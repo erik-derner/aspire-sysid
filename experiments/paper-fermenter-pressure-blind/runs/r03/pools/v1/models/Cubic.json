@@ -1,0 +1,201 @@
+{
+  "expressions": {
+    "dy": "p0*1 + p1*((y-yc)/ys) + p2*((x1-uc)/us) + p3*((x2-vc)/vs) + p4*((y-yc)/ys)**2 + p5*((y-yc)/ys)*((x1-uc)/us) + p6*((y-yc)/ys)*((x2-vc)/vs) + p7*((x1-uc)/us)**2 + p8*((x1-uc)/us)*((x2-vc)/vs) + p9*((x2-vc)/vs)**2 + p10*((y-yc)/ys)**3 + p11*((y-yc)/ys)**2*((x1-uc)/us) + p12*((y-yc)/ys)**2*((x2-vc)/vs) + p13*((y-yc)/ys)*((x1-uc)/us)**2 + p14*((y-yc)/ys)*((x1-uc)/us)*((x2-vc)/vs) + p15*((y-yc)/ys)*((x2-vc)/vs)**2 + p16*((x1-uc)/us)**3 + p17*((x1-uc)/us)**2*((x2-vc)/vs) + p18*((x1-uc)/us)*((x2-vc)/vs)**2 + p19*((x2-vc)/vs)**3"
+  },
+  "parameters": [
+    {
+      "name": "p0",
+      "value": -0.012606414654728166,
+      "unit": "unknown",
+      "type": "fitted",
+      "description": "Coefficient of `1`; controls this monomial contribution to `dy`. Estimated jointly in the final simulation-error fit; not fixed from another candidate."
+    },
+    {
+      "name": "p1",
+      "value": -0.018927363284272494,
+      "unit": "unknown",
+      "type": "fitted",
+      "description": "Coefficient of `((y-yc)/ys)`; controls this monomial contribution to `dy`. Estimated jointly in the final simulation-error fit; not fixed from another candidate."
+    },
+    {
+      "name": "p2",
+      "value": 0.012942822126057952,
+      "unit": "unknown",
+      "type": "fitted",
+      "description": "Coefficient of `((x1-uc)/us)`; controls this monomial contribution to `dy`. Estimated jointly in the final simulation-error fit; not fixed from another candidate."
+    },
+    {
+      "name": "p3",
+      "value": 0.008169254580599764,
+      "unit": "unknown",
+      "type": "fitted",
+      "description": "Coefficient of `((x2-vc)/vs)`; controls this monomial contribution to `dy`. Estimated jointly in the final simulation-error fit; not fixed from another candidate."
+    },
+    {
+      "name": "p4",
+      "value": 0.005839854217136338,
+      "unit": "unknown",
+      "type": "fitted",
+      "description": "Coefficient of `((y-yc)/ys)**2`; controls this monomial contribution to `dy`. Estimated jointly in the final simulation-error fit; not fixed from another candidate."
+    },
+    {
+      "name": "p5",
+      "value": 0.007730053920678214,
+      "unit": "unknown",
+      "type": "fitted",
+      "description": "Coefficient of `((y-yc)/ys)*((x1-uc)/us)`; controls this monomial contribution to `dy`. Estimated jointly in the final simulation-error fit; not fixed from another candidate."
+    },
+    {
+      "name": "p6",
+      "value": -7.063817343438333e-06,
+      "unit": "unknown",
+      "type": "fitted",
+      "description": "Coefficient of `((y-yc)/ys)*((x2-vc)/vs)`; controls this monomial contribution to `dy`. Estimated jointly in the final simulation-error fit; not fixed from another candidate."
+    },
+    {
+      "name": "p7",
+      "value": 0.0028537028464537878,
+      "unit": "unknown",
+      "type": "fitted",
+      "description": "Coefficient of `((x1-uc)/us)**2`; controls this monomial contribution to `dy`. Estimated jointly in the final simulation-error fit; not fixed from another candidate."
+    },
+    {
+      "name": "p8",
+      "value": 1.1891438059506218e-05,
+      "unit": "unknown",
+      "type": "fitted",
+      "description": "Coefficient of `((x1-uc)/us)*((x2-vc)/vs)`; controls this monomial contribution to `dy`. Estimated jointly in the final simulation-error fit; not fixed from another candidate."
+    },
+    {
+      "name": "p9",
+      "value": 0.0007083112436841854,
+      "unit": "unknown",
+      "type": "fitted",
+      "description": "Coefficient of `((x2-vc)/vs)**2`; controls this monomial contribution to `dy`. Estimated jointly in the final simulation-error fit; not fixed from another candidate."
+    },
+    {
+      "name": "p10",
+      "value": -0.0036298292026984208,
+      "unit": "unknown",
+      "type": "fitted",
+      "description": "Coefficient of `((y-yc)/ys)**3`; controls this monomial contribution to `dy`. Estimated jointly in the final simulation-error fit; not fixed from another candidate."
+    },
+    {
+      "name": "p11",
+      "value": 0.004923351220857963,
+      "unit": "unknown",
+      "type": "fitted",
+      "description": "Coefficient of `((y-yc)/ys)**2*((x1-uc)/us)`; controls this monomial contribution to `dy`. Estimated jointly in the final simulation-error fit; not fixed from another candidate."
+    },
+    {
+      "name": "p12",
+      "value": 0.004283615211687549,
+      "unit": "unknown",
+      "type": "fitted",
+      "description": "Coefficient of `((y-yc)/ys)**2*((x2-vc)/vs)`; controls this monomial contribution to `dy`. Estimated jointly in the final simulation-error fit; not fixed from another candidate."
+    },
+    {
+      "name": "p13",
+      "value": -0.0037982610907208096,
+      "unit": "unknown",
+      "type": "fitted",
+      "description": "Coefficient of `((y-yc)/ys)*((x1-uc)/us)**2`; controls this monomial contribution to `dy`. Estimated jointly in the final simulation-error fit; not fixed from another candidate."
+    },
+    {
+      "name": "p14",
+      "value": -0.007350921510295827,
+      "unit": "unknown",
+      "type": "fitted",
+      "description": "Coefficient of `((y-yc)/ys)*((x1-uc)/us)*((x2-vc)/vs)`; controls this monomial contribution to `dy`. Estimated jointly in the final simulation-error fit; not fixed from another candidate."
+    },
+    {
+      "name": "p15",
+      "value": -0.001650570556905486,
+      "unit": "unknown",
+      "type": "fitted",
+      "description": "Coefficient of `((y-yc)/ys)*((x2-vc)/vs)**2`; controls this monomial contribution to `dy`. Estimated jointly in the final simulation-error fit; not fixed from another candidate."
+    },
+    {
+      "name": "p16",
+      "value": 0.001344887440747541,
+      "unit": "unknown",
+      "type": "fitted",
+      "description": "Coefficient of `((x1-uc)/us)**3`; controls this monomial contribution to `dy`. Estimated jointly in the final simulation-error fit; not fixed from another candidate."
+    },
+    {
+      "name": "p17",
+      "value": 0.0022332153432989507,
+      "unit": "unknown",
+      "type": "fitted",
+      "description": "Coefficient of `((x1-uc)/us)**2*((x2-vc)/vs)`; controls this monomial contribution to `dy`. Estimated jointly in the final simulation-error fit; not fixed from another candidate."
+    },
+    {
+      "name": "p18",
+      "value": 0.0009179370438979532,
+      "unit": "unknown",
+      "type": "fitted",
+      "description": "Coefficient of `((x1-uc)/us)*((x2-vc)/vs)**2`; controls this monomial contribution to `dy`. Estimated jointly in the final simulation-error fit; not fixed from another candidate."
+    },
+    {
+      "name": "p19",
+      "value": 0.00013487550528552413,
+      "unit": "unknown",
+      "type": "fitted",
+      "description": "Coefficient of `((x2-vc)/vs)**3`; controls this monomial contribution to `dy`. Estimated jointly in the final simulation-error fit; not fixed from another candidate."
+    },
+    {
+      "name": "yc",
+      "value": 1.3,
+      "unit": "unknown",
+      "type": "fixed",
+      "description": "Center for `y`, chosen as a convenient round value near the training mean, not response-fitted."
+    },
+    {
+      "name": "ys",
+      "value": 0.3,
+      "unit": "unknown",
+      "type": "fixed",
+      "description": "Scale for `y`, chosen as a convenient round spread from inspection of data/train.csv, not response-fitted."
+    },
+    {
+      "name": "uc",
+      "value": 60.0,
+      "unit": "unknown",
+      "type": "fixed",
+      "description": "Center for `x1`, chosen as a convenient round value near the training mean, not response-fitted."
+    },
+    {
+      "name": "us",
+      "value": 20.0,
+      "unit": "unknown",
+      "type": "fixed",
+      "description": "Scale for `x1`, chosen as a convenient round spread from inspection of data/train.csv, not response-fitted."
+    },
+    {
+      "name": "vc",
+      "value": 18.0,
+      "unit": "unknown",
+      "type": "fixed",
+      "description": "Center for `x2`, chosen as a convenient round value near the training mean, not response-fitted."
+    },
+    {
+      "name": "vs",
+      "value": 7.0,
+      "unit": "unknown",
+      "type": "fixed",
+      "description": "Scale for `x2`, chosen as a convenient round spread from inspection of data/train.csv, not response-fitted."
+    }
+  ],
+  "estimation": {
+    "criterion": "Minimize the sum of squared free-running simulated-minus-observed `y` errors on both supplied trajectories, excluding each initial sample. Classical RK4 uses a step of 5 s and constant logged inputs per step, with no replacement of simulated states by later observations. This matches the scored variable and integration convention; equal row weights are used because no measurement variances are supplied. The derivative training fit supplies initialization, not the final criterion.",
+    "data": "Initialization: all 1452 rows in data/train.csv, one trajectory, using `dy` as target. Structural checks use all 1454 rows of the separate data/val.csv trajectory. Final coefficient fit uses both files, retaining their separate initial conditions: 1451 and 1453 post-initial `y` residuals, respectively. No rows are arbitrarily discarded; the first state of each file is an initial condition, and the last input does not drive a scored subsequent sample. Validation is therefore used for selection and final estimation, not claimed as an independent final test.",
+    "method": "Ordinary least squares on all data/train.csv derivative rows using numpy.linalg.lstsq, with the twenty fixed monomials, estimated all coefficients simultaneously. It needs no starting values because the coefficients enter linearly. The resulting training-only derivative estimates are the numerical starting vector below. These are stored in explore_results.json under `cubic` with key `ols`; fit_explore.py reproduces them. Final step: all fitted parameters, including shape parameters, were estimated together by bounded nonlinear least squares (scipy.optimize.least_squares, default method trf, loss linear). Analytical state and parameter partial derivatives were generated with sympy.lambdify; RK4 sensitivity recurrences supply the trajectory Jacobian. This is used rather than derivative-only fitting because the evaluation is a free-running state simulation. Starting values, in parameter-table order, are `[-0.010754837893977872, -0.018014552477114507, 0.011808911071938055, 0.008091700385991161, 0.003341814181215423, 0.007704494123246431, 0.0016247770585724767, 0.002728195079791228, -0.0002540048664036211, -0.00019089152624377292, -0.0006425072600332872, -0.0005987312512369936, -0.00014608276737811487, 0.0004549021954942886, -0.0009822585227627317, -1.1866146226868756e-05, 0.0005443060962636068, 0.00029831111779585765, -9.832343374168297e-05, -0.0003176025463044038]`, with the heterogeneous units given in the parameter table. Lower and upper bound vectors are `[-1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1]` and `[1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1]` in those same units. The broad coefficient bounds prevent explosive iterates; shape bounds preserve the chosen family. Settings: `max_nfev = 150`, `ftol = 1e-10`, `xtol = 1e-10`, `gtol = 1e-10`, `x_scale = \"jac\"`. The method is deterministic and uses no random seed. scipy.optimize.least_squares API documentation, SciPy v1.18.0 manual, was checked online for the trust-region reflective method; actual installed SciPy is 1.18.1. A local optimum, not a global guarantee, is obtained. fit_final.py writes all final values; make_submission.py formats the candidate.",
+    "script": "fit_final.py"
+  },
+  "discussion": {
+    "family": "Continuous-time multivariate polynomial regression, total degree three, used as a nonlinear state equation. Prediction-error identification reference: L. Ljung, System Identification: Theory for the User, second edition, 1999; cited from memory, bibliographic source not checked.",
+    "interpretation": "The state `y`, inputs `x1` and `x2`, and derivative `dy` have unspecified physical units; time is in s. No physical interpretation is assumed. The fixed parameters `yc` and `ys` center and scale `y`; `uc` and `us` center and scale `x1`; `vc` and `vs` center and scale `x2`. Their ratios are dimensionless. The constant `p0` is a drift. Linear state feedback, input forcing, curvature, and input-dependent state feedback are represented by all monomials in the delivered expression. Each `p0` through `p19` multiplies the exact monomial stated in its parameter description. These are mathematical effects, not identified mechanisms. The highest pure-state term has a negative fitted coefficient, but global stability is not proved.",
+    "origin": "The degree-three structure came from an explicit polynomial-library search, not physical reasoning. An affine fit was weak; bilinear feedback substantially improved simulation. Quadratic and cubic libraries then tested curvature and interactions. Degree four did not improve held-out simulation, and degree five had a training simulation failure; these were rejected. Orthogonal matching pursuit on degree-two through degree-four libraries was also tried by a helper, but its sparse derivative fits did not beat the full cubic derivative baseline. The full cubic was retained as the strongest smooth training-only derivative fit in validation simulation; no genetic programming or PySINDy was used.",
+    "limitations": "Twenty coefficients are correlated because only two trajectories explore a restricted state-input region. Polynomial growth and RK4 instability are possible outside that region. The complete model is an empirical scalar approximation; positive local state slopes at a few observed points mean contraction is not guaranteed. Residuals remain temporally structured: in the final fit the validation derivative-residual lag-one correlation is `0.434` and its correlation with the next `x2` increment is `0.637` (both dimensionless, computed on data/val.csv). That increment is diagnostic only, never a model argument. This may reflect omitted dynamics or timing; causation cannot be determined. Final refit RMSE on data/train.csv is `0.023325` and on data/val.csv is `0.033375`, in the unspecified units of `y`; these are in-sample after refitting. No test performance is known. The observed combined envelope is approximately `0.992 <= y <= 2.187`, `1.628 <= x1 <= 94.449`, and `0.083 <= x2 <= 30.797`, all in their respective unspecified units; independently combining those extrema is not necessarily supported by either trajectory."
+  }
+}

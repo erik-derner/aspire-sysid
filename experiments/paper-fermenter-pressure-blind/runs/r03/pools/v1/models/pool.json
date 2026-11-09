@@ -1,0 +1,11 @@
+{
+  "order": [
+    "Cubic",
+    "Hinge",
+    "Pade",
+    "LogShift",
+    "Sigmoid"
+  ],
+  "recommended": "Cubic",
+  "reason": "The cubic polynomial had the lowest training-only derivative-initialized validation simulation RMSE among the retained smooth families: approximately 0.036525 in the unspecified units of `y`, computed on data/val.csv with constant-input 5 s RK4. The final joint simulation-error refit also has the lowest joint state error (training RMSE 0.023325; validation RMSE 0.033375, now in-sample, in the unspecified units of `y`). Its negative highest pure-state cubic term provides better far-state behavior than unconstrained quadratic growth, but neither global RK4 stability nor test accuracy is claimed. The pool includes piecewise, guarded rational, logarithmic and positive-rate alternatives because residual timing structure remains unexplained."
+}

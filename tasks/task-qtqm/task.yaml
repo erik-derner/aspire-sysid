@@ -1,0 +1,37 @@
+schema_version: 1
+id: task-qtqm
+title: Identification task qtqm
+formulation: continuous
+columns:
+- name: y
+  roles: [state, output]
+  unit: not supplied
+- name: x1
+  roles: [input]
+  unit: not supplied
+- name: x2
+  roles: [input]
+  unit: not supplied
+- name: dy
+  roles: [state_derivative]
+  derivative_of: y
+  unit: not supplied
+dynamics:
+  sampling_period: 5.0
+  states: [y]
+  inputs: [x1, x2]
+evaluation:
+  mode: simulation
+  initialization: 1
+  failure_limits:
+  - {variable: y, lower: -100.0, upper: 100.0, unit: not supplied, justification: 'numerical divergence
+      bound, about 46 times the largest training magnitude of y'}
+  time_limit_s: 60.0
+data: {train: data/train.csv, val: data/val.csv}
+pool_cap: 10
+budget:
+  round: {turns: 60, seconds: 3600, usd: 10.0}
+  session: {turns: 180, seconds: 10800, usd: 30.0}
+  analysis_exchange: {turns: 15, seconds: 900, usd: 1.0}
+test:
+- {file: test/held_out_1.csv, trajectory: test-1}

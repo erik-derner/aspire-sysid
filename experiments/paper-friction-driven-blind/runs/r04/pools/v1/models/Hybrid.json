@@ -1,0 +1,76 @@
+{
+  "expressions": {
+    "dy": "x1",
+    "dx1": "Piecewise((-h*x1, (Abs(x1) < s) & (Abs((-a*sin(y + delta) + c*x2)) < fs)), ((-a*sin(y + delta) + c*x2) - b*x1 - f*sign(x1), True))"
+  },
+  "parameters": [
+    {
+      "name": "a",
+      "value": 110.46294734593523,
+      "unit": "recorded x1 unit/s",
+      "type": "fitted",
+      "description": "Restoring amplitude multiplying the sine of the coordinate; estimated jointly by output-error fitting."
+    },
+    {
+      "name": "b",
+      "value": 1.8579125129767688,
+      "unit": "s^-1",
+      "type": "fitted",
+      "description": "Linear velocity damping rate; estimated jointly by output-error fitting."
+    },
+    {
+      "name": "c",
+      "value": 28.069342817296018,
+      "unit": "recorded x1 unit/(recorded x2 unit*s)",
+      "type": "fitted",
+      "description": "Linear input forcing gain; estimated jointly by output-error fitting."
+    },
+    {
+      "name": "f",
+      "value": 19.456281265669908,
+      "unit": "recorded x1 unit/s",
+      "type": "fitted",
+      "description": "Magnitude of the saturating velocity-opposing term; estimated jointly by output-error fitting."
+    },
+    {
+      "name": "s",
+      "value": 0.1363533685192863,
+      "unit": "recorded x1 unit",
+      "type": "fitted",
+      "description": "Velocity transition scale; estimated jointly by output-error fitting within the stated bounds."
+    },
+    {
+      "name": "delta",
+      "value": -0.029052398892812293,
+      "unit": "-",
+      "type": "fitted",
+      "description": "Dimensionless phase shift of the numerical sine argument; estimated jointly by output-error fitting."
+    },
+    {
+      "name": "fs",
+      "value": 15.026846580888096,
+      "unit": "recorded x1 unit/s",
+      "type": "fitted",
+      "description": "Magnitude threshold for the force-gated low-speed branch; estimated jointly by output-error fitting, independently of the sliding magnitude."
+    },
+    {
+      "name": "h",
+      "value": 100.0,
+      "unit": "s^-1",
+      "type": "fixed",
+      "description": "Velocity-decay rate in the low-speed gate. Chosen as `h = 1/Ts = 100` s^-1 with `Ts = 0.01` s from TASK.md, so the regularized stopping time is one sample. This is a numerical regularization choice, not an estimated physical relaxation rate."
+    }
+  ],
+  "estimation": {
+    "criterion": "Unweighted sum of squared output errors `y_sim-y` over every sample after the first of each training trajectory. Each rollout starts at its own logged initial `y` and `x1`, holds `x2` constant between samples, and uses classical fourth-order Runge-Kutta with `Ts = 0.01` s. Simulated states are never reset to later observations. This output-error criterion matches the task score and avoids relying on noisy finite-difference acceleration as a final target; `dx1` was used only in exploratory structure selection and initialization. Equal sample weights follow the task scoring rule.",
+    "data": "data/train.csv, all 13 trajectories and all samples; the first row of each is initialization, not an error term. No training trajectory was excluded. data/val.csv, all three trajectories, was reserved for uninterrupted rollout comparison and residual inspection. Derivative regressions used the supplied training `dx1`; final estimates use training `y` only.",
+    "method": "Differential evolution by scipy.optimize.differential_evolution minimized the square root of the same mean squared output error, which has the same optimum as the sum of squares. All fitted parameters were estimated jointly. This derivative-free population method was chosen because switching gates make local finite-difference optimization unreliable, as demonstrated by an earlier sign-friction fit. Bounds were `90 <= a <= 130` recorded x1 unit/s; `0.5 <= b <= 3.5` s^-1; `22 <= c <= 34` recorded x1 unit/(recorded x2 unit*s); `15 <= f <= 27` recorded x1 unit/s; `0.1 <= s <= 0.4` recorded x1 unit; `-0.08 <= delta <= 0.03` dimensionless; `15 <= fs <= 35` recorded x1 unit/s. They bracketed the preceding smooth-friction fits and allowed a separate gate threshold. The differential-evolution defaults were strategy best1bin, Latin-hypercube initialization, mutation interval `(0.5, 1.0)`, recombination `0.7`, immediate updating, and one worker; no single numerical starting vector applies. The pseudorandom seed was `seed = 1729`, `popsize = 12`, `maxiter = 300`, `tol = 1e-6`, and `polish = False`. Population members were initialized within the given bounds, with no prior solution inserted. The run used 25284 objective evaluations and reached the iteration limit, so global convergence is not claimed. The fixed low-velocity decay rate was not estimated. Reference: SciPy API documentation for scipy.optimize.differential_evolution; the installed implementation was used. Numba JIT compilation accelerated a hand-coded RK4 simulator without changing the model equations. The reproducibility script is `fit_friction.py`; `make_submission.py` copies its saved winning parameters into the deliverables. ",
+    "script": "fit_friction.py"
+  },
+  "discussion": {
+    "family": "Force-gated hybrid stick/slip oscillator, inspired by Karnopp-style near-zero-velocity gating but with an explicit exponential velocity-decay regularization. Reference from memory, not source-checked: D. Karnopp, Computer Simulation of Stick-Slip Friction in Mechanical Dynamic Systems, Journal of Dynamic Systems, Measurement, and Control, 1985. This delivered equation is an empirical adaptation, not claimed identical to that paper.",
+    "interpretation": "The state `y` is the scored logged coordinate; `x1` is its velocity-like state; `x2` is the logged exogenous input. The equation `dy = x1` supplies the kinematic relationship. The term `-b*x1` damps velocity, with `b` its rate coefficient; `c*x2` supplies linear forcing, with `c` its gain. These are mathematical effects, not established physical mechanisms. Define the driving acceleration expression `-a*sin(y + delta) + c*x2`. If `Abs(x1) < s` and its magnitude is below `fs`, `dx1 = -h*x1` decays the residual velocity, allowing nearly stationary states at different coordinates. Outside that gate, `-b*x1` gives linear damping and `-f*sign(x1)` gives signed sliding opposition. The threshold `fs`, sliding magnitude `f`, velocity gate width `s`, and fixed decay rate `h` are separate quantities; `fs` is a mathematical gate threshold and is not asserted to be a true static-friction coefficient.",
+    "origin": "Before fitting I listed affine state-space, sparse-polynomial, and nonlinear restoring/damping families with saturation and absolute-value terms. Actual exploratory work used deterministic ordinary least squares, not a genetic symbolic-regression package or PySINDy. The library compared linear, sinusoidal and cubic/quintic restoring terms, sign/tanh friction, velocity-quadratic damping, input-cubic terms and low-order interactions (explore.py and moving.py). The linear derivative model had training derivative RMSE `17.1872` in recorded `x1` units/s; replacing linear restoration by sine reduced this to `12.6139`, and adding sign friction reduced it to `9.6318`, on all training rows. Residuals near zero velocity and nonzero final positions motivated sharp friction transitions and static gates. Central finite differences verified `x1 = (y_next-y_previous)/(2*Ts)` at interior samples to roundoff, with `Ts = 0.01` s, so `dy = x1` was fixed rather than fitted. Sine restoration is an oscillator analogy inferred from data, not supplied physical knowledge. Persistent nonzero resting positions and residuals concentrated near zero speed motivated a force-gated branch that smooth tanh friction lacks. An earlier piecewise attempt used zero acceleration inside the gate and local least squares; it could preserve a nonzero velocity and was difficult to optimize. This version uses `-h*x1` and differential evolution to search the switching landscape. The structure was manually designed; population search estimates parameters, not symbolic structure.",
+    "limitations": "Physical state and input units, apparatus, intended use, and noise statistics are not supplied. A recorded unit in parameter metadata means the numerical coordinate unit of its named column, not an invented physical unit. Sine arguments use the logged numerical `y` coordinate; no angular calibration is established. Treating the state/input as sufficient for a two-state autonomous vector field is an assumption imposed by the task. Central-difference derivatives of quantized positions are not independent exact acceleration measurements. No parameter confidence intervals were calculated. Training and validation rollouts are finite and do not establish global validity or stability under arbitrary forcing. The validation set was used for model comparison, not for fitting any delivered parameter. Switching surfaces make estimates and trajectories sensitive to small state and coefficient changes. The optimized force-gate threshold is smaller than the sliding magnitude; this is an empirical numerical gate, not evidence for a conventional static/kinetic friction law. The fixed decay rate depends on the task sampling interval, and behavior at other sampling rates is not validated. Differential evolution reached its iteration limit. Training rollout RMSE was `0.056124709367311516` in recorded `y` units; validation rollout RMSE was `0.08586466470760443` in recorded `y` units. Validation per-trajectory RMSEs, in trajectory order, were `0.09915533726495035`, `0.0707427992936414`, `0.08046577063641597` in recorded `y` units. Validation mean signed error was `-0.004243880703577046` in recorded `y` units, but its near-zero pooled value masks trajectory-dependent bias: validation trajectory 1 is underpredicted on average and trajectory 3 overpredicted. The validation sampled-acceleration RMSE was `15.504273517446263` in recorded `x1` units/s. Full residual summaries are in selected_diagnostics.json, generated by selected_diagnostics.py. No test data were accessed."
+  }
+}

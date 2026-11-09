@@ -1,0 +1,12 @@
+{
+  "order": [
+    "CubicSparse",
+    "RationalQuadratic",
+    "HingeSpline",
+    "LogFeedback",
+    "BilinearPower",
+    "SigmoidRate"
+  ],
+  "recommended": "CubicSparse",
+  "reason": "Recommend the sparse cubic vector field. Its training-only fit achieved validation free-running RK4 RMSE 0.036448609 U_y versus 0.038356466 U_y for the rational quadratic and 0.037679721 U_y for the compact spline. It also had the lowest criterion-selection suffix RMSE among these families, 0.049425261 U_y, although that suffix had already been inspected during exploratory validation. Final coefficients were refitted on both supplied files; their validation RMSE 0.036584843 U_y is consequently in-sample, not an unseen-test estimate. U_y denotes the unspecified native state unit. The pool also retains rational, fixed-knot spline, logarithmic feedback, bilinear-power and positive logistic-rate families as structurally distinct alternatives. Residual temporal correlation and extrapolation uncertainty remain; no physical law or globally valid model is claimed."
+}

@@ -1,0 +1,83 @@
+{
+  "expressions": {
+    "dp": "a*Max(flow,0)-b*Min(Max((vscale-valve)/vscale,0),1)**m/(1+c*Min(Max((vscale-valve)/vscale,0),1)**m)*(Max(p-pa,0)/pr)*sqrt(Max(p+pa,0)/(2*pa))/sqrt((Max(p-pa,0)+s)/pr)+r*Max(pa-p,0)"
+  },
+  "parameters": [
+    {
+      "name": "vscale",
+      "value": 100.0,
+      "unit": "%",
+      "type": "fixed",
+      "description": "Full-closure position `vscale = 100` %, supplied by TASK.md; normalizes aperture and fixes the sealed endpoint."
+    },
+    {
+      "name": "pr",
+      "value": 1.0,
+      "unit": "bar",
+      "type": "fixed",
+      "description": "Pressure normalization `pr = 1` bar, chosen to nondimensionalize pressure powers without changing the numerical bar-valued fits."
+    },
+    {
+      "name": "a",
+      "value": 0.0011524620337669154,
+      "unit": "bar/(s*(l/min))",
+      "type": "fitted",
+      "description": "Positive pressure-rate gain per air-flow rate, estimated from the logged standard-volume flow."
+    },
+    {
+      "name": "b",
+      "value": 0.509901769733291,
+      "unit": "bar/s",
+      "type": "fitted",
+      "description": "Outlet pressure-rate scale before the aperture and pressure factors."
+    },
+    {
+      "name": "c",
+      "value": 4.989408752355306,
+      "unit": "-",
+      "type": "fitted",
+      "description": "Nonnegative saturation parameter of the rational-power valve characteristic."
+    },
+    {
+      "name": "r",
+      "value": 0.49999999999999994,
+      "unit": "1/s",
+      "type": "fitted",
+      "description": "Fully-open near-atmospheric relaxation rate, bounded to preserve five-second RK4 stability."
+    },
+    {
+      "name": "m",
+      "value": 1.6309983813740154,
+      "unit": "-",
+      "type": "fitted",
+      "description": "Positive exponent controlling the aperture characteristic."
+    },
+    {
+      "name": "pa",
+      "value": 0.9800000000000001,
+      "unit": "bar",
+      "type": "fitted",
+      "description": "Empirical near-atmospheric equilibrium reference; not an independently measured ambient pressure."
+    },
+    {
+      "name": "s",
+      "value": 0.028991128714639422,
+      "unit": "bar",
+      "type": "tied",
+      "description": "Pressure regularization chosen by the fitted fully-open atmospheric relaxation rate, not an additional independent fit.",
+      "equation": "pr*(b/((1+c)*r*pr))**2"
+    }
+  ],
+  "estimation": {
+    "criterion": "The final criterion is the sum of squared free-running errors on `p`, in bar squared, across both trajectories after their initial samples. Each trajectory is initialized at its first logged `p`; inputs are held at the logged sample values for a classical RK4 step of five seconds, with no measurement resets. This matches the scored simulation setting and avoids treating filtered `dp` as an exact vector field. The preliminary criterion was squared error on `dp`, in (bar/s) squared, only to obtain a starting point. No outlier removal, weighting or regularization penalty was used.",
+    "data": "The first two estimation steps used data/train.csv: all 1452 samples as the contiguous trajectory, with 1451 derivative targets or subsequent-state pressure errors. Structural selection used data/val.csv as a separate 1454-sample trajectory, never concatenating its state to training. The final refit used both complete trajectories, for 2904 subsequent-state errors. Initial samples supply the initial states and have no fitted pressure-error term. The final row of each file is not a derivative initialization target because its successor is unavailable. No inaccessible test data were used; final validation-trajectory errors are in-sample after joint refitting.",
+    "method": "Bound-constrained nonlinear least squares with the Trust Region Reflective algorithm in `scipy.optimize.least_squares`, using SciPy 1.18.1; reference: the official SciPy documentation for this function, cited from memory; attempted web retrieval returned no usable page content. This method handles sign and stability bounds directly, unlike unconstrained Levenberg-Marquardt. All independent parameters were estimated jointly within each step; tied `s` was recomputed on every evaluation. Step one minimized derivative residuals on training rows except the final row, multiplying residuals by a fixed numerical factor of one hundred for conditioning; this does not change their least-squares minimizer. Initial values were `a = 0.00121` bar/(s*(l/min)), `b = 0.567` bar/s, `c = 5.66`, `r = 0.4` 1/s, `m = 1.66`, `pa = 0.99` bar. These are hand-chosen order-of-magnitude gas-balance values, positive valve-shape values, a square-root-nearby exponent, and a near-one-bar atmospheric reference. The initial relaxation-rate guess was below the stability ceiling. Step two minimized free-running training-trajectory pressure errors from the derivative-fit solution `a = 0.00102026934945` bar/(s*(l/min)), `b = 0.464238286287` bar/s, `c = 4.78464269709`, `r = 0.5` 1/s, `m = 1.66460932564`, `pa = 0.988286930011` bar. This train-only fit was used for structural comparison on validation. Step three jointly minimized pressure errors on both trajectories, initialized by the training simulation fit `a = 0.00116641729544` bar/(s*(l/min)), `b = 0.61695950878` bar/s, `c = 6.40416017286`, `r = 0.5` 1/s, `m = 1.73103628473`, `pa = 0.98` bar. Final bounds were `0.0001 <= a <= 0.004` bar/(s*(l/min)), `0.01 <= b <= 1` bar/s, `0 <= c <= 30`, `0.03 <= r <= 0.5` 1/s, `0.3 <= n <= 0.85`, `0.5 <= m <= 3`, and `0.98 <= pa <= 1.02` bar, applying only to the independent fitted parameters of this candidate. The relaxation ceiling is an assumed numerical admissibility constraint, not a measured physical rate. Each derivative fit allowed eight hundred function evaluations, with `ftol = 1e-10`, `xtol = 1e-10`, `gtol = 1e-10`; each simulation fit allowed twelve hundred with corresponding tolerances `1e-11`. All used `method = 'trf'`, `jac = '2-point'`, `x_scale = 'jac'` and ordinary squared loss. No randomization or multistart was used, so no seed applies; this is a local, not certified-global, optimum. The scripts use Numba 0.68.0 only to accelerate deterministic right-hand-side and RK4 loops.",
+    "script": "fit_final.py"
+  },
+  "discussion": {
+    "family": "Lumped isothermal gas-inventory balance with a regularized pressure-squared gas-restriction outlet. This is a compressibility-sensitive resistance approximation, not a choked-flow nozzle model. The common gas-inventory motivation is the ideal-gas equation of state at fixed effective volume and temperature; reference: NASA Glenn Research Center, Equation of State, cited from memory and not source-checked; attempted web retrieval returned no usable page content. The particular valve map and regularization are assumptions of this identification, not formulas supplied by that reference.",
+    "interpretation": "Here `p` is measured absolute headspace pressure in bar, `valve` is percent closed and `flow` is air flow in l/min. `vscale` is full closure in %, `pr` is a one-bar pressure normalization and `pa` is the atmospheric-equilibrium reference in bar. Define the explanatory aperture `x = Min(Max((vscale-valve)/vscale,0),1)` and nonnegative dimensionless pressure drop `h = Max(p-pa,0)/pr`. The inlet term `a*Max(flow,0)` converts nonnegative supplied air flow to pressure accumulation; negative flow is clipped only as an untested domain continuation. The outlet characteristic vanishes at full closure. The final term `r*Max(pa-p,0)` restores pressure below the reference at a valve-independent bounded rate. It is a numerical/phenomenological continuation, not evidence of a physical leak. `b` is a pressure-rate scale in bar/s, `m` is the aperture exponent, and `c` is a dimensionless saturation parameter. `s` is a tied pressure scale in bar, and `r` is the atmospheric relaxation rate in 1/s. The outlet term `b*x**m/(1+c*x**m)*(Max(p-pa,0)/pr)*sqrt(Max(p+pa,0)/(2*pa))/sqrt((Max(p-pa,0)+s)/pr)` becomes proportional to the square root of a pressure-squared difference away from the small-drop regularization. The absolute-pressure factor models density sensitivity while preserving zero discharge at the reference pressure.",
+    "origin": "The gas balance and monotonic valve endpoint constraints came from physical reasoning. A density correction using pressure-squared difference was tried after the square-root models left pressure-dependent residuals. The factor involving absolute pressure was an assumed isothermal resistance correction, not a term selected by symbolic search. The rational-power aperture characteristic was retained from the manually tested valve families to isolate this pressure-law alternative. The regularizer was parameterized through the fitted fully-open atmospheric relaxation rate after unconstrained exploratory fits showed that some low-drop slopes would be unsafe for a five-second explicit RK4 step. This is an intentional simulation-safety restriction, not evidence for a particular laminar transition. For this candidate, the train-only free-running fit had training RMSE `0.0270520800982` bar and genuinely held-out validation RMSE `0.0398439341845` bar. After joint refitting, training-trajectory RMSE was `0.0275590909037` bar and validation-trajectory RMSE was `0.0385439383196` bar; these last two are in-sample diagnostics, not test results. Simulation residuals were inspected by pressure, valve, flow and time quintiles. Final residual lag-one correlations were `0.922172514207` on training and `0.968287709434` on validation. Sustained time-dependent errors remain, so omitted memory or changing operating conditions are plausible but not identifiable from the permitted one-state model. No time-dependent corrective term was inserted.",
+    "limitations": "This approximation does not include choking or gas-temperature dynamics. Its training and train-only validation errors were worse than the generalized-discharge model. The fitted atmospheric reference reaches its lower bound, so neither its offset nor the assumed compressibility correction is established independently by these experiments.  R1 holds globally because the inlet coefficient is positive and `Max(flow,0)` is nondecreasing. R2 holds for percent closure from zero to one hundred: conductance is nondecreasing with aperture, the discharged pressure factor is nonnegative, and the below-reference recovery term is independent of closure. Clipping extends this monotonicity beyond that input interval. R3 holds exactly at `p = pa` with `flow = 0`, for every open valve; the fitted `pa = 0.98` bar is approximately nominal atmospheric pressure, but represents an empirical offset. R4 holds: above `pa` the zero-flow derivative is negative for an open valve and below `pa` it is positive. R5 holds: at `valve = vscale` the outlet is zero and supplied nonnegative flow cannot lower pressure. Above `pa`, a sealed tank reduces exactly to `a*Max(flow,0)`. The valve-independent subatmospheric recovery is an intentional mathematical extension used to meet the requested global closure monotonicity. It should not be interpreted as actual air ingress through a sealed vessel. Physical use is mainly at or above the near-atmospheric reference. Constant temperature, constant effective gas capacitance, input alignment and instantaneous actuator response are assumed. Neither temperature, actual gas inventory, bubble holdup, valve hysteresis nor sensor calibration is measured here. The fitted inlet gain folds these effects into one coefficient. The pressure and input ranges of the two supplied experiments do not identify behavior at much higher pressure or at exact full closure; no relief valve is modeled. Long sealed operation with continuing inlet can physically exceed the harness pressure bound; no artificial pressure cap was added because it would contradict the sealed accumulation law. Sign constraints and the imposed atmospheric relaxation bound prevent local zero-flow numerical instability, but do not certify arbitrary high-pressure trajectories. "
+  }
+}

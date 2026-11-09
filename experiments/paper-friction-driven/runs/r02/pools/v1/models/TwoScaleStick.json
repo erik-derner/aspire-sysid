@@ -1,0 +1,62 @@
+{
+  "expressions": {
+    "dtheta": "omega",
+    "domega": "a*u-g*sin(theta)-b*omega-c*tanh(omega/v)-exp(-(omega/vs)**2)*Min(Max(a*u-g*sin(theta),-c),c)"
+  },
+  "parameters": [
+    {
+      "name": "a",
+      "value": 28.519094256027827,
+      "unit": "rad/(s^2 V)",
+      "type": "fitted",
+      "description": "Motor-voltage to acceleration gain `a`; only gain divided by inertia is identified."
+    },
+    {
+      "name": "g",
+      "value": 112.07431946968833,
+      "unit": "rad/s^2",
+      "type": "fitted",
+      "description": "Positive restoring-acceleration scale `g`."
+    },
+    {
+      "name": "b",
+      "value": 1.5912329550111275,
+      "unit": "1/s",
+      "type": "fitted",
+      "description": "Positive viscous acceleration coefficient `b`; includes motor back-emf damping and bearing friction without separating them."
+    },
+    {
+      "name": "c",
+      "value": 22.217444835927402,
+      "unit": "rad/s^2",
+      "type": "fitted",
+      "description": "Dry-friction acceleration scale `c`."
+    },
+    {
+      "name": "v",
+      "value": 0.5180844956793949,
+      "unit": "rad/s",
+      "type": "fitted",
+      "description": "Sliding-friction regularization speed `v` in `tanh(omega/v)`."
+    },
+    {
+      "name": "vs",
+      "value": 0.16445979368366628,
+      "unit": "rad/s",
+      "type": "fitted",
+      "description": "Independent static-friction localization speed `vs` in `exp(-(omega/vs)**2)`."
+    }
+  ],
+  "estimation": {
+    "criterion": "Sum of squared differences between simulated and logged `theta` across all trajectories after initialization, with equal per-sample weights. This targets the required uncorrected long-horizon angle simulation rather than a derivative proxy; no state correction is applied after the first sample.",
+    "data": "All 3522 rows of data/train.csv (trajectories 1 through 13) and all 1192 rows of data/val.csv (trajectories 1 through 3), treated as 16 separate trajectories, never concatenated into one experiment. Final fitting uses all supplied data to improve parameter precision across both driven and free-response regimes. Initial samples initialize states and have identically zero angle residual; the remaining 4698 samples contribute to the criterion. Validation was first used to assess training-only models, then intentionally included in final fitting and trajectory cross-validation; reported post-refit validation error is therefore not independent validation.",
+    "method": "All fitted parameters listed here were estimated jointly by bounded nonlinear least squares, scipy.optimize.least_squares with its trust-region reflective algorithm, minimizing the stated full-trajectory criterion. This accommodates the nonlinear simulation objective; direct derivative regression was not used for the final values because central-difference acceleration is noisy. Three deterministic starts were tried and the lowest angle sum of squares was retained. Starting values, in parameter units: `a = 28` rad/(s^2 V), `g = 110` rad/s^2, `b = 1.6` 1/s, `c = 21` rad/s^2, `v = 0.4` rad/s, `vs = 0.2` rad/s; `a = 28` rad/(s^2 V), `g = 110` rad/s^2, `b = 1.6` 1/s, `c = 21` rad/s^2, `v = 0.8` rad/s, `vs = 0.3` rad/s; `a = 28` rad/(s^2 V), `g = 110` rad/s^2, `b = 1.6` 1/s, `c = 21` rad/s^2, `v = 1.5` rad/s, `vs = 0.2` rad/s. Bounds: `10 <= a <= 50` rad/(s^2 V); `50 <= g <= 180` rad/s^2; `0 <= b <= 8` 1/s; `8 <= c <= 45` rad/s^2; `0.15 <= v <= 2` rad/s; `0.1 <= vs <= 3` rad/s. These broad physical/regularization bounds enforce positive dissipation, admissible restoring shape and manageable low-speed stiffness; they are assumptions, not inferred confidence intervals. Finite-difference relative step was `diff_step = 0.0001`; tolerances were `ftol = 1e-9`, `xtol = 1e-9`, `gtol = 1e-9`; limit was 300 function evaluations per start. No stochastic optimization was used, so no random seed applies. Classical fourth-order Runge-Kutta used one `0.01` s step per sample and the logged `u` was held constant between samples, exactly as specified. These starts were chosen around the moving-state physical scales, with three sliding/static width choices to expose local minima. Deterministic trajectory cross-validation used three folds with concatenated trajectory indices `[0,3,5,8,11]`, `[1,4,7,10,13]` and `[2,6,9,12,14,15]` (zero-based indices, training trajectories first then validation trajectories). Each fold restarted from the physical initialization recorded by the script, used 180 function evaluations and `1e-8` stopping tolerances; fold data were never used in that fold objective. Pooled three-fold trajectory cross-validation angle RMSE was 0.076358 rad. After pooled refitting, angle RMSE was 0.068436 rad across both supplied files; this is in-sample, not held-out performance.",
+    "script": "fit_twoscale.py"
+  },
+  "discussion": {
+    "family": "Regularized Coulomb-viscous friction with a static dead zone and independent sliding/static speed scales. Related friction-model background: B. Armstrong-Helouvry, P. Dupont and C. Canudas de Wit, A survey of models, analysis tools and compensation methods for the control of machines with friction, Automatica 30 (1994), 1083-1138; bibliographic reference recalled from memory, not source-checked. These expressions are phenomenological reductions, not the LuGre model.",
+    "interpretation": "The mandatory kinematics are `dtheta = omega`. Motor torque per inertia is `a*u`; hanging-equilibrium restoring torque per inertia is `-g*sin(theta)`; `-b*omega` is viscous and back-emf damping. The sliding term is `-c*tanh(omega/v)`. Define the available acceleration `D = a*u-g*sin(theta)` and the static weight `H = exp(-(omega/vs)**2)`. The countertorque term is `-H*Min(Max(D,-c),c)`: at rest it cancels any available acceleration inside `[-c,c]`, whereas away from rest it vanishes. The two speed scales are separate because sliding-force smoothing and localization of static cancellation serve different purposes. Both friction and gravity coefficients are normalized by an unknown inertia. At `omega = 0` and `u = 0`, `D-Min(Max(D,-c),c)` has the same sign as `D`, or is zero; therefore R2 holds. Since `0 <= H <= 1`, the acceleration is nondecreasing in `u` with slope between `a*(1-H)` and `a`, including plateau regions; this establishes R3 in the nondecreasing sense required for sticking.",
+    "origin": "The motor gain, sinusoidal restoring term, viscous damping and Coulomb friction came from physical reasoning. Moving-sample ordinary least squares in explore_data.py gave initial physical scales; subsequent fits minimized uncorrected angle simulations rather than noisy acceleration. A single-scale Gaussian static cancellation was tried in fit_models.py; it preferred a static threshold smaller than the observed stationary torque band and drifted in extended rest tests. Independent static/sliding scales and a nonnegative static excess were then tried in fit_stiction.py. After pooled refinement the Stribeck excess was nearly zero, so it was removed, both the speed-localized sliding excess and static excess were set to zero, and the remaining six parameters were refitted in fit_twoscale.py. Thus the final equality of sliding and static thresholds is an explicit simplifying assumption, not a separately measured fact. The tanh and Gaussian operators were chosen regularizers, not symbolic-regression discoveries. No genetic-programming or PySINDy search was run.",
+    "limitations": "This smooth approximation is not an exact set-valued friction law away from zero velocity. Independent low-speed widths may admit extra low-speed force-balance branches; they are effective regularizers. Motor inductance, friction memory and temperature are omitted because the required model has only the two recorded states. The fitted gravity scale, motor gain and friction are normalized by inertia, which these data cannot separately identify. Input excitation occupies a narrower range than the formal voltage domain, so extrapolation to large voltage is uncertain. Large negative-angle free-response phase error remains. Cross-validation was used in model selection and is not an independent final test. An additional 20 s unforced simulation initialized at each of the nine logged stationary free-response endpoints in the supplied files left every angle unchanged, supporting persistence at rest; this tests those equilibria only, not every possible low-speed state."
+  }
+}

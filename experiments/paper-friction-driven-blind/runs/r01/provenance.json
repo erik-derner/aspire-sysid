@@ -1,0 +1,296 @@
+{
+  "authorized_part": {
+    "noise": null,
+    "preprocessing": null,
+    "sampling_period_s": 0.01,
+    "train": {
+      "file": "data/train.csv",
+      "samples": 3522,
+      "trajectories": 13,
+      "trajectory_lengths": [
+        450,
+        450,
+        300,
+        300,
+        442,
+        442,
+        442,
+        141,
+        141,
+        141,
+        91,
+        91,
+        91
+      ]
+    },
+    "trajectory_column": "trajectory",
+    "val": {
+      "file": "data/val.csv",
+      "samples": 1192,
+      "trajectories": 3,
+      "trajectory_lengths": [
+        450,
+        300,
+        442
+      ]
+    }
+  },
+  "build_script": "not stated",
+  "datasets": [
+    {
+      "agent_visible": true,
+      "assignment": "training",
+      "dataset": "train",
+      "noise": "not stated",
+      "operating_conditions": {
+        "source": "task.yaml, field description",
+        "statement": "not stated per dataset; the task description states the conditions of the recordings as a whole",
+        "task_description": null
+      },
+      "preprocessing": "not stated",
+      "samples": 3522,
+      "sampling_period_s": 0.01,
+      "source": {
+        "provenance_document": "provenance.md of the task folder",
+        "recording_names": "not stated",
+        "task_file": "data/train.csv",
+        "working_directory_file": "data/train.csv"
+      },
+      "trajectories": [
+        {
+          "id": "1",
+          "samples": 450
+        },
+        {
+          "id": "2",
+          "samples": 450
+        },
+        {
+          "id": "3",
+          "samples": 300
+        },
+        {
+          "id": "4",
+          "samples": 300
+        },
+        {
+          "id": "5",
+          "samples": 442
+        },
+        {
+          "id": "6",
+          "samples": 442
+        },
+        {
+          "id": "7",
+          "samples": 442
+        },
+        {
+          "id": "8",
+          "samples": 141
+        },
+        {
+          "id": "9",
+          "samples": 141
+        },
+        {
+          "id": "10",
+          "samples": 141
+        },
+        {
+          "id": "11",
+          "samples": 91
+        },
+        {
+          "id": "12",
+          "samples": 91
+        },
+        {
+          "id": "13",
+          "samples": 91
+        }
+      ],
+      "trajectory_column": "trajectory",
+      "version": {
+        "bytes": 179789,
+        "sha256": "98a8000e2d4dc97e2f31a279eee1da183ffe347a8702f8fca3fc632df37ffc72"
+      }
+    },
+    {
+      "agent_visible": true,
+      "assignment": "validation",
+      "dataset": "val",
+      "noise": "not stated",
+      "operating_conditions": {
+        "source": "task.yaml, field description",
+        "statement": "not stated per dataset; the task description states the conditions of the recordings as a whole",
+        "task_description": null
+      },
+      "preprocessing": "not stated",
+      "samples": 1192,
+      "sampling_period_s": 0.01,
+      "source": {
+        "provenance_document": "provenance.md of the task folder",
+        "recording_names": "not stated",
+        "task_file": "data/val.csv",
+        "working_directory_file": "data/val.csv"
+      },
+      "trajectories": [
+        {
+          "id": "1",
+          "samples": 450
+        },
+        {
+          "id": "2",
+          "samples": 300
+        },
+        {
+          "id": "3",
+          "samples": 442
+        }
+      ],
+      "trajectory_column": "trajectory",
+      "version": {
+        "bytes": 65398,
+        "sha256": "f254b00381ef1019b50e820c5a239728b97c43d99a5a1444df27551af0354ae9"
+      }
+    },
+    {
+      "agent_visible": false,
+      "assignment": "test",
+      "dataset": "test-1",
+      "noise": "not stated",
+      "operating_conditions": {
+        "source": "task.yaml, field description",
+        "statement": "not stated per dataset; the task description states the conditions of the recordings as a whole",
+        "task_description": null
+      },
+      "preprocessing": "not stated",
+      "samples": 450,
+      "sampling_period_s": 0.01,
+      "source": {
+        "provenance_document": "provenance.md of the task folder",
+        "recording_names": "not stated",
+        "task_file": "test/held_out_1.csv",
+        "working_directory_file": null
+      },
+      "trajectories": [
+        {
+          "id": "test-1",
+          "samples": 450
+        }
+      ],
+      "trajectory_column": null,
+      "version": {
+        "sha256": "e166c96666d0f6affa425ba467686ce4a2b5c00851bfd975ef43c312e5cb0d92"
+      }
+    },
+    {
+      "agent_visible": false,
+      "assignment": "test",
+      "dataset": "test-2",
+      "noise": "not stated",
+      "operating_conditions": {
+        "source": "task.yaml, field description",
+        "statement": "not stated per dataset; the task description states the conditions of the recordings as a whole",
+        "task_description": null
+      },
+      "preprocessing": "not stated",
+      "samples": 300,
+      "sampling_period_s": 0.01,
+      "source": {
+        "provenance_document": "provenance.md of the task folder",
+        "recording_names": "not stated",
+        "task_file": "test/held_out_2.csv",
+        "working_directory_file": null
+      },
+      "trajectories": [
+        {
+          "id": "test-2",
+          "samples": 300
+        }
+      ],
+      "trajectory_column": null,
+      "version": {
+        "sha256": "ca0abade1ef11419a4f75d52f0afcfb5a423a7f4de20b8452bf1d2aacad1d675"
+      }
+    },
+    {
+      "agent_visible": false,
+      "assignment": "test",
+      "dataset": "test-3",
+      "noise": "not stated",
+      "operating_conditions": {
+        "source": "task.yaml, field description",
+        "statement": "not stated per dataset; the task description states the conditions of the recordings as a whole",
+        "task_description": null
+      },
+      "preprocessing": "not stated",
+      "samples": 141,
+      "sampling_period_s": 0.01,
+      "source": {
+        "provenance_document": "provenance.md of the task folder",
+        "recording_names": "not stated",
+        "task_file": "test/held_out_3.csv",
+        "working_directory_file": null
+      },
+      "trajectories": [
+        {
+          "id": "test-3",
+          "samples": 141
+        }
+      ],
+      "trajectory_column": null,
+      "version": {
+        "sha256": "9973cbfa04845c79c094a7345d60bcab30028884a203ceb620f878ddb3235fbb"
+      }
+    },
+    {
+      "agent_visible": false,
+      "assignment": "test",
+      "dataset": "test-4",
+      "noise": "not stated",
+      "operating_conditions": {
+        "source": "task.yaml, field description",
+        "statement": "not stated per dataset; the task description states the conditions of the recordings as a whole",
+        "task_description": null
+      },
+      "preprocessing": "not stated",
+      "samples": 91,
+      "sampling_period_s": 0.01,
+      "source": {
+        "provenance_document": "provenance.md of the task folder",
+        "recording_names": "not stated",
+        "task_file": "test/held_out_4.csv",
+        "working_directory_file": null
+      },
+      "trajectories": [
+        {
+          "id": "test-4",
+          "samples": 91
+        }
+      ],
+      "trajectory_column": null,
+      "version": {
+        "sha256": "bda563d433a4c13b29606a4770dc851b194ce67c3e870d664647ca5c0dd09855"
+      }
+    }
+  ],
+  "format_version": 1,
+  "provenance_document": {
+    "file": "provenance.md",
+    "sha256": "9785ac2346255b653a8b2820bc4f03ff1633ea1c5334c213d7b82406be0a7d93"
+  },
+  "sampling_period_note": null,
+  "sampling_period_s": 0.01,
+  "separation": {
+    "delayed_variables": "not applicable: the task declares no delayed variables",
+    "filtering": "the harness applies no filtering or other preprocessing; the preprocessing of the task authors is stated per dataset, and any filtering by the agent is applied by its own scripts to the data in its working directory, which contain no test data",
+    "per_trajectory_evaluation": "every trajectory and static dataset is evaluated on its own; a simulation starts once per trajectory and the end of one trajectory is never joined to the beginning of another",
+    "sealing": "the 4 sealed test trajectory file(s) are held in the task store and opened only by the evaluation module of the harness; they are never copied into the working directory, and the brief, the execution messages and the results permitted to the agent contain no test value, test trajectory, test-derived plot or failure location on test data; the leak scanner searches the working directory and the transcript for them",
+    "selection": "the agent fits and recommends from the training and validation data only; its recommendation is recorded in the pool file before any test result exists; the ranking on test data is computed afterwards by the harness and is labeled oracle-based selection on test data",
+    "use_of_test_data": "the authors used the test data during the development of the framework and of the tasks; a result of a round after the user has seen test results is labeled test-informed"
+  },
+  "task_id": "task-jdhj",
+  "user_facing": "contains recording names and digests of sealed files; never shown to the agent"
+}

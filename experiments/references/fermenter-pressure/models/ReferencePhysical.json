@@ -1,0 +1,47 @@
+{
+  "expressions": {
+    "dp": "a*flow - b*(1 - valve/c_v)*sqrt(Max(p - p_a, 0))"
+  },
+  "parameters": [
+    {
+      "name": "a",
+      "value": 0.0013358194041040098,
+      "unit": "bar min/(l s)",
+      "type": "fitted",
+      "description": "Gain of the air flow rate `flow`: the rise of the headspace pressure per unit of time and per unit of air flow rate; for an ideal gas at constant temperature it is inversely proportional to the volume of the headspace."
+    },
+    {
+      "name": "b",
+      "value": 0.18352178975068623,
+      "unit": "bar^0.5/s",
+      "type": "fitted",
+      "description": "Gain of the outflow through the fully open outlet valve (`valve = 0`): discharge coefficient and cross-section of the valve combined with the properties of the headspace."
+    },
+    {
+      "name": "c_v",
+      "value": 100.0,
+      "unit": "% closed",
+      "type": "fixed",
+      "description": "Valve position at which the valve is fully closed; `100`, given by the description of the task (100 % = fully closed)."
+    },
+    {
+      "name": "p_a",
+      "value": 1.0272190782434287,
+      "unit": "bar",
+      "type": "fitted",
+      "description": "Pressure downstream of the outlet valve (ambient pressure), below which the model has no outflow."
+    }
+  ],
+  "estimation": {
+    "criterion": "Root mean squared error of the simulated pressure `p` in bar over all scored samples of the training trajectory, because the task scores the simulated `p` and the intended use is simulation.",
+    "data": "data/train.csv, the one trajectory, simulated as a whole from its first sample (1451 scored samples). The validation data were not used.",
+    "method": "Nelder-Mead simplex method, scipy.optimize.minimize with method='Nelder-Mead' (SciPy 1.18.1), xatol `1e-9`, fatol `1e-10`. The method needs no derivative of the simulation error with respect to the parameters, which is not smooth in `p_a` because of the `Max` function, and three parameters are few enough for a simplex search. Starting values `a = 0.0009479`, `b = 0.1181` and `p_a = 1.0` bar: `p_a` was set to `1` bar, the standard atmospheric pressure rounded to one digit, and `a` and `b` are the ordinary least-squares fit (numpy.linalg.lstsq) of the column `dp` with this `p_a`, which is linear in `a` and `b` and needs no starting values itself. The simulation uses one step of the classical fourth-order Runge-Kutta method per sampling period with the inputs held constant, as the evaluation of the task does. `a`, `b` and `p_a` were estimated together in the second step. The method uses no random numbers.",
+    "script": "experiments/references/fermenter-pressure/fit_references.py"
+  },
+  "discussion": {
+    "family": "First-order mass balance of a gas volume with an orifice outflow (the outflow is proportional to the square root of the pressure difference across the valve, the equation of incompressible flow through an orifice) and a linear valve characteristic. Reference model written by hand; it is not a candidate of the agent. No reference is cited, because the model was written from memory of textbook fluid mechanics and no source was checked.",
+    "interpretation": "`a*flow` is the rise of the pressure by the air fed into the tank; `b*(1 - valve/c_v)*sqrt(Max(p - p_a, 0))` is the fall of the pressure by the air that leaves through the outlet valve: `1 - valve/c_v` is the open fraction of the valve, and `sqrt(Max(p - p_a, 0))` is the dependence of the flow through an orifice on the pressure difference, zero when the headspace pressure is not above `p_a`.",
+    "origin": "The structure was written from the description of the task (air fed in at a controlled flow rate, outflow through a valve whose position is given in % closed) before any estimation, and it was not changed after the estimation. No other structure was tried for this reference model.",
+    "limitations": "A linear valve characteristic and an incompressible orifice flow are assumptions; a real valve has a nonlinear characteristic, and the flow of air is compressible and becomes choked at a large pressure ratio. The model has no leakage when the valve is fully closed and no dynamics of the mass-flow controller. The headspace volume and the temperature are taken as constant."
+  }
+}

@@ -1,0 +1,83 @@
+{
+  "expressions": {
+    "dy": "x1",
+    "dx1": "a*sin(y) + h*cos(y) + b*x1 + c*x2 + d - e*tanh(x1/w) - Min(Max((a*sin(y) + h*cos(y) + b*x1 + c*x2 + d), -s), s)*exp(-(x1/j)**2)"
+  },
+  "parameters": [
+    {
+      "name": "a",
+      "value": -112.00080061444052,
+      "unit": "U_x1/s",
+      "type": "fitted",
+      "description": "restoring-law coefficient."
+    },
+    {
+      "name": "b",
+      "value": -1.593136854907839,
+      "unit": "s^-1",
+      "type": "fitted",
+      "description": "linear velocity coefficient."
+    },
+    {
+      "name": "c",
+      "value": 28.52678860718196,
+      "unit": "U_x1/(s*U_x2)",
+      "type": "fitted",
+      "description": "input gain."
+    },
+    {
+      "name": "d",
+      "value": -0.7775945389215783,
+      "unit": "U_x1/s",
+      "type": "fitted",
+      "description": "constant acceleration bias."
+    },
+    {
+      "name": "e",
+      "value": 22.073517178506048,
+      "unit": "U_x1/s",
+      "type": "fitted",
+      "description": "positive kinetic-friction acceleration scale."
+    },
+    {
+      "name": "w",
+      "value": 0.4120219234328745,
+      "unit": "U_x1",
+      "type": "fitted",
+      "description": "smooth-friction velocity transition scale."
+    },
+    {
+      "name": "h",
+      "value": 4.424208228679498,
+      "unit": "U_x1/s",
+      "type": "fitted",
+      "description": "cosine restoring coefficient."
+    },
+    {
+      "name": "j",
+      "value": 0.21912238479612697,
+      "unit": "U_x1",
+      "type": "fitted",
+      "description": "velocity scale for fading the static-force cancellation."
+    },
+    {
+      "name": "s",
+      "value": 10.460073181261892,
+      "unit": "U_x1/s",
+      "type": "fitted",
+      "description": "static-force acceleration cancellation threshold."
+    }
+  ],
+  "estimation": {
+    "criterion": "Sum of squared free-running errors in `y`, excluding the initial sample of every trajectory. Equal per-sample weight matches the announced output-RMSE score; no derivative residual was included in the final criterion.",
+    "data": "Final fitting used all 3522 rows of data/train.csv (13 separate trajectories) and all 1192 rows of data/val.csv (3 separate trajectories), treating same-numbered trajectories in different files as distinct experiments. Each first row supplies the two measured initial states and is not scored. The final data combine all supplied experiments to reduce coefficient uncertainty after training-only structure screening and validation-based choices. Counts are dimensionless. No other data were used. The system, intended use and physical units are unknown. Define U_y, U_x1 and U_x2 as the unspecified numerical units of `y`, `x1` and `x2`; seconds are supplied for time. The kinematic model assumes U_x1 = U_y/s. Trigonometric arguments use the supplied numerical coordinate without an identified unit conversion.",
+    "method": "All nine parameters were estimated together in the final combined-data step. Two starting values for the low-speed cancellation scale and two candidate cancellation structures had previously been screened using training-only fitting and validation rollout comparison. The final method was bounded nonlinear least squares (trust-region reflective algorithm), `scipy.optimize.least_squares`, minimizing free-running output error rather than a derivative criterion because `dx1` is a quantized centered-difference target. Model predictions used classical fourth-order Runge-Kutta with `T_s = 0.01` s, logged `x2` constant within each step, and no state resets after each measured trajectory initial condition. Starts were the corresponding training-only fits: `a = -111.70271198327606` U_x1/s; `b = -1.6172153758020222` s^-1; `c = 28.510555788720715` U_x1/(s*U_x2); `d = -0.22698460817160393` U_x1/s; `e = 22.02144485403849` U_x1/s; `w = 0.899078996075535` U_x1; `h = 3.919807790686002` U_x1/s; `j = 0.9296422203790975` U_x1; `s = 11.190226390542437` U_x1/s. Bounds were `-180.0 <= a <= -50` U_x1/s; `-10.0 <= b <= 0` s^-1; `5.0 <= c <= 50` U_x1/(s*U_x2); `-15.0 <= d <= 15` U_x1/s; `0.0 <= e <= 60` U_x1/s; `0.09 <= w <= 3` U_x1; `-20.0 <= h <= 30` U_x1/s; `0.05 <= j <= 4` U_x1; `1.0 <= s <= 60` U_x1/s. The sign constraints enforce restoring and dissipative effects; finite search limits keep parameters in the derivative-screening scale, and positive transition widths avoid division by zero. Settings were `max_nfev = 350`, `diff_step = 0.0001`, `ftol = 2e-8`, `xtol = 2e-8`, and `gtol = 2e-8` (dimensionless numerical settings); remaining arguments used SciPy defaults. The final fit used 21 function evaluations, a dimensionless count. No random numbers or seed were used. The complete starting values, bounds, results and residual diagnostics are saved in final_fit_results.json. Python NumPy, SciPy and Numba compiled RK4 were used; Numba version 0.68.0. Reproduction: run fit_final.py then write_models.py; preceding width selection is in width_check.py with supporting explore_models.py and stick_models.py.",
+    "script": "fit_final.py"
+  },
+  "discussion": {
+    "family": "Trigonometric nonlinear state-space oscillator with a velocity-weighted static-force deadzone and regularized Coulomb friction. Friction background: B. Armstrong-Helouvry, P. Dupont and C. Canudas de Wit, A survey of models, analysis tools and compensation methods for the control of machines with friction, Automatica 30(7), 1083-1138 (1994). This bibliographic reference is cited from memory, not verified online; none of the formulas here is asserted to be its exact model.",
+    "interpretation": "The imposed kinematic equation is `dy = x1`. Define the un-clipped acceleration, only as a shorthand in this text, by `F = a*sin(y) + h*cos(y) + b*x1 + c*x2 + d`. The sine and cosine terms restore displacement with an allowed numerical-origin shift; `b*x1` damps velocity, `c*x2` transmits input, and `d` biases acceleration. The term `-e*tanh(x1/w)` opposes motion. The term `-Min(Max(F, -s), s)*exp(-(x1/j)**2)` cancels the force up to the threshold `s` at rest, fading on the speed scale `j`. At `x1 = 0` and `Abs(F) <= s`, the acceleration is zero. This allows a continuum of resting positions, unlike the other two smooth-friction families. The shorthand `F` is expanded in the delivered expression.",
+    "origin": "The other models leave nonzero predicted accelerations at measured zero speed, where many experiments show nearly constant, different resting positions. This motivated a manually proposed clipped-force deadzone, with `exp(-(x1/j)**2)` restricting cancellation to low speed. Two blend structures and two starting speed widths were tried. This additive cancellation structure permits exact resting equilibria and was retained as a distinct structural alternative, although its held-out rollout error was worse than the recommended model. No claim of a measured static-friction threshold is made.",
+    "limitations": "The system, intended use and physical units are unknown. Define U_y, U_x1 and U_x2 as the unspecified numerical units of `y`, `x1` and `x2`; seconds are supplied for time. The kinematic model assumes U_x1 = U_y/s. Trigonometric arguments use the supplied numerical coordinate without an identified unit conversion. Initial states are measured; no extra memory, input delay or unmeasured dynamics is represented. Quantization and centered-difference targets limit friction identification. Final estimates use validation too, so final validation errors are in-sample, not an unbiased generalization estimate. No test data were accessed. The clipped-force threshold and speed widths are correlated and are not uniquely established as mechanical friction properties. The exponential fade is an empirical interpolation, not a constitutive law. The prior training-only validation rollout `RMSE = 0.08321687` U_y used data/val.csv, excluding each first sample. Final calibration rollout `RMSE = 0.05611577` U_y on data/train.csv and `RMSE = 0.07536960` U_y on data/val.csv are in-sample. Final acceleration residual `RMSE = 7.920249` U_x1/s on training rows and `RMSE = 15.669755` U_x1/s on validation rows are much larger relative to their targets; transient and intermediate-speed behavior remains imperfect. No accuracy beyond the supplied ranges is established."
+  }
+}

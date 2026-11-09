@@ -1,0 +1,100 @@
+schema_version: 1
+id: fermenter-pressure
+title: Headspace air pressure of an aerated fermentation tank
+formulation: continuous
+description: >
+  A small-scale 40-liter fermentation tank filled with approximately 25 liters of
+  water, data recorded on the real rig. At the bottom of the tank, air is fed into the
+  water at a flow rate controlled by a local mass-flow controller. The air collects in
+  the headspace above the water level and leaves through an outlet valve at the
+  top of the tank; the air pressure above the water level depends on the valve
+  position. The valve position is the first input (`valve`), the air flow rate is
+  the second input (`flow`), and the headspace air pressure `p` is the state and
+  the measured output; `dp` is the sampled time derivative of `p`, a possible
+  fitting target of dp = f(p, valve, flow). Sampling period T_s = 5 s. Each data
+  file is one contiguous trajectory. The derivative column is a filtered numerical 
+  difference of p. Physical units: pressure in bar (10^5 Pa), valve in % closed (100% = fully closed),
+  air flow rate in liters/min.
+intended_use: >
+  Simulation of the pressure p. The model is integrated from the first
+  sample of a held-out trajectory, with the recorded inputs valve and flow
+  applied and no further corrections, and the simulated p is compared with the
+  measured one. The model should give stable, accurate long-horizon simulation. 
+  The model is meant to be used as a
+  physically interpretable process model, so its structure should be defensible
+  from the physics, not only from the fit.
+columns:
+  - name: p
+    symbol: p
+    roles: [state, output]
+    unit: "bar"
+    description: headspace air pressure, simulated state and measured output
+  - name: valve
+    symbol: u_1
+    roles: [input]
+    unit: "% closed"
+    description: outlet valve position, first exogenous input
+    range: [0.0, 100.0]
+  - name: flow
+    symbol: u_2
+    roles: [input]
+    unit: "l/min"
+    description: air flow rate controlled by the mass-flow controller, second exogenous input
+  - name: dp
+    symbol: dp/dt
+    roles: [state_derivative]
+    derivative_of: p
+    unit: "bar/s"
+    description: sampled time derivative of p (a filtered numerical difference); a possible fitting target, never simulated
+dynamics:
+  sampling_period: 5.0
+  states: [p]
+  inputs: [valve, flow]
+evaluation:
+  mode: simulation
+  initialization: 1
+  failure_limits:
+    - variable: p
+      lower: -100.0
+      upper: 100.0
+      unit: bar
+      justification: >-
+        numerical divergence bound, about 46 times the largest training value
+        2.19 bar
+  time_limit_s: 60.0
+data:
+  train: data/train.csv
+  val: data/val.csv
+requirements_nl:
+  - id: R1
+    source: {stated_by: "RB", date: "2026-10-08"}
+    text: >-
+      Monotonicity with respect to inlet flow. At a fixed pressure and valve position,
+      increasing the inlet air flow rate cannot decrease the pressure derivative.
+  - id: R2
+    source: {stated_by: "RB", date: "2026-10-08"}
+    text: >-
+      Monotonicity with respect to valve closure. At a fixed pressure and inlet flow rate,
+      closing the outlet valve further cannot decrease the pressure derivative.
+  - id: R3
+    source: {stated_by: "RB", date: "2026-10-08"}
+    text: >-
+      Zero-flow equilibrium. With zero inlet flow and an open outlet valve, atmospheric
+      pressure (approximately 1 bar) is the pressure equilibrium.
+  - id: R4
+    source: {stated_by: "RB", date: "2026-10-08"}
+    text: >-
+      Pressure relaxation. With zero inlet flow and an open outlet valve, pressure tends
+      toward atmospheric pressure.
+  - id: R5
+    source: {stated_by: "RB", date: "2026-10-08"}
+    text: >-
+      Fully closed valve. For a perfectly sealed tank with a fully closed outlet valve, the
+      pressure cannot decrease when air is supplied.
+pool_cap: 10
+budget:
+  round: {turns: 60, seconds: 3600, usd: 10.0}
+  session: {turns: 180, seconds: 10800, usd: 30.0}
+  analysis_exchange: {turns: 15, seconds: 900, usd: 1.0}
+test:
+  - {file: test/test_trajectory_1.csv, trajectory: test-1}

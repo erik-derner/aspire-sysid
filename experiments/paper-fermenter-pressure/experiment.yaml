@@ -1,0 +1,29 @@
+# Experiment of the manuscript: the described task
+# of the fermenter pressure with the physical requirements R1 to R5
+# in natural language, five runs with identical settings.
+# The runs differ only in the responses of the language model. gpt-6.1-sol (OpenAI) has no dated
+# snapshot; the results are reported with the dates of the runs. Reasoning effort medium
+# (aspire/configs/tools.yaml). Three runs execute concurrently.
+#
+#   aspire experiment run experiments/paper-fermenter-pressure --dry-run --agent-python <exe>
+#   aspire experiment run experiments/paper-fermenter-pressure --yes --agent-python <exe>
+#   aspire experiment aggregate experiments/paper-fermenter-pressure
+#   aspire experiment report experiments/paper-fermenter-pressure
+
+schema_version: 2
+id: paper-fermenter-pressure
+model: gpt-6.1-sol
+task: fermenter-pressure
+runs: 5
+concurrency: 3
+# null: the round budget of the task (60 turns, 3600 s, 10 USD).
+budget: null
+exports: {python: true, matlab: true, octave: auto}
+plots: true
+# Pass the agent's interpreter with --agent-python; never commit a path of one computer.
+agent_python: null
+workspace_root: null
+keep_workspaces: true
+notes: >-
+  One of the six experiments of the manuscript (three systems, each as a described and as a
+  blind task). Largest possible cost: 5 runs × 10 USD = 50 USD.

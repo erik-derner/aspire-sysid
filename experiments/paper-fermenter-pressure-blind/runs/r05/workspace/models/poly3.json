@@ -1,0 +1,187 @@
+{
+  "expressions": {
+    "dy": "c0*1 + c1*((y-y0)/s0) + c2*(x1/u0) + c3*(x2/v0) + c4*((y-y0)/s0)**2 + c5*((y-y0)/s0)*(x1/u0) + c6*((y-y0)/s0)*(x2/v0) + c7*(x1/u0)**2 + c8*(x1/u0)*(x2/v0) + c9*(x2/v0)**2 + c10*((y-y0)/s0)**3 + c11*((y-y0)/s0)**2*(x1/u0) + c12*((y-y0)/s0)**2*(x2/v0) + c13*((y-y0)/s0)*(x1/u0)**2 + c14*((y-y0)/s0)*(x1/u0)*(x2/v0) + c15*((y-y0)/s0)*(x2/v0)**2 + c16*(x1/u0)**3 + c17*(x1/u0)**2*(x2/v0) + c18*(x1/u0)*(x2/v0)**2 + c19*(x2/v0)**3"
+  },
+  "parameters": [
+    {
+      "name": "y0",
+      "value": 1.0,
+      "unit": "U_y",
+      "type": "fixed",
+      "description": "State translation `y0 = 1` U_y, chosen before polynomial fitting as a convenient origin close to the observed lower state range; it is not a known physical zero."
+    },
+    {
+      "name": "s0",
+      "value": 1.0,
+      "unit": "U_y",
+      "type": "fixed",
+      "description": "State scale `s0 = 1` U_y, chosen to make `(y-y0)/s0` dimensionless without changing its numerical value."
+    },
+    {
+      "name": "u0",
+      "value": 60.0,
+      "unit": "U_x1",
+      "type": "fixed",
+      "description": "Input scale `u0 = 60` U_x1, chosen as a convenient near-central scale from inspection of training input magnitudes, not fitted."
+    },
+    {
+      "name": "v0",
+      "value": 20.0,
+      "unit": "U_x2",
+      "type": "fixed",
+      "description": "Input scale `v0 = 20` U_x2, chosen as a convenient near-central scale from inspection of training input magnitudes, not fitted."
+    },
+    {
+      "name": "c0",
+      "value": -0.02289078346288468,
+      "unit": "U_y/s",
+      "type": "fitted",
+      "description": "Coefficient multiplying `1`, jointly estimated by final rollout least squares; initial value came from the training-only fits described in estimation."
+    },
+    {
+      "name": "c1",
+      "value": -0.38301889429833186,
+      "unit": "U_y/s",
+      "type": "fitted",
+      "description": "Coefficient multiplying `((y-y0)/s0)`, jointly estimated by final rollout least squares; initial value came from the training-only fits described in estimation."
+    },
+    {
+      "name": "c2",
+      "value": 0.0843856058001041,
+      "unit": "U_y/s",
+      "type": "fitted",
+      "description": "Coefficient multiplying `(x1/u0)`, jointly estimated by final rollout least squares; initial value came from the training-only fits described in estimation."
+    },
+    {
+      "name": "c3",
+      "value": 0.04336138532400372,
+      "unit": "U_y/s",
+      "type": "fitted",
+      "description": "Coefficient multiplying `(x2/v0)`, jointly estimated by final rollout least squares; initial value came from the training-only fits described in estimation."
+    },
+    {
+      "name": "c4",
+      "value": -0.1006099186583908,
+      "unit": "U_y/s",
+      "type": "fitted",
+      "description": "Coefficient multiplying `((y-y0)/s0)**2`, jointly estimated by final rollout least squares; initial value came from the training-only fits described in estimation."
+    },
+    {
+      "name": "c5",
+      "value": 0.39576087746111355,
+      "unit": "U_y/s",
+      "type": "fitted",
+      "description": "Coefficient multiplying `((y-y0)/s0)*(x1/u0)`, jointly estimated by final rollout least squares; initial value came from the training-only fits described in estimation."
+    },
+    {
+      "name": "c6",
+      "value": 0.2092019583983992,
+      "unit": "U_y/s",
+      "type": "fitted",
+      "description": "Coefficient multiplying `((y-y0)/s0)*(x2/v0)`, jointly estimated by final rollout least squares; initial value came from the training-only fits described in estimation."
+    },
+    {
+      "name": "c7",
+      "value": -0.1007516195084197,
+      "unit": "U_y/s",
+      "type": "fitted",
+      "description": "Coefficient multiplying `(x1/u0)**2`, jointly estimated by final rollout least squares; initial value came from the training-only fits described in estimation."
+    },
+    {
+      "name": "c8",
+      "value": -0.09220371130323281,
+      "unit": "U_y/s",
+      "type": "fitted",
+      "description": "Coefficient multiplying `(x1/u0)*(x2/v0)`, jointly estimated by final rollout least squares; initial value came from the training-only fits described in estimation."
+    },
+    {
+      "name": "c9",
+      "value": -0.011714759095129458,
+      "unit": "U_y/s",
+      "type": "fitted",
+      "description": "Coefficient multiplying `(x2/v0)**2`, jointly estimated by final rollout least squares; initial value came from the training-only fits described in estimation."
+    },
+    {
+      "name": "c10",
+      "value": -0.1344310821244907,
+      "unit": "U_y/s",
+      "type": "fitted",
+      "description": "Coefficient multiplying `((y-y0)/s0)**3`, jointly estimated by final rollout least squares; initial value came from the training-only fits described in estimation."
+    },
+    {
+      "name": "c11",
+      "value": 0.16410127082381915,
+      "unit": "U_y/s",
+      "type": "fitted",
+      "description": "Coefficient multiplying `((y-y0)/s0)**2*(x1/u0)`, jointly estimated by final rollout least squares; initial value came from the training-only fits described in estimation."
+    },
+    {
+      "name": "c12",
+      "value": 0.13598024979405068,
+      "unit": "U_y/s",
+      "type": "fitted",
+      "description": "Coefficient multiplying `((y-y0)/s0)**2*(x2/v0)`, jointly estimated by final rollout least squares; initial value came from the training-only fits described in estimation."
+    },
+    {
+      "name": "c13",
+      "value": -0.1139497523511902,
+      "unit": "U_y/s",
+      "type": "fitted",
+      "description": "Coefficient multiplying `((y-y0)/s0)*(x1/u0)**2`, jointly estimated by final rollout least squares; initial value came from the training-only fits described in estimation."
+    },
+    {
+      "name": "c14",
+      "value": -0.21001834125839178,
+      "unit": "U_y/s",
+      "type": "fitted",
+      "description": "Coefficient multiplying `((y-y0)/s0)*(x1/u0)*(x2/v0)`, jointly estimated by final rollout least squares; initial value came from the training-only fits described in estimation."
+    },
+    {
+      "name": "c15",
+      "value": -0.04491008909370047,
+      "unit": "U_y/s",
+      "type": "fitted",
+      "description": "Coefficient multiplying `((y-y0)/s0)*(x2/v0)**2`, jointly estimated by final rollout least squares; initial value came from the training-only fits described in estimation."
+    },
+    {
+      "name": "c16",
+      "value": 0.03631196157659363,
+      "unit": "U_y/s",
+      "type": "fitted",
+      "description": "Coefficient multiplying `(x1/u0)**3`, jointly estimated by final rollout least squares; initial value came from the training-only fits described in estimation."
+    },
+    {
+      "name": "c17",
+      "value": 0.057424749119466025,
+      "unit": "U_y/s",
+      "type": "fitted",
+      "description": "Coefficient multiplying `(x1/u0)**2*(x2/v0)`, jointly estimated by final rollout least squares; initial value came from the training-only fits described in estimation."
+    },
+    {
+      "name": "c18",
+      "value": 0.022478093507555103,
+      "unit": "U_y/s",
+      "type": "fitted",
+      "description": "Coefficient multiplying `(x1/u0)*(x2/v0)**2`, jointly estimated by final rollout least squares; initial value came from the training-only fits described in estimation."
+    },
+    {
+      "name": "c19",
+      "value": 0.0031451302823998243,
+      "unit": "U_y/s",
+      "type": "fitted",
+      "description": "Coefficient multiplying `(x2/v0)**3`, jointly estimated by final rollout least squares; initial value came from the training-only fits described in estimation."
+    }
+  ],
+  "estimation": {
+    "criterion": "Sum of squared full-rollout state residuals `y_sim-y` over every row after the first in each file. Each rollout uses classical fourth-order Runge\u2013Kutta, one step of `5` s, with `x1` and `x2` held at the left sample. This matches the supplied evaluation objective rather than treating the sampled derivative as an instantaneous derivative. ",
+    "data": "All rows of `data/train.csv` and `data/val.csv`, treated as two separately initialized uninterrupted trajectories, with sampling period `5` s from TASK.md. No measured-state resets inside either file and no rows removed. Validation was first used for structure comparison, then explicitly included in final calibration to use both available excitation patterns. Final validation errors are calibration diagnostics, not independent generalization estimates. ",
+    "method": "Final parameters were estimated jointly with nonlinear least squares using `scipy.optimize.least_squares`, trust-region reflective method, `jac` supplied by forward sensitivity propagation through all four RK4 stages, and `x_scale = \"jac\"`. This uses the exact chosen rollout and avoids finite-difference Jacobian cost; ordinary least squares cannot minimize its nonlinear trajectory objective. Parameter optimization coordinates are scaled by `Max(Abs(initial_value),0.01)`, a dimensionless numerical conditioning rule implemented in `refine.py`. The stopping tolerances `ftol = 1e-8`, `xtol = 1e-8`, and `gtol = 1e-8` are dimensionless solver settings; the maximum is `120` function evaluations. Final optimization is deterministic and uses no random seed. Initial ordinary least squares on all training `dy` values used `numpy.linalg.lstsq` and needed no starting values. The resulting coefficient vector was then refined jointly against the uninterrupted training rollout with the same RK4 nonlinear least-squares method. That training-only fit supplies the numeric final-stage starts below; no final parameters were tied or independently fixed. Actual final-stage starts: `c0 = -0.015852702359573211` U_y/s; `c1 = -0.40805657569188258` U_y/s; `c2 = 0.061070427671847421` U_y/s; `c3 = 0.010243528988275548` U_y/s; `c4 = 0.017510752863574345` U_y/s; `c5 = 0.35097252284018404` U_y/s; `c6 = 0.12649909574026116` U_y/s; `c7 = -0.076250341210493552` U_y/s; `c8 = -0.034261286640780958` U_y/s; `c9 = 0.02931266271605119` U_y/s; `c10 = -0.041605197526164803` U_y/s; `c11 = 0.046625612539592354` U_y/s; `c12 = 0.012137642960327556` U_y/s; `c13 = -0.065365505112573219` U_y/s; `c14 = -0.13615246240885998` U_y/s; `c15 = 0.022481865761882821` U_y/s; `c16 = 0.028857208010146115` U_y/s; `c17 = 0.028551853545876194` U_y/s; `c18 = -0.0022927794295690132` U_y/s; `c19 = -0.01282808357731261` U_y/s. These starts were used because the training-only rollout fits had already produced finite plausible trajectories. No random numbers apply. ",
+    "script": "reproduce_models.py"
+  },
+  "discussion": {
+    "family": "Degree-three polynomial continuous-time nonlinear state-space model, using a complete monomial feature library. Polynomial feature libraries are also used in S. L. Brunton, J. L. Proctor and J. N. Kutz, Discovering governing equations from data by sparse identification of nonlinear dynamical systems, PNAS 113, 3932\u20133937, 2016, DOI 10.1073/pnas.1517384113 (publisher record checked). This candidate does not use that paper's sparse estimator. ",
+    "interpretation": "The actual units are not supplied. `U_y`, `U_x1`, and `U_x2` denote placeholders for the unknown units of `y`, `x1`, and `x2`; `s` denotes seconds. Normalized features and exponents are dimensionless. Each `c` parameter is the coefficient of the normalized monomial specified in its parameter description. `c0` is constant drift; degree-one state and input terms provide affine dynamics; quadratic and cubic state terms curve the restoring field; products couple the state-dependent rate to inputs or couple the two inputs. No particular physical meaning is established for these mathematical effects.",
+    "origin": "Started with an affine baseline, then complete polynomial libraries of degrees `2` through `6` and ridge penalties. Degree-two terms greatly reduced derivative error; degree-three state-input interactions reduced rollout error further. Higher-degree libraries offered limited validation benefit and additional extrapolation risk, so degree `3` was retained. The feature library was a generic regression assumption, not a recovered physical law. Greedy sparse nonlinear feature search by the helper did not outperform this library. All degree-three terms were retained because the complete library was well conditioned after scaling and the chosen structure improved validation rollouts.",
+    "limitations": "No physical apparatus, units, measurement noise model or intended operating envelope is known. Inputs and the state are correlated along only two supplied files, so the fitted coefficients need not be separately causally identifiable. One anomalous middle transition occurs in each file; it was not used as a reset. Oscillatory serially correlated derivative residuals remain, consistent with omitted dynamics or timing effects but not proof of their cause; an autonomous scalar state with only the two current inputs cannot explicitly represent input history. Extrapolation beyond the supplied excitation is unvalidated. A polynomial field has no general global RK4 stability guarantee; its state-feedback slope is very slightly positive at a few supplied samples. "
+  }
+}

@@ -1,0 +1,2252 @@
+{
+  "budget": {
+    "analysis_exchange": {
+      "seconds": 900.0,
+      "turns": 15,
+      "usd": 1.0
+    },
+    "round": {
+      "seconds": 3600.0,
+      "turns": 60,
+      "usd": 10.0
+    },
+    "session": {
+      "seconds": 10800.0,
+      "turns": 180,
+      "usd": 30.0
+    }
+  },
+  "configuration": {
+    "name": "open",
+    "settings": {
+      "helpers": {
+        "default_turns": 20,
+        "max_helpers": 5
+      },
+      "name": "open",
+      "origin": "aspire/configs/tools.yaml",
+      "output": {
+        "agent_cap_chars": 20000,
+        "record_cap_chars": 10000000
+      },
+      "requests": {
+        "max_output_tokens": 16384,
+        "reasoning_effort": "medium",
+        "reasoning_summary": "auto",
+        "unreported_usage_chars_per_token": 2.0
+      },
+      "shell": {
+        "allowed_path_prefixes": [
+          "/usr",
+          "/bin",
+          "/sbin",
+          "/lib",
+          "/lib64",
+          "/dev/null",
+          "/dev/stdout",
+          "/dev/stderr"
+        ],
+        "limit_s": 600.0
+      },
+      "tools": [
+        "read_file",
+        "write_file",
+        "list_files",
+        "run_shell",
+        "web_fetch",
+        "web_search",
+        "install_package",
+        "start_helper"
+      ],
+      "web": {
+        "denied_url_substrings": [
+          "aspire-sysid",
+          "://127.",
+          "://localhost",
+          "://[::1]",
+          "://0.0.0.0"
+        ],
+        "max_fetch_chars": 200000
+      }
+    }
+  },
+  "consumption": {
+    "checks_s": 0.0,
+    "cost_usd": 2.5206159999999995,
+    "elapsed_s": 1525.4220000000205,
+    "estimated_usage_turns": 0,
+    "evaluation_s": 18.468999999808148,
+    "excess_by_round_sum": {
+      "seconds": 0.0,
+      "turns": 0.0,
+      "usd": 0.0
+    },
+    "input_tokens": 1104743,
+    "output_tokens": 29113,
+    "turns": 43,
+    "waiting_s": 0.0,
+    "web_search_calls": 2
+  },
+  "created_at": "2026-10-08T00:45:03.068533+00:00",
+  "environment": {
+    "error": null,
+    "packages": {
+      "cloudpickle": "3.1.2",
+      "contourpy": "1.4.0",
+      "cycler": "0.12.1",
+      "derivative": "0.6.3",
+      "fonttools": "4.66.1",
+      "gplearn": "0.4.3",
+      "importlib-metadata": "9.0.1",
+      "joblib": "1.6.0",
+      "kiwisolver": "1.5.1",
+      "matplotlib": "3.11.2",
+      "mpmath": "1.3.0",
+      "narwhals": "2.26.0",
+      "numpy": "2.5.3",
+      "packaging": "26.3",
+      "pandas": "3.0.6",
+      "pillow": "12.3.0",
+      "pip": "25.0.1",
+      "pyparsing": "3.3.3",
+      "pysindy": "2.1.0",
+      "python-dateutil": "2.9.0.post0",
+      "scikit-learn": "1.9.1",
+      "scipy": "1.18.1",
+      "six": "1.17.0",
+      "sympy": "1.14.0",
+      "threadpoolctl": "3.7.0",
+      "typing-extensions": "4.16.0",
+      "tzdata": "2026.5",
+      "zipp": "4.1.1"
+    },
+    "python_executable": "%USERPROFILE%\\AppData\\Local\\aspire\\agent-env\\Scripts\\python.exe",
+    "python_version": "3.12.10",
+    "sr_packages": {
+      "PySINDy": "2.1.0",
+      "gplearn": "0.4.3"
+    }
+  },
+  "extra": {
+    "experiment_run": {
+      "agent_interpreter": {
+        "error": null,
+        "executable": "%USERPROFILE%\\AppData\\Local\\aspire\\agent-env\\Scripts\\python.exe",
+        "harness_importable": false,
+        "is_harness_interpreter": false,
+        "note": "the harness package cannot be imported from the agent's interpreter",
+        "python_version": "3.12.10",
+        "runs": true
+      },
+      "attempt": 1,
+      "dry_run": false,
+      "experiment": {
+        "agent_python": "%USERPROFILE%\\AppData\\Local\\aspire\\agent-env\\Scripts\\python.exe",
+        "budget_override": null,
+        "concurrency": 3,
+        "config_sha256": "6a5f4338cf4eff8a59cc3f6a6ec1d5cd80475fb440e325fbe7d74df778afecee",
+        "exports": {
+          "matlab": true,
+          "octave": "auto",
+          "python": true
+        },
+        "folder": "experiments/paper-fermenter-pressure-blind",
+        "id": "paper-fermenter-pressure-blind",
+        "keep_workspaces": true,
+        "model": "gpt-6.1-sol",
+        "notes": "One of the six experiments of the manuscript (three systems, each as a described and as a blind task). Largest possible cost: 5 runs × 10 USD = 50 USD.",
+        "plots": true,
+        "runs": 5,
+        "seeds": "The language-model requests set no seed, so the responses are not reproducible; the runs of an experiment differ only in these responses. Requirement sampling and the reference comparison use the seeds declared by the task and the harness, recorded in every run record.",
+        "task": "task-qtqm",
+        "tasks_root": "tasks",
+        "vendor": "openai",
+        "workspace_root": "<tmp>\\aspire-runs-blind"
+      },
+      "experiment_id": "paper-fermenter-pressure-blind",
+      "output": {
+        "name": "y",
+        "unit": "not supplied"
+      },
+      "pool_cap": 10,
+      "provider": {
+        "model": "gpt-6.1-sol",
+        "vendor": "openai"
+      },
+      "round_budget": {
+        "seconds": 3600.0,
+        "source": "task",
+        "turns": 60,
+        "usd": 10.0
+      },
+      "run_id": "r05",
+      "run_index": 5,
+      "runs": 5,
+      "shell_environment": {
+        "package_target": "<tmp>\\aspire-runs-blind\\ee6d00b5c697f527\\packages",
+        "package_target_note": "packages installed by the agent go into this folder of the run's attempt (PIP_TARGET, PYTHONPATH)",
+        "removed_variables": []
+      },
+      "task_id": "task-qtqm",
+      "token": "da3f98a6f62c41eaaf1d6ed30d322409",
+      "web_backends": {
+        "web_fetch": "available (Python urllib, text of the resource)",
+        "web_search": "provided by the vendor: the built-in web search tool of the OpenAI Responses API, executed by the vendor inside a response; the harness records each search action with its query and sources"
+      },
+      "workspace": {
+        "copy": {
+          "bytes_copied": 835237,
+          "destination": "experiments/paper-fermenter-pressure-blind/runs/r05/workspace",
+          "excluded": [],
+          "files_copied": 45,
+          "rules": {
+            "environment_markers": [
+              "pyvenv.cfg",
+              "conda-meta"
+            ],
+            "excluded_names": [
+              "__pycache__",
+              "*.pyc",
+              "*.pyo",
+              ".ipynb_checkpoints",
+              ".git",
+              ".cache",
+              ".mypy_cache",
+              ".pytest_cache",
+              "node_modules",
+              ".julia",
+              "*.egg-info"
+            ],
+            "links": "symbolic links are listed, never followed",
+            "max_file_bytes": 20000000,
+            "max_total_bytes": 200000000
+          },
+          "source": "<tmp>\\aspire-runs-blind\\ee6d00b5c697f527\\workspace"
+        },
+        "kept": true,
+        "outside_repository": true,
+        "path": "<tmp>\\aspire-runs-blind\\ee6d00b5c697f527\\workspace",
+        "root": "<tmp>\\aspire-runs-blind"
+      }
+    },
+    "leak_scan": {
+      "clean": true,
+      "findings": [],
+      "method": "aspire_sysid.evaluate.leaks.scan_for_sealed_leaks: sealed paths and file names, recording names and their stems, digests of sealed files, test rows, test values with at least 6 significant digits, the reference expression",
+      "not_scanned": [],
+      "scanned": [
+        "transcript.jsonl",
+        "workspace/diagnostics.py",
+        "workspace/diagnostics_results.json",
+        "workspace/explore.py",
+        "workspace/final_fit.py",
+        "workspace/final_fit_results.json",
+        "workspace/fit_start_values.json",
+        "workspace/helper_followup.py",
+        "workspace/helper_followup_log.txt",
+        "workspace/helper_followup_results.json",
+        "workspace/helper_nonlinear.py",
+        "workspace/helper_nonlinear_log.txt",
+        "workspace/helper_nonlinear_results.json",
+        "workspace/inspect_data.py",
+        "workspace/models/cos_power.json",
+        "workspace/models/gaussian_field.json",
+        "workspace/models/poly3.json",
+        "workspace/models/pool.json",
+        "workspace/models/rational2.json",
+        "workspace/nonlinear_more.py",
+        "workspace/nonlinear_more_results.json",
+        "workspace/plan.md",
+        "workspace/poly_results.json",
+        "workspace/prepare_delivery.py",
+        "workspace/rbf_final_results.json",
+        "workspace/rbf_finalize.py",
+        "workspace/rbf_fit.py",
+        "workspace/rbf_screen_results.json",
+        "workspace/refine.py",
+        "workspace/refine_results.json",
+        "workspace/reproduce_models.py",
+        "workspace/reproduced_results.json",
+        "workspace/robust_cos.py",
+        "workspace/robust_cos_results.json",
+        "workspace/rollout.py",
+        "workspace/structured.py",
+        "workspace/structured_results.json",
+        "workspace/valve_explore.py",
+        "workspace/valve_explore_results.json",
+        "workspace/write_models.py"
+      ]
+    }
+  },
+  "format_version": 1,
+  "harness": {
+    "code_revision": {
+      "commit": null,
+      "dirty": true,
+      "identity": {
+        "changed": [],
+        "changes_sha256": null,
+        "dirty": false,
+        "paths": [
+          "aspire",
+          "tasks"
+        ],
+        "trees": {
+          "aspire": "5b0a61ed97131cdddcf5ba717497fb844f469682",
+          "tasks": "4d94d2dee0f4aac04d38abe073376d5de763b261"
+        }
+      },
+      "note": null,
+      "source": "git"
+    },
+    "version": "0.1.0.dev0"
+  },
+  "kind": "aspire_run_record",
+  "model": {
+    "id": "gpt-6.1-sol",
+    "vendor": "openai"
+  },
+  "outcome": "completed",
+  "price": {
+    "input_usd_per_mtok": 2.0,
+    "model": "gpt-6.1-sol",
+    "output_usd_per_mtok": 10.0,
+    "source": "official OpenAI model page (developers.openai.com/api/docs/models/gpt-6.1-sol)",
+    "table": "aspire/configs/prices.yaml",
+    "table_verified": "2026-08-02",
+    "verified": "2026-10-05"
+  },
+  "provenance": {
+    "authorized_part": {
+      "noise": null,
+      "preprocessing": null,
+      "sampling_period_s": 5.0,
+      "train": {
+        "file": "data/train.csv",
+        "samples": 1452,
+        "trajectories": 1,
+        "trajectory_lengths": [
+          1452
+        ]
+      },
+      "trajectory_column": null,
+      "val": {
+        "file": "data/val.csv",
+        "samples": 1454,
+        "trajectories": 1,
+        "trajectory_lengths": [
+          1454
+        ]
+      }
+    },
+    "build_script": "not stated",
+    "datasets": [
+      {
+        "agent_visible": true,
+        "assignment": "training",
+        "dataset": "train",
+        "noise": "not stated",
+        "operating_conditions": {
+          "source": "task.yaml, field description",
+          "statement": "not stated per dataset; the task description states the conditions of the recordings as a whole",
+          "task_description": null
+        },
+        "preprocessing": "not stated",
+        "samples": 1452,
+        "sampling_period_s": 5.0,
+        "source": {
+          "provenance_document": "provenance.md of the task folder",
+          "recording_names": "not stated",
+          "task_file": "data/train.csv",
+          "working_directory_file": "data/train.csv"
+        },
+        "trajectories": [
+          {
+            "id": "train",
+            "samples": 1452
+          }
+        ],
+        "trajectory_column": null,
+        "version": {
+          "bytes": 105525,
+          "sha256": "a31c845871c427d2a99f02feedf639bffdd9a6539fae46a702df05894083a063"
+        }
+      },
+      {
+        "agent_visible": true,
+        "assignment": "validation",
+        "dataset": "val",
+        "noise": "not stated",
+        "operating_conditions": {
+          "source": "task.yaml, field description",
+          "statement": "not stated per dataset; the task description states the conditions of the recordings as a whole",
+          "task_description": null
+        },
+        "preprocessing": "not stated",
+        "samples": 1454,
+        "sampling_period_s": 5.0,
+        "source": {
+          "provenance_document": "provenance.md of the task folder",
+          "recording_names": "not stated",
+          "task_file": "data/val.csv",
+          "working_directory_file": "data/val.csv"
+        },
+        "trajectories": [
+          {
+            "id": "val",
+            "samples": 1454
+          }
+        ],
+        "trajectory_column": null,
+        "version": {
+          "bytes": 105660,
+          "sha256": "5625cf7dd6ce0106cfa49ff1db6bb7b5eabaa29f8854014d9c8db97d920ce372"
+        }
+      },
+      {
+        "agent_visible": false,
+        "assignment": "test",
+        "dataset": "test-1",
+        "noise": "not stated",
+        "operating_conditions": {
+          "source": "task.yaml, field description",
+          "statement": "not stated per dataset; the task description states the conditions of the recordings as a whole",
+          "task_description": null
+        },
+        "preprocessing": "not stated",
+        "samples": 1210,
+        "sampling_period_s": 5.0,
+        "source": {
+          "provenance_document": "provenance.md of the task folder",
+          "recording_names": "not stated",
+          "task_file": "test/held_out_1.csv",
+          "working_directory_file": null
+        },
+        "trajectories": [
+          {
+            "id": "test-1",
+            "samples": 1210
+          }
+        ],
+        "trajectory_column": null,
+        "version": {
+          "sha256": "6affe841cb8f196503ac9f7df876acf265e35279111473e8e0359c6d24005608"
+        }
+      }
+    ],
+    "format_version": 1,
+    "provenance_document": {
+      "file": "provenance.md",
+      "sha256": "4d2edfa725460080209ada17c094a0a85e6c28082f6145fd6d6defbaa522229f"
+    },
+    "sampling_period_note": null,
+    "sampling_period_s": 5.0,
+    "separation": {
+      "delayed_variables": "not applicable: the task declares no delayed variables",
+      "filtering": "the harness applies no filtering or other preprocessing; the preprocessing of the task authors is stated per dataset, and any filtering by the agent is applied by its own scripts to the data in its working directory, which contain no test data",
+      "per_trajectory_evaluation": "every trajectory and static dataset is evaluated on its own; a simulation starts once per trajectory and the end of one trajectory is never joined to the beginning of another",
+      "sealing": "the 1 sealed test trajectory file(s) are held in the task store and opened only by the evaluation module of the harness; they are never copied into the working directory, and the brief, the execution messages and the results permitted to the agent contain no test value, test trajectory, test-derived plot or failure location on test data; the leak scanner searches the working directory and the transcript for them",
+      "selection": "the agent fits and recommends from the training and validation data only; its recommendation is recorded in the pool file before any test result exists; the ranking on test data is computed afterwards by the harness and is labeled oracle-based selection on test data",
+      "use_of_test_data": "the authors used the test data during the development of the framework and of the tasks; a result of a round after the user has seen test results is labeled test-informed"
+    },
+    "task_id": "task-qtqm",
+    "user_facing": "contains recording names and digests of sealed files; never shown to the agent"
+  },
+  "provenance_file": "provenance.json",
+  "rounds": [
+    {
+      "candidate_files": {
+        "complete": [
+          "cos_power",
+          "gaussian_field",
+          "poly3",
+          "rational2"
+        ],
+        "incomplete": [],
+        "missing": []
+      },
+      "check_report": {
+        "evaluated": [
+          "poly3",
+          "rational2",
+          "cos_power",
+          "gaussian_field"
+        ],
+        "issues": [],
+        "order": [
+          "poly3",
+          "rational2",
+          "cos_power",
+          "gaussian_field"
+        ],
+        "order_from_pool_file": true,
+        "outside_limit": [],
+        "passed": true,
+        "text": "File and expression checks of the candidate files (rules F1 to P1)\nTask task-qtqm (continuous); pool limit 10; training data data/train.csv: 1452 rows in 1 trajectory\n\nPool file models/pool.json: valid (pool version 1, 4 label(s) in the order, recommendation: poly3)\n\nCandidate poly3 (models/poly3.json, position 1 of 4): passed\n  diagnostics: 20 fitted, 4 fixed, 0 tied parameter(s); 0 non-integer numeric literal(s); evaluated on 1452 training rows\nCandidate rational2 (models/rational2.json, position 2 of 4): passed\n  diagnostics: 11 fitted, 4 fixed, 0 tied parameter(s); 0 non-integer numeric literal(s); evaluated on 1452 training rows\nCandidate cos_power (models/cos_power.json, position 3 of 4): passed\n  diagnostics: 8 fitted, 5 fixed, 0 tied parameter(s); 0 non-integer numeric literal(s); evaluated on 1452 training rows\nCandidate gaussian_field (models/gaussian_field.json, position 4 of 4): passed\n  diagnostics: 101 fitted, 6 fixed, 0 tied parameter(s); 0 non-integer numeric literal(s); evaluated on 1452 training rows\n\nSummary: 4 of 4 candidate(s) within the limit passed the file and expression checks (0 outside the limit); pool file: valid; candidates to be evaluated: poly3, rational2, cos_power, gaussian_field; result: PASS (exit status 0).\n"
+      },
+      "consumption": {
+        "cached_input_tokens": 1031224,
+        "checks_s": 0.0,
+        "cost_usd": 2.5206159999999995,
+        "elapsed_s": 1525.4220000000205,
+        "estimated_usage_turns": 0,
+        "evaluation_s": 18.468999999808148,
+        "excess": {
+          "seconds": 0.0,
+          "turns": 0.0,
+          "usd": 0.0
+        },
+        "input_tokens": 1104743,
+        "output_tokens": 29113,
+        "reasoning_tokens": 8344,
+        "turns": 43,
+        "waiting_s": 0.0,
+        "web_search_calls": 2
+      },
+      "correction_used": false,
+      "done_count": 1,
+      "error": null,
+      "evaluated_labels": [
+        "poly3",
+        "rational2",
+        "cos_power",
+        "gaussian_field"
+      ],
+      "evaluation": {
+        "folder": "evaluation/v1",
+        "permitted_file": "evaluation/v1/permitted.json",
+        "report": {
+          "candidates": [
+            {
+              "allowed_violations": [],
+              "checks": {
+                "issues": [],
+                "notes": [],
+                "passed": true
+              },
+              "complexity": {
+                "fitted_parameters": 20,
+                "fixed_parameters": 4,
+                "node_count": 224,
+                "node_count_per_key": {
+                  "dy": 224
+                },
+                "noninteger_literals": 0,
+                "tied_parameters": 0
+              },
+              "excluded_by_requirements": false,
+              "exclusions": [],
+              "expressions": {
+                "dy": "c0*1 + c1*((y-y0)/s0) + c2*(x1/u0) + c3*(x2/v0) + c4*((y-y0)/s0)**2 + c5*((y-y0)/s0)*(x1/u0) + c6*((y-y0)/s0)*(x2/v0) + c7*(x1/u0)**2 + c8*(x1/u0)*(x2/v0) + c9*(x2/v0)**2 + c10*((y-y0)/s0)**3 + c11*((y-y0)/s0)**2*(x1/u0) + c12*((y-y0)/s0)**2*(x2/v0) + c13*((y-y0)/s0)*(x1/u0)**2 + c14*((y-y0)/s0)*(x1/u0)*(x2/v0) + c15*((y-y0)/s0)*(x2/v0)**2 + c16*(x1/u0)**3 + c17*(x1/u0)**2*(x2/v0) + c18*(x1/u0)*(x2/v0)**2 + c19*(x2/v0)**3"
+              },
+              "failed_computations": [],
+              "label": "poly3",
+              "position": 1,
+              "requirements": [],
+              "sealed": {
+                "eligible": true,
+                "failed_computations": [],
+                "failed_numerically": false,
+                "ineligibility": [],
+                "rank": 1,
+                "reference_comparison": null,
+                "score_S": 0.021765581782156908,
+                "test": {
+                  "finished": true,
+                  "group": "test",
+                  "pooled_rmse": 0.021765581782156908,
+                  "scored_samples": 1209,
+                  "trajectories": [
+                    {
+                      "completed_samples": 1209,
+                      "failure": null,
+                      "finished": true,
+                      "group": "test",
+                      "measures": {
+                        "mean": 1.2166959096125278,
+                        "n": 1209,
+                        "nrmse": 0.156183643515471,
+                        "r2": 0.9756066694982323,
+                        "rmse": 0.021765581782156908,
+                        "sse": 0.5727523253317547,
+                        "std": 0.13935890655541586
+                      },
+                      "n_samples": 1210,
+                      "note": null,
+                      "prefix_diagnostic": null,
+                      "required_samples": 1209,
+                      "scoring_interval": [
+                        1,
+                        1210
+                      ],
+                      "trajectory": "test-1"
+                    }
+                  ]
+                }
+              },
+              "sensitivity": {
+                "assumptions": [
+                  "the fitting target is the one implied by the formulation (the model file has no structured field for it)"
+                ],
+                "available": true,
+                "data": [
+                  "train",
+                  "val"
+                ],
+                "deficient": false,
+                "dependent_groups": [],
+                "method": "analytic derivatives (SymPy), ties differentiated through their equations",
+                "parameters": [
+                  "c0",
+                  "c1",
+                  "c2",
+                  "c3",
+                  "c4",
+                  "c5",
+                  "c6",
+                  "c7",
+                  "c8",
+                  "c9",
+                  "c10",
+                  "c11",
+                  "c12",
+                  "c13",
+                  "c14",
+                  "c15",
+                  "c16",
+                  "c17",
+                  "c18",
+                  "c19"
+                ],
+                "rank": 20,
+                "rank_threshold": "s_i / s_1 > 1e-08",
+                "reason": null,
+                "rows": 2906,
+                "rows_dropped": 0,
+                "scaling": "rows of each target divided by the standard deviation of its measured column; columns divided by their Euclidean norm",
+                "singular_values": [
+                  4.107831582986792,
+                  1.4601300134000366,
+                  0.8012610186607999,
+                  0.4640100086452986,
+                  0.2316955014231968,
+                  0.1891900378929271,
+                  0.15111400793427177,
+                  0.1168217996499884,
+                  0.07724511665259956,
+                  0.044793252363144694,
+                  0.029110928566583916,
+                  0.024110890114953716,
+                  0.020990612092787832,
+                  0.016630199249063022,
+                  0.011592522687702899,
+                  0.009386029389769955,
+                  0.008105535564515194,
+                  0.005442624174654177,
+                  0.004040704904756046,
+                  0.0019344894238118345
+                ],
+                "targets": [
+                  "dy"
+                ],
+                "zero_columns": []
+              },
+              "status": "evaluated",
+              "structure": {
+                "dy": "P1 + 0.05*P10*x2 + 0.00083333333333333333*P11*x1*x2 + 0.016666666666666667*P12*x1*(y - 1.0)**2 + 0.016666666666666667*P13*x1*(y - 1.0) + 0.00027777777777777778*P14*x1**2*(y - 1.0) + 0.0025*P15*x2**2*(y - 1.0) + 4.1666666666666667e-5*P16*x1*x2**2 + 0.05*P17*x2*(y - 1.0)**2 + 0.05*P18*x2*(y - 1.0) + 1.3888888888888889e-5*P19*x1**2*x2 + 1.0*P2*(y - 1.0) + 0.00083333333333333333*P20*x1*x2*(y - 1.0) + 1.0*P3*(y - 1.0)**3 + 1.0*P4*(y - 1.0)**2 + 0.000125*P5*x2**3 + 0.016666666666666667*P6*x1 + 0.00027777777777777778*P7*x1**2 + 4.6296296296296296e-6*P8*x1**3 + 0.0025*P9*x2**2"
+              },
+              "structure_group": 1,
+              "unresolved_requirements": [],
+              "visible": {
+                "train": {
+                  "finished": true,
+                  "group": "train",
+                  "pooled_rmse": 0.02332498268327471,
+                  "scored_samples": 1451,
+                  "trajectories": [
+                    {
+                      "completed_samples": 1451,
+                      "failure": null,
+                      "finished": true,
+                      "group": "train",
+                      "measures": {
+                        "mean": 1.298373536846705,
+                        "n": 1451,
+                        "nrmse": 0.08945148404023186,
+                        "r2": 0.9919984320030002,
+                        "rmse": 0.02332498268327471,
+                        "sse": 0.7894235397210193,
+                        "std": 0.2607556815131655
+                      },
+                      "n_samples": 1452,
+                      "note": null,
+                      "prefix_diagnostic": null,
+                      "required_samples": 1451,
+                      "scoring_interval": [
+                        1,
+                        1452
+                      ],
+                      "trajectory": "train"
+                    }
+                  ]
+                },
+                "val": {
+                  "finished": true,
+                  "group": "val",
+                  "pooled_rmse": 0.03337531111782932,
+                  "scored_samples": 1453,
+                  "trajectories": [
+                    {
+                      "completed_samples": 1453,
+                      "failure": null,
+                      "finished": true,
+                      "group": "val",
+                      "measures": {
+                        "mean": 1.306534241456782,
+                        "n": 1453,
+                        "nrmse": 0.12712810268085278,
+                        "r2": 0.9838384455087665,
+                        "rmse": 0.03337531111782932,
+                        "sse": 1.618513252883893,
+                        "std": 0.26253291297531567
+                      },
+                      "n_samples": 1454,
+                      "note": null,
+                      "prefix_diagnostic": null,
+                      "required_samples": 1453,
+                      "scoring_interval": [
+                        1,
+                        1454
+                      ],
+                      "trajectory": "val"
+                    }
+                  ]
+                }
+              },
+              "within_limit": true
+            },
+            {
+              "allowed_violations": [],
+              "checks": {
+                "issues": [],
+                "notes": [],
+                "passed": true
+              },
+              "complexity": {
+                "fitted_parameters": 11,
+                "fixed_parameters": 4,
+                "node_count": 107,
+                "node_count_per_key": {
+                  "dy": 107
+                },
+                "noninteger_literals": 0,
+                "tied_parameters": 0
+              },
+              "excluded_by_requirements": false,
+              "exclusions": [],
+              "expressions": {
+                "dy": "(c0*1 + c1*((y-y0)/s0) + c2*(x1/u0) + c3*(x2/v0) + c4*((y-y0)/s0)**2 + c5*((y-y0)/s0)*(x1/u0) + c6*((y-y0)/s0)*(x2/v0) + c7*(x1/u0)**2 + c8*(x1/u0)*(x2/v0) + c9*(x2/v0)**2)/(1+k*((y-y0)/s0)**2)"
+              },
+              "failed_computations": [],
+              "label": "rational2",
+              "position": 2,
+              "requirements": [],
+              "sealed": {
+                "eligible": true,
+                "failed_computations": [],
+                "failed_numerically": false,
+                "ineligibility": [],
+                "rank": 4,
+                "reference_comparison": null,
+                "score_S": 0.024213814455258213,
+                "test": {
+                  "finished": true,
+                  "group": "test",
+                  "pooled_rmse": 0.024213814455258213,
+                  "scored_samples": 1209,
+                  "trajectories": [
+                    {
+                      "completed_samples": 1209,
+                      "failure": null,
+                      "finished": true,
+                      "group": "test",
+                      "measures": {
+                        "mean": 1.2166959096125278,
+                        "n": 1209,
+                        "nrmse": 0.17375146701247707,
+                        "r2": 0.9698104277110121,
+                        "rmse": 0.024213814455258213,
+                        "sse": 0.708847351862669,
+                        "std": 0.13935890655541586
+                      },
+                      "n_samples": 1210,
+                      "note": null,
+                      "prefix_diagnostic": null,
+                      "required_samples": 1209,
+                      "scoring_interval": [
+                        1,
+                        1210
+                      ],
+                      "trajectory": "test-1"
+                    }
+                  ]
+                }
+              },
+              "sensitivity": {
+                "assumptions": [
+                  "the fitting target is the one implied by the formulation (the model file has no structured field for it)"
+                ],
+                "available": true,
+                "data": [
+                  "train",
+                  "val"
+                ],
+                "deficient": false,
+                "dependent_groups": [],
+                "method": "analytic derivatives (SymPy), ties differentiated through their equations",
+                "parameters": [
+                  "c0",
+                  "c1",
+                  "c2",
+                  "c3",
+                  "c4",
+                  "c5",
+                  "c6",
+                  "c7",
+                  "c8",
+                  "c9",
+                  "k"
+                ],
+                "rank": 11,
+                "rank_threshold": "s_i / s_1 > 1e-08",
+                "reason": null,
+                "rows": 2906,
+                "rows_dropped": 0,
+                "scaling": "rows of each target divided by the standard deviation of its measured column; columns divided by their Euclidean norm",
+                "singular_values": [
+                  2.9115616740158603,
+                  1.035778202279754,
+                  0.9744806536649778,
+                  0.6000405272027892,
+                  0.31096376802376874,
+                  0.1419494029643237,
+                  0.10262027514175594,
+                  0.09777502548994108,
+                  0.040182056170544544,
+                  0.039474123062232996,
+                  0.014113004504083352
+                ],
+                "targets": [
+                  "dy"
+                ],
+                "zero_columns": []
+              },
+              "status": "evaluated",
+              "structure": {
+                "dy": "(0.016666666666666667*P10*x1*(y - 1.0) + 0.05*P11*x2*(y - 1.0) + P2 + 1.0*P3*(y - 1.0) + 1.0*P4*(y - 1.0)**2 + 0.016666666666666667*P5*x1 + 0.00027777777777777778*P6*x1**2 + 0.0025*P7*x2**2 + 0.05*P8*x2 + 0.00083333333333333333*P9*x1*x2)/(1.0*P1*(y - 1.0)**2 + 1)"
+              },
+              "structure_group": 2,
+              "unresolved_requirements": [],
+              "visible": {
+                "train": {
+                  "finished": true,
+                  "group": "train",
+                  "pooled_rmse": 0.025472387944329135,
+                  "scored_samples": 1451,
+                  "trajectories": [
+                    {
+                      "completed_samples": 1451,
+                      "failure": null,
+                      "finished": true,
+                      "group": "train",
+                      "measures": {
+                        "mean": 1.298373536846705,
+                        "n": 1451,
+                        "nrmse": 0.09768679936909845,
+                        "r2": 0.9904572892290215,
+                        "rmse": 0.025472387944329135,
+                        "sse": 0.9414705365478726,
+                        "std": 0.2607556815131655
+                      },
+                      "n_samples": 1452,
+                      "note": null,
+                      "prefix_diagnostic": null,
+                      "required_samples": 1451,
+                      "scoring_interval": [
+                        1,
+                        1452
+                      ],
+                      "trajectory": "train"
+                    }
+                  ]
+                },
+                "val": {
+                  "finished": true,
+                  "group": "val",
+                  "pooled_rmse": 0.03643019421052238,
+                  "scored_samples": 1453,
+                  "trajectories": [
+                    {
+                      "completed_samples": 1453,
+                      "failure": null,
+                      "finished": true,
+                      "group": "val",
+                      "measures": {
+                        "mean": 1.306534241456782,
+                        "n": 1453,
+                        "nrmse": 0.13876429358001177,
+                        "r2": 0.9807444708272403,
+                        "rmse": 0.03643019421052238,
+                        "sse": 1.9283620999643982,
+                        "std": 0.26253291297531567
+                      },
+                      "n_samples": 1454,
+                      "note": null,
+                      "prefix_diagnostic": null,
+                      "required_samples": 1453,
+                      "scoring_interval": [
+                        1,
+                        1454
+                      ],
+                      "trajectory": "val"
+                    }
+                  ]
+                }
+              },
+              "within_limit": true
+            },
+            {
+              "allowed_violations": [],
+              "checks": {
+                "issues": [],
+                "notes": [],
+                "passed": true
+              },
+              "complexity": {
+                "fitted_parameters": 8,
+                "fixed_parameters": 5,
+                "node_count": 59,
+                "node_count_per_key": {
+                  "dy": 59
+                },
+                "noninteger_literals": 0,
+                "tied_parameters": 0
+              },
+              "excluded_by_requirements": false,
+              "exclusions": [],
+              "expressions": {
+                "dy": "b0+b1*Max(x2/v0,floor)**q-(d0+d1*Max(cos(pi*x1/a0),floor)**r)*((y-h)/s0)*(((y-h)/s0)**2+eps**2)**((p-1)/2)"
+              },
+              "failed_computations": [],
+              "label": "cos_power",
+              "position": 3,
+              "requirements": [],
+              "sealed": {
+                "eligible": true,
+                "failed_computations": [],
+                "failed_numerically": false,
+                "ineligibility": [],
+                "rank": 3,
+                "reference_comparison": null,
+                "score_S": 0.022775933634641223,
+                "test": {
+                  "finished": true,
+                  "group": "test",
+                  "pooled_rmse": 0.022775933634641223,
+                  "scored_samples": 1209,
+                  "trajectories": [
+                    {
+                      "completed_samples": 1209,
+                      "failure": null,
+                      "finished": true,
+                      "group": "test",
+                      "measures": {
+                        "mean": 1.2166959096125278,
+                        "n": 1209,
+                        "nrmse": 0.1634336419365088,
+                        "r2": 0.9732894446833691,
+                        "rmse": 0.022775933634641223,
+                        "sse": 0.627160471891864,
+                        "std": 0.13935890655541586
+                      },
+                      "n_samples": 1210,
+                      "note": null,
+                      "prefix_diagnostic": null,
+                      "required_samples": 1209,
+                      "scoring_interval": [
+                        1,
+                        1210
+                      ],
+                      "trajectory": "test-1"
+                    }
+                  ]
+                }
+              },
+              "sensitivity": {
+                "assumptions": [
+                  "the fitting target is the one implied by the formulation (the model file has no structured field for it)"
+                ],
+                "available": true,
+                "data": [
+                  "train",
+                  "val"
+                ],
+                "deficient": false,
+                "dependent_groups": [],
+                "method": "analytic derivatives (SymPy), ties differentiated through their equations",
+                "parameters": [
+                  "b0",
+                  "b1",
+                  "d0",
+                  "d1",
+                  "h",
+                  "p",
+                  "q",
+                  "r"
+                ],
+                "rank": 8,
+                "rank_threshold": "s_i / s_1 > 1e-08",
+                "reason": null,
+                "rows": 2906,
+                "rows_dropped": 0,
+                "scaling": "rows of each target divided by the standard deviation of its measured column; columns divided by their Euclidean norm",
+                "singular_values": [
+                  2.3919654342773384,
+                  1.2242391496450746,
+                  0.7080636887313696,
+                  0.44583938389977756,
+                  0.23709711694465926,
+                  0.13192684191253307,
+                  0.061388437704921264,
+                  0.04716616794278784
+                ],
+                "targets": [
+                  "dy"
+                ],
+                "zero_columns": []
+              },
+              "status": "evaluated",
+              "structure": {
+                "dy": "P1 + P2*Max(9.9999999999999998e-13, 0.05*x2)**P3 - 1.0*(-P4 + y)*(P6 + P7*Max(9.9999999999999998e-13, cos(0.0055555555555555556*pi*x1))**P8)*(1.0*(-P4 + y)**2 + 0.0025000000000000003)**(P5/2 - 1/2)"
+              },
+              "structure_group": 3,
+              "unresolved_requirements": [],
+              "visible": {
+                "train": {
+                  "finished": true,
+                  "group": "train",
+                  "pooled_rmse": 0.02404004643285199,
+                  "scored_samples": 1451,
+                  "trajectories": [
+                    {
+                      "completed_samples": 1451,
+                      "failure": null,
+                      "finished": true,
+                      "group": "train",
+                      "measures": {
+                        "mean": 1.298373536846705,
+                        "n": 1451,
+                        "nrmse": 0.09219375889855044,
+                        "r2": 0.991500310820156,
+                        "rmse": 0.02404004643285199,
+                        "sse": 0.8385674809483292,
+                        "std": 0.2607556815131655
+                      },
+                      "n_samples": 1452,
+                      "note": null,
+                      "prefix_diagnostic": null,
+                      "required_samples": 1451,
+                      "scoring_interval": [
+                        1,
+                        1452
+                      ],
+                      "trajectory": "train"
+                    }
+                  ]
+                },
+                "val": {
+                  "finished": true,
+                  "group": "val",
+                  "pooled_rmse": 0.038550403446362375,
+                  "scored_samples": 1453,
+                  "trajectories": [
+                    {
+                      "completed_samples": 1453,
+                      "failure": null,
+                      "finished": true,
+                      "group": "val",
+                      "measures": {
+                        "mean": 1.306534241456782,
+                        "n": 1453,
+                        "nrmse": 0.1468402685570591,
+                        "r2": 0.9784379355300907,
+                        "rmse": 0.038550403446362375,
+                        "sse": 2.1593521293397284,
+                        "std": 0.26253291297531567
+                      },
+                      "n_samples": 1454,
+                      "note": null,
+                      "prefix_diagnostic": null,
+                      "required_samples": 1453,
+                      "scoring_interval": [
+                        1,
+                        1454
+                      ],
+                      "trajectory": "val"
+                    }
+                  ]
+                }
+              },
+              "within_limit": true
+            },
+            {
+              "allowed_violations": [],
+              "checks": {
+                "issues": [],
+                "notes": [],
+                "passed": true
+              },
+              "complexity": {
+                "fitted_parameters": 101,
+                "fixed_parameters": 6,
+                "node_count": 1536,
+                "node_count_per_key": {
+                  "dy": 1536
+                },
+                "noninteger_literals": 0,
+                "tied_parameters": 0
+              },
+              "excluded_by_requirements": false,
+              "exclusions": [],
+              "expressions": {
+                "dy": "a0*1 + a1*((y-y0)/s0) + a2*(x1/u0) + a3*(x2/v0) + w0*exp(-((((y-y0)/s0)/sy-my0)**2+((x1/u0-1)*three-mu0)**2+((x2/v0-1)*three-mv0)**2)/(2*ell**2)) + w1*exp(-((((y-y0)/s0)/sy-my1)**2+((x1/u0-1)*three-mu1)**2+((x2/v0-1)*three-mv1)**2)/(2*ell**2)) + w2*exp(-((((y-y0)/s0)/sy-my2)**2+((x1/u0-1)*three-mu2)**2+((x2/v0-1)*three-mv2)**2)/(2*ell**2)) + w3*exp(-((((y-y0)/s0)/sy-my3)**2+((x1/u0-1)*three-mu3)**2+((x2/v0-1)*three-mv3)**2)/(2*ell**2)) + w4*exp(-((((y-y0)/s0)/sy-my4)**2+((x1/u0-1)*three-mu4)**2+((x2/v0-1)*three-mv4)**2)/(2*ell**2)) + w5*exp(-((((y-y0)/s0)/sy-my5)**2+((x1/u0-1)*three-mu5)**2+((x2/v0-1)*three-mv5)**2)/(2*ell**2)) + w6*exp(-((((y-y0)/s0)/sy-my6)**2+((x1/u0-1)*three-mu6)**2+((x2/v0-1)*three-mv6)**2)/(2*ell**2)) + w7*exp(-((((y-y0)/s0)/sy-my7)**2+((x1/u0-1)*three-mu7)**2+((x2/v0-1)*three-mv7)**2)/(2*ell**2)) + w8*exp(-((((y-y0)/s0)/sy-my8)**2+((x1/u0-1)*three-mu8)**2+((x2/v0-1)*three-mv8)**2)/(2*ell**2)) + w9*exp(-((((y-y0)/s0)/sy-my9)**2+((x1/u0-1)*three-mu9)**2+((x2/v0-1)*three-mv9)**2)/(2*ell**2)) + w10*exp(-((((y-y0)/s0)/sy-my10)**2+((x1/u0-1)*three-mu10)**2+((x2/v0-1)*three-mv10)**2)/(2*ell**2)) + w11*exp(-((((y-y0)/s0)/sy-my11)**2+((x1/u0-1)*three-mu11)**2+((x2/v0-1)*three-mv11)**2)/(2*ell**2)) + w12*exp(-((((y-y0)/s0)/sy-my12)**2+((x1/u0-1)*three-mu12)**2+((x2/v0-1)*three-mv12)**2)/(2*ell**2)) + w13*exp(-((((y-y0)/s0)/sy-my13)**2+((x1/u0-1)*three-mu13)**2+((x2/v0-1)*three-mv13)**2)/(2*ell**2)) + w14*exp(-((((y-y0)/s0)/sy-my14)**2+((x1/u0-1)*three-mu14)**2+((x2/v0-1)*three-mv14)**2)/(2*ell**2)) + w15*exp(-((((y-y0)/s0)/sy-my15)**2+((x1/u0-1)*three-mu15)**2+((x2/v0-1)*three-mv15)**2)/(2*ell**2)) + w16*exp(-((((y-y0)/s0)/sy-my16)**2+((x1/u0-1)*three-mu16)**2+((x2/v0-1)*three-mv16)**2)/(2*ell**2)) + w17*exp(-((((y-y0)/s0)/sy-my17)**2+((x1/u0-1)*three-mu17)**2+((x2/v0-1)*three-mv17)**2)/(2*ell**2)) + w18*exp(-((((y-y0)/s0)/sy-my18)**2+((x1/u0-1)*three-mu18)**2+((x2/v0-1)*three-mv18)**2)/(2*ell**2)) + w19*exp(-((((y-y0)/s0)/sy-my19)**2+((x1/u0-1)*three-mu19)**2+((x2/v0-1)*three-mv19)**2)/(2*ell**2)) + w20*exp(-((((y-y0)/s0)/sy-my20)**2+((x1/u0-1)*three-mu20)**2+((x2/v0-1)*three-mv20)**2)/(2*ell**2)) + w21*exp(-((((y-y0)/s0)/sy-my21)**2+((x1/u0-1)*three-mu21)**2+((x2/v0-1)*three-mv21)**2)/(2*ell**2)) + w22*exp(-((((y-y0)/s0)/sy-my22)**2+((x1/u0-1)*three-mu22)**2+((x2/v0-1)*three-mv22)**2)/(2*ell**2)) + w23*exp(-((((y-y0)/s0)/sy-my23)**2+((x1/u0-1)*three-mu23)**2+((x2/v0-1)*three-mv23)**2)/(2*ell**2))"
+              },
+              "failed_computations": [],
+              "label": "gaussian_field",
+              "position": 4,
+              "requirements": [],
+              "sealed": {
+                "eligible": true,
+                "failed_computations": [],
+                "failed_numerically": false,
+                "ineligibility": [],
+                "rank": 2,
+                "reference_comparison": null,
+                "score_S": 0.022533258601614137,
+                "test": {
+                  "finished": true,
+                  "group": "test",
+                  "pooled_rmse": 0.022533258601614137,
+                  "scored_samples": 1209,
+                  "trajectories": [
+                    {
+                      "completed_samples": 1209,
+                      "failure": null,
+                      "finished": true,
+                      "group": "test",
+                      "measures": {
+                        "mean": 1.2166959096125278,
+                        "n": 1209,
+                        "nrmse": 0.16169227470691888,
+                        "r2": 0.9738556083001023,
+                        "rmse": 0.022533258601614137,
+                        "sse": 0.6138670215375259,
+                        "std": 0.13935890655541586
+                      },
+                      "n_samples": 1210,
+                      "note": null,
+                      "prefix_diagnostic": null,
+                      "required_samples": 1209,
+                      "scoring_interval": [
+                        1,
+                        1210
+                      ],
+                      "trajectory": "test-1"
+                    }
+                  ]
+                }
+              },
+              "sensitivity": {
+                "assumptions": [
+                  "the fitting target is the one implied by the formulation (the model file has no structured field for it)"
+                ],
+                "available": true,
+                "data": [
+                  "train",
+                  "val"
+                ],
+                "deficient": true,
+                "dependent_groups": [
+                  {
+                    "components": {
+                      "mu8": 0.1118984729244894,
+                      "mv0": 0.11744330388185244,
+                      "mv14": 0.1096697859617948,
+                      "mv2": 0.11592430056182616,
+                      "mv4": 0.1527986783102105,
+                      "my12": -0.11840410041517611,
+                      "my14": 0.15168500040110983,
+                      "w0": 0.3939093168228395,
+                      "w11": 0.22295346082283912,
+                      "w17": 0.11350247396571407,
+                      "w19": 0.31811949421261076,
+                      "w22": -0.1594837262107136,
+                      "w3": -0.2945568786600084,
+                      "w4": -0.48573471217364145,
+                      "w5": -0.15797044595728885,
+                      "w7": 0.26184743739534355,
+                      "w9": -0.11857793728014578
+                    },
+                    "parameters": [
+                      "mv0",
+                      "w0",
+                      "mv2",
+                      "w3",
+                      "mv4",
+                      "w4",
+                      "w5",
+                      "w7",
+                      "mu8",
+                      "w9",
+                      "w11",
+                      "my12",
+                      "my14",
+                      "mv14",
+                      "w17",
+                      "w19",
+                      "w22"
+                    ],
+                    "relative": 7.457646330399932e-09,
+                    "singular_value": 5.602799054823136e-08
+                  },
+                  {
+                    "components": {
+                      "mu13": -0.13610324050894868,
+                      "mu16": 0.10036306739482177,
+                      "mu21": -0.180602111565614,
+                      "mv13": -0.14299796909534251,
+                      "mv16": 0.13718480943060324,
+                      "w10": 0.17634421333594322,
+                      "w12": -0.10793907318554714,
+                      "w13": 0.12399492593297927,
+                      "w15": 0.42658525986449997,
+                      "w18": -0.2006804790512669,
+                      "w2": 0.18524430649766813,
+                      "w22": 0.16093744392086917,
+                      "w3": -0.5702989878303786,
+                      "w4": 0.14958262606563155,
+                      "w6": -0.2801308048987014,
+                      "w7": -0.13767528872264728
+                    },
+                    "parameters": [
+                      "w2",
+                      "w3",
+                      "w4",
+                      "w6",
+                      "w7",
+                      "w10",
+                      "w12",
+                      "mu13",
+                      "mv13",
+                      "w13",
+                      "w15",
+                      "mu16",
+                      "mv16",
+                      "w18",
+                      "mu21",
+                      "w22"
+                    ],
+                    "relative": 4.78102827879761e-09,
+                    "singular_value": 3.591902798116925e-08
+                  },
+                  {
+                    "components": {
+                      "mv1": 0.1905471257696241,
+                      "w1": -0.18761351644622273,
+                      "w11": 0.1451327719011903,
+                      "w12": 0.24305185204144378,
+                      "w13": -0.3619773458493943,
+                      "w15": -0.20793057370215712,
+                      "w16": 0.20892980688091306,
+                      "w17": -0.4029400696752049,
+                      "w19": 0.21312846738890975,
+                      "w21": -0.33013581235743,
+                      "w3": -0.20993692339233197,
+                      "w4": 0.3203174859396124,
+                      "w6": 0.2487677548802692
+                    },
+                    "parameters": [
+                      "mv1",
+                      "w1",
+                      "w3",
+                      "w4",
+                      "w6",
+                      "w11",
+                      "w12",
+                      "w13",
+                      "w15",
+                      "w16",
+                      "w17",
+                      "w19",
+                      "w21"
+                    ],
+                    "relative": 3.717218824516943e-09,
+                    "singular_value": 2.7926813895259383e-08
+                  },
+                  {
+                    "components": {
+                      "mu13": -0.1275712391555848,
+                      "mu8": -0.1234869584638751,
+                      "mv2": -0.15660857134602613,
+                      "mv21": 0.13417423207875107,
+                      "w0": 0.4829758484317185,
+                      "w11": -0.3266685572435295,
+                      "w12": 0.5741135030439504,
+                      "w16": -0.17969600230339058,
+                      "w21": -0.10545194949629508,
+                      "w22": -0.10166096880654373,
+                      "w23": 0.13229611072275763,
+                      "w6": -0.29541153305487483,
+                      "w8": -0.10216082883098904
+                    },
+                    "parameters": [
+                      "w0",
+                      "mv2",
+                      "w6",
+                      "mu8",
+                      "w8",
+                      "w11",
+                      "w12",
+                      "mu13",
+                      "w16",
+                      "mv21",
+                      "w21",
+                      "w22",
+                      "w23"
+                    ],
+                    "relative": 3.367074081380744e-09,
+                    "singular_value": 2.5296237773812256e-08
+                  },
+                  {
+                    "components": {
+                      "mu0": 0.12810091965597278,
+                      "mu13": 0.17272155304557993,
+                      "mu21": 0.15447800688738142,
+                      "mv1": -0.13916233211457502,
+                      "mv21": -0.11018586156454388,
+                      "mv8": -0.1782550251363416,
+                      "w0": 0.3130092008069925,
+                      "w10": 0.18952832684639115,
+                      "w11": -0.10309136285610271,
+                      "w12": -0.31586085679436365,
+                      "w14": 0.2909084443516338,
+                      "w15": 0.17841688625594032,
+                      "w17": -0.4144256716473701,
+                      "w18": -0.2291265378609965,
+                      "w2": 0.18935419485278882,
+                      "w3": 0.26468226283257223,
+                      "w5": -0.2575138518857575,
+                      "w8": 0.14973982185630588
+                    },
+                    "parameters": [
+                      "mu0",
+                      "w0",
+                      "mv1",
+                      "w2",
+                      "w3",
+                      "w5",
+                      "mv8",
+                      "w8",
+                      "w10",
+                      "w11",
+                      "w12",
+                      "mu13",
+                      "w14",
+                      "w15",
+                      "w17",
+                      "w18",
+                      "mu21",
+                      "mv21"
+                    ],
+                    "relative": 2.7280979693486817e-09,
+                    "singular_value": 2.0495722171517916e-08
+                  },
+                  {
+                    "components": {
+                      "mv2": 0.19839099035021576,
+                      "mv21": -0.14996626650088724,
+                      "mv8": -0.118156420199338,
+                      "w11": 0.491666399651086,
+                      "w12": 0.2583826759243185,
+                      "w14": -0.39698607876730735,
+                      "w15": 0.1843024316811237,
+                      "w17": -0.14988903453471913,
+                      "w2": -0.1361439026604415,
+                      "w21": 0.20328130789402157,
+                      "w23": -0.18049023149176344,
+                      "w3": 0.20835327625742253,
+                      "w4": 0.12700158383039756,
+                      "w5": -0.2580573794423414,
+                      "w6": -0.3104879440667811
+                    },
+                    "parameters": [
+                      "mv2",
+                      "w2",
+                      "w3",
+                      "w4",
+                      "w5",
+                      "w6",
+                      "mv8",
+                      "w11",
+                      "w12",
+                      "w14",
+                      "w15",
+                      "w17",
+                      "mv21",
+                      "w21",
+                      "w23"
+                    ],
+                    "relative": 2.4600030157808474e-09,
+                    "singular_value": 1.848157174669861e-08
+                  },
+                  {
+                    "components": {
+                      "w0": 0.27049403890458334,
+                      "w10": -0.24662136821192737,
+                      "w12": -0.15633994900308726,
+                      "w14": -0.21978068803774084,
+                      "w15": 0.2736123741068426,
+                      "w16": -0.12489851740837593,
+                      "w17": -0.3351574796590573,
+                      "w18": 0.13449107422464174,
+                      "w2": -0.2346658248183895,
+                      "w21": 0.347019463183525,
+                      "w6": 0.5345477558583269,
+                      "w8": -0.18406119637826648
+                    },
+                    "parameters": [
+                      "w0",
+                      "w2",
+                      "w6",
+                      "w8",
+                      "w10",
+                      "w12",
+                      "w14",
+                      "w15",
+                      "w16",
+                      "w17",
+                      "w18",
+                      "w21"
+                    ],
+                    "relative": 1.6653118299564446e-09,
+                    "singular_value": 1.2511196071114024e-08
+                  },
+                  {
+                    "components": {
+                      "mu13": -0.10448566419641181,
+                      "mv1": -0.10293125334614499,
+                      "w0": 0.11559017542785929,
+                      "w1": 0.26127837867466225,
+                      "w10": 0.10872141859556778,
+                      "w11": -0.13527855963117466,
+                      "w12": -0.24883933490754942,
+                      "w13": 0.17570372407614332,
+                      "w14": -0.4329571778873002,
+                      "w15": -0.46524901577858,
+                      "w17": -0.24062156198854312,
+                      "w18": 0.37378452122791817,
+                      "w2": 0.16591584308992638,
+                      "w4": 0.18079623179957025,
+                      "w6": -0.21709199400291948,
+                      "w8": 0.14413814347421441
+                    },
+                    "parameters": [
+                      "w0",
+                      "mv1",
+                      "w1",
+                      "w2",
+                      "w4",
+                      "w6",
+                      "w8",
+                      "w10",
+                      "w11",
+                      "w12",
+                      "mu13",
+                      "w13",
+                      "w14",
+                      "w15",
+                      "w17",
+                      "w18"
+                    ],
+                    "relative": 1.2810155314298054e-09,
+                    "singular_value": 9.624045296237285e-09
+                  },
+                  {
+                    "components": {
+                      "w1": 0.2190910350474916,
+                      "w10": 0.11133762690920442,
+                      "w11": -0.17545086498580723,
+                      "w13": -0.20740176973675156,
+                      "w14": -0.43752332225232465,
+                      "w15": 0.4231126070775838,
+                      "w16": 0.27919804825122296,
+                      "w17": 0.16988608599259752,
+                      "w2": 0.12602198753647406,
+                      "w21": -0.4650256471463756,
+                      "w3": 0.1723462908931964,
+                      "w4": -0.10860107734252422,
+                      "w5": -0.18962596175179133,
+                      "w6": 0.17413493011335904
+                    },
+                    "parameters": [
+                      "w1",
+                      "w2",
+                      "w3",
+                      "w4",
+                      "w5",
+                      "w6",
+                      "w10",
+                      "w11",
+                      "w13",
+                      "w14",
+                      "w15",
+                      "w16",
+                      "w17",
+                      "w21"
+                    ],
+                    "relative": 1.0476993231688697e-09,
+                    "singular_value": 7.871181492827093e-09
+                  },
+                  {
+                    "components": {
+                      "w10": 0.2828625520319001,
+                      "w11": 0.1402822816482759,
+                      "w13": 0.22181783685372924,
+                      "w14": -0.3238370529275023,
+                      "w15": -0.23480812516014812,
+                      "w16": -0.3672601670529469,
+                      "w18": -0.5318083171079324,
+                      "w2": 0.2241095227374561,
+                      "w21": -0.10117642899347748,
+                      "w6": 0.3951117280641474
+                    },
+                    "parameters": [
+                      "w2",
+                      "w6",
+                      "w10",
+                      "w11",
+                      "w13",
+                      "w14",
+                      "w15",
+                      "w16",
+                      "w18",
+                      "w21"
+                    ],
+                    "relative": 7.272248198965157e-10,
+                    "singular_value": 5.463512686235981e-09
+                  },
+                  {
+                    "components": {
+                      "w1": 0.3639857040738489,
+                      "w11": 0.18481401706333703,
+                      "w14": 0.2181161114397869,
+                      "w15": 0.13967619153417837,
+                      "w16": -0.6125254164665185,
+                      "w18": 0.39742370501811547,
+                      "w21": -0.3747536434807565,
+                      "w8": -0.1320215347070253
+                    },
+                    "parameters": [
+                      "w1",
+                      "w8",
+                      "w11",
+                      "w14",
+                      "w15",
+                      "w16",
+                      "w18",
+                      "w21"
+                    ],
+                    "relative": 5.715130275001384e-10,
+                    "singular_value": 4.293677265498814e-09
+                  },
+                  {
+                    "components": {
+                      "mv10": 0.11111259996035652,
+                      "w1": 0.5239687980978037,
+                      "w10": -0.22875488204392497,
+                      "w12": 0.10431090052189644,
+                      "w13": 0.3846643716610682,
+                      "w14": 0.10745857238793716,
+                      "w16": 0.34945862707389697,
+                      "w17": -0.13375203556924853,
+                      "w18": -0.28916911360823,
+                      "w2": -0.3337694359202073,
+                      "w21": -0.21390047866862533,
+                      "w8": -0.25184740321073756
+                    },
+                    "parameters": [
+                      "w1",
+                      "w2",
+                      "w8",
+                      "mv10",
+                      "w10",
+                      "w12",
+                      "w13",
+                      "w14",
+                      "w16",
+                      "w17",
+                      "w18",
+                      "w21"
+                    ],
+                    "relative": 3.131861556168401e-10,
+                    "singular_value": 2.352912727331792e-09
+                  },
+                  {
+                    "components": {
+                      "w1": 0.5615039253295375,
+                      "w13": -0.6446664729805215,
+                      "w15": -0.10078850730102688,
+                      "w18": -0.28336190034490116,
+                      "w21": 0.33260377255810575,
+                      "w8": 0.17136515897378665
+                    },
+                    "parameters": [
+                      "w1",
+                      "w8",
+                      "w13",
+                      "w15",
+                      "w18",
+                      "w21"
+                    ],
+                    "relative": 1.462462218849077e-10,
+                    "singular_value": 1.0987222475382179e-09
+                  },
+                  {
+                    "components": {
+                      "w10": -0.5119369460099642,
+                      "w13": 0.17329838616937968,
+                      "w16": -0.1935483332273509,
+                      "w21": -0.17171255232306143,
+                      "w8": 0.7774147081473158
+                    },
+                    "parameters": [
+                      "w8",
+                      "w10",
+                      "w13",
+                      "w16",
+                      "w21"
+                    ],
+                    "relative": 7.550493854374581e-11,
+                    "singular_value": 5.672553773204899e-10
+                  },
+                  {
+                    "components": {
+                      "mv8": -0.1360949763614263,
+                      "w10": -0.6004573237446802,
+                      "w2": 0.7009497358647772,
+                      "w8": -0.3263242696933753
+                    },
+                    "parameters": [
+                      "w2",
+                      "mv8",
+                      "w8",
+                      "w10"
+                    ],
+                    "relative": 2.2594174707749567e-11,
+                    "singular_value": 1.697460768299794e-10
+                  }
+                ],
+                "method": "analytic derivatives (SymPy), ties differentiated through their equations",
+                "parameters": [
+                  "ell",
+                  "a0",
+                  "a1",
+                  "a2",
+                  "a3",
+                  "my0",
+                  "mu0",
+                  "mv0",
+                  "w0",
+                  "my1",
+                  "mu1",
+                  "mv1",
+                  "w1",
+                  "my2",
+                  "mu2",
+                  "mv2",
+                  "w2",
+                  "my3",
+                  "mu3",
+                  "mv3",
+                  "w3",
+                  "my4",
+                  "mu4",
+                  "mv4",
+                  "w4",
+                  "my5",
+                  "mu5",
+                  "mv5",
+                  "w5",
+                  "my6",
+                  "mu6",
+                  "mv6",
+                  "w6",
+                  "my7",
+                  "mu7",
+                  "mv7",
+                  "w7",
+                  "my8",
+                  "mu8",
+                  "mv8",
+                  "w8",
+                  "my9",
+                  "mu9",
+                  "mv9",
+                  "w9",
+                  "my10",
+                  "mu10",
+                  "mv10",
+                  "w10",
+                  "my11",
+                  "mu11",
+                  "mv11",
+                  "w11",
+                  "my12",
+                  "mu12",
+                  "mv12",
+                  "w12",
+                  "my13",
+                  "mu13",
+                  "mv13",
+                  "w13",
+                  "my14",
+                  "mu14",
+                  "mv14",
+                  "w14",
+                  "my15",
+                  "mu15",
+                  "mv15",
+                  "w15",
+                  "my16",
+                  "mu16",
+                  "mv16",
+                  "w16",
+                  "my17",
+                  "mu17",
+                  "mv17",
+                  "w17",
+                  "my18",
+                  "mu18",
+                  "mv18",
+                  "w18",
+                  "my19",
+                  "mu19",
+                  "mv19",
+                  "w19",
+                  "my20",
+                  "mu20",
+                  "mv20",
+                  "w20",
+                  "my21",
+                  "mu21",
+                  "mv21",
+                  "w21",
+                  "my22",
+                  "mu22",
+                  "mv22",
+                  "w22",
+                  "my23",
+                  "mu23",
+                  "mv23",
+                  "w23"
+                ],
+                "rank": 86,
+                "rank_threshold": "s_i / s_1 > 1e-08",
+                "reason": null,
+                "rows": 2906,
+                "rows_dropped": 0,
+                "scaling": "rows of each target divided by the standard deviation of its measured column; columns divided by their Euclidean norm",
+                "singular_values": [
+                  7.512824833197305,
+                  4.736944255088507,
+                  3.606944221086401,
+                  2.204979503002063,
+                  1.3223751107891768,
+                  1.0569244149771593,
+                  0.7911443493114979,
+                  0.5867746243418955,
+                  0.39369156428908025,
+                  0.3152648638763717,
+                  0.2486497019976803,
+                  0.16876806940563954,
+                  0.14898716886153016,
+                  0.1328798853576644,
+                  0.1039605984589253,
+                  0.08415374080719794,
+                  0.049181324258431046,
+                  0.041610822360913055,
+                  0.037120030834986856,
+                  0.02907676041146698,
+                  0.025736411496645923,
+                  0.019951351164438944,
+                  0.017202419087775145,
+                  0.015581166140198362,
+                  0.012219438548081487,
+                  0.009492539396248703,
+                  0.008751034175363954,
+                  0.006711477585550235,
+                  0.005087166570237539,
+                  0.004550469881991177,
+                  0.0037063924424671863,
+                  0.0028417170287226294,
+                  0.0023957189610112465,
+                  0.002199325950132465,
+                  0.0019103788575688915,
+                  0.0014516812221916598,
+                  0.0013017852553531327,
+                  0.0010663623554474035,
+                  0.0008800783040582452,
+                  0.0006622926746273702,
+                  0.0005970256817983286,
+                  0.00046170033552110943,
+                  0.000429210009490092,
+                  0.00036728574910360376,
+                  0.0002950203375298874,
+                  0.0002440681063891123,
+                  0.00017798936020144395,
+                  0.00016649374697228018,
+                  0.00013063630133092451,
+                  0.0001137112512604374,
+                  0.0001106155219941002,
+                  8.92676986178373e-05,
+                  6.519487280950303e-05,
+                  5.234742995329361e-05,
+                  4.816940159766158e-05,
+                  4.091460412118815e-05,
+                  3.404382097433188e-05,
+                  2.604029725783727e-05,
+                  2.3975227717998887e-05,
+                  1.6947346975683945e-05,
+                  1.632887652811854e-05,
+                  1.1854925234467926e-05,
+                  1.0184706558116149e-05,
+                  7.780459106450585e-06,
+                  7.512429334505005e-06,
+                  5.30622772111442e-06,
+                  3.7051086390274875e-06,
+                  3.467864205494409e-06,
+                  2.665877960313487e-06,
+                  2.23325854042132e-06,
+                  2.0034455047328784e-06,
+                  1.3596957326229545e-06,
+                  1.1034102984762233e-06,
+                  1.0137382447994392e-06,
+                  7.335534067598867e-07,
+                  7.141153719257889e-07,
+                  5.294484367167654e-07,
+                  4.788678689408012e-07,
+                  4.1282064746061316e-07,
+                  3.05856319996338e-07,
+                  2.167761043652951e-07,
+                  1.9419658695114395e-07,
+                  1.3497603768080343e-07,
+                  1.0807657708832192e-07,
+                  8.729467614283501e-08,
+                  8.144121484270347e-08,
+                  5.602799054823136e-08,
+                  3.591902798116925e-08,
+                  2.7926813895259383e-08,
+                  2.5296237773812256e-08,
+                  2.0495722171517916e-08,
+                  1.848157174669861e-08,
+                  1.2511196071114024e-08,
+                  9.624045296237285e-09,
+                  7.871181492827093e-09,
+                  5.463512686235981e-09,
+                  4.293677265498814e-09,
+                  2.352912727331792e-09,
+                  1.0987222475382179e-09,
+                  5.672553773204899e-10,
+                  1.697460768299794e-10
+                ],
+                "targets": [
+                  "dy"
+                ],
+                "zero_columns": []
+              },
+              "status": "evaluated",
+              "structure": {
+                "dy": "P1 + 0.016666666666666667*P100*x1 + 0.05*P101*x2 + P11*exp((-(-P12 + 0.05*x1 - 3.0)**2 - (-P13 + 0.15*x2 - 3.0)**2 - (-P14 + 3.3333333333333335*y - 3.3333333333333335)**2)/(2*P3**2)) + P15*exp((-(-P16 + 0.05*x1 - 3.0)**2 - (-P17 + 0.15*x2 - 3.0)**2 - (-P18 + 3.3333333333333335*y - 3.3333333333333335)**2)/(2*P3**2)) + P19*exp((-(-P20 + 0.05*x1 - 3.0)**2 - (-P21 + 0.15*x2 - 3.0)**2 - (-P22 + 3.3333333333333335*y - 3.3333333333333335)**2)/(2*P3**2)) + P2*exp((-(-P4 + 0.05*x1 - 3.0)**2 - (-P5 + 0.15*x2 - 3.0)**2 - (-P6 + 3.3333333333333335*y - 3.3333333333333335)**2)/(2*P3**2)) + P23*exp((-(-P24 + 0.05*x1 - 3.0)**2 - (-P25 + 0.15*x2 - 3.0)**2 - (-P26 + 3.3333333333333335*y - 3.3333333333333335)**2)/(2*P3**2)) + P27*exp((-(-P28 + 0.05*x1 - 3.0)**2 - (-P29 + 0.15*x2 - 3.0)**2 - (-P30 + 3.3333333333333335*y - 3.3333333333333335)**2)/(2*P3**2)) + P31*exp((-(-P32 + 0.05*x1 - 3.0)**2 - (-P33 + 0.15*x2 - 3.0)**2 - (-P34 + 3.3333333333333335*y - 3.3333333333333335)**2)/(2*P3**2)) + P35*exp((-(-P36 + 0.05*x1 - 3.0)**2 - (-P37 + 0.15*x2 - 3.0)**2 - (-P38 + 3.3333333333333335*y - 3.3333333333333335)**2)/(2*P3**2)) + P39*exp((-(-P40 + 0.05*x1 - 3.0)**2 - (-P41 + 0.15*x2 - 3.0)**2 - (-P42 + 3.3333333333333335*y - 3.3333333333333335)**2)/(2*P3**2)) + P43*exp((-(-P44 + 0.05*x1 - 3.0)**2 - (-P45 + 0.15*x2 - 3.0)**2 - (-P46 + 3.3333333333333335*y - 3.3333333333333335)**2)/(2*P3**2)) + P47*exp((-(-P48 + 0.05*x1 - 3.0)**2 - (-P49 + 0.15*x2 - 3.0)**2 - (-P50 + 3.3333333333333335*y - 3.3333333333333335)**2)/(2*P3**2)) + P51*exp((-(-P52 + 0.05*x1 - 3.0)**2 - (-P53 + 0.15*x2 - 3.0)**2 - (-P54 + 3.3333333333333335*y - 3.3333333333333335)**2)/(2*P3**2)) + P55*exp((-(-P56 + 0.05*x1 - 3.0)**2 - (-P57 + 0.15*x2 - 3.0)**2 - (-P58 + 3.3333333333333335*y - 3.3333333333333335)**2)/(2*P3**2)) + P59*exp((-(-P60 + 0.05*x1 - 3.0)**2 - (-P61 + 0.15*x2 - 3.0)**2 - (-P62 + 3.3333333333333335*y - 3.3333333333333335)**2)/(2*P3**2)) + P63*exp((-(-P64 + 0.05*x1 - 3.0)**2 - (-P65 + 0.15*x2 - 3.0)**2 - (-P66 + 3.3333333333333335*y - 3.3333333333333335)**2)/(2*P3**2)) + P67*exp((-(-P68 + 0.05*x1 - 3.0)**2 - (-P69 + 0.15*x2 - 3.0)**2 - (-P70 + 3.3333333333333335*y - 3.3333333333333335)**2)/(2*P3**2)) + P7*exp((-(-P10 + 3.3333333333333335*y - 3.3333333333333335)**2 - (-P8 + 0.05*x1 - 3.0)**2 - (-P9 + 0.15*x2 - 3.0)**2)/(2*P3**2)) + P71*exp((-(-P72 + 0.05*x1 - 3.0)**2 - (-P73 + 0.15*x2 - 3.0)**2 - (-P74 + 3.3333333333333335*y - 3.3333333333333335)**2)/(2*P3**2)) + P75*exp((-(-P76 + 0.05*x1 - 3.0)**2 - (-P77 + 0.15*x2 - 3.0)**2 - (-P78 + 3.3333333333333335*y - 3.3333333333333335)**2)/(2*P3**2)) + P79*exp((-(-P80 + 0.05*x1 - 3.0)**2 - (-P81 + 0.15*x2 - 3.0)**2 - (-P82 + 3.3333333333333335*y - 3.3333333333333335)**2)/(2*P3**2)) + P83*exp((-(-P84 + 0.05*x1 - 3.0)**2 - (-P85 + 0.15*x2 - 3.0)**2 - (-P86 + 3.3333333333333335*y - 3.3333333333333335)**2)/(2*P3**2)) + P87*exp((-(-P88 + 0.05*x1 - 3.0)**2 - (-P89 + 0.15*x2 - 3.0)**2 - (-P90 + 3.3333333333333335*y - 3.3333333333333335)**2)/(2*P3**2)) + P91*exp((-(-P92 + 0.05*x1 - 3.0)**2 - (-P93 + 0.15*x2 - 3.0)**2 - (-P94 + 3.3333333333333335*y - 3.3333333333333335)**2)/(2*P3**2)) + P95*exp((-(-P96 + 0.05*x1 - 3.0)**2 - (-P97 + 0.15*x2 - 3.0)**2 - (-P98 + 3.3333333333333335*y - 3.3333333333333335)**2)/(2*P3**2)) + 1.0*P99*(y - 1.0)"
+              },
+              "structure_group": 4,
+              "unresolved_requirements": [],
+              "visible": {
+                "train": {
+                  "finished": true,
+                  "group": "train",
+                  "pooled_rmse": 0.024946005565247602,
+                  "scored_samples": 1451,
+                  "trajectories": [
+                    {
+                      "completed_samples": 1451,
+                      "failure": null,
+                      "finished": true,
+                      "group": "train",
+                      "measures": {
+                        "mean": 1.298373536846705,
+                        "n": 1451,
+                        "nrmse": 0.0956681189858871,
+                        "r2": 0.9908476110097022,
+                        "rmse": 0.024946005565247602,
+                        "sse": 0.9029619340026397,
+                        "std": 0.2607556815131655
+                      },
+                      "n_samples": 1452,
+                      "note": null,
+                      "prefix_diagnostic": null,
+                      "required_samples": 1451,
+                      "scoring_interval": [
+                        1,
+                        1452
+                      ],
+                      "trajectory": "train"
+                    }
+                  ]
+                },
+                "val": {
+                  "finished": true,
+                  "group": "val",
+                  "pooled_rmse": 0.03355614609084022,
+                  "scored_samples": 1453,
+                  "trajectories": [
+                    {
+                      "completed_samples": 1453,
+                      "failure": null,
+                      "finished": true,
+                      "group": "val",
+                      "measures": {
+                        "mean": 1.306534241456782,
+                        "n": 1453,
+                        "nrmse": 0.12781691145138552,
+                        "r2": 0.9836628371470286,
+                        "rmse": 0.03355614609084022,
+                        "sse": 1.6360997085026356,
+                        "std": 0.26253291297531567
+                      },
+                      "n_samples": 1454,
+                      "note": null,
+                      "prefix_diagnostic": null,
+                      "required_samples": 1453,
+                      "scoring_interval": [
+                        1,
+                        1454
+                      ],
+                      "trajectory": "val"
+                    }
+                  ]
+                }
+              },
+              "within_limit": true
+            }
+          ],
+          "counts": {
+            "accepted_by_checks": 4,
+            "eligible": 4,
+            "evaluated": 4,
+            "excluded_by_requirements": 0,
+            "failed_numerically": 0,
+            "failed_numerically_on_visible_data": 0,
+            "outside_limit": 0,
+            "overlap": {
+              "excluded_and_failed_numerically": [],
+              "note": "the categories overlap: the candidates accepted by the checks include those outside the pool limit, and a candidate can be both excluded by requirements and failed numerically; the counts need not sum to the pool size"
+            },
+            "proposed": 4
+          },
+          "format_version": 1,
+          "formulation": "continuous",
+          "pool_file": {
+            "issues": [],
+            "order": [
+              "poly3",
+              "rational2",
+              "cos_power",
+              "gaussian_field"
+            ],
+            "order_from_pool_file": true,
+            "pool_cap": 10,
+            "pool_version": 1,
+            "valid": true
+          },
+          "recommendation": {
+            "agent": {
+              "label": "poly3",
+              "reason": "Recommend `poly3`: it is a transparent degree-three polynomial field with fewer fitted values than the Gaussian network and the lowest combined-data uninterrupted RK4 state RMSE in this pool. Its final errors are about `0.023325` U_y on `data/train.csv` and `0.033375` U_y on `data/val.csv`; U_y denotes the unspecified state unit. Validation was included in final calibration, so these are not untouched holdout scores. Before final pooling, its training-derivative fit gave validation rollout RMSE about `0.036525` U_y and compared favorably with most compact nonlinear alternatives. The Gaussian model had a slightly lower screened holdout error but higher complexity and no final pooled advantage. The rational and smoothed power-law candidates hedge structural uncertainty, not coefficient uncertainty. No claim is made about unavailable test data."
+            },
+            "notes": [],
+            "present": true,
+            "sealed": {
+              "eligible": true,
+              "note": "the test error of the recommended candidate (practical selection); sealed",
+              "rank": 1,
+              "test_score_S": 0.021765581782156908
+            }
+          },
+          "sealed": {
+            "no_ranking_reason": null,
+            "ranking": {
+              "candidates_considered": 4,
+              "criterion": "pooled test RMSE S, increasing",
+              "entries": [
+                {
+                  "allowed_violations": [],
+                  "label": "poly3",
+                  "rank": 1,
+                  "score_S": 0.021765581782156908,
+                  "tied_with_previous": false,
+                  "unresolved_requirements": []
+                },
+                {
+                  "allowed_violations": [],
+                  "label": "gaussian_field",
+                  "rank": 2,
+                  "score_S": 0.022533258601614137,
+                  "tied_with_previous": false,
+                  "unresolved_requirements": []
+                },
+                {
+                  "allowed_violations": [],
+                  "label": "cos_power",
+                  "rank": 3,
+                  "score_S": 0.022775933634641223,
+                  "tied_with_previous": false,
+                  "unresolved_requirements": []
+                },
+                {
+                  "allowed_violations": [],
+                  "label": "rational2",
+                  "rank": 4,
+                  "score_S": 0.024213814455258213,
+                  "tied_with_previous": false,
+                  "unresolved_requirements": []
+                }
+              ],
+              "label": "oracle-based selection on test data",
+              "note": "This ranking selects on the test data. It measures whether the pool contains an accurate model, not whether the agent can recognize that model without test data. A rank is not evidence of physical admissibility: each entry carries its unresolved requirements and any violation allowed by the user.",
+              "pool_size": 4,
+              "tie_rule": "|S_a - S_b| <= 1e-12 * max(S_a, S_b) for consecutive candidates; tied candidates share a rank",
+              "ties": []
+            },
+            "test_trajectories": [
+              {
+                "n_samples": 1210,
+                "scored_samples": 1209,
+                "trajectory": "test-1"
+              }
+            ]
+          },
+          "settings": {
+            "discontinuities": "expressions with jumps (Piecewise, sign) are evaluated pointwise at the sample instants and Runge-Kutta stages; no event detection or step refinement is applied at a jump",
+            "failure_limits": [
+              {
+                "justification": "numerical divergence bound, about 46 times the largest training magnitude of y",
+                "lower": -100.0,
+                "unit": "not supplied",
+                "upper": 100.0,
+                "variable": "y"
+              }
+            ],
+            "harness_version": "0.1.0.dev0",
+            "horizon": null,
+            "horizon_note": null,
+            "initialization": 1,
+            "input_hold": "zero_order",
+            "integrator": "rk4",
+            "measurement": "y",
+            "mode": "simulation",
+            "pool_cap": 10,
+            "reference_samples": 2000,
+            "reference_seed": 20260925,
+            "requirement_confirmation_points": 5,
+            "sampling_period_s": 5.0,
+            "scoring": "after_initialization",
+            "sensitivity_rank_threshold": 1e-08,
+            "software": {
+              "numpy": "2.5.1",
+              "sympy": "1.14.0"
+            },
+            "substeps": 1,
+            "symbolic_time_limit_s": 10.0,
+            "tie_relative_tolerance": 1e-12,
+            "time_limit_s": 60.0,
+            "top_k": 5
+          },
+          "structures": {
+            "convention": "ties resolved, fixed values kept, given constants kept, fitted parameters renamed P1..Pn in order of first occurrence; equal when a one-to-one renaming of the fitted parameters makes every expression identical in SymPy's canonical form",
+            "distinct": 4,
+            "exhaustive": true,
+            "groups": [
+              [
+                "poly3"
+              ],
+              [
+                "rational2"
+              ],
+              [
+                "cos_power"
+              ],
+              [
+                "gaussian_field"
+              ]
+            ]
+          },
+          "task_id": "task-qtqm"
+        },
+        "report_file": "evaluation/v1/evaluation.json",
+        "report_sha256": "8bfb8960b601c19d6c89f62d37780008e88ed74d35e3ab071e70247bc556f9f4"
+      },
+      "final_text": "DONE",
+      "helpers": [
+        {
+          "allowance": {
+            "seconds": 3562.84300000011,
+            "turns": 8,
+            "usd": 9.87406
+          },
+          "cost_usd": 0.2243,
+          "ended": "final",
+          "name": "helper-1",
+          "turns": 7
+        }
+      ],
+      "limit": null,
+      "mode": "round",
+      "order_assigned_by_harness": false,
+      "outcome": "completed",
+      "pool": {
+        "files": {
+          "cos_power.json": "e42d50a2c1147bade248cafa27b0b92eb2e8a5c09266fcfac41c2fcafc448879",
+          "gaussian_field.json": "1e6395cb4780b74348065bf18bacb1bdcc548e66b066f8827e9283672a0c619f",
+          "poly3.json": "9d09d98a42c07e8fb5221ce6c5747f1b43ca0da84c9813019fae8eb4a6ad6c23",
+          "pool.json": "9ad4e56169e10b12831e8b0e5daa68af084120890caac79e9373d32e8325a04b",
+          "rational2.json": "a0b4e5ef0fc7121177b7cf07eb8ec893b239a3795927cd5dabb990a19c979b66"
+        },
+        "folder": "pools/v1",
+        "not_copied": [],
+        "pool_version": 1,
+        "round": 1,
+        "session": "session-1",
+        "source": "<tmp>\\aspire-runs-blind\\ee6d00b5c697f527\\workspace\\models",
+        "taken": "at the end of the round",
+        "taken_at": "2026-10-08T00:44:51.472635+00:00"
+      },
+      "pool_version": 1,
+      "previous_labels": [],
+      "reminder_sent": false,
+      "round": 1,
+      "session": "session-1",
+      "termination_message": null,
+      "termination_reason": "the agent sent the completion message DONE and at least one candidate within the pool limit passed the file and expression checks",
+      "test_informed": false
+    }
+  ],
+  "run_id": "r05",
+  "seeds": {
+    "harness": "none: the harness draws no other random numbers",
+    "language_model": "none: the requests set no seed, and the responses of the language model are not reproducible",
+    "reference_comparison": null,
+    "requirement_sampling": {},
+    "run": {
+      "attempt": 1,
+      "run_index": 5
+    }
+  },
+  "software": {
+    "aspire_sysid": "0.1.0.dev0",
+    "matplotlib": "3.11.1",
+    "numpy": "2.5.1",
+    "platform": "Windows-11-10.0.26200-SP0",
+    "python": "3.12.10",
+    "python_implementation": "CPython",
+    "pyyaml": "6.0.3",
+    "scipy": "1.18.0",
+    "sympy": "1.14.0"
+  },
+  "task": {
+    "files": {
+      "data/train.csv": "a31c845871c427d2a99f02feedf639bffdd9a6539fae46a702df05894083a063",
+      "data/val.csv": "5625cf7dd6ce0106cfa49ff1db6bb7b5eabaa29f8854014d9c8db97d920ce372",
+      "task.yaml": "88e3e7eb877d407304edc23a6018e6dac13101c7602b9e65a936f018bacacb8e"
+    },
+    "folder": "tasks/task-qtqm",
+    "formulation": "continuous",
+    "id": "task-qtqm",
+    "sealed_files": {
+      "test/held_out_1.csv": "6affe841cb8f196503ac9f7df876acf265e35279111473e8e0359c6d24005608"
+    },
+    "sealed_sha256": "df40454aa5f0c5bacbc4ea6aab2d8a53729dbfd699a9d40cd1c1cfd649ad2868",
+    "spec_sha256": "f53c09d7b25394d8ef3d4e931e0317c9df8d8d7085ea6316bc2fd6f22d960375",
+    "title": "Identification task qtqm"
+  },
+  "user_facing": "contains results on sealed test data and recording names; never shown to the agent",
+  "termination_reason": "the agent sent the completion message DONE and at least one candidate within the pool limit passed the file and expression checks",
+  "texts": {
+    "brief": "# Task: Identification task qtqm\n\n## 1 System and intended use\n\nThe task gives no description of the system.\n\nThe task states no intended use of the model.\n\n## 2 Data\n\n`data/train.csv` holds 1452 samples of training data: one trajectory of consecutive samples. `data/val.csv` holds 1454 samples of validation data: one trajectory of consecutive samples. Whether and how you use the validation data is your decision. Row k+1 of a trajectory is the sample that follows row k; different trajectories are separate experiments. The sampling period is T_s = 5 s.\n\n| Column | Role | Unit | Training range | Description |\n|---|---|---|---|---|\n| `y` | state, scored output | not supplied | not declared | not supplied |\n| `x1` | input | not supplied | not declared | not supplied |\n| `x2` | input | not supplied | not declared | not supplied |\n| `dy` | sampled time derivative of `y` | not supplied | not declared | not supplied |\n\nThe task does not state the units. The task does not describe the columns.\n\n## 3 What you deliver\n\nA candidate is a continuous-time model of one closed-form expression, `dy`: the time derivative of the state `y` as a function of `y`, `x1` and `x2`. The column `dy` is a possible fitting target for the derivative of `y`; it is not an argument of the expressions. `FORMAT.md` states how an expression is written and what it may contain.\n\nWrite one file per candidate, `models/<label>.json`; `FORMAT.md` describes the file and gives an example. Write also `models/pool.json`, which lists the labels of your candidates in the order in which they are to be evaluated. You can recommend one candidate that you consider the best-performing. `models/pool.json` then names that candidate and gives your reason. Run `python check_submission.py` to check your files: it prints every error with its location, so that you can correct it.\n\nAt most 10 candidates are evaluated, in the order of `models/pool.json`. Consider various identification approaches, for example physically motivated structures, symbolic-regression search or sparse regression; before fitting, list the approaches and the model families you will try. Build the pool from structurally different model families, not from variations of one form. Examine the residuals of your best candidates and try structures that can represent what they show. Include only candidates you would defend as a model of the system.\n\n## 4 Evaluation\n\nThe harness, the software that runs this task, evaluates every candidate on test data that you cannot access. For each test trajectory it starts from the first logged state and integrates the expressions with the classical fourth-order Runge–Kutta method, one step per sampling period, with the logged inputs held constant between samples; a simulated state is never replaced by a later measurement. The score is the root mean squared error (RMSE) between simulated and logged `y` over all test samples after the first of each trajectory. An evaluation fails when a value is not finite, when `y` leaves [-100, 100], or when it takes longer than 60 s.\n\n## 5 Limits and completion\n\nOne round: 60 turns, 3600 s of execution time, 10 USD; a turn is one response of yours. When the files pass the check, send the exact message DONE. If the harness's check of the files then fails, you receive its report and may correct the files once. If a limit ends the round earlier, the complete candidate files are evaluated.\n",
+    "brief_sha256": "6a586c0c9b1f93d94d9e18c7741b06d327863dd76484aa4f8449eb3fe2daea54",
+    "first_user_message": "The identification round begins. The task brief is TASK.md in the working directory; the candidate file format and the writing rules are in FORMAT.md.",
+    "first_user_message_sha256": "274ef7dab7038187fdb10b5d9a6687d2203be019d755f7c10a2c5de6cd155b4c",
+    "helper_system_prompt": "You are a helper agent for system identification. The main agent has assigned you the subtask stated in the first message. You work in the same working directory as the main agent, with the tools described in this request; you cannot start further helper agents. Your turns and costs count toward the main agent's budget. Do not access information outside the permissions stated in TASK.md. When the subtask is finished, reply with text only, without a tool request. State what you did, the files you wrote, the methods, data and settings you used, and the results; give every number with its unit, the data set it was computed on and, for an error, its definition. Follow the writing rules in FORMAT.md. That reply ends your work and is returned to the main agent.",
+    "helper_system_prompt_sha256": "88b7af5b641a2c553131930a523c04031548a901ecbc32314d9adb9905675b5e",
+    "supplied": true,
+    "system_prompt": "You are an agent for system identification. Your task is in TASK.md in the working directory; read it first. FORMAT.md describes the files you deliver and how to write your texts. A human will assess your models and your explanations.\n\nHow you identify the models is your decision. You may read and write files in the working directory, write and run code, fetch web resources, search the web, install Python packages and start helper agents. The installed symbolic-regression packages are gplearn 0.4.3 and PySINDy 2.1.0; symbolic-regression search is suited to tasks of this kind, and whether you use it is your decision. Models of any kind, including black-box models, may serve as intermediate tools; the models you deliver have the form that TASK.md requires.\n\nReport what you actually did: the methods, the data and the settings you used. Helper agents cannot start further helpers, and their turns and cost count toward your limits. Everything you do is recorded. The test data and the evaluation results are not available to you; do not try to reach them or any file outside the working directory.\n\nEnvironment description (supplied by the harness from the run environment):\n- Tools: read_file, write_file, list_files, run_shell, web_fetch, web_search, install_package, start_helper.\n- Shell: run_shell passes each command to the Windows command interpreter cmd.exe, not to a POSIX shell. POSIX shell syntax such as here-documents (<<) does not work there; run Python code from a script file or with python -c.\n- Python 3.12.10.\n- Installed packages and versions (28): cloudpickle 3.1.2, contourpy 1.4.0, cycler 0.12.1, derivative 0.6.3, fonttools 4.66.1, gplearn 0.4.3, importlib-metadata 9.0.1, joblib 1.6.0, kiwisolver 1.5.1, matplotlib 3.11.2, mpmath 1.3.0, narwhals 2.26.0, numpy 2.5.3, packaging 26.3, pandas 3.0.6, pillow 12.3.0, pip 25.0.1, pyparsing 3.3.3, pysindy 2.1.0, python-dateutil 2.9.0.post0, scikit-learn 1.9.1, scipy 1.18.1, six 1.17.0, sympy 1.14.0, threadpoolctl 3.7.0, typing-extensions 4.16.0, tzdata 2026.5, zipp 4.1.1.",
+    "system_prompt_sha256": "f9e3e30d66553fc7bcd891a936cd6c981fc25d8cd145a1731ab846ac1f985eb6"
+  },
+  "transcript": {
+    "file": "transcript.jsonl",
+    "present": true,
+    "sha256": "2a782162a453f495f7b6fd20ff6f2bd50a20aa2538e4fa94fd862152b11bfc59"
+  },
+  "workspace_manifest": {
+    "brief_sha256": "6a586c0c9b1f93d94d9e18c7741b06d327863dd76484aa4f8449eb3fe2daea54",
+    "files": [
+      {
+        "bytes": 8130,
+        "name": "FORMAT.md",
+        "sha256": "ed4cc6f5dad015fbb83237a40eca6cc763a799432554a698494bbc32d94fd4bb"
+      },
+      {
+        "bytes": 3424,
+        "name": "TASK.md",
+        "sha256": "6a586c0c9b1f93d94d9e18c7741b06d327863dd76484aa4f8449eb3fe2daea54"
+      },
+      {
+        "bytes": 965,
+        "name": "check_config.json",
+        "sha256": "076cafa8f62b43a5a0aa710c5f745b69cb764a96f9e57316bdf635945da664d9"
+      },
+      {
+        "bytes": 102476,
+        "name": "check_submission.py",
+        "sha256": "9e6e1ffa2c5973f214cb0d57d9a1c967366795102f999b92c0d89a8a7acb5e0e"
+      },
+      {
+        "bytes": 105525,
+        "name": "data/train.csv",
+        "sha256": "a31c845871c427d2a99f02feedf639bffdd9a6539fae46a702df05894083a063"
+      },
+      {
+        "bytes": 105660,
+        "name": "data/val.csv",
+        "sha256": "5625cf7dd6ce0106cfa49ff1db6bb7b5eabaa29f8854014d9c8db97d920ce372"
+      }
+    ],
+    "folders": [
+      "data",
+      "models"
+    ],
+    "format_sha256": "ed4cc6f5dad015fbb83237a40eca6cc763a799432554a698494bbc32d94fd4bb",
+    "interactive": false,
+    "task_id": "task-qtqm",
+    "workspace": "<tmp>\\aspire-runs-blind\\ee6d00b5c697f527\\workspace"
+  }
+}

@@ -1,0 +1,10 @@
+{
+  "order": [
+    "SeriesPipe",
+    "Compressible",
+    "MixedOutlet",
+    "ValvePower"
+  ],
+  "recommended": "SeriesPipe",
+  "reason": "The five-coefficient series viscous/inertial resistance balance is the most parsimonious physically explicit candidate, with exact sealed-valve behavior and a bounded small-drop relaxation rate that is safe for the required 5 s RK4 integration. Its training-only validation RMSE was 0.0387076 bar and its joint-fit supplied-data RMSE is approximately 0.032312 bar. The slightly more flexible alternatives improve supplied-data RMSE only modestly; all retain substantial correlated residuals and no independent validation remains after the final refit. This recommendation weights interpretability, numerical relaxation stability and restrained extrapolation over a small in-sample fit advantage."
+}

@@ -1,0 +1,9 @@
+{
+  "order": [
+    "HarmonicFriction",
+    "BoundedStiction",
+    "QuinticOscillator"
+  ],
+  "recommended": "HarmonicFriction",
+  "reason": "Recommended for its smooth closed form, position-dependent dissipative term and best pre-refit held-out validation output error among these delivered structures (`0.0763671` in recorded `y` units). After all-data refitting its training and reused-validation free-running errors are `0.0344979` and `0.0718753` in recorded `y` units. These final figures are no longer independent holdout evidence. BoundedStiction offers exact stopping behavior; QuinticOscillator provides a polynomial restoring alternative. No test data were accessed."
+}

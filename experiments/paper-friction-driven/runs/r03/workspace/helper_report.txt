@@ -1,0 +1,482 @@
+DERIVATIVE STRUCTURE REPORT (no model files and no simulation)
+Definitions: `theta` is angle in rad, `omega` angular velocity in rad/s, `u` voltage in V, `domega` measured acceleration in rad/s^2. `e = domega - prediction` is the derivative residual. Derivative RMSE is sqrt(mean(e**2)); means are arithmetic sample means. Counts are samples, identifiers dimensionless. Unless marked assumed, numbers below are computed on the named data/subset. Coefficient units are given at every initialization.
+Methods: constrained linear least squares, scipy.optimize.lsq_linear, with positive gravity/viscous/Coulomb/linear-voltage coefficients; extension coefficients unrestricted. Features scaled by training root mean square. All parameters fitted jointly; no starting values and no random seed are required. Objective=sum((domega-prediction)**2) on selected moving samples, to avoid regressing an unmodeled stick constraint. Reference from memory, not web-checked: Lawson and Hanson, Solving Least Squares Problems (SIAM). Base family is pendulum gravity with viscous plus Coulomb friction. Derivative fits do not establish long-horizon simulation quality.
+
+train: total=3522 samples; trajectories=13 dimensionless trajectory identifiers; sample period assumed from TASK.md=0.01 s.
+  trajectory identifier=1: n=450 samples, voltage range=[-3.89531,3.17744] V; theta range=[-0.694292,0.662876] rad; omega range=[-8.95354,5.81195] rad/s; exact-zero speed=115 samples.
+  trajectory identifier=2: n=450 samples, voltage range=[-3.61381,3.60983] V; theta range=[-1.28491,2.0923] rad; omega range=[-20.1062,14.4513] rad/s; exact-zero speed=104 samples.
+  trajectory identifier=3: n=300 samples, voltage range=[-4.94511,3.9525] V; theta range=[-1.69332,0.584336] rad; omega range=[-9.42478,8.63938] rad/s; exact-zero speed=82 samples.
+  trajectory identifier=4: n=300 samples, voltage range=[-4.25734,3.58254] V; theta range=[-1.73416,2.3342] rad; omega range=[-18.2212,13.3518] rad/s; exact-zero speed=3 samples.
+  trajectory identifier=5: n=442 samples, voltage range=[0,0] V; theta range=[-1.00845,2.27765] rad; omega range=[-14.7655,6.9115] rad/s; exact-zero speed=347 samples.
+  trajectory identifier=6: n=442 samples, voltage range=[0,0] V; theta range=[-1.01788,2.53527] rad; omega range=[-15.2367,7.06858] rad/s; exact-zero speed=344 samples.
+  trajectory identifier=7: n=442 samples, voltage range=[0,0] V; theta range=[-2.51327,1.05558] rad; omega range=[-7.6969,13.823] rad/s; exact-zero speed=332 samples.
+  trajectory identifier=8: n=141 samples, voltage range=[0,0] V; theta range=[-0.0534071,0.722566] rad; omega range=[-4.08407,0.15708] rad/s; exact-zero speed=88 samples.
+  trajectory identifier=9: n=141 samples, voltage range=[0,0] V; theta range=[-0.694292,0.282743] rad; omega range=[-0.628319,4.86947] rad/s; exact-zero speed=82 samples.
+  trajectory identifier=10: n=141 samples, voltage range=[0,0] V; theta range=[-0.254469,-0.0879646] rad; omega range=[-3.92699,0.785398] rad/s; exact-zero speed=100 samples.
+  trajectory identifier=11: n=91 samples, voltage range=[0,0] V; theta range=[-0.518363,0.150796] rad; omega range=[-0.314159,3.45575] rad/s; exact-zero speed=47 samples.
+  trajectory identifier=12: n=91 samples, voltage range=[0,0] V; theta range=[-0.0973894,-0.0565487] rad; omega range=[0,0.785398] rad/s; exact-zero speed=82 samples.
+  trajectory identifier=13: n=91 samples, voltage range=[0,0] V; theta range=[-1.55509,0.797965] rad; omega range=[-5.96903,11.1527] rad/s; exact-zero speed=2 samples.
+  moving threshold=0 rad/s: 1794 samples.
+  moving threshold=0.157 rad/s: 1794 samples.
+  moving threshold=0.5 rad/s: 1519 samples.
+  moving threshold=1 rad/s: 1312 samples.
+  moving threshold=2 rad/s: 1073 samples.
+  Numerically resting threshold assumed=1e-10 rad/s: theta range=[-1.01788,0.797965] rad; acceleration RMS=6.65586 rad/s^2; 1728 samples.
+
+val: total=1192 samples; trajectories=3 dimensionless trajectory identifiers; sample period assumed from TASK.md=0.01 s.
+  trajectory identifier=1: n=450 samples, voltage range=[-2.91205,3.83954] V; theta range=[-0.939336,1.78128] rad; omega range=[-17.9071,10.5243] rad/s; exact-zero speed=109 samples.
+  trajectory identifier=2: n=300 samples, voltage range=[-4.81971,3.37971] V; theta range=[-1.14982,0.929911] rad; omega range=[-8.32522,8.32522] rad/s; exact-zero speed=71 samples.
+  trajectory identifier=3: n=442 samples, voltage range=[0,0] V; theta range=[-2.22739,0.936195] rad; omega range=[-7.38274,13.1947] rad/s; exact-zero speed=343 samples.
+  moving threshold=0 rad/s: 669 samples.
+  moving threshold=0.157 rad/s: 669 samples.
+  moving threshold=0.5 rad/s: 572 samples.
+  moving threshold=1 rad/s: 526 samples.
+  moving threshold=2 rad/s: 422 samples.
+  Numerically resting threshold assumed=1e-10 rad/s: theta range=[-1.0273,1.78128] rad; acceleration RMS=6.19128 rad/s^2; 523 samples.
+
+BASE sensitivity 0.157 rad/s; fitting data=train, rows=1794 samples; moving threshold=Abs(omega) > 0.157 rad/s; subset=all trajectories.
+Expression: `domega = g*(-sin(theta)) + b*(-omega) + c*(-sign(omega)) + k*(u)`.
+  `g = 108.010397` rad/s^2; estimated jointly from the preceding training subset.
+  `b = 1.85461289` 1/s; estimated jointly from the preceding training subset.
+  `c = 16.9958462` rad/s^2; estimated jointly from the preceding training subset.
+  `k = 26.3729158` rad/(s^2 V); estimated jointly from the preceding training subset.
+  train/all-moving: n=1794 samples; derivative RMSE=10.8275 rad/s^2; mean residual=1.42633 rad/s^2.
+  train/driven-moving: n=962 samples; derivative RMSE=11.7662 rad/s^2; mean residual=1.28287 rad/s^2.
+  train/free-moving: n=832 samples; derivative RMSE=9.62865 rad/s^2; mean residual=1.59222 rad/s^2.
+  val/all-moving: n=669 samples; derivative RMSE=21.5169 rad/s^2; mean residual=4.91865 rad/s^2.
+  val/driven-moving: n=457 samples; derivative RMSE=24.8603 rad/s^2; mean residual=6.99694 rad/s^2.
+  val/free-moving: n=212 samples; derivative RMSE=11.3459 rad/s^2; mean residual=0.438556 rad/s^2.
+  Grid physical audit: min gravity(theta)*theta=0 rad^2/s^2 on 2001 assumed grid points, theta in [-pi,pi] rad; min d(force)/du=26.3729 rad/(s^2 V) on 2001 assumed grid points, u in [-10,10] V. Sign-reversed gravity gives restoring force. Other friction asymmetry terms require separate final-model audit.
+
+BASE sensitivity 0.5 rad/s; fitting data=train, rows=1519 samples; moving threshold=Abs(omega) > 0.5 rad/s; subset=all trajectories.
+Expression: `domega = g*(-sin(theta)) + b*(-omega) + c*(-sign(omega)) + k*(u)`.
+  `g = 108.38543` rad/s^2; estimated jointly from the preceding training subset.
+  `b = 1.61814894` 1/s; estimated jointly from the preceding training subset.
+  `c = 19.0260322` rad/s^2; estimated jointly from the preceding training subset.
+  `k = 26.5126912` rad/(s^2 V); estimated jointly from the preceding training subset.
+  train/all-moving: n=1519 samples; derivative RMSE=10.4881 rad/s^2; mean residual=1.17201 rad/s^2.
+  train/driven-moving: n=840 samples; derivative RMSE=11.3532 rad/s^2; mean residual=1.1596 rad/s^2.
+  train/free-moving: n=679 samples; derivative RMSE=9.30722 rad/s^2; mean residual=1.18736 rad/s^2.
+  val/all-moving: n=572 samples; derivative RMSE=22.3359 rad/s^2; mean residual=4.64813 rad/s^2.
+  val/driven-moving: n=413 samples; derivative RMSE=25.4221 rad/s^2; mean residual=6.89256 rad/s^2.
+  val/free-moving: n=159 samples; derivative RMSE=10.7722 rad/s^2; mean residual=-1.18172 rad/s^2.
+  Grid physical audit: min gravity(theta)*theta=0 rad^2/s^2 on 2001 assumed grid points, theta in [-pi,pi] rad; min d(force)/du=26.5127 rad/(s^2 V) on 2001 assumed grid points, u in [-10,10] V. Sign-reversed gravity gives restoring force. Other friction asymmetry terms require separate final-model audit.
+
+BASE sensitivity 1 rad/s; fitting data=train, rows=1312 samples; moving threshold=Abs(omega) > 1 rad/s; subset=all trajectories.
+Expression: `domega = g*(-sin(theta)) + b*(-omega) + c*(-sign(omega)) + k*(u)`.
+  `g = 108.42444` rad/s^2; estimated jointly from the preceding training subset.
+  `b = 1.54606048` 1/s; estimated jointly from the preceding training subset.
+  `c = 19.6566834` rad/s^2; estimated jointly from the preceding training subset.
+  `k = 26.5277079` rad/(s^2 V); estimated jointly from the preceding training subset.
+  train/all-moving: n=1312 samples; derivative RMSE=10.5294 rad/s^2; mean residual=1.08963 rad/s^2.
+  train/driven-moving: n=755 samples; derivative RMSE=11.2345 rad/s^2; mean residual=1.20831 rad/s^2.
+  train/free-moving: n=557 samples; derivative RMSE=9.49033 rad/s^2; mean residual=0.928749 rad/s^2.
+  val/all-moving: n=526 samples; derivative RMSE=22.8431 rad/s^2; mean residual=4.4032 rad/s^2.
+  val/driven-moving: n=382 samples; derivative RMSE=25.9489 rad/s^2; mean residual=6.55934 rad/s^2.
+  val/free-moving: n=144 samples; derivative RMSE=10.9459 rad/s^2; mean residual=-1.31654 rad/s^2.
+  Grid physical audit: min gravity(theta)*theta=0 rad^2/s^2 on 2001 assumed grid points, theta in [-pi,pi] rad; min d(force)/du=26.5277 rad/(s^2 V) on 2001 assumed grid points, u in [-10,10] V. Sign-reversed gravity gives restoring force. Other friction asymmetry terms require separate final-model audit.
+
+BASE sensitivity 2 rad/s; fitting data=train, rows=1073 samples; moving threshold=Abs(omega) > 2 rad/s; subset=all trajectories.
+Expression: `domega = g*(-sin(theta)) + b*(-omega) + c*(-sign(omega)) + k*(u)`.
+  `g = 108.487939` rad/s^2; estimated jointly from the preceding training subset.
+  `b = 1.4717184` 1/s; estimated jointly from the preceding training subset.
+  `c = 20.4583077` rad/s^2; estimated jointly from the preceding training subset.
+  `k = 26.6730666` rad/(s^2 V); estimated jointly from the preceding training subset.
+  train/all-moving: n=1073 samples; derivative RMSE=10.8993 rad/s^2; mean residual=0.806456 rad/s^2.
+  train/driven-moving: n=624 samples; derivative RMSE=11.5386 rad/s^2; mean residual=0.982382 rad/s^2.
+  train/free-moving: n=449 samples; derivative RMSE=9.94279 rad/s^2; mean residual=0.561963 rad/s^2.
+  val/all-moving: n=422 samples; derivative RMSE=22.0889 rad/s^2; mean residual=4.50097 rad/s^2.
+  val/driven-moving: n=306 samples; derivative RMSE=24.9441 rad/s^2; mean residual=6.75607 rad/s^2.
+  val/free-moving: n=116 samples; derivative RMSE=11.5617 rad/s^2; mean residual=-1.44783 rad/s^2.
+  Grid physical audit: min gravity(theta)*theta=0 rad^2/s^2 on 2001 assumed grid points, theta in [-pi,pi] rad; min d(force)/du=26.6731 rad/(s^2 V) on 2001 assumed grid points, u in [-10,10] V. Sign-reversed gravity gives restoring force. Other friction asymmetry terms require separate final-model audit.
+
+BASE regime free; fitting data=train, rows=679 samples; moving threshold=Abs(omega) > 0.5 rad/s; subset=free.
+Expression: `domega = g*(-sin(theta)) + b*(-omega) + c*(-sign(omega))`.
+  `g = 107.930124` rad/s^2; estimated jointly from the preceding training subset.
+  `b = 1.91987173` 1/s; estimated jointly from the preceding training subset.
+  `c = 18.9622477` rad/s^2; estimated jointly from the preceding training subset.
+  train/all-moving: n=1519 samples; derivative RMSE=45.6914 rad/s^2; mean residual=-2.78853 rad/s^2.
+  train/driven-moving: n=840 samples; derivative RMSE=60.891 rad/s^2; mean residual=-6.07517 rad/s^2.
+  train/free-moving: n=679 samples; derivative RMSE=9.14155 rad/s^2; mean residual=1.27742 rad/s^2.
+  val/all-moving: n=572 samples; derivative RMSE=56.7937 rad/s^2; mean residual=6.71545 rad/s^2.
+  val/driven-moving: n=413 samples; derivative RMSE=66.5235 rad/s^2; mean residual=9.58992 rad/s^2.
+  val/free-moving: n=159 samples; derivative RMSE=10.4356 rad/s^2; mean residual=-0.750942 rad/s^2.
+  Grid physical audit: min gravity(theta)*theta=0 rad^2/s^2 on 2001 assumed grid points, theta in [-pi,pi] rad; min d(force)/du=0 rad/(s^2 V) on 2001 assumed grid points, u in [-10,10] V. Sign-reversed gravity gives restoring force. Other friction asymmetry terms require separate final-model audit.
+
+BASE regime driven; fitting data=train, rows=1027 samples; moving threshold=Abs(omega) > 0.5 rad/s; subset=driven.
+Expression: `domega = g*(-sin(theta)) + b*(-omega) + c*(-sign(omega)) + k*(u)`.
+  `g = 109.361032` rad/s^2; estimated jointly from the preceding training subset.
+  `b = 1.46275184` 1/s; estimated jointly from the preceding training subset.
+  `c = 18.5999285` rad/s^2; estimated jointly from the preceding training subset.
+  `k = 26.230346` rad/(s^2 V); estimated jointly from the preceding training subset.
+  train/all-moving: n=1519 samples; derivative RMSE=10.5801 rad/s^2; mean residual=1.04565 rad/s^2.
+  train/driven-moving: n=840 samples; derivative RMSE=11.2476 rad/s^2; mean residual=1.04678 rad/s^2.
+  train/free-moving: n=679 samples; derivative RMSE=9.69096 rad/s^2; mean residual=1.04424 rad/s^2.
+  val/all-moving: n=572 samples; derivative RMSE=22.4545 rad/s^2; mean residual=4.61955 rad/s^2.
+  val/driven-moving: n=413 samples; derivative RMSE=25.4718 rad/s^2; mean residual=6.99455 rad/s^2.
+  val/free-moving: n=159 samples; derivative RMSE=11.3398 rad/s^2; mean residual=-1.54948 rad/s^2.
+  Grid physical audit: min gravity(theta)*theta=0 rad^2/s^2 on 2001 assumed grid points, theta in [-pi,pi] rad; min d(force)/du=26.2303 rad/(s^2 V) on 2001 assumed grid points, u in [-10,10] V. Sign-reversed gravity gives restoring force. Other friction asymmetry terms require separate final-model audit.
+
+asymmetric Coulomb; fitting data=train, rows=1519 samples; moving threshold=Abs(omega) > 0.5 rad/s; subset=all trajectories.
+Expression: `domega = g*(-sin(theta)) + b*(-omega) + c*(-sign(omega)) + k*(u) + asymC*(-Abs(sign(omega)))`.
+  `g = 108.256949` rad/s^2; estimated jointly from the preceding training subset.
+  `b = 1.58579452` 1/s; estimated jointly from the preceding training subset.
+  `c = 19.3321418` rad/s^2; estimated jointly from the preceding training subset.
+  `k = 26.5957328` rad/(s^2 V); estimated jointly from the preceding training subset.
+  `asymC = -1.22046868` rad/s^2; estimated jointly from the preceding training subset.
+  train/all-moving: n=1519 samples; derivative RMSE=10.4197 rad/s^2; mean residual=-7.89596e-15 rad/s^2.
+  train/driven-moving: n=840 samples; derivative RMSE=11.3015 rad/s^2; mean residual=-0.00556087 rad/s^2.
+  train/free-moving: n=679 samples; derivative RMSE=9.21275 rad/s^2; mean residual=0.00687942 rad/s^2.
+  val/all-moving: n=572 samples; derivative RMSE=22.096 rad/s^2; mean residual=3.42501 rad/s^2.
+  val/driven-moving: n=413 samples; derivative RMSE=25.1051 rad/s^2; mean residual=5.65487 rad/s^2.
+  val/free-moving: n=159 samples; derivative RMSE=10.9232 rad/s^2; mean residual=-2.36701 rad/s^2.
+  Grid physical audit: min gravity(theta)*theta=0 rad^2/s^2 on 2001 assumed grid points, theta in [-pi,pi] rad; min d(force)/du=26.5957 rad/(s^2 V) on 2001 assumed grid points, u in [-10,10] V. Sign-reversed gravity gives restoring force. Other friction asymmetry terms require separate final-model audit.
+
+asymmetric damping; fitting data=train, rows=1519 samples; moving threshold=Abs(omega) > 0.5 rad/s; subset=all trajectories.
+Expression: `domega = g*(-sin(theta)) + b*(-omega) + c*(-sign(omega)) + k*(u) + asymD*(-Abs(omega))`.
+  `g = 108.387662` rad/s^2; estimated jointly from the preceding training subset.
+  `b = 1.59412911` 1/s; estimated jointly from the preceding training subset.
+  `c = 19.1428876` rad/s^2; estimated jointly from the preceding training subset.
+  `k = 26.519727` rad/(s^2 V); estimated jointly from the preceding training subset.
+  `asymD = -0.119434134` 1/s; estimated jointly from the preceding training subset.
+  train/all-moving: n=1519 samples; derivative RMSE=10.4634 rad/s^2; mean residual=0.622867 rad/s^2.
+  train/driven-moving: n=840 samples; derivative RMSE=11.3115 rad/s^2; mean residual=0.571389 rad/s^2.
+  train/free-moving: n=679 samples; derivative RMSE=9.30796 rad/s^2; mean residual=0.686551 rad/s^2.
+  val/all-moving: n=572 samples; derivative RMSE=22.2571 rad/s^2; mean residual=4.12839 rad/s^2.
+  val/driven-moving: n=413 samples; derivative RMSE=25.2937 rad/s^2; mean residual=6.37143 rad/s^2.
+  val/free-moving: n=159 samples; derivative RMSE=10.9695 rad/s^2; mean residual=-1.69785 rad/s^2.
+  Grid physical audit: min gravity(theta)*theta=0 rad^2/s^2 on 2001 assumed grid points, theta in [-pi,pi] rad; min d(force)/du=26.5197 rad/(s^2 V) on 2001 assumed grid points, u in [-10,10] V. Sign-reversed gravity gives restoring force. Other friction asymmetry terms require separate final-model audit.
+
+asymmetric voltage; fitting data=train, rows=1519 samples; moving threshold=Abs(omega) > 0.5 rad/s; subset=all trajectories.
+Expression: `domega = g*(-sin(theta)) + b*(-omega) + c*(-sign(omega)) + k*(u) + asymU*(Abs(u))`.
+  `g = 108.369446` rad/s^2; estimated jointly from the preceding training subset.
+  `b = 1.63142196` 1/s; estimated jointly from the preceding training subset.
+  `c = 19.0379327` rad/s^2; estimated jointly from the preceding training subset.
+  `k = 26.6620134` rad/(s^2 V); estimated jointly from the preceding training subset.
+  `asymU = 0.519833529` rad/(s^2 V); estimated jointly from the preceding training subset.
+  train/all-moving: n=1519 samples; derivative RMSE=10.4554 rad/s^2; mean residual=0.669146 rad/s^2.
+  train/driven-moving: n=840 samples; derivative RMSE=11.3092 rad/s^2; mean residual=0.245537 rad/s^2.
+  train/free-moving: n=679 samples; derivative RMSE=9.29128 rad/s^2; mean residual=1.1932 rad/s^2.
+  val/all-moving: n=572 samples; derivative RMSE=22.1194 rad/s^2; mean residual=3.91059 rad/s^2.
+  val/driven-moving: n=413 samples; derivative RMSE=25.1623 rad/s^2; mean residual=5.86245 rad/s^2.
+  val/free-moving: n=159 samples; derivative RMSE=10.7495 rad/s^2; mean residual=-1.15935 rad/s^2.
+  Grid physical audit: min gravity(theta)*theta=0 rad^2/s^2 on 2001 assumed grid points, theta in [-pi,pi] rad; min d(force)/du=26.1422 rad/(s^2 V) on 2001 assumed grid points, u in [-10,10] V. Sign-reversed gravity gives restoring force. Other friction asymmetry terms require separate final-model audit.
+
+quadratic damping; fitting data=train, rows=1519 samples; moving threshold=Abs(omega) > 0.5 rad/s; subset=all trajectories.
+Expression: `domega = g*(-sin(theta)) + b*(-omega) + c*(-sign(omega)) + k*(u) + quadD*(-omega*Abs(omega))`.
+  `g = 108.291288` rad/s^2; estimated jointly from the preceding training subset.
+  `b = 2.24322148` 1/s; estimated jointly from the preceding training subset.
+  `c = 17.7264645` rad/s^2; estimated jointly from the preceding training subset.
+  `k = 26.5721986` rad/(s^2 V); estimated jointly from the preceding training subset.
+  `quadD = -0.0438764883` 1/rad; estimated jointly from the preceding training subset.
+  train/all-moving: n=1519 samples; derivative RMSE=10.4559 rad/s^2; mean residual=1.1879 rad/s^2.
+  train/driven-moving: n=840 samples; derivative RMSE=11.3336 rad/s^2; mean residual=1.19448 rad/s^2.
+  train/free-moving: n=679 samples; derivative RMSE=9.25553 rad/s^2; mean residual=1.17976 rad/s^2.
+  val/all-moving: n=572 samples; derivative RMSE=22.3738 rad/s^2; mean residual=4.68973 rad/s^2.
+  val/driven-moving: n=413 samples; derivative RMSE=25.4604 rad/s^2; mean residual=6.99867 rad/s^2.
+  val/free-moving: n=159 samples; derivative RMSE=10.8206 rad/s^2; mean residual=-1.30771 rad/s^2.
+  Grid physical audit: min gravity(theta)*theta=0 rad^2/s^2 on 2001 assumed grid points, theta in [-pi,pi] rad; min d(force)/du=26.5722 rad/(s^2 V) on 2001 assumed grid points, u in [-10,10] V. Sign-reversed gravity gives restoring force. Other friction asymmetry terms require separate final-model audit.
+
+cubic damping; fitting data=train, rows=1519 samples; moving threshold=Abs(omega) > 0.5 rad/s; subset=all trajectories.
+Expression: `domega = g*(-sin(theta)) + b*(-omega) + c*(-sign(omega)) + k*(u) + cubicD*(-omega**3)`.
+  `g = 108.282767` rad/s^2; estimated jointly from the preceding training subset.
+  `b = 1.94385363` 1/s; estimated jointly from the preceding training subset.
+  `c = 18.1476683` rad/s^2; estimated jointly from the preceding training subset.
+  `k = 26.5748917` rad/(s^2 V); estimated jointly from the preceding training subset.
+  `cubicD = -0.00164979895` s/rad^2; estimated jointly from the preceding training subset.
+  train/all-moving: n=1519 samples; derivative RMSE=10.4592 rad/s^2; mean residual=1.21356 rad/s^2.
+  train/driven-moving: n=840 samples; derivative RMSE=11.3391 rad/s^2; mean residual=1.22875 rad/s^2.
+  train/free-moving: n=679 samples; derivative RMSE=9.25547 rad/s^2; mean residual=1.19476 rad/s^2.
+  val/all-moving: n=572 samples; derivative RMSE=22.3742 rad/s^2; mean residual=4.70604 rad/s^2.
+  val/driven-moving: n=413 samples; derivative RMSE=25.4663 rad/s^2; mean residual=7.00136 rad/s^2.
+  val/free-moving: n=159 samples; derivative RMSE=10.7871 rad/s^2; mean residual=-1.25603 rad/s^2.
+  Grid physical audit: min gravity(theta)*theta=0 rad^2/s^2 on 2001 assumed grid points, theta in [-pi,pi] rad; min d(force)/du=26.5749 rad/(s^2 V) on 2001 assumed grid points, u in [-10,10] V. Sign-reversed gravity gives restoring force. Other friction asymmetry terms require separate final-model audit.
+
+quadratic voltage; fitting data=train, rows=1519 samples; moving threshold=Abs(omega) > 0.5 rad/s; subset=all trajectories.
+Expression: `domega = g*(-sin(theta)) + b*(-omega) + c*(-sign(omega)) + k*(u) + quadU*(u*Abs(u))`.
+  `g = 108.402142` rad/s^2; estimated jointly from the preceding training subset.
+  `b = 1.62022865` 1/s; estimated jointly from the preceding training subset.
+  `c = 19.0169383` rad/s^2; estimated jointly from the preceding training subset.
+  `k = 26.2285265` rad/(s^2 V); estimated jointly from the preceding training subset.
+  `quadU = 0.0910865473` rad/(s^2 V^2); estimated jointly from the preceding training subset.
+  train/all-moving: n=1519 samples; derivative RMSE=10.4872 rad/s^2; mean residual=1.18955 rad/s^2.
+  train/driven-moving: n=840 samples; derivative RMSE=11.3517 rad/s^2; mean residual=1.1925 rad/s^2.
+  train/free-moving: n=679 samples; derivative RMSE=9.30715 rad/s^2; mean residual=1.18589 rad/s^2.
+  val/all-moving: n=572 samples; derivative RMSE=22.3343 rad/s^2; mean residual=4.65983 rad/s^2.
+  val/driven-moving: n=413 samples; derivative RMSE=25.4198 rad/s^2; mean residual=6.90878 rad/s^2.
+  val/free-moving: n=159 samples; derivative RMSE=10.7746 rad/s^2; mean residual=-1.18177 rad/s^2.
+  Grid physical audit: min gravity(theta)*theta=0 rad^2/s^2 on 2001 assumed grid points, theta in [-pi,pi] rad; min d(force)/du=26.2285 rad/(s^2 V) on 2001 assumed grid points, u in [-10,10] V. Sign-reversed gravity gives restoring force. Other friction asymmetry terms require separate final-model audit.
+
+cubic voltage; fitting data=train, rows=1519 samples; moving threshold=Abs(omega) > 0.5 rad/s; subset=all trajectories.
+Expression: `domega = g*(-sin(theta)) + b*(-omega) + c*(-sign(omega)) + k*(u) + cubicU*(u**3)`.
+  `g = 108.39393` rad/s^2; estimated jointly from the preceding training subset.
+  `b = 1.61879644` 1/s; estimated jointly from the preceding training subset.
+  `c = 19.02329` rad/s^2; estimated jointly from the preceding training subset.
+  `k = 26.4360776` rad/(s^2 V); estimated jointly from the preceding training subset.
+  `cubicU = 0.00721229685` rad/(s^2 V^3); estimated jointly from the preceding training subset.
+  train/all-moving: n=1519 samples; derivative RMSE=10.4879 rad/s^2; mean residual=1.18027 rad/s^2.
+  train/driven-moving: n=840 samples; derivative RMSE=11.3528 rad/s^2; mean residual=1.17502 rad/s^2.
+  train/free-moving: n=679 samples; derivative RMSE=9.30734 rad/s^2; mean residual=1.18677 rad/s^2.
+  val/all-moving: n=572 samples; derivative RMSE=22.3366 rad/s^2; mean residual=4.65472 rad/s^2.
+  val/driven-moving: n=413 samples; derivative RMSE=25.4228 rad/s^2; mean residual=6.90173 rad/s^2.
+  val/free-moving: n=159 samples; derivative RMSE=10.7735 rad/s^2; mean residual=-1.18186 rad/s^2.
+  Grid physical audit: min gravity(theta)*theta=0 rad^2/s^2 on 2001 assumed grid points, theta in [-pi,pi] rad; min d(force)/du=26.4361 rad/(s^2 V) on 2001 assumed grid points, u in [-10,10] V. Sign-reversed gravity gives restoring force. Other friction asymmetry terms require separate final-model audit.
+
+gravity harmonic 2; fitting data=train, rows=1519 samples; moving threshold=Abs(omega) > 0.5 rad/s; subset=all trajectories.
+Expression: `domega = g*(-sin(theta)) + b*(-omega) + c*(-sign(omega)) + k*(u) + g2*(-sin(2*theta))`.
+  `g = 107.724667` rad/s^2; estimated jointly from the preceding training subset.
+  `b = 1.60709062` 1/s; estimated jointly from the preceding training subset.
+  `c = 19.0821147` rad/s^2; estimated jointly from the preceding training subset.
+  `k = 26.511261` rad/(s^2 V); estimated jointly from the preceding training subset.
+  `g2 = 0.776443348` rad/s^2; estimated jointly from the preceding training subset.
+  train/all-moving: n=1519 samples; derivative RMSE=10.4819 rad/s^2; mean residual=1.13767 rad/s^2.
+  train/driven-moving: n=840 samples; derivative RMSE=11.3923 rad/s^2; mean residual=1.10128 rad/s^2.
+  train/free-moving: n=679 samples; derivative RMSE=9.23234 rad/s^2; mean residual=1.18269 rad/s^2.
+  val/all-moving: n=572 samples; derivative RMSE=22.349 rad/s^2; mean residual=4.64353 rad/s^2.
+  val/driven-moving: n=413 samples; derivative RMSE=25.4402 rad/s^2; mean residual=6.85665 rad/s^2.
+  val/free-moving: n=159 samples; derivative RMSE=10.7592 rad/s^2; mean residual=-1.10499 rad/s^2.
+  Grid physical audit: min gravity(theta)*theta=0 rad^2/s^2 on 2001 assumed grid points, theta in [-pi,pi] rad; min d(force)/du=26.5113 rad/(s^2 V) on 2001 assumed grid points, u in [-10,10] V. Sign-reversed gravity gives restoring force. Other friction asymmetry terms require separate final-model audit.
+
+gravity harmonics 2+3; fitting data=train, rows=1519 samples; moving threshold=Abs(omega) > 0.5 rad/s; subset=all trajectories.
+Expression: `domega = g*(-sin(theta)) + b*(-omega) + c*(-sign(omega)) + k*(u) + g2*(-sin(2*theta)) + g3*(-sin(3*theta))`.
+  `g = 107.217298` rad/s^2; estimated jointly from the preceding training subset.
+  `b = 1.64667473` 1/s; estimated jointly from the preceding training subset.
+  `c = 18.8416244` rad/s^2; estimated jointly from the preceding training subset.
+  `k = 26.6218184` rad/(s^2 V); estimated jointly from the preceding training subset.
+  `g2 = 3.17161271` rad/s^2; estimated jointly from the preceding training subset.
+  `g3 = -2.63506821` rad/s^2; estimated jointly from the preceding training subset.
+  train/all-moving: n=1519 samples; derivative RMSE=10.4236 rad/s^2; mean residual=1.05201 rad/s^2.
+  train/driven-moving: n=840 samples; derivative RMSE=11.3182 rad/s^2; mean residual=0.977726 rad/s^2.
+  train/free-moving: n=679 samples; derivative RMSE=9.19735 rad/s^2; mean residual=1.14391 rad/s^2.
+  val/all-moving: n=572 samples; derivative RMSE=22.3015 rad/s^2; mean residual=4.69199 rad/s^2.
+  val/driven-moving: n=413 samples; derivative RMSE=25.4092 rad/s^2; mean residual=6.86143 rad/s^2.
+  val/free-moving: n=159 samples; derivative RMSE=10.5937 rad/s^2; mean residual=-0.943097 rad/s^2.
+  Grid physical audit: min gravity(theta)*theta=0 rad^2/s^2 on 2001 assumed grid points, theta in [-pi,pi] rad; min d(force)/du=26.6218 rad/(s^2 V) on 2001 assumed grid points, u in [-10,10] V. Sign-reversed gravity gives restoring force. Other friction asymmetry terms require separate final-model audit.
+
+angle-modulated viscous; fitting data=train, rows=1519 samples; moving threshold=Abs(omega) > 0.5 rad/s; subset=all trajectories.
+Expression: `domega = g*(-sin(theta)) + b*(-omega) + c*(-sign(omega)) + k*(u) + angleD*(-omega*(1-cos(theta)))`.
+  `g = 109.184205` rad/s^2; estimated jointly from the preceding training subset.
+  `b = 1.36747776` 1/s; estimated jointly from the preceding training subset.
+  `c = 19.2607653` rad/s^2; estimated jointly from the preceding training subset.
+  `k = 26.5924569` rad/(s^2 V); estimated jointly from the preceding training subset.
+  `angleD = 0.828097063` 1/s; estimated jointly from the preceding training subset.
+  train/all-moving: n=1519 samples; derivative RMSE=10.3218 rad/s^2; mean residual=1.11794 rad/s^2.
+  train/driven-moving: n=840 samples; derivative RMSE=11.2173 rad/s^2; mean residual=1.15031 rad/s^2.
+  train/free-moving: n=679 samples; derivative RMSE=9.09267 rad/s^2; mean residual=1.07789 rad/s^2.
+  val/all-moving: n=572 samples; derivative RMSE=22.2979 rad/s^2; mean residual=4.80791 rad/s^2.
+  val/driven-moving: n=413 samples; derivative RMSE=25.4169 rad/s^2; mean residual=6.9487 rad/s^2.
+  val/free-moving: n=159 samples; derivative RMSE=10.5186 rad/s^2; mean residual=-0.752758 rad/s^2.
+  Grid physical audit: min gravity(theta)*theta=0 rad^2/s^2 on 2001 assumed grid points, theta in [-pi,pi] rad; min d(force)/du=26.5925 rad/(s^2 V) on 2001 assumed grid points, u in [-10,10] V. Sign-reversed gravity gives restoring force. Other friction asymmetry terms require separate final-model audit.
+
+angle-modulated Coulomb; fitting data=train, rows=1519 samples; moving threshold=Abs(omega) > 0.5 rad/s; subset=all trajectories.
+Expression: `domega = g*(-sin(theta)) + b*(-omega) + c*(-sign(omega)) + k*(u) + cAngle*(-sign(omega)*(1-cos(theta)))`.
+  `g = 109.285999` rad/s^2; estimated jointly from the preceding training subset.
+  `b = 1.50533106` 1/s; estimated jointly from the preceding training subset.
+  `c = 18.2519376` rad/s^2; estimated jointly from the preceding training subset.
+  `k = 26.538944` rad/(s^2 V); estimated jointly from the preceding training subset.
+  `cAngle = 6.42637686` rad/s^2; estimated jointly from the preceding training subset.
+  train/all-moving: n=1519 samples; derivative RMSE=10.2317 rad/s^2; mean residual=1.14165 rad/s^2.
+  train/driven-moving: n=840 samples; derivative RMSE=11.1978 rad/s^2; mean residual=1.18627 rad/s^2.
+  train/free-moving: n=679 samples; derivative RMSE=8.89243 rad/s^2; mean residual=1.08644 rad/s^2.
+  val/all-moving: n=572 samples; derivative RMSE=22.2787 rad/s^2; mean residual=4.84285 rad/s^2.
+  val/driven-moving: n=413 samples; derivative RMSE=25.371 rad/s^2; mean residual=7.02141 rad/s^2.
+  val/free-moving: n=159 samples; derivative RMSE=10.6591 rad/s^2; mean residual=-0.815923 rad/s^2.
+  Grid physical audit: min gravity(theta)*theta=0 rad^2/s^2 on 2001 assumed grid points, theta in [-pi,pi] rad; min d(force)/du=26.5389 rad/(s^2 V) on 2001 assumed grid points, u in [-10,10] V. Sign-reversed gravity gives restoring force. Other friction asymmetry terms require separate final-model audit.
+
+angle moving offset; fitting data=train, rows=1519 samples; moving threshold=Abs(omega) > 0.5 rad/s; subset=all trajectories.
+Expression: `domega = g*(-sin(theta)) + b*(-omega) + c*(-sign(omega)) + k*(u) + cosOffset*(cos(theta)*Abs(sign(omega)))`.
+  `g = 108.099089` rad/s^2; estimated jointly from the preceding training subset.
+  `b = 1.57286443` 1/s; estimated jointly from the preceding training subset.
+  `c = 19.4677947` rad/s^2; estimated jointly from the preceding training subset.
+  `k = 26.6172877` rad/(s^2 V); estimated jointly from the preceding training subset.
+  `cosOffset = 2.30945924` rad/s^2; estimated jointly from the preceding training subset.
+  train/all-moving: n=1519 samples; derivative RMSE=10.3029 rad/s^2; mean residual=-0.558371 rad/s^2.
+  train/driven-moving: n=840 samples; derivative RMSE=11.2672 rad/s^2; mean residual=-0.569879 rad/s^2.
+  train/free-moving: n=679 samples; derivative RMSE=8.96767 rad/s^2; mean residual=-0.544134 rad/s^2.
+  val/all-moving: n=572 samples; derivative RMSE=21.9015 rad/s^2; mean residual=2.85636 rad/s^2.
+  val/driven-moving: n=413 samples; derivative RMSE=24.8896 rad/s^2; mean residual=5.09532 rad/s^2.
+  val/free-moving: n=159 samples; derivative RMSE=10.7937 rad/s^2; mean residual=-2.95932 rad/s^2.
+  Grid physical audit: min gravity(theta)*theta=0 rad^2/s^2 on 2001 assumed grid points, theta in [-pi,pi] rad; min d(force)/du=26.6173 rad/(s^2 V) on 2001 assumed grid points, u in [-10,10] V. Sign-reversed gravity gives restoring force. Other friction asymmetry terms require separate final-model audit.
+
+combined quadratic voltage damping asymmetry; fitting data=train, rows=1519 samples; moving threshold=Abs(omega) > 0.5 rad/s; subset=all trajectories.
+Expression: `domega = g*(-sin(theta)) + b*(-omega) + c*(-sign(omega)) + k*(u) + quadU*(u*Abs(u)) + quadD*(-omega*Abs(omega)) + asymC*(-Abs(sign(omega)))`.
+  `g = 108.19384` rad/s^2; estimated jointly from the preceding training subset.
+  `b = 2.25501033` 1/s; estimated jointly from the preceding training subset.
+  `c = 17.9410954` rad/s^2; estimated jointly from the preceding training subset.
+  `k = 25.9147326` rad/(s^2 V); estimated jointly from the preceding training subset.
+  `quadU = 0.240030429` rad/(s^2 V^2); estimated jointly from the preceding training subset.
+  `quadD = -0.0467127575` 1/rad; estimated jointly from the preceding training subset.
+  `asymC = -1.28622483` rad/s^2; estimated jointly from the preceding training subset.
+  train/all-moving: n=1519 samples; derivative RMSE=10.379 rad/s^2; mean residual=1.6241e-14 rad/s^2.
+  train/driven-moving: n=840 samples; derivative RMSE=11.2701 rad/s^2; mean residual=0.0555021 rad/s^2.
+  train/free-moving: n=679 samples; derivative RMSE=9.15738 rad/s^2; mean residual=-0.0686624 rad/s^2.
+  val/all-moving: n=572 samples; derivative RMSE=22.121 rad/s^2; mean residual=3.43423 rad/s^2.
+  val/driven-moving: n=413 samples; derivative RMSE=25.1212 rad/s^2; mean residual=5.7439 rad/s^2.
+  val/free-moving: n=159 samples; derivative RMSE=11.0086 rad/s^2; mean residual=-2.56512 rad/s^2.
+  Grid physical audit: min gravity(theta)*theta=0 rad^2/s^2 on 2001 assumed grid points, theta in [-pi,pi] rad; min d(force)/du=25.9147 rad/(s^2 V) on 2001 assumed grid points, u in [-10,10] V. Sign-reversed gravity gives restoring force. Other friction asymmetry terms require separate final-model audit.
+
+combined harmonics voltage damping; fitting data=train, rows=1519 samples; moving threshold=Abs(omega) > 0.5 rad/s; subset=all trajectories.
+Expression: `domega = g*(-sin(theta)) + b*(-omega) + c*(-sign(omega)) + k*(u) + g2*(-sin(2*theta)) + g3*(-sin(3*theta)) + quadU*(u*Abs(u)) + quadD*(-omega*Abs(omega))`.
+  `g = 107.287277` rad/s^2; estimated jointly from the preceding training subset.
+  `b = 2.27462925` 1/s; estimated jointly from the preceding training subset.
+  `c = 17.5136142` rad/s^2; estimated jointly from the preceding training subset.
+  `k = 26.0245873` rad/(s^2 V); estimated jointly from the preceding training subset.
+  `g2 = 3.07567851` rad/s^2; estimated jointly from the preceding training subset.
+  `g3 = -2.70886658` rad/s^2; estimated jointly from the preceding training subset.
+  `quadU = 0.211436506` rad/(s^2 V^2); estimated jointly from the preceding training subset.
+  `quadD = -0.0434991322` 1/rad; estimated jointly from the preceding training subset.
+  train/all-moving: n=1519 samples; derivative RMSE=10.389 rad/s^2; mean residual=1.1133 rad/s^2.
+  train/driven-moving: n=840 samples; derivative RMSE=11.2803 rad/s^2; mean residual=1.09746 rad/s^2.
+  train/free-moving: n=679 samples; derivative RMSE=9.16726 rad/s^2; mean residual=1.13288 rad/s^2.
+  val/all-moving: n=572 samples; derivative RMSE=22.3337 rad/s^2; mean residual=4.76271 rad/s^2.
+  val/driven-moving: n=413 samples; derivative RMSE=25.4381 rad/s^2; mean residual=7.01196 rad/s^2.
+  val/free-moving: n=159 samples; derivative RMSE=10.6574 rad/s^2; mean residual=-1.07968 rad/s^2.
+  Grid physical audit: min gravity(theta)*theta=0 rad^2/s^2 on 2001 assumed grid points, theta in [-pi,pi] rad; min d(force)/du=26.0246 rad/(s^2 V) on 2001 assumed grid points, u in [-10,10] V. Sign-reversed gravity gives restoring force. Other friction asymmetry terms require separate final-model audit.
+
+BASE residual stratification train; moving threshold=0.5 rad/s; coefficients fitted on train only.
+  `omega` bin=(-30.001, -10.0] rad/s: n=81 samples; mean(e)=1.49262 rad/s^2; RMSE=12.539 rad/s^2.
+  `omega` bin=(-10.0, -5.0] rad/s: n=220 samples; mean(e)=-0.149585 rad/s^2; RMSE=11.205 rad/s^2.
+  `omega` bin=(-5.0, -2.0] rad/s: n=222 samples; mean(e)=2.35757 rad/s^2; RMSE=10.6149 rad/s^2.
+  `omega` bin=(-2.0, -0.5] rad/s: n=161 samples; mean(e)=1.73146 rad/s^2; RMSE=9.93159 rad/s^2.
+  `omega` bin=(0.5, 2.0] rad/s: n=285 samples; mean(e)=2.51864 rad/s^2; RMSE=9.00975 rad/s^2.
+  `omega` bin=(2.0, 5.0] rad/s: n=281 samples; mean(e)=0.401428 rad/s^2; RMSE=10.5018 rad/s^2.
+  `omega` bin=(5.0, 10.0] rad/s: n=176 samples; mean(e)=-0.755414 rad/s^2; RMSE=10.6555 rad/s^2.
+  `omega` bin=(10.0, 30.0] rad/s: n=93 samples; mean(e)=2.06965 rad/s^2; RMSE=11.2304 rad/s^2.
+  `theta` bin=(-4.001, -1.0] rad: n=115 samples; mean(e)=-3.20703 rad/s^2; RMSE=15.9769 rad/s^2.
+  `theta` bin=(-1.0, -0.5] rad: n=200 samples; mean(e)=0.25018 rad/s^2; RMSE=11.9293 rad/s^2.
+  `theta` bin=(-0.5, -0.2] rad: n=248 samples; mean(e)=1.11566 rad/s^2; RMSE=9.00195 rad/s^2.
+  `theta` bin=(-0.2, 0.0] rad: n=267 samples; mean(e)=3.16637 rad/s^2; RMSE=9.09224 rad/s^2.
+  `theta` bin=(0.0, 0.2] rad: n=219 samples; mean(e)=2.65841 rad/s^2; RMSE=9.26517 rad/s^2.
+  `theta` bin=(0.2, 0.5] rad: n=226 samples; mean(e)=3.62078 rad/s^2; RMSE=10.2325 rad/s^2.
+  `theta` bin=(0.5, 1.0] rad: n=136 samples; mean(e)=-1.35919 rad/s^2; RMSE=10.448 rad/s^2.
+  `theta` bin=(1.0, 4.0] rad: n=108 samples; mean(e)=-2.21009 rad/s^2; RMSE=9.52357 rad/s^2.
+  `u` bin=(-10.001, -3.0] V: n=131 samples; mean(e)=-0.61153 rad/s^2; RMSE=11.3574 rad/s^2.
+  `u` bin=(-3.0, -1.0] V: n=172 samples; mean(e)=3.13989 rad/s^2; RMSE=12.0598 rad/s^2.
+  `u` bin=(-1.0, -0.1] V: n=119 samples; mean(e)=0.414508 rad/s^2; RMSE=11.5111 rad/s^2.
+  `u` bin=(-0.1, 0.1] V: n=712 samples; mean(e)=1.05283 rad/s^2; RMSE=9.53666 rad/s^2.
+  `u` bin=(0.1, 1.0] V: n=133 samples; mean(e)=1.9614 rad/s^2; RMSE=12.1318 rad/s^2.
+  `u` bin=(1.0, 3.0] V: n=179 samples; mean(e)=0.635932 rad/s^2; RMSE=10.4206 rad/s^2.
+  `u` bin=(3.0, 10.0] V: n=73 samples; mean(e)=2.00942 rad/s^2; RMSE=8.79066 rad/s^2.
+  Pearson correlation e versus `-sin(theta)`=-0.00965438 dimensionless on train moving subset.
+  Pearson correlation e versus `-omega`=-3.4476e-05 dimensionless on train moving subset.
+  Pearson correlation e versus `-sign(omega)`=0.0112341 dimensionless on train moving subset.
+  Pearson correlation e versus `u`=0.0102441 dimensionless on train moving subset.
+  Pearson correlation e versus `-sin(2*theta)`=0.00967307 dimensionless on train moving subset.
+  Pearson correlation e versus `-sin(3*theta)`=-0.0513334 dimensionless on train moving subset.
+  Pearson correlation e versus `-omega*Abs(omega)`=-0.0266245 dimensionless on train moving subset.
+  Pearson correlation e versus `-omega**3`=-0.0448354 dimensionless on train moving subset.
+  Pearson correlation e versus `u*Abs(u)`=0.0180696 dimensionless on train moving subset.
+  Pearson correlation e versus `u**3`=0.019094 dimensionless on train moving subset.
+  Pearson correlation e versus `Abs(u)`=0.00945069 dimensionless on train moving subset.
+  Pearson correlation e versus `-Abs(omega)`=0.0296277 dimensionless on train moving subset.
+  Pearson correlation e versus `-omega*(1-cos(theta))`=0.13626 dimensionless on train moving subset.
+  Pearson correlation e versus `cos(theta)*Abs(sign(omega))`=0.194418 dimensionless on train moving subset.
+  Pearson correlation e versus `-sign(omega)*(1-cos(theta))`=0.187248 dimensionless on train moving subset.
+
+BASE residual stratification val; moving threshold=0.5 rad/s; coefficients fitted on train only.
+  `omega` bin=(-30.001, -10.0] rad/s: n=14 samples; mean(e)=5.62921 rad/s^2; RMSE=15.9886 rad/s^2.
+  `omega` bin=(-10.0, -5.0] rad/s: n=72 samples; mean(e)=0.183348 rad/s^2; RMSE=10.3997 rad/s^2.
+  `omega` bin=(-5.0, -2.0] rad/s: n=109 samples; mean(e)=9.08465 rad/s^2; RMSE=27.8997 rad/s^2.
+  `omega` bin=(-2.0, -0.5] rad/s: n=70 samples; mean(e)=7.49278 rad/s^2; RMSE=17.2703 rad/s^2.
+  `omega` bin=(0.5, 2.0] rad/s: n=80 samples; mean(e)=2.93772 rad/s^2; RMSE=26.8694 rad/s^2.
+  `omega` bin=(2.0, 5.0] rad/s: n=114 samples; mean(e)=3.21414 rad/s^2; RMSE=28.2906 rad/s^2.
+  `omega` bin=(5.0, 10.0] rad/s: n=92 samples; mean(e)=5.48603 rad/s^2; RMSE=12.3106 rad/s^2.
+  `omega` bin=(10.0, 30.0] rad/s: n=21 samples; mean(e)=-2.57827 rad/s^2; RMSE=15.94 rad/s^2.
+  `theta` bin=(-4.001, -1.0] rad: n=37 samples; mean(e)=-4.63034 rad/s^2; RMSE=16.4834 rad/s^2.
+  `theta` bin=(-1.0, -0.5] rad: n=78 samples; mean(e)=1.98097 rad/s^2; RMSE=14.0747 rad/s^2.
+  `theta` bin=(-0.5, -0.2] rad: n=82 samples; mean(e)=0.265254 rad/s^2; RMSE=23.7671 rad/s^2.
+  `theta` bin=(-0.2, 0.0] rad: n=60 samples; mean(e)=10.4612 rad/s^2; RMSE=28.2383 rad/s^2.
+  `theta` bin=(0.0, 0.2] rad: n=81 samples; mean(e)=10.3324 rad/s^2; RMSE=32.3552 rad/s^2.
+  `theta` bin=(0.2, 0.5] rad: n=89 samples; mean(e)=8.64611 rad/s^2; RMSE=26.9239 rad/s^2.
+  `theta` bin=(0.5, 1.0] rad: n=95 samples; mean(e)=3.81436 rad/s^2; RMSE=11.8916 rad/s^2.
+  `theta` bin=(1.0, 4.0] rad: n=50 samples; mean(e)=1.14648 rad/s^2; RMSE=7.68366 rad/s^2.
+  `u` bin=(-10.001, -3.0] V: n=53 samples; mean(e)=4.32906 rad/s^2; RMSE=11.0733 rad/s^2.
+  `u` bin=(-3.0, -1.0] V: n=82 samples; mean(e)=9.39094 rad/s^2; RMSE=33.397 rad/s^2.
+  `u` bin=(-1.0, -0.1] V: n=60 samples; mean(e)=9.39078 rad/s^2; RMSE=14.6474 rad/s^2.
+  `u` bin=(-0.1, 0.1] V: n=170 samples; mean(e)=-0.630833 rad/s^2; RMSE=11.6762 rad/s^2.
+  `u` bin=(0.1, 1.0] V: n=43 samples; mean(e)=-0.134528 rad/s^2; RMSE=20.2424 rad/s^2.
+  `u` bin=(1.0, 3.0] V: n=103 samples; mean(e)=7.08903 rad/s^2; RMSE=34.3789 rad/s^2.
+  `u` bin=(3.0, 10.0] V: n=61 samples; mean(e)=7.84662 rad/s^2; RMSE=14.0268 rad/s^2.
+  Pearson correlation e versus `-sin(theta)`=-0.0654331 dimensionless on val moving subset.
+  Pearson correlation e versus `-omega`=0.0258325 dimensionless on val moving subset.
+  Pearson correlation e versus `-sign(omega)`=0.0601758 dimensionless on val moving subset.
+  Pearson correlation e versus `u`=0.00393007 dimensionless on val moving subset.
+  Pearson correlation e versus `-sin(2*theta)`=-0.0714348 dimensionless on val moving subset.
+  Pearson correlation e versus `-sin(3*theta)`=-0.0996209 dimensionless on val moving subset.
+  Pearson correlation e versus `-omega*Abs(omega)`=0.0130063 dimensionless on val moving subset.
+  Pearson correlation e versus `-omega**3`=0.0115784 dimensionless on val moving subset.
+  Pearson correlation e versus `u*Abs(u)`=0.0135748 dimensionless on val moving subset.
+  Pearson correlation e versus `u**3`=0.0108386 dimensionless on val moving subset.
+  Pearson correlation e versus `Abs(u)`=0.121383 dimensionless on val moving subset.
+  Pearson correlation e versus `-Abs(omega)`=0.0637018 dimensionless on val moving subset.
+  Pearson correlation e versus `-omega*(1-cos(theta))`=0.0937617 dimensionless on val moving subset.
+  Pearson correlation e versus `cos(theta)*Abs(sign(omega))`=0.161858 dimensionless on val moving subset.
+  Pearson correlation e versus `-sign(omega)*(1-cos(theta))`=0.11714 dimensionless on val moving subset.
+
+LOW-SPEED FRICTION grid: speed scales are assumed alternatives, not independently fitted. Fits use training moving threshold=0.157 rad/s; no rest samples.
+  tanh; assumed speed scale=0.05 rad/s; training initializations: `g = 108.012` rad/s^2; `b = 1.852934` 1/s; `c = 17.00938` rad/s^2; `k = 26.37317` rad/(s^2 V).
+    train moving n=1794 samples; derivative RMSE=10.824 rad/s^2.
+    val moving n=669 samples; derivative RMSE=21.5139 rad/s^2.
+  stribeck; assumed speed scale=0.05 rad/s; training initializations: `g = 108.0104` rad/s^2; `b = 1.854613` 1/s; `c = 16.99585` rad/s^2; `k = 26.37292` rad/(s^2 V); `extraC = 8.388691e-13` rad/s^2.
+    train moving n=1794 samples; derivative RMSE=10.8275 rad/s^2.
+    val moving n=669 samples; derivative RMSE=21.5169 rad/s^2.
+  tanh; assumed speed scale=0.1 rad/s; training initializations: `g = 108.0447` rad/s^2; `b = 1.817812` 1/s; `c = 17.29257` rad/s^2; `k = 26.37821` rad/(s^2 V).
+    train moving n=1794 samples; derivative RMSE=10.7537 rad/s^2.
+    val moving n=669 samples; derivative RMSE=21.4525 rad/s^2.
+  stribeck; assumed speed scale=0.1 rad/s; training initializations: `g = 108.0104` rad/s^2; `b = 1.854613` 1/s; `c = 16.99585` rad/s^2; `k = 26.37292` rad/(s^2 V); `extraC = 2.958228e-31` rad/s^2.
+    train moving n=1794 samples; derivative RMSE=10.8275 rad/s^2.
+    val moving n=669 samples; derivative RMSE=21.5169 rad/s^2.
+  tanh; assumed speed scale=0.2 rad/s; training initializations: `g = 108.1247` rad/s^2; `b = 1.702912` 1/s; `c = 18.22146` rad/s^2; `k = 26.39195` rad/(s^2 V).
+    train moving n=1794 samples; derivative RMSE=10.5762 rad/s^2.
+    val moving n=669 samples; derivative RMSE=21.2805 rad/s^2.
+  stribeck; assumed speed scale=0.2 rad/s; training initializations: `g = 108.0104` rad/s^2; `b = 1.854613` 1/s; `c = 16.99585` rad/s^2; `k = 26.37292` rad/(s^2 V); `extraC = 1.836353e-16` rad/s^2.
+    train moving n=1794 samples; derivative RMSE=10.8275 rad/s^2.
+    val moving n=669 samples; derivative RMSE=21.5169 rad/s^2.
+  tanh; assumed speed scale=0.5 rad/s; training initializations: `g = 108.1029` rad/s^2; `b = 1.4609` 1/s; `c = 20.2263` rad/s^2; `k = 26.40484` rad/(s^2 V).
+    train moving n=1794 samples; derivative RMSE=10.579 rad/s^2.
+    val moving n=669 samples; derivative RMSE=21.1123 rad/s^2.
+  stribeck; assumed speed scale=0.5 rad/s; training initializations: `g = 108.0104` rad/s^2; `b = 1.854613` 1/s; `c = 16.99585` rad/s^2; `k = 26.37292` rad/(s^2 V); `extraC = 2.652931e-14` rad/s^2.
+    train moving n=1794 samples; derivative RMSE=10.8275 rad/s^2.
+    val moving n=669 samples; derivative RMSE=21.5169 rad/s^2.
+  tanh; assumed speed scale=1 rad/s; training initializations: `g = 107.8381` rad/s^2; `b = 1.170099` 1/s; `c = 22.78394` rad/s^2; `k = 26.38153` rad/(s^2 V).
+    train moving n=1794 samples; derivative RMSE=10.9522 rad/s^2.
+    val moving n=669 samples; derivative RMSE=21.1278 rad/s^2.
+  stribeck; assumed speed scale=1 rad/s; training initializations: `g = 108.0104` rad/s^2; `b = 1.854613` 1/s; `c = 16.99585` rad/s^2; `k = 26.37292` rad/(s^2 V); `extraC = 1.022828e-23` rad/s^2.
+    train moving n=1794 samples; derivative RMSE=10.8275 rad/s^2.
+    val moving n=669 samples; derivative RMSE=21.5169 rad/s^2.
+  tanh; assumed speed scale=2 rad/s; training initializations: `g = 107.2782` rad/s^2; `b = 0.7083331` 1/s; `c = 27.4343` rad/s^2; `k = 26.343` rad/(s^2 V).
+    train moving n=1794 samples; derivative RMSE=11.6547 rad/s^2.
+    val moving n=669 samples; derivative RMSE=21.4756 rad/s^2.
+  stribeck; assumed speed scale=2 rad/s; training initializations: `g = 108.0104` rad/s^2; `b = 1.854613` 1/s; `c = 16.99585` rad/s^2; `k = 26.37292` rad/(s^2 V); `extraC = 8.725114e-18` rad/s^2.
+    train moving n=1794 samples; derivative RMSE=10.8275 rad/s^2.
+    val moving n=669 samples; derivative RMSE=21.5169 rad/s^2.
+  tanh; assumed speed scale=4 rad/s; training initializations: `g = 106.3176` rad/s^2; `b = 2.149981e-19` 1/s; `c = 37.25123` rad/s^2; `k = 26.37452` rad/(s^2 V).
+    train moving n=1794 samples; derivative RMSE=12.5806 rad/s^2.
+    val moving n=669 samples; derivative RMSE=22.2216 rad/s^2.
+  stribeck; assumed speed scale=4 rad/s; training initializations: `g = 108.0104` rad/s^2; `b = 1.854613` 1/s; `c = 16.99585` rad/s^2; `k = 26.37292` rad/(s^2 V); `extraC = 1.271015e-22` rad/s^2.
+    train moving n=1794 samples; derivative RMSE=10.8275 rad/s^2.
+    val moving n=669 samples; derivative RMSE=21.5169 rad/s^2.
+
+DERIVATIVE TIMING / ENCODER DIAGNOSTICS: differences kept strictly inside each trajectory; period=0.01 s assumed from TASK.md.
+  train: domega versus `forward` velocity difference: n=3509 samples; disagreement RMSE=7.149825 rad/s^2; correlation=0.9868387 dimensionless.
+  train: domega versus `central` velocity difference: n=3496 samples; disagreement RMSE=1.502801e-13 rad/s^2; correlation=1 dimensionless.
+  train: domega versus `backward` velocity difference: n=3509 samples; disagreement RMSE=7.139983 rad/s^2; correlation=0.9868751 dimensionless.
+  train moving diagnostic voltage shift=-2 samples (-0.02 s): same-source refit n=1519 samples, derivative RMSE=23.1583 rad/s^2; not validation evidence, because coefficients refitted in each source.
+  train moving diagnostic voltage shift=-1 samples (-0.01 s): same-source refit n=1519 samples, derivative RMSE=16.5673 rad/s^2; not validation evidence, because coefficients refitted in each source.
+  train moving diagnostic voltage shift=0 samples (0 s): same-source refit n=1519 samples, derivative RMSE=10.4881 rad/s^2; not validation evidence, because coefficients refitted in each source.
+  train moving diagnostic voltage shift=1 samples (0.01 s): same-source refit n=1510 samples, derivative RMSE=11.2282 rad/s^2; not validation evidence, because coefficients refitted in each source.
+  train moving diagnostic voltage shift=2 samples (0.02 s): same-source refit n=1499 samples, derivative RMSE=18.0607 rad/s^2; not validation evidence, because coefficients refitted in each source.
+  val: domega versus `forward` velocity difference: n=1189 samples; disagreement RMSE=14.30795 rad/s^2; correlation=0.9467271 dimensionless.
+  val: domega versus `central` velocity difference: n=1186 samples; disagreement RMSE=1.481476e-13 rad/s^2; correlation=1 dimensionless.
+  val: domega versus `backward` velocity difference: n=1189 samples; disagreement RMSE=14.30614 rad/s^2; correlation=0.9467415 dimensionless.
+  val moving diagnostic voltage shift=-2 samples (-0.02 s): same-source refit n=572 samples, derivative RMSE=31.325 rad/s^2; not validation evidence, because coefficients refitted in each source.
+  val moving diagnostic voltage shift=-1 samples (-0.01 s): same-source refit n=572 samples, derivative RMSE=26.1586 rad/s^2; not validation evidence, because coefficients refitted in each source.
+  val moving diagnostic voltage shift=0 samples (0 s): same-source refit n=572 samples, derivative RMSE=22.2186 rad/s^2; not validation evidence, because coefficients refitted in each source.
+  val moving diagnostic voltage shift=1 samples (0.01 s): same-source refit n=570 samples, derivative RMSE=22.1244 rad/s^2; not validation evidence, because coefficients refitted in each source.
+  val moving diagnostic voltage shift=2 samples (0.02 s): same-source refit n=568 samples, derivative RMSE=26.4019 rad/s^2; not validation evidence, because coefficients refitted in each source.
+
+REST BAND from free-response rows: inferred force/gravity ratio is illustrative; exact zero velocity alone includes transient reversals.
+  train free rows with assumed zero-speed tolerance=1e-10 rad/s and zero-acceleration tolerance=1e-8 rad/s^2: n=1653 samples, angle range=[-0.08796459,0.1633628] rad; max Abs(sin(theta))=0.1626372 dimensionless. Baseline moving friction ratio c/g=0.1755405 dimensionless from train moving threshold=0.5 rad/s.
+  val free rows with assumed zero-speed tolerance=1e-10 rad/s and zero-acceleration tolerance=1e-8 rad/s^2: n=457 samples, angle range=[-0.03769911,0.1350885] rad; max Abs(sin(theta))=0.134678 dimensionless. Baseline moving friction ratio c/g=0.1755405 dimensionless from train moving threshold=0.5 rad/s.
+
+INTERPRETATION: A sign-based derivative fit cannot represent static friction at rest; use a torque dead zone or carefully audited regularization in the simulator. Any gravity harmonic combination must preserve restoring sign across [-pi,pi] rad (assumed physical domain), not merely observed angles. Odd nonlinear voltage coefficients should preserve monotonicity across [-10,10] V (assumed physical domain), wider than observed training inputs. Negative quadratic damping can fit derivatives but extrapolate to antidamping; smooth saturating or positive-damping alternatives may be safer. Moving-only asymmetric friction must not create nonrestoring torque at zero speed. Timing diagnostics are not permission to introduce lagged input into the candidate expressions. Error reductions are derivative-only and do not establish final simulation performance.

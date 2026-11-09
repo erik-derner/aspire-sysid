@@ -1,0 +1,444 @@
+{
+  "authorized_part": {
+    "noise": null,
+    "preprocessing": null,
+    "sampling_period_s": 0.2,
+    "train": {
+      "file": "data/train.csv",
+      "samples": 450,
+      "trajectories": 3,
+      "trajectory_lengths": [
+        150,
+        150,
+        150
+      ]
+    },
+    "trajectory_column": "trajectory"
+  },
+  "build_script": {
+    "file": "build.py",
+    "sha256": "1295d3bf91b19330bf7c5aa8bf91bab4cc2298bc8ed3d3e161b295218bdaca2f"
+  },
+  "datasets": [
+    {
+      "agent_visible": true,
+      "assignment": "training",
+      "dataset": "train",
+      "noise": "not stated",
+      "operating_conditions": {
+        "source": "task.yaml, field description",
+        "statement": "not stated per dataset; the task description states the conditions of the recordings as a whole",
+        "task_description": "A TurtleBot 2 differential-drive mobile robot moves on a flat floor. Its on-board odometry logs the pose of the robot: the position x, y and the heading phi. The robot receives two commands, the forward velocity v_f and the angular velocity v_a. Each pair of commands is held for 5 samples (1 s) and is then replaced by a new random pair. The logged pose is known to carry a considerable measurement error."
+      },
+      "preprocessing": "not stated",
+      "samples": 450,
+      "sampling_period_s": 0.2,
+      "source": {
+        "provenance_document": "provenance.md of the task folder",
+        "recording_names": [
+          "randrealFeb18_5Hz_ep1",
+          "randrealFeb18_5Hz_ep2",
+          "randrealFeb18_5Hz_ep3"
+        ],
+        "task_file": "data/train.csv",
+        "working_directory_file": "data/train.csv"
+      },
+      "trajectories": [
+        {
+          "id": "1",
+          "samples": 150
+        },
+        {
+          "id": "2",
+          "samples": 150
+        },
+        {
+          "id": "3",
+          "samples": 150
+        }
+      ],
+      "trajectory_column": "trajectory",
+      "version": {
+        "bytes": 41638,
+        "sha256": "bc27e22dbee4254f7e24b08df9e99bb4ab82ddb2e2dfe29efb1daf6b3d371b3c"
+      }
+    },
+    {
+      "agent_visible": false,
+      "assignment": "test",
+      "dataset": "test-1",
+      "noise": "not stated",
+      "operating_conditions": {
+        "source": "task.yaml, field description",
+        "statement": "not stated per dataset; the task description states the conditions of the recordings as a whole",
+        "task_description": "A TurtleBot 2 differential-drive mobile robot moves on a flat floor. Its on-board odometry logs the pose of the robot: the position x, y and the heading phi. The robot receives two commands, the forward velocity v_f and the angular velocity v_a. Each pair of commands is held for 5 samples (1 s) and is then replaced by a new random pair. The logged pose is known to carry a considerable measurement error."
+      },
+      "preprocessing": "not stated",
+      "samples": 26,
+      "sampling_period_s": 0.2,
+      "source": {
+        "provenance_document": "provenance.md of the task folder",
+        "recording_names": "not stated",
+        "task_file": "test/test_trajectory_1.csv",
+        "working_directory_file": null
+      },
+      "trajectories": [
+        {
+          "id": "test-1",
+          "samples": 26
+        }
+      ],
+      "trajectory_column": null,
+      "version": {
+        "sha256": "2cd0b221a1ad73f300fcc2ceeb6a2168ca08bdedade58684b9b401dadf3ae919"
+      }
+    },
+    {
+      "agent_visible": false,
+      "assignment": "test",
+      "dataset": "test-2",
+      "noise": "not stated",
+      "operating_conditions": {
+        "source": "task.yaml, field description",
+        "statement": "not stated per dataset; the task description states the conditions of the recordings as a whole",
+        "task_description": "A TurtleBot 2 differential-drive mobile robot moves on a flat floor. Its on-board odometry logs the pose of the robot: the position x, y and the heading phi. The robot receives two commands, the forward velocity v_f and the angular velocity v_a. Each pair of commands is held for 5 samples (1 s) and is then replaced by a new random pair. The logged pose is known to carry a considerable measurement error."
+      },
+      "preprocessing": "not stated",
+      "samples": 26,
+      "sampling_period_s": 0.2,
+      "source": {
+        "provenance_document": "provenance.md of the task folder",
+        "recording_names": "not stated",
+        "task_file": "test/test_trajectory_2.csv",
+        "working_directory_file": null
+      },
+      "trajectories": [
+        {
+          "id": "test-2",
+          "samples": 26
+        }
+      ],
+      "trajectory_column": null,
+      "version": {
+        "sha256": "e10a4f6df497662ee8d6be9d0a9524afeabf5df1398ecbaa1c7930dbb22b739b"
+      }
+    },
+    {
+      "agent_visible": false,
+      "assignment": "test",
+      "dataset": "test-3",
+      "noise": "not stated",
+      "operating_conditions": {
+        "source": "task.yaml, field description",
+        "statement": "not stated per dataset; the task description states the conditions of the recordings as a whole",
+        "task_description": "A TurtleBot 2 differential-drive mobile robot moves on a flat floor. Its on-board odometry logs the pose of the robot: the position x, y and the heading phi. The robot receives two commands, the forward velocity v_f and the angular velocity v_a. Each pair of commands is held for 5 samples (1 s) and is then replaced by a new random pair. The logged pose is known to carry a considerable measurement error."
+      },
+      "preprocessing": "not stated",
+      "samples": 26,
+      "sampling_period_s": 0.2,
+      "source": {
+        "provenance_document": "provenance.md of the task folder",
+        "recording_names": "not stated",
+        "task_file": "test/test_trajectory_3.csv",
+        "working_directory_file": null
+      },
+      "trajectories": [
+        {
+          "id": "test-3",
+          "samples": 26
+        }
+      ],
+      "trajectory_column": null,
+      "version": {
+        "sha256": "c350f91ec98325e7f648b62774d2e79795553fdad38d7811c52bddcfce4f91f6"
+      }
+    },
+    {
+      "agent_visible": false,
+      "assignment": "test",
+      "dataset": "test-4",
+      "noise": "not stated",
+      "operating_conditions": {
+        "source": "task.yaml, field description",
+        "statement": "not stated per dataset; the task description states the conditions of the recordings as a whole",
+        "task_description": "A TurtleBot 2 differential-drive mobile robot moves on a flat floor. Its on-board odometry logs the pose of the robot: the position x, y and the heading phi. The robot receives two commands, the forward velocity v_f and the angular velocity v_a. Each pair of commands is held for 5 samples (1 s) and is then replaced by a new random pair. The logged pose is known to carry a considerable measurement error."
+      },
+      "preprocessing": "not stated",
+      "samples": 26,
+      "sampling_period_s": 0.2,
+      "source": {
+        "provenance_document": "provenance.md of the task folder",
+        "recording_names": "not stated",
+        "task_file": "test/test_trajectory_4.csv",
+        "working_directory_file": null
+      },
+      "trajectories": [
+        {
+          "id": "test-4",
+          "samples": 26
+        }
+      ],
+      "trajectory_column": null,
+      "version": {
+        "sha256": "a79b27a69bc5de5deabab12432b71ff5649c4c1789078a2007f323b232d75c8e"
+      }
+    },
+    {
+      "agent_visible": false,
+      "assignment": "test",
+      "dataset": "test-5",
+      "noise": "not stated",
+      "operating_conditions": {
+        "source": "task.yaml, field description",
+        "statement": "not stated per dataset; the task description states the conditions of the recordings as a whole",
+        "task_description": "A TurtleBot 2 differential-drive mobile robot moves on a flat floor. Its on-board odometry logs the pose of the robot: the position x, y and the heading phi. The robot receives two commands, the forward velocity v_f and the angular velocity v_a. Each pair of commands is held for 5 samples (1 s) and is then replaced by a new random pair. The logged pose is known to carry a considerable measurement error."
+      },
+      "preprocessing": "not stated",
+      "samples": 26,
+      "sampling_period_s": 0.2,
+      "source": {
+        "provenance_document": "provenance.md of the task folder",
+        "recording_names": "not stated",
+        "task_file": "test/test_trajectory_5.csv",
+        "working_directory_file": null
+      },
+      "trajectories": [
+        {
+          "id": "test-5",
+          "samples": 26
+        }
+      ],
+      "trajectory_column": null,
+      "version": {
+        "sha256": "dcdf3a47f7d824a3a5e3ecc5729b06aeea351c28dae270bdd738eb29d8e9de59"
+      }
+    },
+    {
+      "agent_visible": false,
+      "assignment": "test",
+      "dataset": "test-6",
+      "noise": "not stated",
+      "operating_conditions": {
+        "source": "task.yaml, field description",
+        "statement": "not stated per dataset; the task description states the conditions of the recordings as a whole",
+        "task_description": "A TurtleBot 2 differential-drive mobile robot moves on a flat floor. Its on-board odometry logs the pose of the robot: the position x, y and the heading phi. The robot receives two commands, the forward velocity v_f and the angular velocity v_a. Each pair of commands is held for 5 samples (1 s) and is then replaced by a new random pair. The logged pose is known to carry a considerable measurement error."
+      },
+      "preprocessing": "not stated",
+      "samples": 25,
+      "sampling_period_s": 0.2,
+      "source": {
+        "provenance_document": "provenance.md of the task folder",
+        "recording_names": "not stated",
+        "task_file": "test/test_trajectory_6.csv",
+        "working_directory_file": null
+      },
+      "trajectories": [
+        {
+          "id": "test-6",
+          "samples": 25
+        }
+      ],
+      "trajectory_column": null,
+      "version": {
+        "sha256": "deaed50adbc05b86de9aabf353c222994d2a4bfc61883eda631696d82d1f7e18"
+      }
+    },
+    {
+      "agent_visible": false,
+      "assignment": "test",
+      "dataset": "test-7",
+      "noise": "not stated",
+      "operating_conditions": {
+        "source": "task.yaml, field description",
+        "statement": "not stated per dataset; the task description states the conditions of the recordings as a whole",
+        "task_description": "A TurtleBot 2 differential-drive mobile robot moves on a flat floor. Its on-board odometry logs the pose of the robot: the position x, y and the heading phi. The robot receives two commands, the forward velocity v_f and the angular velocity v_a. Each pair of commands is held for 5 samples (1 s) and is then replaced by a new random pair. The logged pose is known to carry a considerable measurement error."
+      },
+      "preprocessing": "not stated",
+      "samples": 26,
+      "sampling_period_s": 0.2,
+      "source": {
+        "provenance_document": "provenance.md of the task folder",
+        "recording_names": "not stated",
+        "task_file": "test/test_trajectory_7.csv",
+        "working_directory_file": null
+      },
+      "trajectories": [
+        {
+          "id": "test-7",
+          "samples": 26
+        }
+      ],
+      "trajectory_column": null,
+      "version": {
+        "sha256": "a5f22548d289c73e579b4388f02a4edfe82b14ca31886784a500f56b41ef955b"
+      }
+    },
+    {
+      "agent_visible": false,
+      "assignment": "test",
+      "dataset": "test-8",
+      "noise": "not stated",
+      "operating_conditions": {
+        "source": "task.yaml, field description",
+        "statement": "not stated per dataset; the task description states the conditions of the recordings as a whole",
+        "task_description": "A TurtleBot 2 differential-drive mobile robot moves on a flat floor. Its on-board odometry logs the pose of the robot: the position x, y and the heading phi. The robot receives two commands, the forward velocity v_f and the angular velocity v_a. Each pair of commands is held for 5 samples (1 s) and is then replaced by a new random pair. The logged pose is known to carry a considerable measurement error."
+      },
+      "preprocessing": "not stated",
+      "samples": 26,
+      "sampling_period_s": 0.2,
+      "source": {
+        "provenance_document": "provenance.md of the task folder",
+        "recording_names": "not stated",
+        "task_file": "test/test_trajectory_8.csv",
+        "working_directory_file": null
+      },
+      "trajectories": [
+        {
+          "id": "test-8",
+          "samples": 26
+        }
+      ],
+      "trajectory_column": null,
+      "version": {
+        "sha256": "13433506f272611b407b3a551a9582a7f063b643fc5e85557ff3b701c7e14585"
+      }
+    },
+    {
+      "agent_visible": false,
+      "assignment": "test",
+      "dataset": "test-9",
+      "noise": "not stated",
+      "operating_conditions": {
+        "source": "task.yaml, field description",
+        "statement": "not stated per dataset; the task description states the conditions of the recordings as a whole",
+        "task_description": "A TurtleBot 2 differential-drive mobile robot moves on a flat floor. Its on-board odometry logs the pose of the robot: the position x, y and the heading phi. The robot receives two commands, the forward velocity v_f and the angular velocity v_a. Each pair of commands is held for 5 samples (1 s) and is then replaced by a new random pair. The logged pose is known to carry a considerable measurement error."
+      },
+      "preprocessing": "not stated",
+      "samples": 26,
+      "sampling_period_s": 0.2,
+      "source": {
+        "provenance_document": "provenance.md of the task folder",
+        "recording_names": "not stated",
+        "task_file": "test/test_trajectory_9.csv",
+        "working_directory_file": null
+      },
+      "trajectories": [
+        {
+          "id": "test-9",
+          "samples": 26
+        }
+      ],
+      "trajectory_column": null,
+      "version": {
+        "sha256": "60236024e2b23ee74198796ce8a10809492f9c5f853ab3c1d02cfade347de0f8"
+      }
+    },
+    {
+      "agent_visible": false,
+      "assignment": "test",
+      "dataset": "test-10",
+      "noise": "not stated",
+      "operating_conditions": {
+        "source": "task.yaml, field description",
+        "statement": "not stated per dataset; the task description states the conditions of the recordings as a whole",
+        "task_description": "A TurtleBot 2 differential-drive mobile robot moves on a flat floor. Its on-board odometry logs the pose of the robot: the position x, y and the heading phi. The robot receives two commands, the forward velocity v_f and the angular velocity v_a. Each pair of commands is held for 5 samples (1 s) and is then replaced by a new random pair. The logged pose is known to carry a considerable measurement error."
+      },
+      "preprocessing": "not stated",
+      "samples": 26,
+      "sampling_period_s": 0.2,
+      "source": {
+        "provenance_document": "provenance.md of the task folder",
+        "recording_names": "not stated",
+        "task_file": "test/test_trajectory_10.csv",
+        "working_directory_file": null
+      },
+      "trajectories": [
+        {
+          "id": "test-10",
+          "samples": 26
+        }
+      ],
+      "trajectory_column": null,
+      "version": {
+        "sha256": "8338e025c7ebcefeb61e50f780dda9a03956545fa0abe587fb6c024109760fd4"
+      }
+    },
+    {
+      "agent_visible": false,
+      "assignment": "test",
+      "dataset": "test-11",
+      "noise": "not stated",
+      "operating_conditions": {
+        "source": "task.yaml, field description",
+        "statement": "not stated per dataset; the task description states the conditions of the recordings as a whole",
+        "task_description": "A TurtleBot 2 differential-drive mobile robot moves on a flat floor. Its on-board odometry logs the pose of the robot: the position x, y and the heading phi. The robot receives two commands, the forward velocity v_f and the angular velocity v_a. Each pair of commands is held for 5 samples (1 s) and is then replaced by a new random pair. The logged pose is known to carry a considerable measurement error."
+      },
+      "preprocessing": "not stated",
+      "samples": 26,
+      "sampling_period_s": 0.2,
+      "source": {
+        "provenance_document": "provenance.md of the task folder",
+        "recording_names": "not stated",
+        "task_file": "test/test_trajectory_11.csv",
+        "working_directory_file": null
+      },
+      "trajectories": [
+        {
+          "id": "test-11",
+          "samples": 26
+        }
+      ],
+      "trajectory_column": null,
+      "version": {
+        "sha256": "070e7cfef73f4c1a9a4d6915067851b7ea11f3f0ea74d3fcaddadc7b8b6d1b6e"
+      }
+    },
+    {
+      "agent_visible": false,
+      "assignment": "test",
+      "dataset": "test-12",
+      "noise": "not stated",
+      "operating_conditions": {
+        "source": "task.yaml, field description",
+        "statement": "not stated per dataset; the task description states the conditions of the recordings as a whole",
+        "task_description": "A TurtleBot 2 differential-drive mobile robot moves on a flat floor. Its on-board odometry logs the pose of the robot: the position x, y and the heading phi. The robot receives two commands, the forward velocity v_f and the angular velocity v_a. Each pair of commands is held for 5 samples (1 s) and is then replaced by a new random pair. The logged pose is known to carry a considerable measurement error."
+      },
+      "preprocessing": "not stated",
+      "samples": 25,
+      "sampling_period_s": 0.2,
+      "source": {
+        "provenance_document": "provenance.md of the task folder",
+        "recording_names": "not stated",
+        "task_file": "test/test_trajectory_12.csv",
+        "working_directory_file": null
+      },
+      "trajectories": [
+        {
+          "id": "test-12",
+          "samples": 25
+        }
+      ],
+      "trajectory_column": null,
+      "version": {
+        "sha256": "9320c69bfbd3ae12536d266ce0126c0af9546567f47706cb60105cf63602877c"
+      }
+    }
+  ],
+  "format_version": 1,
+  "provenance_document": {
+    "file": "provenance.md",
+    "sha256": "454c9387c4c00d20c94d406f9ee4089094dad033e712732d3c671b24043b1438"
+  },
+  "sampling_period_note": null,
+  "sampling_period_s": 0.2,
+  "separation": {
+    "delayed_variables": "not applicable: the task declares no delayed variables",
+    "filtering": "the harness applies no filtering or other preprocessing; the preprocessing of the task authors is stated per dataset, and any filtering by the agent is applied by its own scripts to the data in its working directory, which contain no test data",
+    "per_trajectory_evaluation": "every trajectory and static dataset is evaluated on its own; a simulation starts once per trajectory and the end of one trajectory is never joined to the beginning of another",
+    "sealing": "the 12 sealed test trajectory file(s) are held in the task store and opened only by the evaluation module of the harness; they are never copied into the working directory, and the brief, the execution messages and the results permitted to the agent contain no test value, test trajectory, test-derived plot or failure location on test data; the leak scanner searches the working directory and the transcript for them",
+    "selection": "the agent fits and recommends from the training and validation data only; its recommendation is recorded in the pool file before any test result exists; the ranking on test data is computed afterwards by the harness and is labeled oracle-based selection on test data",
+    "use_of_test_data": "the authors used the test data during the development of the framework and of the tasks; a result of a round after the user has seen test results is labeled test-informed"
+  },
+  "task_id": "turtlebot",
+  "user_facing": "contains recording names and digests of sealed files; never shown to the agent"
+}

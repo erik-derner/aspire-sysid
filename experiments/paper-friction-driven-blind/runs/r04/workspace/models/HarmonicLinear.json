@@ -1,0 +1,69 @@
+{
+  "expressions": {
+    "dy": "x1",
+    "dx1": "-a*sin(y) + ell*y + harm*cos(y) - b*x1 + c*x2 - f*tanh(x1/s)"
+  },
+  "parameters": [
+    {
+      "name": "a",
+      "value": 124.98740797354635,
+      "unit": "recorded x1 unit/s",
+      "type": "fitted",
+      "description": "Restoring amplitude multiplying the sine of the coordinate; estimated jointly by output-error fitting."
+    },
+    {
+      "name": "b",
+      "value": 1.6099839374677047,
+      "unit": "s^-1",
+      "type": "fitted",
+      "description": "Linear velocity damping rate; estimated jointly by output-error fitting."
+    },
+    {
+      "name": "c",
+      "value": 27.775036230333363,
+      "unit": "recorded x1 unit/(recorded x2 unit*s)",
+      "type": "fitted",
+      "description": "Linear input forcing gain; estimated jointly by output-error fitting."
+    },
+    {
+      "name": "f",
+      "value": 20.99470812093779,
+      "unit": "recorded x1 unit/s",
+      "type": "fitted",
+      "description": "Magnitude of the saturating velocity-opposing term; estimated jointly by output-error fitting."
+    },
+    {
+      "name": "s",
+      "value": 0.10000000000000002,
+      "unit": "recorded x1 unit",
+      "type": "fitted",
+      "description": "Velocity transition scale; estimated jointly by output-error fitting within the stated bounds."
+    },
+    {
+      "name": "ell",
+      "value": 9.96626900862292,
+      "unit": "recorded x1 unit/(recorded y unit*s)",
+      "type": "fitted",
+      "description": "Linear coordinate correction coefficient; estimated jointly by output-error fitting."
+    },
+    {
+      "name": "harm",
+      "value": 3.0378456830950933,
+      "unit": "recorded x1 unit/s",
+      "type": "fitted",
+      "description": "Cosine restoring correction amplitude; estimated jointly by output-error fitting."
+    }
+  ],
+  "estimation": {
+    "criterion": "Unweighted sum of squared output errors `y_sim-y` over every sample after the first of each training trajectory. Each rollout starts at its own logged initial `y` and `x1`, holds `x2` constant between samples, and uses classical fourth-order Runge-Kutta with `Ts = 0.01` s. Simulated states are never reset to later observations. This output-error criterion matches the task score and avoids relying on noisy finite-difference acceleration as a final target; `dx1` was used only in exploratory structure selection and initialization. Equal sample weights follow the task scoring rule.",
+    "data": "data/train.csv, all 13 trajectories and all samples; the first row of each is initialization, not an error term. No training trajectory was excluded. data/val.csv, all three trajectories, was reserved for uninterrupted rollout comparison and residual inspection. Derivative regressions used the supplied training `dx1`; final estimates use training `y` only.",
+    "method": "Bound-constrained nonlinear least squares by scipy.optimize.least_squares, method trf (trust-region reflective), finite-difference Jacobian, linear least-squares loss, and x_scale=jac. This method directly minimizes the nonlinear rollout criterion; ordinary least squares cannot solve that final criterion. All listed fitted parameters were estimated jointly. Three deterministic starts used the same other coefficients and `s = 0.15`, `s = 0.4`, and `s = 1.0` in recorded `x1` units. Coefficients were rounded plausible values informed by derivative regressions, with near-zero extra corrections; the three widths test sensitivity to the initially unknown sharpness. The retained fit had the lowest training criterion among these starts, not the lowest validation error. Its full starting values were `a = 110.0` recorded x1 unit/s; `b = 1.8` s^-1; `c = 28.0` recorded x1 unit/(recorded x2 unit*s); `f = 20.0` recorded x1 unit/s; `s = 0.4` recorded x1 unit; `ell = 10.0` recorded x1 unit/(recorded y unit*s); `harm = 3.0` recorded x1 unit/s. Bounds were `50.0 <= a <= 200.0` recorded x1 unit/s; `0.0 <= b <= 10.0` s^-1; `10.0 <= c <= 50.0` recorded x1 unit/(recorded x2 unit*s); `5.0 <= f <= 40.0` recorded x1 unit/s; `0.1 <= s <= 3.0` recorded x1 unit; `-30.0 <= ell <= 40.0` recorded x1 unit/(recorded y unit*s); `-20.0 <= harm <= 20.0` recorded x1 unit/s. Positive restoring amplitude, damping, input gain, and friction prevent sign-reversed degenerate fits; remaining broad bounds limit implausible extrapolation. The `s >= 0.1` lower bound in recorded `x1` units regularizes sharp transitions for fixed-step RK4; the attained lower bound does not resolve the true transition width. Tolerances were `ftol = 1e-9`, `xtol = 1e-9`, `gtol = 1e-8`, and the maximum was 300 function evaluations. No random numbers or seed were used. Reference: SciPy API documentation for scipy.optimize.least_squares; its implementation and options were used through the installed SciPy package. Numba JIT compilation accelerated a hand-coded RK4 simulator without changing the model equations. The reproducibility script is `fit_final.py`; `make_submission.py` copies its saved winning parameters into the deliverables. ",
+    "script": "fit_final.py"
+  },
+  "discussion": {
+    "family": "Linear-in-basis restoring-force model using first trigonometric harmonics and a linear coordinate term, coupled to nonlinear smooth friction. This is an empirical nonlinear state-space family, not a derived physical law.",
+    "interpretation": "The state `y` is the scored logged coordinate; `x1` is its velocity-like state; `x2` is the logged exogenous input. The equation `dy = x1` supplies the kinematic relationship. The term `-b*x1` damps velocity, with `b` its rate coefficient; `c*x2` supplies linear forcing, with `c` its gain. These are mathematical effects, not established physical mechanisms. The term `-a*sin(y)` is odd periodic restoration; `ell*y` changes the local slope and the high-amplitude shape; `harm*cos(y)` is an even coordinate-dependent acceleration correction. The term `-f*tanh(x1/s)` supplies saturating velocity opposition. Here `ell` and `harm` are basis coefficients, not inferred springs or gravity directions.",
+    "origin": "Before fitting I listed affine state-space, sparse-polynomial, and nonlinear restoring/damping families with saturation and absolute-value terms. Actual exploratory work used deterministic ordinary least squares, not a genetic symbolic-regression package or PySINDy. The library compared linear, sinusoidal and cubic/quintic restoring terms, sign/tanh friction, velocity-quadratic damping, input-cubic terms and low-order interactions (explore.py and moving.py). The linear derivative model had training derivative RMSE `17.1872` in recorded `x1` units/s; replacing linear restoration by sine reduced this to `12.6139`, and adding sign friction reduced it to `9.6318`, on all training rows. Residuals near zero velocity and nonzero final positions motivated sharp friction transitions and static gates. Central finite differences verified `x1 = (y_next-y_previous)/(2*Ts)` at interior samples to roundoff, with `Ts = 0.01` s, so `dy = x1` was fixed rather than fitted. Sine restoration is an oscillator analogy inferred from data, not supplied physical knowledge. Scaled-sine fits substantially reduced training error in large-amplitude free trajectories, but validation did not improve relative to the simpler shifted sine. The alternative basis `-a*sin(y) + ell*y + harm*cos(y)` allows curvature and asymmetry to vary separately. These terms were manually proposed in response to the displacement-binned and per-trajectory residuals, then fitted simultaneously.",
+    "limitations": "Physical state and input units, apparatus, intended use, and noise statistics are not supplied. A recorded unit in parameter metadata means the numerical coordinate unit of its named column, not an invented physical unit. Sine arguments use the logged numerical `y` coordinate; no angular calibration is established. Treating the state/input as sufficient for a two-state autonomous vector field is an assumption imposed by the task. Central-difference derivatives of quantized positions are not independent exact acceleration measurements. No parameter confidence intervals were calculated. Training and validation rollouts are finite and do not establish global validity or stability under arbitrary forcing. The validation set was used for model comparison, not for fitting any delivered parameter. The linear correction has a positive fitted coefficient and therefore creates anti-restoration at sufficiently large displacement when it dominates the bounded harmonics. Its better training score is not matched by the best validation score. The sine and linear basis coefficients may be correlated over limited displacement spans, so individual terms have no identified physical interpretation. Training rollout RMSE was `0.04672833372888441` in recorded `y` units; validation rollout RMSE was `0.08157536011092963` in recorded `y` units. Validation per-trajectory RMSEs, in trajectory order, were `0.09781594566216435`, `0.0674033937203751`, `0.07155245763093791` in recorded `y` units. Validation mean signed error was `-0.0022567237785175963` in recorded `y` units, but its near-zero pooled value masks trajectory-dependent bias: validation trajectory 1 is underpredicted on average and trajectory 3 overpredicted. The validation sampled-acceleration RMSE was `16.098087453911045` in recorded `x1` units/s. Full residual summaries are in selected_diagnostics.json, generated by selected_diagnostics.py. No test data were accessed."
+  }
+}

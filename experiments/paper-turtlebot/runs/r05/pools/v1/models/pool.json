@@ -1,0 +1,10 @@
+{
+  "order": [
+    "calibrated_unicycle",
+    "wheel_deadzone",
+    "body_offset",
+    "angular_deadzone"
+  ],
+  "recommended": "calibrated_unicycle",
+  "reason": "Recommend the two-gain midpoint unicycle for stable calibration and low complexity. On leave-one-trajectory-out 5 s windows initialized at every available pose of data/train.csv, its held-out `x` RMSE is 0.029706 m, versus 0.029508 m for the four-parameter wheel dead-zone alternative, 0.029838 m for the body-frame correction, and 0.030819 m for the angular dead zone. The wheel model advantage is small and its fitted mixing length is unstable across trajectory splits, including one bound-active fit. With command-change-only starts the baseline validation RMSE is 0.032366 m versus 0.032973 m for the wheel alternative. These are internal validation, not hidden-test results. The pool tests genuinely different command-response and body-geometry structures, not multiple gain variants of the recommended form."
+}

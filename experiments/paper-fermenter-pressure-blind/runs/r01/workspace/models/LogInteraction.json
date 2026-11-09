@@ -1,0 +1,103 @@
+{
+  "expressions": {
+    "dy": "c0*(1) + c1*((x1/sx)) + c2*((x2/sz)) + c3*(log(Max(y-q,eps))) + c4*((x1/sx)*log(Max(y-q,eps))) + c5*((x2/sz)*log(Max(y-q,eps))) + c6*((x1/sx)*(x2/sz)) + c7*((x1/sx)**2)"
+  },
+  "parameters": [
+    {
+      "name": "sx",
+      "value": 100.0,
+      "unit": "unknown input x1 unit",
+      "type": "fixed",
+      "description": "Scale of `x1`; chosen as a convenient round value near the observed input range, not a fitted physical constant."
+    },
+    {
+      "name": "sz",
+      "value": 30.0,
+      "unit": "unknown input x2 unit",
+      "type": "fixed",
+      "description": "Scale of `x2`; chosen as a convenient round value near the observed training input range, not a physical constant."
+    },
+    {
+      "name": "q",
+      "value": 0.8679417736967946,
+      "unit": "unknown state unit",
+      "type": "fitted",
+      "description": "Logarithm shift, jointly fitted with all interaction coefficients in the final one-step RK4 criterion."
+    },
+    {
+      "name": "eps",
+      "value": 1e-12,
+      "unit": "unknown state unit",
+      "type": "fixed",
+      "description": "Positive numerical floor in the logarithm argument, chosen solely to keep trial and simulated values finite; inactive on fitted measured states."
+    },
+    {
+      "name": "c0",
+      "value": -0.15246450207064557,
+      "unit": "unknown state unit/s",
+      "type": "fitted",
+      "description": "Coefficient of `1`; jointly estimated by one-step RK4 nonlinear least squares."
+    },
+    {
+      "name": "c1",
+      "value": 0.1284334515456529,
+      "unit": "unknown state unit/s",
+      "type": "fitted",
+      "description": "Coefficient of `(x1/sx)`; jointly estimated by one-step RK4 nonlinear least squares."
+    },
+    {
+      "name": "c2",
+      "value": 0.05940968986531372,
+      "unit": "unknown state unit/s",
+      "type": "fitted",
+      "description": "Coefficient of `(x2/sz)`; jointly estimated by one-step RK4 nonlinear least squares."
+    },
+    {
+      "name": "c3",
+      "value": -0.07114078436321422,
+      "unit": "unknown state unit/s",
+      "type": "fitted",
+      "description": "Coefficient of `log(Max(y-q,eps))`; jointly estimated by one-step RK4 nonlinear least squares."
+    },
+    {
+      "name": "c4",
+      "value": 0.0701624512267978,
+      "unit": "unknown state unit/s",
+      "type": "fitted",
+      "description": "Coefficient of `(x1/sx)*log(Max(y-q,eps))`; jointly estimated by one-step RK4 nonlinear least squares."
+    },
+    {
+      "name": "c5",
+      "value": -0.0018172587862068754,
+      "unit": "unknown state unit/s",
+      "type": "fitted",
+      "description": "Coefficient of `(x2/sz)*log(Max(y-q,eps))`; jointly estimated by one-step RK4 nonlinear least squares."
+    },
+    {
+      "name": "c6",
+      "value": -0.030749479686488335,
+      "unit": "unknown state unit/s",
+      "type": "fitted",
+      "description": "Coefficient of `(x1/sx)*(x2/sz)`; jointly estimated by one-step RK4 nonlinear least squares."
+    },
+    {
+      "name": "c7",
+      "value": 0.03143217273304539,
+      "unit": "unknown state unit/s",
+      "type": "fitted",
+      "description": "Coefficient of `(x1/sx)**2`; jointly estimated by one-step RK4 nonlinear least squares."
+    }
+  ],
+  "estimation": {
+    "criterion": "Unweighted sum of squared one-step state prediction errors `y_pred-y_next` on every consecutive training pair. Each RK4 step starts from the measured state and holds that row of inputs constant for `T_s = 5` s. This estimates the continuous-time model for the actual numerical integration convention rather than treating an interval derivative as exact instantaneous truth. Free-running evaluation is separate and never resets the state.",
+    "data": "All consecutive pairs in `data/train.csv` for final estimation; all training rows for initial derivative ordinary least squares. `data/val.csv` only for structure selection and diagnostics.",
+    "method": "Two-stage deterministic estimation. For each of two initial shifts, all coefficients are initialized by `numpy.linalg.lstsq` against training `dy`. The resulting complete starting vectors, in coefficient order followed by `q`, are `[-0.07880807316332075, 0.01926045174898322, 0.03047277373217694, -0.02040445483477376, 0.017669377538969046, -0.009256146786082907, -0.009012379212457823, 0.0641722948771082, 0.98]`; `[-0.09365974005349469, 0.06084253898121465, 0.04017817171879621, -0.13469582685006587, 0.12686157968131026, 0.013034822829222338, -0.007176516793813849, 0.03574998705727306, 0.5]`. Coefficients have unknown state units per second and `q` has unknown state units. Then all coefficients and `q` are jointly fitted with trust-region reflective nonlinear least squares, `scipy.optimize.least_squares`, using `x_scale = \"jac\"`, at most `350` function evaluations, and function, step, and gradient tolerances `1e-10`. Coefficient bounds are `-100 <= c_i <= 100` in unknown state units per second; shift bounds are `-5 <= q <= 0.99` in unknown state units. Bounds prevent singularity in the measured state range and extreme coefficients. The lower training one-step sum of squares selects the second start. No random seed applies. Additional transformed-state and input libraries and multistep objectives were tested but are not included in this fit.",
+    "script": "helper2.py"
+  },
+  "discussion": {
+    "family": "Logarithmic transformed-state nonlinear regression with bilinear interactions, implemented as a continuous-time nonlinear state-space vector field.",
+    "interpretation": "`log(Max(y-q,eps))` provides strong curvature near the shifted lower state region and weaker curvature at higher state. Its coefficients combined with `x1/sx` and `x2/sz` produce input-dependent restoring sensitivity. The remaining terms provide constant, linear, quadratic, and interacting input forcing. The floor is a numerical safeguard, not a physical lower bound.",
+    "origin": "Square-root, logarithm, exponential, arctangent, and power state transforms were deterministic hypotheses motivated by residual curvature and failure of the affine baseline. Input interactions were included because quadratic regression showed them to matter. Among these families, the logarithm with an additional quadratic term in `x1/sx` had the strongest validation free-running performance. It differs from the polynomial by using a shifted nonlinear state coordinate and from derivative fitting by using measured-state RK4 transition errors.",
+    "limitations": "The units and physical system are unknown. Only one supplied training trajectory and one supplied validation trajectory are available. Validation was used repeatedly for structure selection, so its error is not an unbiased estimate of generalization. Inputs and state are correlated, and global behavior is not identified. No delayed or future input is present. Residuals suggest sampling alignment or omitted dynamics: cubic derivative residual correlation with `x2` at the next sample minus its current value is approximately `0.8375` on training and `0.7193` on validation; this diagnostic is not proof of causation. These memoryless models cannot explicitly reproduce that dependence. Behavior below `y = q` is determined by the imposed floor and has no empirical support. The logarithm is an empirical transform in the supplied numerical state scale, not a dimensionally established physical law. Validation free-running RMSE is `0.0379691` in unknown state units; training RMSE is `0.0249076` in unknown state units, excluding first samples."
+  }
+}

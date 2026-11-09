@@ -1,0 +1,406 @@
+{
+  "expressions": {
+    "x_next": "c_x_1 + c_x_2*x + c_x_3*y + c_x_4*phi + c_x_5*v_f + c_x_6*x**2 + c_x_7*x*y + c_x_8*x*v_f + c_x_9*y**2 + c_x_10*y*phi + c_x_11*y*v_f + c_x_12*y*v_a + c_x_13*phi**2 + c_x_14*phi*v_f + c_x_15*phi*v_a + c_x_16*v_f**2 + c_x_17*v_f*v_a",
+    "y_next": "c_y_1 + c_y_2*x + c_y_3*y + c_y_4*v_f + c_y_5*v_a + c_y_6*x**2 + c_y_7*x*y + c_y_8*x*phi + c_y_9*x*v_f + c_y_10*x*v_a + c_y_11*y**2 + c_y_12*y*phi + c_y_13*y*v_f + c_y_14*y*v_a + c_y_15*phi**2 + c_y_16*phi*v_f + c_y_17*phi*v_a + c_y_18*v_f**2 + c_y_19*v_f*v_a",
+    "phi_next": "c_phi_1 + c_phi_2*x + c_phi_3*y + c_phi_4*phi + c_phi_5*v_f + c_phi_6*v_a + c_phi_7*x**2 + c_phi_8*x*y + c_phi_9*x*phi + c_phi_10*x*v_f + c_phi_11*y**2 + c_phi_12*y*phi + c_phi_13*y*v_f + c_phi_14*y*v_a + c_phi_15*phi**2 + c_phi_16*phi*v_f + c_phi_17*v_f**2 + c_phi_18*v_f*v_a + c_phi_19*v_a**2"
+  },
+  "parameters": [
+    {
+      "name": "c_x_1",
+      "value": 0.0025210563375599616,
+      "unit": "m",
+      "type": "fitted",
+      "description": "Coefficient of the library term `1` in the expression of `x_next`."
+    },
+    {
+      "name": "c_x_2",
+      "value": 1.0000678619208696,
+      "unit": "m / ((m))",
+      "type": "fitted",
+      "description": "Coefficient of the library term `x` in the expression of `x_next`."
+    },
+    {
+      "name": "c_x_3",
+      "value": -0.002718605692202318,
+      "unit": "m / ((m))",
+      "type": "fitted",
+      "description": "Coefficient of the library term `y` in the expression of `x_next`."
+    },
+    {
+      "name": "c_x_4",
+      "value": 0.006296397660932302,
+      "unit": "m / ((rad))",
+      "type": "fitted",
+      "description": "Coefficient of the library term `phi` in the expression of `x_next`."
+    },
+    {
+      "name": "c_x_5",
+      "value": 0.12346739746878305,
+      "unit": "m / ((m/s))",
+      "type": "fitted",
+      "description": "Coefficient of the library term `v_f` in the expression of `x_next`."
+    },
+    {
+      "name": "c_x_6",
+      "value": 0.0016694639653466229,
+      "unit": "m / ((m)^2)",
+      "type": "fitted",
+      "description": "Coefficient of the library term `x**2` in the expression of `x_next`."
+    },
+    {
+      "name": "c_x_7",
+      "value": -0.004416060135440426,
+      "unit": "m / ((m) (m))",
+      "type": "fitted",
+      "description": "Coefficient of the library term `x*y` in the expression of `x_next`."
+    },
+    {
+      "name": "c_x_8",
+      "value": 0.0261347137923381,
+      "unit": "m / ((m) (m/s))",
+      "type": "fitted",
+      "description": "Coefficient of the library term `x*v_f` in the expression of `x_next`."
+    },
+    {
+      "name": "c_x_9",
+      "value": 0.0020623977660219244,
+      "unit": "m / ((m)^2)",
+      "type": "fitted",
+      "description": "Coefficient of the library term `y**2` in the expression of `x_next`."
+    },
+    {
+      "name": "c_x_10",
+      "value": 0.001506989375810777,
+      "unit": "m / ((m) (rad))",
+      "type": "fitted",
+      "description": "Coefficient of the library term `y*phi` in the expression of `x_next`."
+    },
+    {
+      "name": "c_x_11",
+      "value": 0.009622785384214072,
+      "unit": "m / ((m) (m/s))",
+      "type": "fitted",
+      "description": "Coefficient of the library term `y*v_f` in the expression of `x_next`."
+    },
+    {
+      "name": "c_x_12",
+      "value": -0.0036215045300216878,
+      "unit": "m / ((m) (rad/s))",
+      "type": "fitted",
+      "description": "Coefficient of the library term `y*v_a` in the expression of `x_next`."
+    },
+    {
+      "name": "c_x_13",
+      "value": -0.004397415542155214,
+      "unit": "m / ((rad)^2)",
+      "type": "fitted",
+      "description": "Coefficient of the library term `phi**2` in the expression of `x_next`."
+    },
+    {
+      "name": "c_x_14",
+      "value": -0.06176437980099607,
+      "unit": "m / ((rad) (m/s))",
+      "type": "fitted",
+      "description": "Coefficient of the library term `phi*v_f` in the expression of `x_next`."
+    },
+    {
+      "name": "c_x_15",
+      "value": -0.0014881300420296556,
+      "unit": "m / ((rad) (rad/s))",
+      "type": "fitted",
+      "description": "Coefficient of the library term `phi*v_a` in the expression of `x_next`."
+    },
+    {
+      "name": "c_x_16",
+      "value": -0.21225920576838173,
+      "unit": "m / ((m/s)^2)",
+      "type": "fitted",
+      "description": "Coefficient of the library term `v_f**2` in the expression of `x_next`."
+    },
+    {
+      "name": "c_x_17",
+      "value": 0.03963502104692214,
+      "unit": "m / ((m/s) (rad/s))",
+      "type": "fitted",
+      "description": "Coefficient of the library term `v_f*v_a` in the expression of `x_next`."
+    },
+    {
+      "name": "c_y_1",
+      "value": 0.0016974363606305472,
+      "unit": "m",
+      "type": "fitted",
+      "description": "Coefficient of the library term `1` in the expression of `y_next`."
+    },
+    {
+      "name": "c_y_2",
+      "value": -0.011277661229183014,
+      "unit": "m / ((m))",
+      "type": "fitted",
+      "description": "Coefficient of the library term `x` in the expression of `y_next`."
+    },
+    {
+      "name": "c_y_3",
+      "value": 0.9974265135688155,
+      "unit": "m / ((m))",
+      "type": "fitted",
+      "description": "Coefficient of the library term `y` in the expression of `y_next`."
+    },
+    {
+      "name": "c_y_4",
+      "value": 0.03405788350984312,
+      "unit": "m / ((m/s))",
+      "type": "fitted",
+      "description": "Coefficient of the library term `v_f` in the expression of `y_next`."
+    },
+    {
+      "name": "c_y_5",
+      "value": -0.007298788891855611,
+      "unit": "m / ((rad/s))",
+      "type": "fitted",
+      "description": "Coefficient of the library term `v_a` in the expression of `y_next`."
+    },
+    {
+      "name": "c_y_6",
+      "value": 0.011085805304501754,
+      "unit": "m / ((m)^2)",
+      "type": "fitted",
+      "description": "Coefficient of the library term `x**2` in the expression of `y_next`."
+    },
+    {
+      "name": "c_y_7",
+      "value": -0.012150003437308392,
+      "unit": "m / ((m) (m))",
+      "type": "fitted",
+      "description": "Coefficient of the library term `x*y` in the expression of `y_next`."
+    },
+    {
+      "name": "c_y_8",
+      "value": 0.00780301479037106,
+      "unit": "m / ((m) (rad))",
+      "type": "fitted",
+      "description": "Coefficient of the library term `x*phi` in the expression of `y_next`."
+    },
+    {
+      "name": "c_y_9",
+      "value": 0.019923993259007323,
+      "unit": "m / ((m) (m/s))",
+      "type": "fitted",
+      "description": "Coefficient of the library term `x*v_f` in the expression of `y_next`."
+    },
+    {
+      "name": "c_y_10",
+      "value": 0.0037907274646898723,
+      "unit": "m / ((m) (rad/s))",
+      "type": "fitted",
+      "description": "Coefficient of the library term `x*v_a` in the expression of `y_next`."
+    },
+    {
+      "name": "c_y_11",
+      "value": 0.003549654779586259,
+      "unit": "m / ((m)^2)",
+      "type": "fitted",
+      "description": "Coefficient of the library term `y**2` in the expression of `y_next`."
+    },
+    {
+      "name": "c_y_12",
+      "value": 0.001960385890700016,
+      "unit": "m / ((m) (rad))",
+      "type": "fitted",
+      "description": "Coefficient of the library term `y*phi` in the expression of `y_next`."
+    },
+    {
+      "name": "c_y_13",
+      "value": 0.0009505016150313951,
+      "unit": "m / ((m) (m/s))",
+      "type": "fitted",
+      "description": "Coefficient of the library term `y*v_f` in the expression of `y_next`."
+    },
+    {
+      "name": "c_y_14",
+      "value": -0.00604757179765075,
+      "unit": "m / ((m) (rad/s))",
+      "type": "fitted",
+      "description": "Coefficient of the library term `y*v_a` in the expression of `y_next`."
+    },
+    {
+      "name": "c_y_15",
+      "value": -0.0020950877444776525,
+      "unit": "m / ((rad)^2)",
+      "type": "fitted",
+      "description": "Coefficient of the library term `phi**2` in the expression of `y_next`."
+    },
+    {
+      "name": "c_y_16",
+      "value": 0.06978641113157176,
+      "unit": "m / ((rad) (m/s))",
+      "type": "fitted",
+      "description": "Coefficient of the library term `phi*v_f` in the expression of `y_next`."
+    },
+    {
+      "name": "c_y_17",
+      "value": 0.0023087475384832613,
+      "unit": "m / ((rad) (rad/s))",
+      "type": "fitted",
+      "description": "Coefficient of the library term `phi*v_a` in the expression of `y_next`."
+    },
+    {
+      "name": "c_y_18",
+      "value": -0.20386638436949442,
+      "unit": "m / ((m/s)^2)",
+      "type": "fitted",
+      "description": "Coefficient of the library term `v_f**2` in the expression of `y_next`."
+    },
+    {
+      "name": "c_y_19",
+      "value": 0.06714470779443107,
+      "unit": "m / ((m/s) (rad/s))",
+      "type": "fitted",
+      "description": "Coefficient of the library term `v_f*v_a` in the expression of `y_next`."
+    },
+    {
+      "name": "c_phi_1",
+      "value": -0.0015706515131264712,
+      "unit": "rad",
+      "type": "fitted",
+      "description": "Coefficient of the library term `1` in the expression of `phi_next`."
+    },
+    {
+      "name": "c_phi_2",
+      "value": 0.01027679555065672,
+      "unit": "rad / ((m))",
+      "type": "fitted",
+      "description": "Coefficient of the library term `x` in the expression of `phi_next`."
+    },
+    {
+      "name": "c_phi_3",
+      "value": -0.020693870387505028,
+      "unit": "rad / ((m))",
+      "type": "fitted",
+      "description": "Coefficient of the library term `y` in the expression of `phi_next`."
+    },
+    {
+      "name": "c_phi_4",
+      "value": 1.0029159157512875,
+      "unit": "rad / ((rad))",
+      "type": "fitted",
+      "description": "Coefficient of the library term `phi` in the expression of `phi_next`."
+    },
+    {
+      "name": "c_phi_5",
+      "value": -0.04752201162280231,
+      "unit": "rad / ((m/s))",
+      "type": "fitted",
+      "description": "Coefficient of the library term `v_f` in the expression of `phi_next`."
+    },
+    {
+      "name": "c_phi_6",
+      "value": 0.0990070132774714,
+      "unit": "rad / ((rad/s))",
+      "type": "fitted",
+      "description": "Coefficient of the library term `v_a` in the expression of `phi_next`."
+    },
+    {
+      "name": "c_phi_7",
+      "value": -0.01071829192518538,
+      "unit": "rad / ((m)^2)",
+      "type": "fitted",
+      "description": "Coefficient of the library term `x**2` in the expression of `phi_next`."
+    },
+    {
+      "name": "c_phi_8",
+      "value": 0.03222966466960302,
+      "unit": "rad / ((m) (m))",
+      "type": "fitted",
+      "description": "Coefficient of the library term `x*y` in the expression of `phi_next`."
+    },
+    {
+      "name": "c_phi_9",
+      "value": 0.00878446559153326,
+      "unit": "rad / ((m) (rad))",
+      "type": "fitted",
+      "description": "Coefficient of the library term `x*phi` in the expression of `phi_next`."
+    },
+    {
+      "name": "c_phi_10",
+      "value": -0.030520437823745004,
+      "unit": "rad / ((m) (m/s))",
+      "type": "fitted",
+      "description": "Coefficient of the library term `x*v_f` in the expression of `phi_next`."
+    },
+    {
+      "name": "c_phi_11",
+      "value": -0.03075799900987653,
+      "unit": "rad / ((m)^2)",
+      "type": "fitted",
+      "description": "Coefficient of the library term `y**2` in the expression of `phi_next`."
+    },
+    {
+      "name": "c_phi_12",
+      "value": 0.006057494842573228,
+      "unit": "rad / ((m) (rad))",
+      "type": "fitted",
+      "description": "Coefficient of the library term `y*phi` in the expression of `phi_next`."
+    },
+    {
+      "name": "c_phi_13",
+      "value": 0.04077457399982757,
+      "unit": "rad / ((m) (m/s))",
+      "type": "fitted",
+      "description": "Coefficient of the library term `y*v_f` in the expression of `phi_next`."
+    },
+    {
+      "name": "c_phi_14",
+      "value": 0.004810182200919595,
+      "unit": "rad / ((m) (rad/s))",
+      "type": "fitted",
+      "description": "Coefficient of the library term `y*v_a` in the expression of `phi_next`."
+    },
+    {
+      "name": "c_phi_15",
+      "value": 0.0017751318316108792,
+      "unit": "rad / ((rad)^2)",
+      "type": "fitted",
+      "description": "Coefficient of the library term `phi**2` in the expression of `phi_next`."
+    },
+    {
+      "name": "c_phi_16",
+      "value": -0.01748808071724378,
+      "unit": "rad / ((rad) (m/s))",
+      "type": "fitted",
+      "description": "Coefficient of the library term `phi*v_f` in the expression of `phi_next`."
+    },
+    {
+      "name": "c_phi_17",
+      "value": 0.30102569567551446,
+      "unit": "rad / ((m/s)^2)",
+      "type": "fitted",
+      "description": "Coefficient of the library term `v_f**2` in the expression of `phi_next`."
+    },
+    {
+      "name": "c_phi_18",
+      "value": 0.06316245753081963,
+      "unit": "rad / ((m/s) (rad/s))",
+      "type": "fitted",
+      "description": "Coefficient of the library term `v_f*v_a` in the expression of `phi_next`."
+    },
+    {
+      "name": "c_phi_19",
+      "value": 0.002701769807114167,
+      "unit": "rad / ((rad/s)^2)",
+      "type": "fitted",
+      "description": "Coefficient of the library term `v_a**2` in the expression of `phi_next`."
+    }
+  ],
+  "estimation": {
+    "criterion": "Sum of squared one-step prediction errors of each next state (`x` in m, `y` in m, `phi` in rad), each state fitted separately, with a ridge penalty; this is the criterion of the default optimizer of the package and is not the simulation error that the task scores. It was kept because the reference model is the result of the tool as it is delivered.",
+    "data": "data/train.csv, all three trajectories, as one-step transitions from a row to the next row of the same trajectory: `442` transitions. `5` transitions in which the logged heading `phi` wraps at pi were left out, because the wrapped next heading is not a continuous function of the present state.",
+    "method": "Sparse identification of nonlinear dynamics (SINDy; Brunton, Proctor and Kutz, 2016) in discrete time, pysindy.DiscreteSINDy (PySINDy 2.1.0) with its default settings except the threshold of the optimizer, which was selected from the grid `0.1, 0.05, 0.02, 0.01, 0.005, 0.002, 0.001` as the value with the smallest root mean squared error of the simulated `x` on the training data, cut into segments of `25` simulated samples; the selected threshold is `0.001`: the library of all polynomial terms up to degree `2` in `x`, `y`, `phi`, `v_f` and `v_a` with a constant term, and sequentially thresholded least squares (STLSQ) with threshold `0.001`, ridge parameter `0.05` and at most `20` iterations. The threshold was changed because with the default `0.1` no term that contains a command is kept: at the sampling period of `0.2` s every such coefficient is smaller than `0.1`. The selection uses the training data only. The method needs no starting values and uses no random numbers. All coefficients of one state were estimated together.",
+    "script": "experiments/references/turtlebot/fit_references.py"
+  },
+  "discussion": {
+    "family": "Polynomial discrete-time state-space model found by sparse regression (SINDy). Reference model; it is not a candidate of the agent.",
+    "interpretation": "Each expression is a linear combination of the polynomial library terms that the thresholding kept. The terms have no assigned physical meaning; a coefficient of the present state close to 1 carries the state over to the next sample, and the terms with `v_f` or `v_a` add the effect of the commands.",
+    "origin": "The structure was selected by the sparse-regression algorithm from the polynomial library; no physical reasoning entered, and no other library was tried.",
+    "limitations": "A polynomial library of degree 2 contains no trigonometric function of the heading, so that the model cannot represent the rotation of the displacement with the heading. The criterion is the one-step prediction error, not the simulation error. The polynomial in `phi` is not periodic and is fitted on headings between -pi and pi."
+  }
+}

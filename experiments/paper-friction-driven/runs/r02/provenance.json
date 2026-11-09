@@ -1,0 +1,299 @@
+{
+  "authorized_part": {
+    "noise": null,
+    "preprocessing": null,
+    "sampling_period_s": 0.01,
+    "train": {
+      "file": "data/train.csv",
+      "samples": 3522,
+      "trajectories": 13,
+      "trajectory_lengths": [
+        450,
+        450,
+        300,
+        300,
+        442,
+        442,
+        442,
+        141,
+        141,
+        141,
+        91,
+        91,
+        91
+      ]
+    },
+    "trajectory_column": "trajectory",
+    "val": {
+      "file": "data/val.csv",
+      "samples": 1192,
+      "trajectories": 3,
+      "trajectory_lengths": [
+        450,
+        300,
+        442
+      ]
+    }
+  },
+  "build_script": {
+    "file": "build.py",
+    "sha256": "114591b19704887f3630c113ce8c3529c06ddbdf2581a551d4b05a01a4b4765a"
+  },
+  "datasets": [
+    {
+      "agent_visible": true,
+      "assignment": "training",
+      "dataset": "train",
+      "noise": "not stated",
+      "operating_conditions": {
+        "source": "task.yaml, field description",
+        "statement": "not stated per dataset; the task description states the conditions of the recordings as a whole",
+        "task_description": "Data from a real lab rig: a rotational motion system with adjustable dry friction, driven by a voltage-controlled DC motor. A leaf spring presses a felt pad against a rotating disc. The dry-friction level is approximately constant across all recordings; bearing friction (viscous and dry) is present too. Zero angle is the hanging equilibrium. Each row is one sample of the angle theta (rad), the angular velocity omega (rad/s), the motor voltage u (V, an exogenous input) and the angular acceleration domega (rad/s^2), sampled with period T_s = 0.01 s (100 Hz). The state-space model consists of an unknown (sought) closed-form nonlinear expression: domega, the time derivative of omega, as functions of theta, omega and u; and the kinematic identity dtheta = omega as a formal requirement (R1). The training and validation files each contain several separate trajectories of two kinds, marked by the column `trajectory`; a file is not one contiguous trajectory. Driven trajectories start at rest at theta = 0 with a random binary voltage signal applied throughout. Free-response trajectories start from an initial angle with u = 0 throughout; most of their samples are at rest inside the stick band. One model must cover both regimes. The signals come from a digital encoder and numerical differentiation."
+      },
+      "preprocessing": "not stated",
+      "samples": 3522,
+      "sampling_period_s": 0.01,
+      "source": {
+        "provenance_document": "provenance.md of the task folder",
+        "recording_names": "not stated",
+        "task_file": "data/train.csv",
+        "working_directory_file": "data/train.csv"
+      },
+      "trajectories": [
+        {
+          "id": "1",
+          "samples": 450
+        },
+        {
+          "id": "2",
+          "samples": 450
+        },
+        {
+          "id": "3",
+          "samples": 300
+        },
+        {
+          "id": "4",
+          "samples": 300
+        },
+        {
+          "id": "5",
+          "samples": 442
+        },
+        {
+          "id": "6",
+          "samples": 442
+        },
+        {
+          "id": "7",
+          "samples": 442
+        },
+        {
+          "id": "8",
+          "samples": 141
+        },
+        {
+          "id": "9",
+          "samples": 141
+        },
+        {
+          "id": "10",
+          "samples": 141
+        },
+        {
+          "id": "11",
+          "samples": 91
+        },
+        {
+          "id": "12",
+          "samples": 91
+        },
+        {
+          "id": "13",
+          "samples": 91
+        }
+      ],
+      "trajectory_column": "trajectory",
+      "version": {
+        "bytes": 179798,
+        "sha256": "37358e377347dd284303091a28a4f47c16349cfc5bc55f2f5754e6f1c762b0fe"
+      }
+    },
+    {
+      "agent_visible": true,
+      "assignment": "validation",
+      "dataset": "val",
+      "noise": "not stated",
+      "operating_conditions": {
+        "source": "task.yaml, field description",
+        "statement": "not stated per dataset; the task description states the conditions of the recordings as a whole",
+        "task_description": "Data from a real lab rig: a rotational motion system with adjustable dry friction, driven by a voltage-controlled DC motor. A leaf spring presses a felt pad against a rotating disc. The dry-friction level is approximately constant across all recordings; bearing friction (viscous and dry) is present too. Zero angle is the hanging equilibrium. Each row is one sample of the angle theta (rad), the angular velocity omega (rad/s), the motor voltage u (V, an exogenous input) and the angular acceleration domega (rad/s^2), sampled with period T_s = 0.01 s (100 Hz). The state-space model consists of an unknown (sought) closed-form nonlinear expression: domega, the time derivative of omega, as functions of theta, omega and u; and the kinematic identity dtheta = omega as a formal requirement (R1). The training and validation files each contain several separate trajectories of two kinds, marked by the column `trajectory`; a file is not one contiguous trajectory. Driven trajectories start at rest at theta = 0 with a random binary voltage signal applied throughout. Free-response trajectories start from an initial angle with u = 0 throughout; most of their samples are at rest inside the stick band. One model must cover both regimes. The signals come from a digital encoder and numerical differentiation."
+      },
+      "preprocessing": "not stated",
+      "samples": 1192,
+      "sampling_period_s": 0.01,
+      "source": {
+        "provenance_document": "provenance.md of the task folder",
+        "recording_names": "not stated",
+        "task_file": "data/val.csv",
+        "working_directory_file": "data/val.csv"
+      },
+      "trajectories": [
+        {
+          "id": "1",
+          "samples": 450
+        },
+        {
+          "id": "2",
+          "samples": 300
+        },
+        {
+          "id": "3",
+          "samples": 442
+        }
+      ],
+      "trajectory_column": "trajectory",
+      "version": {
+        "bytes": 65407,
+        "sha256": "2c65339a8f0841bd47e2efdda6a43c11d7f6e7ab1c13217796222736409115d4"
+      }
+    },
+    {
+      "agent_visible": false,
+      "assignment": "test",
+      "dataset": "test-1",
+      "noise": "not stated",
+      "operating_conditions": {
+        "source": "task.yaml, field description",
+        "statement": "not stated per dataset; the task description states the conditions of the recordings as a whole",
+        "task_description": "Data from a real lab rig: a rotational motion system with adjustable dry friction, driven by a voltage-controlled DC motor. A leaf spring presses a felt pad against a rotating disc. The dry-friction level is approximately constant across all recordings; bearing friction (viscous and dry) is present too. Zero angle is the hanging equilibrium. Each row is one sample of the angle theta (rad), the angular velocity omega (rad/s), the motor voltage u (V, an exogenous input) and the angular acceleration domega (rad/s^2), sampled with period T_s = 0.01 s (100 Hz). The state-space model consists of an unknown (sought) closed-form nonlinear expression: domega, the time derivative of omega, as functions of theta, omega and u; and the kinematic identity dtheta = omega as a formal requirement (R1). The training and validation files each contain several separate trajectories of two kinds, marked by the column `trajectory`; a file is not one contiguous trajectory. Driven trajectories start at rest at theta = 0 with a random binary voltage signal applied throughout. Free-response trajectories start from an initial angle with u = 0 throughout; most of their samples are at rest inside the stick band. One model must cover both regimes. The signals come from a digital encoder and numerical differentiation."
+      },
+      "preprocessing": "not stated",
+      "samples": 450,
+      "sampling_period_s": 0.01,
+      "source": {
+        "provenance_document": "provenance.md of the task folder",
+        "recording_names": "not stated",
+        "task_file": "test/test_trajectory_1.csv",
+        "working_directory_file": null
+      },
+      "trajectories": [
+        {
+          "id": "test-1",
+          "samples": 450
+        }
+      ],
+      "trajectory_column": null,
+      "version": {
+        "sha256": "be37e420ac4e01a4f288afc391fd18d7d66d7c47da0098d6eb9ddb7259b9e617"
+      }
+    },
+    {
+      "agent_visible": false,
+      "assignment": "test",
+      "dataset": "test-2",
+      "noise": "not stated",
+      "operating_conditions": {
+        "source": "task.yaml, field description",
+        "statement": "not stated per dataset; the task description states the conditions of the recordings as a whole",
+        "task_description": "Data from a real lab rig: a rotational motion system with adjustable dry friction, driven by a voltage-controlled DC motor. A leaf spring presses a felt pad against a rotating disc. The dry-friction level is approximately constant across all recordings; bearing friction (viscous and dry) is present too. Zero angle is the hanging equilibrium. Each row is one sample of the angle theta (rad), the angular velocity omega (rad/s), the motor voltage u (V, an exogenous input) and the angular acceleration domega (rad/s^2), sampled with period T_s = 0.01 s (100 Hz). The state-space model consists of an unknown (sought) closed-form nonlinear expression: domega, the time derivative of omega, as functions of theta, omega and u; and the kinematic identity dtheta = omega as a formal requirement (R1). The training and validation files each contain several separate trajectories of two kinds, marked by the column `trajectory`; a file is not one contiguous trajectory. Driven trajectories start at rest at theta = 0 with a random binary voltage signal applied throughout. Free-response trajectories start from an initial angle with u = 0 throughout; most of their samples are at rest inside the stick band. One model must cover both regimes. The signals come from a digital encoder and numerical differentiation."
+      },
+      "preprocessing": "not stated",
+      "samples": 300,
+      "sampling_period_s": 0.01,
+      "source": {
+        "provenance_document": "provenance.md of the task folder",
+        "recording_names": "not stated",
+        "task_file": "test/test_trajectory_2.csv",
+        "working_directory_file": null
+      },
+      "trajectories": [
+        {
+          "id": "test-2",
+          "samples": 300
+        }
+      ],
+      "trajectory_column": null,
+      "version": {
+        "sha256": "fde46c52558e336d1719d93b6f8792d78f83e795db5c59ab7558801425e648ea"
+      }
+    },
+    {
+      "agent_visible": false,
+      "assignment": "test",
+      "dataset": "test-3",
+      "noise": "not stated",
+      "operating_conditions": {
+        "source": "task.yaml, field description",
+        "statement": "not stated per dataset; the task description states the conditions of the recordings as a whole",
+        "task_description": "Data from a real lab rig: a rotational motion system with adjustable dry friction, driven by a voltage-controlled DC motor. A leaf spring presses a felt pad against a rotating disc. The dry-friction level is approximately constant across all recordings; bearing friction (viscous and dry) is present too. Zero angle is the hanging equilibrium. Each row is one sample of the angle theta (rad), the angular velocity omega (rad/s), the motor voltage u (V, an exogenous input) and the angular acceleration domega (rad/s^2), sampled with period T_s = 0.01 s (100 Hz). The state-space model consists of an unknown (sought) closed-form nonlinear expression: domega, the time derivative of omega, as functions of theta, omega and u; and the kinematic identity dtheta = omega as a formal requirement (R1). The training and validation files each contain several separate trajectories of two kinds, marked by the column `trajectory`; a file is not one contiguous trajectory. Driven trajectories start at rest at theta = 0 with a random binary voltage signal applied throughout. Free-response trajectories start from an initial angle with u = 0 throughout; most of their samples are at rest inside the stick band. One model must cover both regimes. The signals come from a digital encoder and numerical differentiation."
+      },
+      "preprocessing": "not stated",
+      "samples": 141,
+      "sampling_period_s": 0.01,
+      "source": {
+        "provenance_document": "provenance.md of the task folder",
+        "recording_names": "not stated",
+        "task_file": "test/test_trajectory_3.csv",
+        "working_directory_file": null
+      },
+      "trajectories": [
+        {
+          "id": "test-3",
+          "samples": 141
+        }
+      ],
+      "trajectory_column": null,
+      "version": {
+        "sha256": "4a9059749dbc8a5b5809fc1e39926b0c406e6d670b9b57eab440b0aa48de874d"
+      }
+    },
+    {
+      "agent_visible": false,
+      "assignment": "test",
+      "dataset": "test-4",
+      "noise": "not stated",
+      "operating_conditions": {
+        "source": "task.yaml, field description",
+        "statement": "not stated per dataset; the task description states the conditions of the recordings as a whole",
+        "task_description": "Data from a real lab rig: a rotational motion system with adjustable dry friction, driven by a voltage-controlled DC motor. A leaf spring presses a felt pad against a rotating disc. The dry-friction level is approximately constant across all recordings; bearing friction (viscous and dry) is present too. Zero angle is the hanging equilibrium. Each row is one sample of the angle theta (rad), the angular velocity omega (rad/s), the motor voltage u (V, an exogenous input) and the angular acceleration domega (rad/s^2), sampled with period T_s = 0.01 s (100 Hz). The state-space model consists of an unknown (sought) closed-form nonlinear expression: domega, the time derivative of omega, as functions of theta, omega and u; and the kinematic identity dtheta = omega as a formal requirement (R1). The training and validation files each contain several separate trajectories of two kinds, marked by the column `trajectory`; a file is not one contiguous trajectory. Driven trajectories start at rest at theta = 0 with a random binary voltage signal applied throughout. Free-response trajectories start from an initial angle with u = 0 throughout; most of their samples are at rest inside the stick band. One model must cover both regimes. The signals come from a digital encoder and numerical differentiation."
+      },
+      "preprocessing": "not stated",
+      "samples": 91,
+      "sampling_period_s": 0.01,
+      "source": {
+        "provenance_document": "provenance.md of the task folder",
+        "recording_names": "not stated",
+        "task_file": "test/test_trajectory_4.csv",
+        "working_directory_file": null
+      },
+      "trajectories": [
+        {
+          "id": "test-4",
+          "samples": 91
+        }
+      ],
+      "trajectory_column": null,
+      "version": {
+        "sha256": "f71b092b015a82c8ec19f9fc8ac7d72fc859783f933f00b973905e71adbb51b0"
+      }
+    }
+  ],
+  "format_version": 1,
+  "provenance_document": {
+    "file": "provenance.md",
+    "sha256": "5e1078018a3a80c24ef354e47e4bc4040e329d637c65786044282362cdcfb123"
+  },
+  "sampling_period_note": null,
+  "sampling_period_s": 0.01,
+  "separation": {
+    "delayed_variables": "not applicable: the task declares no delayed variables",
+    "filtering": "the harness applies no filtering or other preprocessing; the preprocessing of the task authors is stated per dataset, and any filtering by the agent is applied by its own scripts to the data in its working directory, which contain no test data",
+    "per_trajectory_evaluation": "every trajectory and static dataset is evaluated on its own; a simulation starts once per trajectory and the end of one trajectory is never joined to the beginning of another",
+    "sealing": "the 4 sealed test trajectory file(s) are held in the task store and opened only by the evaluation module of the harness; they are never copied into the working directory, and the brief, the execution messages and the results permitted to the agent contain no test value, test trajectory, test-derived plot or failure location on test data; the leak scanner searches the working directory and the transcript for them",
+    "selection": "the agent fits and recommends from the training and validation data only; its recommendation is recorded in the pool file before any test result exists; the ranking on test data is computed afterwards by the harness and is labeled oracle-based selection on test data",
+    "use_of_test_data": "the authors used the test data during the development of the framework and of the tasks; a result of a round after the user has seen test results is labeled test-informed"
+  },
+  "task_id": "friction-driven",
+  "user_facing": "contains recording names and digests of sealed files; never shown to the agent"
+}

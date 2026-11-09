@@ -1,0 +1,63 @@
+{
+  "expressions": {
+    "x_next": "x+Piecewise((Ts*(gf*v_f+bf)*cos(phi), Eq((ga*v_a+ba+ca*v_a**3),0)), ((gf*v_f+bf)*(sin(phi+Ts*(ga*v_a+ba+ca*v_a**3))-sin(phi))/(ga*v_a+ba+ca*v_a**3), True))",
+    "y_next": "y+Piecewise((Ts*(gf*v_f+bf)*sin(phi), Eq((ga*v_a+ba+ca*v_a**3),0)), ((gf*v_f+bf)*(cos(phi)-cos(phi+Ts*(ga*v_a+ba+ca*v_a**3)))/(ga*v_a+ba+ca*v_a**3), True))",
+    "phi_next": "phi+Ts*(ga*v_a+ba+ca*v_a**3)"
+  },
+  "parameters": [
+    {
+      "name": "gf",
+      "value": 0.8844224803214773,
+      "unit": "-",
+      "type": "fitted",
+      "description": "Forward-command gain; estimated jointly by the rollout fit described below."
+    },
+    {
+      "name": "ga",
+      "value": 0.8283315112076757,
+      "unit": "-",
+      "type": "fitted",
+      "description": "Angular-command gain; estimated jointly by the rollout fit described below."
+    },
+    {
+      "name": "bf",
+      "value": -0.006646758756745293,
+      "unit": "m/s",
+      "type": "fitted",
+      "description": "Constant forward-speed offset; this is an empirical offset, not an independently established actuator bias."
+    },
+    {
+      "name": "ba",
+      "value": 0.0067111069505400986,
+      "unit": "rad/s",
+      "type": "fitted",
+      "description": "Constant angular-rate offset; this is an empirical offset, not an independently established actuator bias."
+    },
+    {
+      "name": "ca",
+      "value": -0.15789466323248239,
+      "unit": "s^2/rad^2",
+      "type": "fitted",
+      "description": "Cubic angular-response coefficient in `ca*v_a**3`; estimated jointly as a static nonlinear correction."
+    },
+    {
+      "name": "Ts",
+      "value": 0.2,
+      "unit": "s",
+      "type": "fixed",
+      "description": "Sampling period `Ts = 0.2` s specified in TASK.md; fixed, not estimated."
+    }
+  ],
+  "estimation": {
+    "criterion": "Sum of squared `x` rollout errors plus squared weighted `y` and unwrapped `phi` errors. The multiplier on `y` error is `0.35`; the multiplier on `phi` error is `0.05` m/rad. These fixed weights were chosen to retain orientation and planar-motion information while emphasizing the scored `x` output. Every rollout starts at a logged pose, then uses only commands for `25` steps (`5` s); errors at all steps have equal weight. The optimization is an output-error criterion, not a regression on noisy pose derivatives.",
+    "data": "data/train.csv, all three trajectories, all rows. Heading was unwrapped independently per trajectory. Each trajectory has `150` samples. Starts are rows `0` through `124` inclusive in each trajectory (zero-based), giving `375` overlapping training windows with `25` within-trajectory transitions each. No window crosses a trajectory boundary. Later rows contribute targets; the final input has no successor and is not used. Every window uses its logged initial state without smoothing or later pose correction. No data were discarded for fitting beyond the need for a complete window.",
+    "method": "Bound-constrained nonlinear least squares with scipy.optimize.least_squares, using its trust-region reflective algorithm and finite-difference Jacobian. It is suitable for the small nonlinear rollout parameter vector; ordinary least squares would not minimize the free-run criterion. All fitted parameters were estimated together in one optimization using all training trajectories. Numerical starts: `gf = 0.8`; `ga = 0.55`; `bf = 0` m/s; `ba = 0` rad/s; `ca = 0.2` s^2/rad^2. Starts encode approximately unity speed gains with small offsets and modest nonlinearities, based on exploratory block motion and physically plausible response. Bounds: `0.2 <= gf <= 1.5`; `0 <= ga <= 1.5`; `-0.04 <= bf <= 0.04` m/s; `-0.15 <= ba <= 0.15` rad/s; `-1 <= ca <= 1` s^2/rad^2. Bounds prevent implausible gains and poorly conditioned searches; they are regularizing assumptions, not independent measurements. Settings: `max_nfev = 400`, `ftol = 1e-10`, `xtol = 1e-10`, `gtol = 1e-10`, and `x_scale = \"jac\"`. All these solver settings are dimensionless. No random numbers are used and no seed applies. For validation only, I repeated fitting on each pair of trajectories from the same starts and rolled out the omitted trajectory; these validation fits are not the submitted values. Running the named script from the working directory reproduces this candidate in its result JSON; imported local modules are dependencies.",
+    "script": "refine_models.py"
+  },
+  "discussion": {
+    "family": "Low-order polynomial static angular-response unicycle with exact circular-arc integration. Standard planar unicycle/nonholonomic kinematics; reference recalled from memory, not checked online: R. M. Murray, Z. Li and S. S. Sastry, A Mathematical Introduction to Robotic Manipulation (1994).",
+    "interpretation": "`x`, `y`, `phi`, `v_f`, `v_a` and `Ts` have the meanings and units in TASK.md. Forward speed is `gf*v_f+bf` m/s. Angular rate is `ga*v_a+ba+ca*v_a**3` rad/s. `gf` and `ga` are command gains, `bf` and `ba` empirical biases, and `ca*v_a**3` is a smooth odd correction that changes gain with angular-command magnitude; it has no separately established physical mechanism. The exact sine/cosine arc expressions integrate these rates and `Piecewise` handles the zero-rate limit.",
+    "origin": "The geometry came from differential-drive physical reasoning, preserving translation invariance and omitting absolute-position terms. PLAN.md records the families before fitting. Helper block regressions found little transferable forward nonlinearity, near-zero lateral slip and strong switching transients. I compared affine Euler and exact-arc kinematics, cubic and dead-zone angular maps, smooth tanh turning, wheel dead zones, lateral slip, command coupling, forward saturation and fitted integration angle. The latter alternatives did not consistently improve trajectory-held-out `x` error and were not retained. The cubic angular basis came from a physically selected odd-polynomial library after angular residuals showed command dependence. Block diagnostic cubic regression modestly improved held-out angular fit, but unconstrained forward cubic maps and command coupling did not transfer well. I retained only the angular cubic term, using a scored-output-weighted fit. This was parametric nonlinear regression, not gplearn or PySINDy search. Training rolling-window `x` RMSE is `0.02849296` m on all three training trajectories; pooled leave-one-trajectory-out rolling-window `x` RMSE is `0.03013795` m. These are local diagnostics, not test scores.",
+    "limitations": "Only three training trajectories and nonnegative `v_f` commands are available; reverse driving is not identified. The observed ranges are `0.0000343124 <= v_f <= 0.2981556034` m/s and `-0.9481475363 <= v_a <= 0.9411606268` rad/s in data/train.csv. Restrict use to similar commands and approximately `5` s rollouts. No actuator velocity or previous input is available as state; all candidates omit the observed switching lag. Parameters therefore describe effective input-to-odometry motion rather than independently established physical constants. Logged pose noise and slowly correlated residuals remain unresolved. `phi_next` is intentionally unwrapped; sine and cosine preserve heading periodicity. Accurate long-duration or high-speed motion is not established. The polynomial is a local response approximation only; the fitted negative cubic correction can eventually reverse the response at commands outside the observed range. Its held-out `x` advantage over affine kinematics is not established, so it is not recommended."
+  }
+}

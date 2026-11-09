@@ -1,0 +1,1486 @@
+{
+  "candidates": [
+    {
+      "allowed_violations": [],
+      "checks": {
+        "issues": [],
+        "notes": [],
+        "passed": true
+      },
+      "complexity": {
+        "fitted_parameters": 7,
+        "fixed_parameters": 2,
+        "node_count": 81,
+        "node_count_per_key": {
+          "dp": 81
+        },
+        "noninteger_literals": 0,
+        "tied_parameters": 1
+      },
+      "excluded_by_requirements": false,
+      "exclusions": [],
+      "expressions": {
+        "dp": "a*Max(flow,0)-b*Min(Max((vscale-valve)/vscale,0),1)**m/(1+c*Min(Max((vscale-valve)/vscale,0),1)**m)*(Max(p-pa,0)/pr)*((Max(p-pa,0)+s)/pr)**(n-1)+r*Max(pa-p,0)"
+      },
+      "failed_computations": [],
+      "label": "GeneralizedDischarge",
+      "position": 1,
+      "requirements": [
+        {
+          "assumptions": [],
+          "counterexample": null,
+          "detail": "stated in natural language: the harness does not assess it; the human assesses it, and the agent's assertion alone does not count as verification",
+          "domain": null,
+          "exception": null,
+          "exclude_on_violation": false,
+          "excludes": false,
+          "id": "R1",
+          "kind": "natural_language",
+          "outcome": "unavailable",
+          "quantity": null,
+          "sampling": null,
+          "source": {
+            "date": "2026-10-08",
+            "note": null,
+            "stated_by": "RB"
+          },
+          "statement": "Monotonicity with respect to inlet flow. At a fixed pressure and valve position, increasing the inlet air flow rate cannot decrease the pressure derivative.",
+          "status": "unresolved",
+          "symbolic": null,
+          "target": null,
+          "tolerance": null,
+          "type": "natural_language",
+          "verification": null
+        },
+        {
+          "assumptions": [],
+          "counterexample": null,
+          "detail": "stated in natural language: the harness does not assess it; the human assesses it, and the agent's assertion alone does not count as verification",
+          "domain": null,
+          "exception": null,
+          "exclude_on_violation": false,
+          "excludes": false,
+          "id": "R2",
+          "kind": "natural_language",
+          "outcome": "unavailable",
+          "quantity": null,
+          "sampling": null,
+          "source": {
+            "date": "2026-10-08",
+            "note": null,
+            "stated_by": "RB"
+          },
+          "statement": "Monotonicity with respect to valve closure. At a fixed pressure and inlet flow rate, closing the outlet valve further cannot decrease the pressure derivative.",
+          "status": "unresolved",
+          "symbolic": null,
+          "target": null,
+          "tolerance": null,
+          "type": "natural_language",
+          "verification": null
+        },
+        {
+          "assumptions": [],
+          "counterexample": null,
+          "detail": "stated in natural language: the harness does not assess it; the human assesses it, and the agent's assertion alone does not count as verification",
+          "domain": null,
+          "exception": null,
+          "exclude_on_violation": false,
+          "excludes": false,
+          "id": "R3",
+          "kind": "natural_language",
+          "outcome": "unavailable",
+          "quantity": null,
+          "sampling": null,
+          "source": {
+            "date": "2026-10-08",
+            "note": null,
+            "stated_by": "RB"
+          },
+          "statement": "Zero-flow equilibrium. With zero inlet flow and an open outlet valve, atmospheric pressure (approximately 1 bar) is the pressure equilibrium.",
+          "status": "unresolved",
+          "symbolic": null,
+          "target": null,
+          "tolerance": null,
+          "type": "natural_language",
+          "verification": null
+        },
+        {
+          "assumptions": [],
+          "counterexample": null,
+          "detail": "stated in natural language: the harness does not assess it; the human assesses it, and the agent's assertion alone does not count as verification",
+          "domain": null,
+          "exception": null,
+          "exclude_on_violation": false,
+          "excludes": false,
+          "id": "R4",
+          "kind": "natural_language",
+          "outcome": "unavailable",
+          "quantity": null,
+          "sampling": null,
+          "source": {
+            "date": "2026-10-08",
+            "note": null,
+            "stated_by": "RB"
+          },
+          "statement": "Pressure relaxation. With zero inlet flow and an open outlet valve, pressure tends toward atmospheric pressure.",
+          "status": "unresolved",
+          "symbolic": null,
+          "target": null,
+          "tolerance": null,
+          "type": "natural_language",
+          "verification": null
+        },
+        {
+          "assumptions": [],
+          "counterexample": null,
+          "detail": "stated in natural language: the harness does not assess it; the human assesses it, and the agent's assertion alone does not count as verification",
+          "domain": null,
+          "exception": null,
+          "exclude_on_violation": false,
+          "excludes": false,
+          "id": "R5",
+          "kind": "natural_language",
+          "outcome": "unavailable",
+          "quantity": null,
+          "sampling": null,
+          "source": {
+            "date": "2026-10-08",
+            "note": null,
+            "stated_by": "RB"
+          },
+          "statement": "Fully closed valve. For a perfectly sealed tank with a fully closed outlet valve, the pressure cannot decrease when air is supplied.",
+          "status": "unresolved",
+          "symbolic": null,
+          "target": null,
+          "tolerance": null,
+          "type": "natural_language",
+          "verification": null
+        }
+      ],
+      "sensitivity": {
+        "assumptions": [
+          "the fitting target is the one implied by the formulation (the model file has no structured field for it)"
+        ],
+        "available": true,
+        "data": [
+          "train",
+          "val"
+        ],
+        "deficient": false,
+        "dependent_groups": [],
+        "method": "analytic derivatives (SymPy), ties differentiated through their equations",
+        "parameters": [
+          "a",
+          "b",
+          "c",
+          "r",
+          "n",
+          "m",
+          "pa"
+        ],
+        "rank": 7,
+        "rank_threshold": "s_i / s_1 > 1e-08",
+        "reason": null,
+        "rows": 2906,
+        "rows_dropped": 0,
+        "scaling": "rows of each target divided by the standard deviation of its measured column; columns divided by their Euclidean norm",
+        "singular_values": [
+          2.3445618056038176,
+          0.9976868312336863,
+          0.5710170529385715,
+          0.36998886813551707,
+          0.16053412873869954,
+          0.13166679949826987,
+          0.03989156070877861
+        ],
+        "targets": [
+          "dp"
+        ],
+        "zero_columns": []
+      },
+      "status": "evaluated",
+      "structure": {
+        "dp": "P1*Max(0, flow) + P2*Max(0, P3 - p) - 1.0*P4*(1.0*(1.0*P4/(P2*(P5 + 1)))**(1/(1 - P7)) + 1.0*Max(0, -P3 + p))**(P7 - 1)*Max(0, -P3 + p)*Min(1, Max(0, 1.0 - 0.01*valve))**P6/(P5*Min(1, Max(0, 1.0 - 0.01*valve))**P6 + 1)"
+      },
+      "structure_group": 1,
+      "unresolved_requirements": [
+        "R1",
+        "R2",
+        "R3",
+        "R4",
+        "R5"
+      ],
+      "visible": {
+        "train": {
+          "finished": true,
+          "group": "train",
+          "pooled_rmse": 0.0245809178925744,
+          "scored_samples": 1451,
+          "trajectories": [
+            {
+              "completed_samples": 1451,
+              "failure": null,
+              "finished": true,
+              "group": "train",
+              "measures": {
+                "mean": 1.298373536846705,
+                "n": 1451,
+                "nrmse": 0.09426800501500603,
+                "r2": 0.9911135432304908,
+                "rmse": 0.0245809178925744,
+                "sse": 0.8767254319645937,
+                "std": 0.2607556815131655
+              },
+              "n_samples": 1452,
+              "note": null,
+              "prefix_diagnostic": null,
+              "required_samples": 1451,
+              "scoring_interval": [
+                1,
+                1452
+              ],
+              "trajectory": "train"
+            }
+          ]
+        },
+        "val": {
+          "finished": true,
+          "group": "val",
+          "pooled_rmse": 0.0372737413878742,
+          "scored_samples": 1453,
+          "trajectories": [
+            {
+              "completed_samples": 1453,
+              "failure": null,
+              "finished": true,
+              "group": "val",
+              "measures": {
+                "mean": 1.306534241456782,
+                "n": 1453,
+                "nrmse": 0.14197740376795656,
+                "r2": 0.9798424168193106,
+                "rmse": 0.0372737413878742,
+                "sse": 2.018699101113833,
+                "std": 0.26253291297531567
+              },
+              "n_samples": 1454,
+              "note": null,
+              "prefix_diagnostic": null,
+              "required_samples": 1453,
+              "scoring_interval": [
+                1,
+                1454
+              ],
+              "trajectory": "val"
+            }
+          ]
+        }
+      },
+      "within_limit": true
+    },
+    {
+      "allowed_violations": [],
+      "checks": {
+        "issues": [],
+        "notes": [],
+        "passed": true
+      },
+      "complexity": {
+        "fitted_parameters": 6,
+        "fixed_parameters": 2,
+        "node_count": 79,
+        "node_count_per_key": {
+          "dp": 79
+        },
+        "noninteger_literals": 0,
+        "tied_parameters": 1
+      },
+      "excluded_by_requirements": false,
+      "exclusions": [],
+      "expressions": {
+        "dp": "a*Max(flow,0)-b*Min(Max((vscale-valve)/vscale,0),1)**m/(1+c*Min(Max((vscale-valve)/vscale,0),1)**m)*(sqrt((Max(p-pa,0)+s)/pr)-sqrt(s/pr))+r*Max(pa-p,0)"
+      },
+      "failed_computations": [],
+      "label": "MixedResistance",
+      "position": 2,
+      "requirements": [
+        {
+          "assumptions": [],
+          "counterexample": null,
+          "detail": "stated in natural language: the harness does not assess it; the human assesses it, and the agent's assertion alone does not count as verification",
+          "domain": null,
+          "exception": null,
+          "exclude_on_violation": false,
+          "excludes": false,
+          "id": "R1",
+          "kind": "natural_language",
+          "outcome": "unavailable",
+          "quantity": null,
+          "sampling": null,
+          "source": {
+            "date": "2026-10-08",
+            "note": null,
+            "stated_by": "RB"
+          },
+          "statement": "Monotonicity with respect to inlet flow. At a fixed pressure and valve position, increasing the inlet air flow rate cannot decrease the pressure derivative.",
+          "status": "unresolved",
+          "symbolic": null,
+          "target": null,
+          "tolerance": null,
+          "type": "natural_language",
+          "verification": null
+        },
+        {
+          "assumptions": [],
+          "counterexample": null,
+          "detail": "stated in natural language: the harness does not assess it; the human assesses it, and the agent's assertion alone does not count as verification",
+          "domain": null,
+          "exception": null,
+          "exclude_on_violation": false,
+          "excludes": false,
+          "id": "R2",
+          "kind": "natural_language",
+          "outcome": "unavailable",
+          "quantity": null,
+          "sampling": null,
+          "source": {
+            "date": "2026-10-08",
+            "note": null,
+            "stated_by": "RB"
+          },
+          "statement": "Monotonicity with respect to valve closure. At a fixed pressure and inlet flow rate, closing the outlet valve further cannot decrease the pressure derivative.",
+          "status": "unresolved",
+          "symbolic": null,
+          "target": null,
+          "tolerance": null,
+          "type": "natural_language",
+          "verification": null
+        },
+        {
+          "assumptions": [],
+          "counterexample": null,
+          "detail": "stated in natural language: the harness does not assess it; the human assesses it, and the agent's assertion alone does not count as verification",
+          "domain": null,
+          "exception": null,
+          "exclude_on_violation": false,
+          "excludes": false,
+          "id": "R3",
+          "kind": "natural_language",
+          "outcome": "unavailable",
+          "quantity": null,
+          "sampling": null,
+          "source": {
+            "date": "2026-10-08",
+            "note": null,
+            "stated_by": "RB"
+          },
+          "statement": "Zero-flow equilibrium. With zero inlet flow and an open outlet valve, atmospheric pressure (approximately 1 bar) is the pressure equilibrium.",
+          "status": "unresolved",
+          "symbolic": null,
+          "target": null,
+          "tolerance": null,
+          "type": "natural_language",
+          "verification": null
+        },
+        {
+          "assumptions": [],
+          "counterexample": null,
+          "detail": "stated in natural language: the harness does not assess it; the human assesses it, and the agent's assertion alone does not count as verification",
+          "domain": null,
+          "exception": null,
+          "exclude_on_violation": false,
+          "excludes": false,
+          "id": "R4",
+          "kind": "natural_language",
+          "outcome": "unavailable",
+          "quantity": null,
+          "sampling": null,
+          "source": {
+            "date": "2026-10-08",
+            "note": null,
+            "stated_by": "RB"
+          },
+          "statement": "Pressure relaxation. With zero inlet flow and an open outlet valve, pressure tends toward atmospheric pressure.",
+          "status": "unresolved",
+          "symbolic": null,
+          "target": null,
+          "tolerance": null,
+          "type": "natural_language",
+          "verification": null
+        },
+        {
+          "assumptions": [],
+          "counterexample": null,
+          "detail": "stated in natural language: the harness does not assess it; the human assesses it, and the agent's assertion alone does not count as verification",
+          "domain": null,
+          "exception": null,
+          "exclude_on_violation": false,
+          "excludes": false,
+          "id": "R5",
+          "kind": "natural_language",
+          "outcome": "unavailable",
+          "quantity": null,
+          "sampling": null,
+          "source": {
+            "date": "2026-10-08",
+            "note": null,
+            "stated_by": "RB"
+          },
+          "statement": "Fully closed valve. For a perfectly sealed tank with a fully closed outlet valve, the pressure cannot decrease when air is supplied.",
+          "status": "unresolved",
+          "symbolic": null,
+          "target": null,
+          "tolerance": null,
+          "type": "natural_language",
+          "verification": null
+        }
+      ],
+      "sensitivity": {
+        "assumptions": [
+          "the fitting target is the one implied by the formulation (the model file has no structured field for it)"
+        ],
+        "available": true,
+        "data": [
+          "train",
+          "val"
+        ],
+        "deficient": false,
+        "dependent_groups": [],
+        "method": "analytic derivatives (SymPy), ties differentiated through their equations",
+        "parameters": [
+          "a",
+          "b",
+          "c",
+          "r",
+          "m",
+          "pa"
+        ],
+        "rank": 6,
+        "rank_threshold": "s_i / s_1 > 1e-08",
+        "reason": null,
+        "rows": 2906,
+        "rows_dropped": 0,
+        "scaling": "rows of each target divided by the standard deviation of its measured column; columns divided by their Euclidean norm",
+        "singular_values": [
+          2.208292701338236,
+          0.8828557770422751,
+          0.5322082637938166,
+          0.20969754602864765,
+          0.12143821489940637,
+          0.04520050066687454
+        ],
+        "targets": [
+          "dp"
+        ],
+        "zero_columns": []
+      },
+      "status": "evaluated",
+      "structure": {
+        "dp": "P1*Max(0, flow) + P2*Max(0, P3 - p) - P4*(-0.5*sqrt(1/(P2**2*(P5 + 1)**2))*Abs(P4) + sqrt(1.0*Max(0, -P3 + p) + 0.25*P4**2/(P2**2*(P5 + 1)**2)))*Min(1, Max(0, 1.0 - 0.01*valve))**P6/(P5*Min(1, Max(0, 1.0 - 0.01*valve))**P6 + 1)"
+      },
+      "structure_group": 2,
+      "unresolved_requirements": [
+        "R1",
+        "R2",
+        "R3",
+        "R4",
+        "R5"
+      ],
+      "visible": {
+        "train": {
+          "finished": true,
+          "group": "train",
+          "pooled_rmse": 0.024921133939256247,
+          "scored_samples": 1451,
+          "trajectories": [
+            {
+              "completed_samples": 1451,
+              "failure": null,
+              "finished": true,
+              "group": "train",
+              "measures": {
+                "mean": 1.298373536846705,
+                "n": 1451,
+                "nrmse": 0.09557273611312658,
+                "r2": 0.9908658521118506,
+                "rmse": 0.024921133939256247,
+                "sse": 0.9011622923034254,
+                "std": 0.2607556815131655
+              },
+              "n_samples": 1452,
+              "note": null,
+              "prefix_diagnostic": null,
+              "required_samples": 1451,
+              "scoring_interval": [
+                1,
+                1452
+              ],
+              "trajectory": "train"
+            }
+          ]
+        },
+        "val": {
+          "finished": true,
+          "group": "val",
+          "pooled_rmse": 0.03737480502260036,
+          "scored_samples": 1453,
+          "trajectories": [
+            {
+              "completed_samples": 1453,
+              "failure": null,
+              "finished": true,
+              "group": "val",
+              "measures": {
+                "mean": 1.306534241456782,
+                "n": 1453,
+                "nrmse": 0.14236235982386894,
+                "r2": 0.9797329585053792,
+                "rmse": 0.03737480502260036,
+                "sse": 2.0296609013436524,
+                "std": 0.26253291297531567
+              },
+              "n_samples": 1454,
+              "note": null,
+              "prefix_diagnostic": null,
+              "required_samples": 1453,
+              "scoring_interval": [
+                1,
+                1454
+              ],
+              "trajectory": "val"
+            }
+          ]
+        }
+      },
+      "within_limit": true
+    },
+    {
+      "allowed_violations": [],
+      "checks": {
+        "issues": [],
+        "notes": [],
+        "passed": true
+      },
+      "complexity": {
+        "fitted_parameters": 10,
+        "fixed_parameters": 7,
+        "node_count": 223,
+        "node_count_per_key": {
+          "dp": 223
+        },
+        "noninteger_literals": 0,
+        "tied_parameters": 1
+      },
+      "excluded_by_requirements": false,
+      "exclusions": [],
+      "expressions": {
+        "dp": "a*Max(flow,0)-(dA*Min(Max((Min(Max((vscale-valve)/vscale,0),1)-0)/(kA-0),0),1)+dB*Min(Max((Min(Max((vscale-valve)/vscale,0),1)-kA)/(kB-kA),0),1)+dC*Min(Max((Min(Max((vscale-valve)/vscale,0),1)-kB)/(kC-kB),0),1)+dD*Min(Max((Min(Max((vscale-valve)/vscale,0),1)-kC)/(kD-kC),0),1)+dE*Min(Max((Min(Max((vscale-valve)/vscale,0),1)-kD)/(kE-kD),0),1)+dF*Min(Max((Min(Max((vscale-valve)/vscale,0),1)-kE)/(1-kE),0),1))*(Max(p-pa,0)/pr)*((Max(p-pa,0)+s)/pr)**(n-1)+r*Max(pa-p,0)"
+      },
+      "failed_computations": [],
+      "label": "TabulatedValve",
+      "position": 3,
+      "requirements": [
+        {
+          "assumptions": [],
+          "counterexample": null,
+          "detail": "stated in natural language: the harness does not assess it; the human assesses it, and the agent's assertion alone does not count as verification",
+          "domain": null,
+          "exception": null,
+          "exclude_on_violation": false,
+          "excludes": false,
+          "id": "R1",
+          "kind": "natural_language",
+          "outcome": "unavailable",
+          "quantity": null,
+          "sampling": null,
+          "source": {
+            "date": "2026-10-08",
+            "note": null,
+            "stated_by": "RB"
+          },
+          "statement": "Monotonicity with respect to inlet flow. At a fixed pressure and valve position, increasing the inlet air flow rate cannot decrease the pressure derivative.",
+          "status": "unresolved",
+          "symbolic": null,
+          "target": null,
+          "tolerance": null,
+          "type": "natural_language",
+          "verification": null
+        },
+        {
+          "assumptions": [],
+          "counterexample": null,
+          "detail": "stated in natural language: the harness does not assess it; the human assesses it, and the agent's assertion alone does not count as verification",
+          "domain": null,
+          "exception": null,
+          "exclude_on_violation": false,
+          "excludes": false,
+          "id": "R2",
+          "kind": "natural_language",
+          "outcome": "unavailable",
+          "quantity": null,
+          "sampling": null,
+          "source": {
+            "date": "2026-10-08",
+            "note": null,
+            "stated_by": "RB"
+          },
+          "statement": "Monotonicity with respect to valve closure. At a fixed pressure and inlet flow rate, closing the outlet valve further cannot decrease the pressure derivative.",
+          "status": "unresolved",
+          "symbolic": null,
+          "target": null,
+          "tolerance": null,
+          "type": "natural_language",
+          "verification": null
+        },
+        {
+          "assumptions": [],
+          "counterexample": null,
+          "detail": "stated in natural language: the harness does not assess it; the human assesses it, and the agent's assertion alone does not count as verification",
+          "domain": null,
+          "exception": null,
+          "exclude_on_violation": false,
+          "excludes": false,
+          "id": "R3",
+          "kind": "natural_language",
+          "outcome": "unavailable",
+          "quantity": null,
+          "sampling": null,
+          "source": {
+            "date": "2026-10-08",
+            "note": null,
+            "stated_by": "RB"
+          },
+          "statement": "Zero-flow equilibrium. With zero inlet flow and an open outlet valve, atmospheric pressure (approximately 1 bar) is the pressure equilibrium.",
+          "status": "unresolved",
+          "symbolic": null,
+          "target": null,
+          "tolerance": null,
+          "type": "natural_language",
+          "verification": null
+        },
+        {
+          "assumptions": [],
+          "counterexample": null,
+          "detail": "stated in natural language: the harness does not assess it; the human assesses it, and the agent's assertion alone does not count as verification",
+          "domain": null,
+          "exception": null,
+          "exclude_on_violation": false,
+          "excludes": false,
+          "id": "R4",
+          "kind": "natural_language",
+          "outcome": "unavailable",
+          "quantity": null,
+          "sampling": null,
+          "source": {
+            "date": "2026-10-08",
+            "note": null,
+            "stated_by": "RB"
+          },
+          "statement": "Pressure relaxation. With zero inlet flow and an open outlet valve, pressure tends toward atmospheric pressure.",
+          "status": "unresolved",
+          "symbolic": null,
+          "target": null,
+          "tolerance": null,
+          "type": "natural_language",
+          "verification": null
+        },
+        {
+          "assumptions": [],
+          "counterexample": null,
+          "detail": "stated in natural language: the harness does not assess it; the human assesses it, and the agent's assertion alone does not count as verification",
+          "domain": null,
+          "exception": null,
+          "exclude_on_violation": false,
+          "excludes": false,
+          "id": "R5",
+          "kind": "natural_language",
+          "outcome": "unavailable",
+          "quantity": null,
+          "sampling": null,
+          "source": {
+            "date": "2026-10-08",
+            "note": null,
+            "stated_by": "RB"
+          },
+          "statement": "Fully closed valve. For a perfectly sealed tank with a fully closed outlet valve, the pressure cannot decrease when air is supplied.",
+          "status": "unresolved",
+          "symbolic": null,
+          "target": null,
+          "tolerance": null,
+          "type": "natural_language",
+          "verification": null
+        }
+      ],
+      "sensitivity": {
+        "assumptions": [
+          "the fitting target is the one implied by the formulation (the model file has no structured field for it)"
+        ],
+        "available": true,
+        "data": [
+          "train",
+          "val"
+        ],
+        "deficient": false,
+        "dependent_groups": [],
+        "method": "analytic derivatives (SymPy), ties differentiated through their equations",
+        "parameters": [
+          "a",
+          "r",
+          "n",
+          "pa",
+          "dA",
+          "dB",
+          "dC",
+          "dD",
+          "dE",
+          "dF"
+        ],
+        "rank": 10,
+        "rank_threshold": "s_i / s_1 > 1e-08",
+        "reason": null,
+        "rows": 2906,
+        "rows_dropped": 0,
+        "scaling": "rows of each target divided by the standard deviation of its measured column; columns divided by their Euclidean norm",
+        "singular_values": [
+          2.519462852756748,
+          1.3125741048145918,
+          0.8317385298525803,
+          0.7484402401821314,
+          0.5004312337283525,
+          0.4470835838343989,
+          0.3875696294769633,
+          0.21527239718786073,
+          0.12472274579807263,
+          0.12280489060036913
+        ],
+        "targets": [
+          "dp"
+        ],
+        "zero_columns": []
+      },
+      "status": "evaluated",
+      "structure": {
+        "dp": "P1*Max(0, flow) + P2*Max(0, P3 - p) - 1.0*(1.0*(1.0*(P4 + P5 + P6 + P7 + P8 + P9)/P2)**(1/(1 - P10)) + 1.0*Max(0, -P3 + p))**(P10 - 1)*(P4*Min(1, 9.9999999999999994*Min(1, Max(0, 1.0 - 0.01*valve))) + P5*Min(1, Max(0, 9.9999999999999994*Min(1, Max(0, 1.0 - 0.01*valve)) - 1.0)) + P6*Min(1, Max(0, 10.000000000000002*Min(1, Max(0, 1.0 - 0.01*valve)) - 2.0000000000000006)) + P7*Min(1, Max(0, 6.6666666666666657*Min(1, Max(0, 1.0 - 0.01*valve)) - 1.9999999999999996)) + P8*Min(1, Max(0, 4.9999999999999997*Min(1, Max(0, 1.0 - 0.01*valve)) - 2.2499999999999999)) + P9*Min(1, Max(0, 2.8571428571428573*Min(1, Max(0, 1.0 - 0.01*valve)) - 1.8571428571428573)))*Max(0, -P3 + p)"
+      },
+      "structure_group": 3,
+      "unresolved_requirements": [
+        "R1",
+        "R2",
+        "R3",
+        "R4",
+        "R5"
+      ],
+      "visible": {
+        "train": {
+          "finished": true,
+          "group": "train",
+          "pooled_rmse": 0.025098746061235758,
+          "scored_samples": 1451,
+          "trajectories": [
+            {
+              "completed_samples": 1451,
+              "failure": null,
+              "finished": true,
+              "group": "train",
+              "measures": {
+                "mean": 1.298373536846705,
+                "n": 1451,
+                "nrmse": 0.09625387993691147,
+                "r2": 0.9907351905970906,
+                "rmse": 0.025098746061235758,
+                "sse": 0.9140531751311227,
+                "std": 0.2607556815131655
+              },
+              "n_samples": 1452,
+              "note": null,
+              "prefix_diagnostic": null,
+              "required_samples": 1451,
+              "scoring_interval": [
+                1,
+                1452
+              ],
+              "trajectory": "train"
+            }
+          ]
+        },
+        "val": {
+          "finished": true,
+          "group": "val",
+          "pooled_rmse": 0.03699521995396482,
+          "scored_samples": 1453,
+          "trajectories": [
+            {
+              "completed_samples": 1453,
+              "failure": null,
+              "finished": true,
+              "group": "val",
+              "measures": {
+                "mean": 1.306534241456782,
+                "n": 1453,
+                "nrmse": 0.14091650275271675,
+                "r2": 0.9801425392519436,
+                "rmse": 0.03699521995396482,
+                "sse": 1.9886430730895703,
+                "std": 0.26253291297531567
+              },
+              "n_samples": 1454,
+              "note": null,
+              "prefix_diagnostic": null,
+              "required_samples": 1453,
+              "scoring_interval": [
+                1,
+                1454
+              ],
+              "trajectory": "val"
+            }
+          ]
+        }
+      },
+      "within_limit": true
+    },
+    {
+      "allowed_violations": [],
+      "checks": {
+        "issues": [],
+        "notes": [],
+        "passed": true
+      },
+      "complexity": {
+        "fitted_parameters": 6,
+        "fixed_parameters": 2,
+        "node_count": 94,
+        "node_count_per_key": {
+          "dp": 94
+        },
+        "noninteger_literals": 0,
+        "tied_parameters": 1
+      },
+      "excluded_by_requirements": false,
+      "exclusions": [],
+      "expressions": {
+        "dp": "a*Max(flow,0)-b*Min(Max((vscale-valve)/vscale,0),1)**m/(1+c*Min(Max((vscale-valve)/vscale,0),1)**m)*(Max(p-pa,0)/pr)*sqrt(Max(p+pa,0)/(2*pa))/sqrt((Max(p-pa,0)+s)/pr)+r*Max(pa-p,0)"
+      },
+      "failed_computations": [],
+      "label": "CompressibleDischarge",
+      "position": 4,
+      "requirements": [
+        {
+          "assumptions": [],
+          "counterexample": null,
+          "detail": "stated in natural language: the harness does not assess it; the human assesses it, and the agent's assertion alone does not count as verification",
+          "domain": null,
+          "exception": null,
+          "exclude_on_violation": false,
+          "excludes": false,
+          "id": "R1",
+          "kind": "natural_language",
+          "outcome": "unavailable",
+          "quantity": null,
+          "sampling": null,
+          "source": {
+            "date": "2026-10-08",
+            "note": null,
+            "stated_by": "RB"
+          },
+          "statement": "Monotonicity with respect to inlet flow. At a fixed pressure and valve position, increasing the inlet air flow rate cannot decrease the pressure derivative.",
+          "status": "unresolved",
+          "symbolic": null,
+          "target": null,
+          "tolerance": null,
+          "type": "natural_language",
+          "verification": null
+        },
+        {
+          "assumptions": [],
+          "counterexample": null,
+          "detail": "stated in natural language: the harness does not assess it; the human assesses it, and the agent's assertion alone does not count as verification",
+          "domain": null,
+          "exception": null,
+          "exclude_on_violation": false,
+          "excludes": false,
+          "id": "R2",
+          "kind": "natural_language",
+          "outcome": "unavailable",
+          "quantity": null,
+          "sampling": null,
+          "source": {
+            "date": "2026-10-08",
+            "note": null,
+            "stated_by": "RB"
+          },
+          "statement": "Monotonicity with respect to valve closure. At a fixed pressure and inlet flow rate, closing the outlet valve further cannot decrease the pressure derivative.",
+          "status": "unresolved",
+          "symbolic": null,
+          "target": null,
+          "tolerance": null,
+          "type": "natural_language",
+          "verification": null
+        },
+        {
+          "assumptions": [],
+          "counterexample": null,
+          "detail": "stated in natural language: the harness does not assess it; the human assesses it, and the agent's assertion alone does not count as verification",
+          "domain": null,
+          "exception": null,
+          "exclude_on_violation": false,
+          "excludes": false,
+          "id": "R3",
+          "kind": "natural_language",
+          "outcome": "unavailable",
+          "quantity": null,
+          "sampling": null,
+          "source": {
+            "date": "2026-10-08",
+            "note": null,
+            "stated_by": "RB"
+          },
+          "statement": "Zero-flow equilibrium. With zero inlet flow and an open outlet valve, atmospheric pressure (approximately 1 bar) is the pressure equilibrium.",
+          "status": "unresolved",
+          "symbolic": null,
+          "target": null,
+          "tolerance": null,
+          "type": "natural_language",
+          "verification": null
+        },
+        {
+          "assumptions": [],
+          "counterexample": null,
+          "detail": "stated in natural language: the harness does not assess it; the human assesses it, and the agent's assertion alone does not count as verification",
+          "domain": null,
+          "exception": null,
+          "exclude_on_violation": false,
+          "excludes": false,
+          "id": "R4",
+          "kind": "natural_language",
+          "outcome": "unavailable",
+          "quantity": null,
+          "sampling": null,
+          "source": {
+            "date": "2026-10-08",
+            "note": null,
+            "stated_by": "RB"
+          },
+          "statement": "Pressure relaxation. With zero inlet flow and an open outlet valve, pressure tends toward atmospheric pressure.",
+          "status": "unresolved",
+          "symbolic": null,
+          "target": null,
+          "tolerance": null,
+          "type": "natural_language",
+          "verification": null
+        },
+        {
+          "assumptions": [],
+          "counterexample": null,
+          "detail": "stated in natural language: the harness does not assess it; the human assesses it, and the agent's assertion alone does not count as verification",
+          "domain": null,
+          "exception": null,
+          "exclude_on_violation": false,
+          "excludes": false,
+          "id": "R5",
+          "kind": "natural_language",
+          "outcome": "unavailable",
+          "quantity": null,
+          "sampling": null,
+          "source": {
+            "date": "2026-10-08",
+            "note": null,
+            "stated_by": "RB"
+          },
+          "statement": "Fully closed valve. For a perfectly sealed tank with a fully closed outlet valve, the pressure cannot decrease when air is supplied.",
+          "status": "unresolved",
+          "symbolic": null,
+          "target": null,
+          "tolerance": null,
+          "type": "natural_language",
+          "verification": null
+        }
+      ],
+      "sensitivity": {
+        "assumptions": [
+          "the fitting target is the one implied by the formulation (the model file has no structured field for it)"
+        ],
+        "available": true,
+        "data": [
+          "train",
+          "val"
+        ],
+        "deficient": false,
+        "dependent_groups": [],
+        "method": "analytic derivatives (SymPy), ties differentiated through their equations",
+        "parameters": [
+          "a",
+          "b",
+          "c",
+          "r",
+          "m",
+          "pa"
+        ],
+        "rank": 6,
+        "rank_threshold": "s_i / s_1 > 1e-08",
+        "reason": null,
+        "rows": 2906,
+        "rows_dropped": 0,
+        "scaling": "rows of each target divided by the standard deviation of its measured column; columns divided by their Euclidean norm",
+        "singular_values": [
+          2.183161863018527,
+          0.9597428877868452,
+          0.4934335926162593,
+          0.2249084407981228,
+          0.1304059296363221,
+          0.04039363384615468
+        ],
+        "targets": [
+          "dp"
+        ],
+        "zero_columns": []
+      },
+      "status": "evaluated",
+      "structure": {
+        "dp": "P1*Max(0, flow) + P2*Max(0, P3 - p) - 0.5*sqrt(2)*P4*sqrt(1/P3)*Max(0, -P3 + p)*sqrt(Max(0, P3 + p))*Min(1, Max(0, 1.0 - 0.01*valve))**P6/((P5*Min(1, Max(0, 1.0 - 0.01*valve))**P6 + 1)*sqrt(1.0*Max(0, -P3 + p) + 1.0*P4**2/(P2**2*(P5 + 1)**2)))"
+      },
+      "structure_group": 4,
+      "unresolved_requirements": [
+        "R1",
+        "R2",
+        "R3",
+        "R4",
+        "R5"
+      ],
+      "visible": {
+        "train": {
+          "finished": true,
+          "group": "train",
+          "pooled_rmse": 0.02755909090373843,
+          "scored_samples": 1451,
+          "trajectories": [
+            {
+              "completed_samples": 1451,
+              "failure": null,
+              "finished": true,
+              "group": "train",
+              "measures": {
+                "mean": 1.298373536846705,
+                "n": 1451,
+                "nrmse": 0.10568932091455494,
+                "r2": 0.9888297674446203,
+                "rmse": 0.02755909090373843,
+                "sse": 1.102039566080192,
+                "std": 0.2607556815131655
+              },
+              "n_samples": 1452,
+              "note": null,
+              "prefix_diagnostic": null,
+              "required_samples": 1451,
+              "scoring_interval": [
+                1,
+                1452
+              ],
+              "trajectory": "train"
+            }
+          ]
+        },
+        "val": {
+          "finished": true,
+          "group": "val",
+          "pooled_rmse": 0.038543938319599846,
+          "scored_samples": 1453,
+          "trajectories": [
+            {
+              "completed_samples": 1453,
+              "failure": null,
+              "finished": true,
+              "group": "val",
+              "measures": {
+                "mean": 1.306534241456782,
+                "n": 1453,
+                "nrmse": 0.1468156425903974,
+                "r2": 0.9784451670907687,
+                "rmse": 0.038543938319599846,
+                "sse": 2.158627918261976,
+                "std": 0.26253291297531567
+              },
+              "n_samples": 1454,
+              "note": null,
+              "prefix_diagnostic": null,
+              "required_samples": 1453,
+              "scoring_interval": [
+                1,
+                1454
+              ],
+              "trajectory": "val"
+            }
+          ]
+        }
+      },
+      "within_limit": true
+    },
+    {
+      "allowed_violations": [],
+      "checks": {
+        "issues": [],
+        "notes": [],
+        "passed": true
+      },
+      "complexity": {
+        "fitted_parameters": 4,
+        "fixed_parameters": 3,
+        "node_count": 58,
+        "node_count_per_key": {
+          "dp": 58
+        },
+        "noninteger_literals": 0,
+        "tied_parameters": 1
+      },
+      "excluded_by_requirements": false,
+      "exclusions": [],
+      "expressions": {
+        "dp": "a*Max(flow,0)-b*Min(Max((vscale-valve)/vscale,0),1)**m*(Max(p-pa,0)/pr)/sqrt((Max(p-pa,0)+s)/pr)+r*Max(pa-p,0)"
+      },
+      "failed_computations": [],
+      "label": "RegularizedOrifice",
+      "position": 5,
+      "requirements": [
+        {
+          "assumptions": [],
+          "counterexample": null,
+          "detail": "stated in natural language: the harness does not assess it; the human assesses it, and the agent's assertion alone does not count as verification",
+          "domain": null,
+          "exception": null,
+          "exclude_on_violation": false,
+          "excludes": false,
+          "id": "R1",
+          "kind": "natural_language",
+          "outcome": "unavailable",
+          "quantity": null,
+          "sampling": null,
+          "source": {
+            "date": "2026-10-08",
+            "note": null,
+            "stated_by": "RB"
+          },
+          "statement": "Monotonicity with respect to inlet flow. At a fixed pressure and valve position, increasing the inlet air flow rate cannot decrease the pressure derivative.",
+          "status": "unresolved",
+          "symbolic": null,
+          "target": null,
+          "tolerance": null,
+          "type": "natural_language",
+          "verification": null
+        },
+        {
+          "assumptions": [],
+          "counterexample": null,
+          "detail": "stated in natural language: the harness does not assess it; the human assesses it, and the agent's assertion alone does not count as verification",
+          "domain": null,
+          "exception": null,
+          "exclude_on_violation": false,
+          "excludes": false,
+          "id": "R2",
+          "kind": "natural_language",
+          "outcome": "unavailable",
+          "quantity": null,
+          "sampling": null,
+          "source": {
+            "date": "2026-10-08",
+            "note": null,
+            "stated_by": "RB"
+          },
+          "statement": "Monotonicity with respect to valve closure. At a fixed pressure and inlet flow rate, closing the outlet valve further cannot decrease the pressure derivative.",
+          "status": "unresolved",
+          "symbolic": null,
+          "target": null,
+          "tolerance": null,
+          "type": "natural_language",
+          "verification": null
+        },
+        {
+          "assumptions": [],
+          "counterexample": null,
+          "detail": "stated in natural language: the harness does not assess it; the human assesses it, and the agent's assertion alone does not count as verification",
+          "domain": null,
+          "exception": null,
+          "exclude_on_violation": false,
+          "excludes": false,
+          "id": "R3",
+          "kind": "natural_language",
+          "outcome": "unavailable",
+          "quantity": null,
+          "sampling": null,
+          "source": {
+            "date": "2026-10-08",
+            "note": null,
+            "stated_by": "RB"
+          },
+          "statement": "Zero-flow equilibrium. With zero inlet flow and an open outlet valve, atmospheric pressure (approximately 1 bar) is the pressure equilibrium.",
+          "status": "unresolved",
+          "symbolic": null,
+          "target": null,
+          "tolerance": null,
+          "type": "natural_language",
+          "verification": null
+        },
+        {
+          "assumptions": [],
+          "counterexample": null,
+          "detail": "stated in natural language: the harness does not assess it; the human assesses it, and the agent's assertion alone does not count as verification",
+          "domain": null,
+          "exception": null,
+          "exclude_on_violation": false,
+          "excludes": false,
+          "id": "R4",
+          "kind": "natural_language",
+          "outcome": "unavailable",
+          "quantity": null,
+          "sampling": null,
+          "source": {
+            "date": "2026-10-08",
+            "note": null,
+            "stated_by": "RB"
+          },
+          "statement": "Pressure relaxation. With zero inlet flow and an open outlet valve, pressure tends toward atmospheric pressure.",
+          "status": "unresolved",
+          "symbolic": null,
+          "target": null,
+          "tolerance": null,
+          "type": "natural_language",
+          "verification": null
+        },
+        {
+          "assumptions": [],
+          "counterexample": null,
+          "detail": "stated in natural language: the harness does not assess it; the human assesses it, and the agent's assertion alone does not count as verification",
+          "domain": null,
+          "exception": null,
+          "exclude_on_violation": false,
+          "excludes": false,
+          "id": "R5",
+          "kind": "natural_language",
+          "outcome": "unavailable",
+          "quantity": null,
+          "sampling": null,
+          "source": {
+            "date": "2026-10-08",
+            "note": null,
+            "stated_by": "RB"
+          },
+          "statement": "Fully closed valve. For a perfectly sealed tank with a fully closed outlet valve, the pressure cannot decrease when air is supplied.",
+          "status": "unresolved",
+          "symbolic": null,
+          "target": null,
+          "tolerance": null,
+          "type": "natural_language",
+          "verification": null
+        }
+      ],
+      "sensitivity": {
+        "assumptions": [
+          "the fitting target is the one implied by the formulation (the model file has no structured field for it)"
+        ],
+        "available": true,
+        "data": [
+          "train",
+          "val"
+        ],
+        "deficient": false,
+        "dependent_groups": [],
+        "method": "analytic derivatives (SymPy), ties differentiated through their equations",
+        "parameters": [
+          "a",
+          "b",
+          "r",
+          "m"
+        ],
+        "rank": 4,
+        "rank_threshold": "s_i / s_1 > 1e-08",
+        "reason": null,
+        "rows": 2906,
+        "rows_dropped": 0,
+        "scaling": "rows of each target divided by the standard deviation of its measured column; columns divided by their Euclidean norm",
+        "singular_values": [
+          1.8888264266544583,
+          0.608749444161612,
+          0.2195197844280519,
+          0.11648994999286114
+        ],
+        "targets": [
+          "dp"
+        ],
+        "zero_columns": []
+      },
+      "status": "evaluated",
+      "structure": {
+        "dp": "P1*Max(0, flow) + P2*Max(0, 1.0 - p) - 1.0*P3*Max(0, p - 1.0)*Min(1, Max(0, 1.0 - 0.01*valve))**P4/sqrt(1.0*Max(0, p - 1.0) + 1.0*P3**2/P2**2)"
+      },
+      "structure_group": 5,
+      "unresolved_requirements": [
+        "R1",
+        "R2",
+        "R3",
+        "R4",
+        "R5"
+      ],
+      "visible": {
+        "train": {
+          "finished": true,
+          "group": "train",
+          "pooled_rmse": 0.03340025266257694,
+          "scored_samples": 1451,
+          "trajectories": [
+            {
+              "completed_samples": 1451,
+              "failure": null,
+              "finished": true,
+              "group": "train",
+              "measures": {
+                "mean": 1.298373536846705,
+                "n": 1451,
+                "nrmse": 0.1280902201967575,
+                "r2": 0.9835928954899462,
+                "rmse": 0.03340025266257694,
+                "sse": 1.618702049867692,
+                "std": 0.2607556815131655
+              },
+              "n_samples": 1452,
+              "note": null,
+              "prefix_diagnostic": null,
+              "required_samples": 1451,
+              "scoring_interval": [
+                1,
+                1452
+              ],
+              "trajectory": "train"
+            }
+          ]
+        },
+        "val": {
+          "finished": true,
+          "group": "val",
+          "pooled_rmse": 0.03984320213738663,
+          "scored_samples": 1453,
+          "trajectories": [
+            {
+              "completed_samples": 1453,
+              "failure": null,
+              "finished": true,
+              "group": "val",
+              "measures": {
+                "mean": 1.306534241456782,
+                "n": 1453,
+                "nrmse": 0.15176459852533933,
+                "r2": 0.9769675066344425,
+                "rmse": 0.03984320213738663,
+                "sse": 2.306609539282625,
+                "std": 0.26253291297531567
+              },
+              "n_samples": 1454,
+              "note": null,
+              "prefix_diagnostic": null,
+              "required_samples": 1453,
+              "scoring_interval": [
+                1,
+                1454
+              ],
+              "trajectory": "val"
+            }
+          ]
+        }
+      },
+      "within_limit": true
+    }
+  ],
+  "counts": {
+    "accepted_by_checks": 5,
+    "evaluated": 5,
+    "excluded_by_requirements": 0,
+    "failed_numerically_on_visible_data": 0,
+    "outside_limit": 0,
+    "overlap": {
+      "note": "the categories overlap; the counts need not sum to the pool size"
+    },
+    "proposed": 5
+  },
+  "format_version": 1,
+  "formulation": "continuous",
+  "pool_file": {
+    "issues": [],
+    "order": [
+      "GeneralizedDischarge",
+      "MixedResistance",
+      "TabulatedValve",
+      "CompressibleDischarge",
+      "RegularizedOrifice"
+    ],
+    "order_from_pool_file": true,
+    "pool_cap": 10,
+    "pool_version": 1,
+    "valid": true
+  },
+  "recommendation": {
+    "agent": {
+      "label": "GeneralizedDischarge",
+      "reason": "The compact generalized gas-balance model achieved the lowest genuinely held-out validation RMSE among the final stable candidate structures: `0.0386073098819` bar from a train-only fit. Its final parameters are jointly refitted on the training and validation trajectories; their pressure RMSE values are `0.0245809178926` bar and `0.0372737413879` bar, respectively, and are therefore in-sample rather than held-out. The tabulated valve model has a slightly lower final joint-data error but had worse train-only validation performance and greater calibration flexibility. The recommendation preserves positive inlet response, monotone valve response, near-atmospheric recovery, and exact sealed-valve accumulation above the atmospheric reference. The square-root-nearby discharge exponent is an interpretable effective restriction law; systematic time-dependent residuals remain, so no test-performance claim is made."
+    },
+    "notes": [
+      "requirement(s) stated in natural language (R1, R2, R3, R4, R5) are assessed by the human"
+    ],
+    "present": true
+  },
+  "settings": {
+    "discontinuities": "expressions with jumps (Piecewise, sign) are evaluated pointwise at the sample instants and Runge-Kutta stages; no event detection or step refinement is applied at a jump",
+    "failure_limits": [
+      {
+        "justification": "numerical divergence bound, about 46 times the largest training value 2.19 bar",
+        "lower": -100.0,
+        "unit": "bar",
+        "upper": 100.0,
+        "variable": "p"
+      }
+    ],
+    "harness_version": "0.1.0.dev0",
+    "horizon": null,
+    "horizon_note": null,
+    "initialization": 1,
+    "input_hold": "zero_order",
+    "integrator": "rk4",
+    "measurement": "p",
+    "mode": "simulation",
+    "pool_cap": 10,
+    "reference_samples": 2000,
+    "reference_seed": 20260925,
+    "requirement_confirmation_points": 5,
+    "sampling_period_s": 5.0,
+    "scoring": "after_initialization",
+    "sensitivity_rank_threshold": 1e-08,
+    "software": {
+      "numpy": "2.5.1",
+      "sympy": "1.14.0"
+    },
+    "substeps": 1,
+    "symbolic_time_limit_s": 10.0,
+    "tie_relative_tolerance": 1e-12,
+    "time_limit_s": 60.0,
+    "top_k": 5
+  },
+  "structures": {
+    "convention": "ties resolved, fixed values kept, given constants kept, fitted parameters renamed P1..Pn in order of first occurrence; equal when a one-to-one renaming of the fitted parameters makes every expression identical in SymPy's canonical form",
+    "distinct": 5,
+    "exhaustive": true,
+    "groups": [
+      [
+        "GeneralizedDischarge"
+      ],
+      [
+        "MixedResistance"
+      ],
+      [
+        "TabulatedValve"
+      ],
+      [
+        "CompressibleDischarge"
+      ],
+      [
+        "RegularizedOrifice"
+      ]
+    ]
+  },
+  "task_id": "fermenter-pressure"
+}

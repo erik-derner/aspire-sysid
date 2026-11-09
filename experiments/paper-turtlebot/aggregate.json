@@ -1,0 +1,1795 @@
+{
+  "counts_definitions": {
+    "attempted": "runs with a run record (finished, whatever the outcome)",
+    "delivered": "runs whose final check report passed: a valid pool file with at least one candidate within the pool limit that passed the file and expression checks",
+    "eligible": "runs with at least one candidate eligible for ranking",
+    "evaluated_without_valid_pool_file": "runs that ended without a valid pool file whose checked candidates were evaluated in file-name order (harness order); they can be eligible without being delivered",
+    "interrupted_attempts": "attempts ended by an interruption of the harness and repeated from the beginning; not attempted runs"
+  },
+  "counts_labels": {
+    "attempted": "attempted",
+    "delivered": "delivered",
+    "eligible": "eligible",
+    "evaluated_without_valid_pool_file": "evaluated without a valid pool file",
+    "interrupted_attempts": "interrupted attempts"
+  },
+  "delivered": 5,
+  "eligible": 5,
+  "evaluated_without_valid_pool_file": 0,
+  "experiment": {
+    "agent_python": null,
+    "budget_override": null,
+    "concurrency": 3,
+    "config_sha256": "79e50b856f5864827ad25b6e69c4c696eca7ea98981417ed634e665fc7d64ced",
+    "exports": {
+      "matlab": true,
+      "octave": "auto",
+      "python": true
+    },
+    "folder": "experiments/paper-turtlebot",
+    "id": "paper-turtlebot",
+    "keep_workspaces": true,
+    "model": "gpt-6.1-sol",
+    "notes": "One of the six experiments of the manuscript (three systems, each as a described and as a blind task). Largest possible cost: 5 runs × 10 USD = 50 USD.",
+    "plots": true,
+    "runs": 5,
+    "seeds": "The language-model requests set no seed, so the responses are not reproducible; the runs of an experiment differ only in these responses. Requirement sampling and the reference comparison use the seeds declared by the task and the harness, recorded in every run record.",
+    "task": "turtlebot",
+    "tasks_root": "tasks",
+    "vendor": "openai",
+    "workspace_root": "<tmp>\\aspire-runs"
+  },
+  "format_version": 2,
+  "identity": {
+    "changes_sha256": null,
+    "commits": [],
+    "dirty": false,
+    "dry_run": false,
+    "harness_version": "0.1.0.dev0",
+    "model": "gpt-6.1-sol",
+    "task": "turtlebot",
+    "trees": {
+      "aspire": "5b0a61ed97131cdddcf5ba717497fb844f469682",
+      "tasks": "4d94d2dee0f4aac04d38abe073376d5de763b261"
+    }
+  },
+  "interrupted_attempts": 0,
+  "kind": "aspire_aggregate",
+  "leak_findings": 4,
+  "missing_runs": [],
+  "outcomes": {
+    "completed": 5
+  },
+  "output": {
+    "name": "x",
+    "unit": "m"
+  },
+  "per_trajectory_rmse": {
+    "oracle_best": {
+      "test-1": {
+        "max": 0.07334945596281803,
+        "mean": 0.0544069439918234,
+        "mean_note": "all 5 runs",
+        "min": 0.039644284637095094,
+        "n_finite": 5,
+        "n_runs": 5,
+        "no_finite_result": [],
+        "sd": 0.012128033733608289,
+        "sd_note": null,
+        "single_result": false,
+        "values": [
+          {
+            "run_id": "r01",
+            "value": 0.051409269011614245
+          },
+          {
+            "run_id": "r02",
+            "value": 0.039644284637095094
+          },
+          {
+            "run_id": "r03",
+            "value": 0.054794913576182436
+          },
+          {
+            "run_id": "r04",
+            "value": 0.07334945596281803
+          },
+          {
+            "run_id": "r05",
+            "value": 0.0528367967714072
+          }
+        ]
+      },
+      "test-10": {
+        "max": 0.012810809838871241,
+        "mean": 0.010726567645676505,
+        "mean_note": "all 5 runs",
+        "min": 0.009734160384647885,
+        "n_finite": 5,
+        "n_runs": 5,
+        "no_finite_result": [],
+        "sd": 0.0012376419428714112,
+        "sd_note": null,
+        "single_result": false,
+        "values": [
+          {
+            "run_id": "r01",
+            "value": 0.010405818703345272
+          },
+          {
+            "run_id": "r02",
+            "value": 0.010787077303209497
+          },
+          {
+            "run_id": "r03",
+            "value": 0.009734160384647885
+          },
+          {
+            "run_id": "r04",
+            "value": 0.012810809838871241
+          },
+          {
+            "run_id": "r05",
+            "value": 0.009894971998308633
+          }
+        ]
+      },
+      "test-11": {
+        "max": 0.05957907183452299,
+        "mean": 0.05334634281597904,
+        "mean_note": "all 5 runs",
+        "min": 0.048472834040569186,
+        "n_finite": 5,
+        "n_runs": 5,
+        "no_finite_result": [],
+        "sd": 0.004459044305718699,
+        "sd_note": null,
+        "single_result": false,
+        "values": [
+          {
+            "run_id": "r01",
+            "value": 0.05957907183452299
+          },
+          {
+            "run_id": "r02",
+            "value": 0.048472834040569186
+          },
+          {
+            "run_id": "r03",
+            "value": 0.05232149654348892
+          },
+          {
+            "run_id": "r04",
+            "value": 0.05036596433162133
+          },
+          {
+            "run_id": "r05",
+            "value": 0.05599234732969278
+          }
+        ]
+      },
+      "test-12": {
+        "max": 0.008600665309345237,
+        "mean": 0.007727883909165884,
+        "mean_note": "all 5 runs",
+        "min": 0.005459623350378489,
+        "n_finite": 5,
+        "n_runs": 5,
+        "no_finite_result": [],
+        "sd": 0.0012925547946927088,
+        "sd_note": null,
+        "single_result": false,
+        "values": [
+          {
+            "run_id": "r01",
+            "value": 0.008248480604993657
+          },
+          {
+            "run_id": "r02",
+            "value": 0.008412618157578208
+          },
+          {
+            "run_id": "r03",
+            "value": 0.00791803212353383
+          },
+          {
+            "run_id": "r04",
+            "value": 0.008600665309345237
+          },
+          {
+            "run_id": "r05",
+            "value": 0.005459623350378489
+          }
+        ]
+      },
+      "test-2": {
+        "max": 0.012539728077501826,
+        "mean": 0.009620861031127035,
+        "mean_note": "all 5 runs",
+        "min": 0.007905146418147248,
+        "n_finite": 5,
+        "n_runs": 5,
+        "no_finite_result": [],
+        "sd": 0.001867106785369336,
+        "sd_note": null,
+        "single_result": false,
+        "values": [
+          {
+            "run_id": "r01",
+            "value": 0.01026414290253867
+          },
+          {
+            "run_id": "r02",
+            "value": 0.009123330463674159
+          },
+          {
+            "run_id": "r03",
+            "value": 0.008271957293773271
+          },
+          {
+            "run_id": "r04",
+            "value": 0.012539728077501826
+          },
+          {
+            "run_id": "r05",
+            "value": 0.007905146418147248
+          }
+        ]
+      },
+      "test-3": {
+        "max": 0.0546374087460363,
+        "mean": 0.05132850696614184,
+        "mean_note": "all 5 runs",
+        "min": 0.04457697027888066,
+        "n_finite": 5,
+        "n_runs": 5,
+        "no_finite_result": [],
+        "sd": 0.003889870387058455,
+        "sd_note": null,
+        "single_result": false,
+        "values": [
+          {
+            "run_id": "r01",
+            "value": 0.0546374087460363
+          },
+          {
+            "run_id": "r02",
+            "value": 0.04457697027888066
+          },
+          {
+            "run_id": "r03",
+            "value": 0.05231581396769695
+          },
+          {
+            "run_id": "r04",
+            "value": 0.05259614094648397
+          },
+          {
+            "run_id": "r05",
+            "value": 0.05251620089161129
+          }
+        ]
+      },
+      "test-4": {
+        "max": 0.031125694047369,
+        "mean": 0.024718734217582458,
+        "mean_note": "all 5 runs",
+        "min": 0.02110951338355124,
+        "n_finite": 5,
+        "n_runs": 5,
+        "no_finite_result": [],
+        "sd": 0.0038814343327877093,
+        "sd_note": null,
+        "single_result": false,
+        "values": [
+          {
+            "run_id": "r01",
+            "value": 0.022466352557784803
+          },
+          {
+            "run_id": "r02",
+            "value": 0.031125694047369
+          },
+          {
+            "run_id": "r03",
+            "value": 0.02375158086455923
+          },
+          {
+            "run_id": "r04",
+            "value": 0.025140530234648018
+          },
+          {
+            "run_id": "r05",
+            "value": 0.02110951338355124
+          }
+        ]
+      },
+      "test-5": {
+        "max": 0.04522441356841048,
+        "mean": 0.035754123902116755,
+        "mean_note": "all 5 runs",
+        "min": 0.02955692811320993,
+        "n_finite": 5,
+        "n_runs": 5,
+        "no_finite_result": [],
+        "sd": 0.005739435106850086,
+        "sd_note": null,
+        "single_result": false,
+        "values": [
+          {
+            "run_id": "r01",
+            "value": 0.03453847975237495
+          },
+          {
+            "run_id": "r02",
+            "value": 0.04522441356841048
+          },
+          {
+            "run_id": "r03",
+            "value": 0.03492351388342687
+          },
+          {
+            "run_id": "r04",
+            "value": 0.02955692811320993
+          },
+          {
+            "run_id": "r05",
+            "value": 0.03452728419316154
+          }
+        ]
+      },
+      "test-6": {
+        "max": 0.05924060917351307,
+        "mean": 0.051031065010936426,
+        "mean_note": "all 5 runs",
+        "min": 0.04455992693525475,
+        "n_finite": 5,
+        "n_runs": 5,
+        "no_finite_result": [],
+        "sd": 0.005687853407468081,
+        "sd_note": null,
+        "single_result": false,
+        "values": [
+          {
+            "run_id": "r01",
+            "value": 0.04455992693525475
+          },
+          {
+            "run_id": "r02",
+            "value": 0.05399067011370594
+          },
+          {
+            "run_id": "r03",
+            "value": 0.04909409415620866
+          },
+          {
+            "run_id": "r04",
+            "value": 0.04827002467599971
+          },
+          {
+            "run_id": "r05",
+            "value": 0.05924060917351307
+          }
+        ]
+      },
+      "test-7": {
+        "max": 0.06145468375295711,
+        "mean": 0.053790372825114716,
+        "mean_note": "all 5 runs",
+        "min": 0.043430898544045055,
+        "n_finite": 5,
+        "n_runs": 5,
+        "no_finite_result": [],
+        "sd": 0.0072935867948956635,
+        "sd_note": null,
+        "single_result": false,
+        "values": [
+          {
+            "run_id": "r01",
+            "value": 0.043430898544045055
+          },
+          {
+            "run_id": "r02",
+            "value": 0.05680833994255942
+          },
+          {
+            "run_id": "r03",
+            "value": 0.057962851265698556
+          },
+          {
+            "run_id": "r04",
+            "value": 0.06145468375295711
+          },
+          {
+            "run_id": "r05",
+            "value": 0.04929509062031344
+          }
+        ]
+      },
+      "test-8": {
+        "max": 0.01309151525904381,
+        "mean": 0.0077833695538012835,
+        "mean_note": "all 5 runs",
+        "min": 0.00493922781104537,
+        "n_finite": 5,
+        "n_runs": 5,
+        "no_finite_result": [],
+        "sd": 0.003168200989393328,
+        "sd_note": null,
+        "single_result": false,
+        "values": [
+          {
+            "run_id": "r01",
+            "value": 0.00493922781104537
+          },
+          {
+            "run_id": "r02",
+            "value": 0.01309151525904381
+          },
+          {
+            "run_id": "r03",
+            "value": 0.007557814893414909
+          },
+          {
+            "run_id": "r04",
+            "value": 0.007479078768761652
+          },
+          {
+            "run_id": "r05",
+            "value": 0.005849211036740681
+          }
+        ]
+      },
+      "test-9": {
+        "max": 0.03663063795917546,
+        "mean": 0.03247005788838043,
+        "mean_note": "all 5 runs",
+        "min": 0.029008070553983446,
+        "n_finite": 5,
+        "n_runs": 5,
+        "no_finite_result": [],
+        "sd": 0.003013720251399313,
+        "sd_note": null,
+        "single_result": false,
+        "values": [
+          {
+            "run_id": "r01",
+            "value": 0.029008070553983446
+          },
+          {
+            "run_id": "r02",
+            "value": 0.03663063795917546
+          },
+          {
+            "run_id": "r03",
+            "value": 0.0302373347050903
+          },
+          {
+            "run_id": "r04",
+            "value": 0.03389758706183191
+          },
+          {
+            "run_id": "r05",
+            "value": 0.03257665916182103
+          }
+        ]
+      }
+    },
+    "recommended": {
+      "test-1": {
+        "max": 0.05477697068041859,
+        "mean": 0.04819302199338469,
+        "mean_note": "all 5 runs",
+        "min": 0.04073587731975719,
+        "n_finite": 5,
+        "n_runs": 5,
+        "no_finite_result": [],
+        "sd": 0.00684415906759572,
+        "sd_note": null,
+        "single_result": false,
+        "values": [
+          {
+            "run_id": "r01",
+            "value": 0.05024049272533911
+          },
+          {
+            "run_id": "r02",
+            "value": 0.0411432586301994
+          },
+          {
+            "run_id": "r03",
+            "value": 0.05406851061120916
+          },
+          {
+            "run_id": "r04",
+            "value": 0.05477697068041859
+          },
+          {
+            "run_id": "r05",
+            "value": 0.04073587731975719
+          }
+        ]
+      },
+      "test-10": {
+        "max": 0.015077936824942064,
+        "mean": 0.011518246820645443,
+        "mean_note": "all 5 runs",
+        "min": 0.009689270888649544,
+        "n_finite": 5,
+        "n_runs": 5,
+        "no_finite_result": [],
+        "sd": 0.002162589288734438,
+        "sd_note": null,
+        "single_result": false,
+        "values": [
+          {
+            "run_id": "r01",
+            "value": 0.01018634938026587
+          },
+          {
+            "run_id": "r02",
+            "value": 0.011965810565846717
+          },
+          {
+            "run_id": "r03",
+            "value": 0.010671866443523019
+          },
+          {
+            "run_id": "r04",
+            "value": 0.015077936824942064
+          },
+          {
+            "run_id": "r05",
+            "value": 0.009689270888649544
+          }
+        ]
+      },
+      "test-11": {
+        "max": 0.08079981838794577,
+        "mean": 0.06830801548161566,
+        "mean_note": "all 5 runs",
+        "min": 0.060640404368244014,
+        "n_finite": 5,
+        "n_runs": 5,
+        "no_finite_result": [],
+        "sd": 0.008406113938332224,
+        "sd_note": null,
+        "single_result": false,
+        "values": [
+          {
+            "run_id": "r01",
+            "value": 0.08079981838794577
+          },
+          {
+            "run_id": "r02",
+            "value": 0.06079355692178231
+          },
+          {
+            "run_id": "r03",
+            "value": 0.07161882318376246
+          },
+          {
+            "run_id": "r04",
+            "value": 0.060640404368244014
+          },
+          {
+            "run_id": "r05",
+            "value": 0.06768747454634372
+          }
+        ]
+      },
+      "test-12": {
+        "max": 0.006906531652123421,
+        "mean": 0.005822857858628949,
+        "mean_note": "all 5 runs",
+        "min": 0.0051943448301932935,
+        "n_finite": 5,
+        "n_runs": 5,
+        "no_finite_result": [],
+        "sd": 0.0007389661099004048,
+        "sd_note": null,
+        "single_result": false,
+        "values": [
+          {
+            "run_id": "r01",
+            "value": 0.0051943448301932935
+          },
+          {
+            "run_id": "r02",
+            "value": 0.0053443081630210835
+          },
+          {
+            "run_id": "r03",
+            "value": 0.006273655271116765
+          },
+          {
+            "run_id": "r04",
+            "value": 0.006906531652123421
+          },
+          {
+            "run_id": "r05",
+            "value": 0.005395449376690184
+          }
+        ]
+      },
+      "test-2": {
+        "max": 0.013032478423629482,
+        "mean": 0.010219398813897848,
+        "mean_note": "all 5 runs",
+        "min": 0.007828074701624908,
+        "n_finite": 5,
+        "n_runs": 5,
+        "no_finite_result": [],
+        "sd": 0.0025315570816124783,
+        "sd_note": null,
+        "single_result": false,
+        "values": [
+          {
+            "run_id": "r01",
+            "value": 0.007828074701624908
+          },
+          {
+            "run_id": "r02",
+            "value": 0.012874634327751856
+          },
+          {
+            "run_id": "r03",
+            "value": 0.009011859992221555
+          },
+          {
+            "run_id": "r04",
+            "value": 0.013032478423629482
+          },
+          {
+            "run_id": "r05",
+            "value": 0.008349946624261435
+          }
+        ]
+      },
+      "test-3": {
+        "max": 0.05994613516694995,
+        "mean": 0.0529952134385709,
+        "mean_note": "all 5 runs",
+        "min": 0.04769498583897068,
+        "n_finite": 5,
+        "n_runs": 5,
+        "no_finite_result": [],
+        "sd": 0.005551925324119034,
+        "sd_note": null,
+        "single_result": false,
+        "values": [
+          {
+            "run_id": "r01",
+            "value": 0.05994613516694995
+          },
+          {
+            "run_id": "r02",
+            "value": 0.04769498583897068
+          },
+          {
+            "run_id": "r03",
+            "value": 0.05796538482542188
+          },
+          {
+            "run_id": "r04",
+            "value": 0.04931923996205225
+          },
+          {
+            "run_id": "r05",
+            "value": 0.05005032139945975
+          }
+        ]
+      },
+      "test-4": {
+        "max": 0.03070157606618274,
+        "mean": 0.026132699847216147,
+        "mean_note": "all 5 runs",
+        "min": 0.021296861754010445,
+        "n_finite": 5,
+        "n_runs": 5,
+        "no_finite_result": [],
+        "sd": 0.004350133567226527,
+        "sd_note": null,
+        "single_result": false,
+        "values": [
+          {
+            "run_id": "r01",
+            "value": 0.021296861754010445
+          },
+          {
+            "run_id": "r02",
+            "value": 0.02940064003760591
+          },
+          {
+            "run_id": "r03",
+            "value": 0.02178156868005425
+          },
+          {
+            "run_id": "r04",
+            "value": 0.03070157606618274
+          },
+          {
+            "run_id": "r05",
+            "value": 0.027482852698227384
+          }
+        ]
+      },
+      "test-5": {
+        "max": 0.043961393758951785,
+        "mean": 0.03931621553551316,
+        "mean_note": "all 5 runs",
+        "min": 0.03471411483690894,
+        "n_finite": 5,
+        "n_runs": 5,
+        "no_finite_result": [],
+        "sd": 0.00411157826965095,
+        "sd_note": null,
+        "single_result": false,
+        "values": [
+          {
+            "run_id": "r01",
+            "value": 0.03544820428577144
+          },
+          {
+            "run_id": "r02",
+            "value": 0.043961393758951785
+          },
+          {
+            "run_id": "r03",
+            "value": 0.03471411483690894
+          },
+          {
+            "run_id": "r04",
+            "value": 0.04009142212121255
+          },
+          {
+            "run_id": "r05",
+            "value": 0.042365942674721116
+          }
+        ]
+      },
+      "test-6": {
+        "max": 0.08074821868668931,
+        "mean": 0.0720479874763663,
+        "mean_note": "all 5 runs",
+        "min": 0.062218528150624945,
+        "n_finite": 5,
+        "n_runs": 5,
+        "no_finite_result": [],
+        "sd": 0.007351585647045868,
+        "sd_note": null,
+        "single_result": false,
+        "values": [
+          {
+            "run_id": "r01",
+            "value": 0.062218528150624945
+          },
+          {
+            "run_id": "r02",
+            "value": 0.08074821868668931
+          },
+          {
+            "run_id": "r03",
+            "value": 0.06811566127846258
+          },
+          {
+            "run_id": "r04",
+            "value": 0.07178608697584542
+          },
+          {
+            "run_id": "r05",
+            "value": 0.07737144229020927
+          }
+        ]
+      },
+      "test-7": {
+        "max": 0.06718874728312936,
+        "mean": 0.05380192895241116,
+        "mean_note": "all 5 runs",
+        "min": 0.03701262212476492,
+        "n_finite": 5,
+        "n_runs": 5,
+        "no_finite_result": [],
+        "sd": 0.011656621553359812,
+        "sd_note": null,
+        "single_result": false,
+        "values": [
+          {
+            "run_id": "r01",
+            "value": 0.03701262212476492
+          },
+          {
+            "run_id": "r02",
+            "value": 0.06192707217482706
+          },
+          {
+            "run_id": "r03",
+            "value": 0.05306076966237625
+          },
+          {
+            "run_id": "r04",
+            "value": 0.06718874728312936
+          },
+          {
+            "run_id": "r05",
+            "value": 0.049820433516958224
+          }
+        ]
+      },
+      "test-8": {
+        "max": 0.011801615593161395,
+        "mean": 0.008163759099430493,
+        "mean_note": "all 5 runs",
+        "min": 0.00477245021249134,
+        "n_finite": 5,
+        "n_runs": 5,
+        "no_finite_result": [],
+        "sd": 0.0030768542864671516,
+        "sd_note": null,
+        "single_result": false,
+        "values": [
+          {
+            "run_id": "r01",
+            "value": 0.00477245021249134
+          },
+          {
+            "run_id": "r02",
+            "value": 0.01102766331910702
+          },
+          {
+            "run_id": "r03",
+            "value": 0.006392026023356854
+          },
+          {
+            "run_id": "r04",
+            "value": 0.011801615593161395
+          },
+          {
+            "run_id": "r05",
+            "value": 0.006825040349035851
+          }
+        ]
+      },
+      "test-9": {
+        "max": 0.04175491359838592,
+        "mean": 0.03806203130290113,
+        "mean_note": "all 5 runs",
+        "min": 0.033033901342160325,
+        "n_finite": 5,
+        "n_runs": 5,
+        "no_finite_result": [],
+        "sd": 0.004222920891875631,
+        "sd_note": null,
+        "single_result": false,
+        "values": [
+          {
+            "run_id": "r01",
+            "value": 0.033033901342160325
+          },
+          {
+            "run_id": "r02",
+            "value": 0.04175491359838592
+          },
+          {
+            "run_id": "r03",
+            "value": 0.033937256149081454
+          },
+          {
+            "run_id": "r04",
+            "value": 0.041288569762947154
+          },
+          {
+            "run_id": "r05",
+            "value": 0.04029551566193078
+          }
+        ]
+      }
+    }
+  },
+  "pool_cap": 10,
+  "pool_sizes": [
+    4,
+    5,
+    6
+  ],
+  "quantities": {
+    "cost_usd": {
+      "max": 1.6545079999999999,
+      "mean": 1.3100931999999998,
+      "mean_note": "all 5 runs",
+      "min": 0.9556339999999998,
+      "n_finite": 5,
+      "n_runs": 5,
+      "no_finite_result": [],
+      "sd": 0.2534962940107804,
+      "sd_note": null,
+      "single_result": false,
+      "values": [
+        {
+          "run_id": "r01",
+          "value": 1.6545079999999999
+        },
+        {
+          "run_id": "r02",
+          "value": 1.3332700000000002
+        },
+        {
+          "run_id": "r03",
+          "value": 1.225568
+        },
+        {
+          "run_id": "r04",
+          "value": 0.9556339999999998
+        },
+        {
+          "run_id": "r05",
+          "value": 1.3814859999999998
+        }
+      ]
+    },
+    "distinct_structures": {
+      "max": 6.0,
+      "mean": 5.0,
+      "mean_note": "all 5 runs",
+      "min": 4.0,
+      "n_finite": 5,
+      "n_runs": 5,
+      "no_finite_result": [],
+      "sd": 1.0,
+      "sd_note": null,
+      "single_result": false,
+      "values": [
+        {
+          "run_id": "r01",
+          "value": 6
+        },
+        {
+          "run_id": "r02",
+          "value": 4
+        },
+        {
+          "run_id": "r03",
+          "value": 6
+        },
+        {
+          "run_id": "r04",
+          "value": 5
+        },
+        {
+          "run_id": "r05",
+          "value": 4
+        }
+      ]
+    },
+    "elapsed_s": {
+      "max": 776.8439999998081,
+      "mean": 531.4093999999575,
+      "mean_note": "all 5 runs",
+      "min": 370.46899999980815,
+      "n_finite": 5,
+      "n_runs": 5,
+      "no_finite_result": [],
+      "sd": 158.48640826987315,
+      "sd_note": null,
+      "single_result": false,
+      "values": [
+        {
+          "run_id": "r01",
+          "value": 776.8439999998081
+        },
+        {
+          "run_id": "r02",
+          "value": 452.375
+        },
+        {
+          "run_id": "r03",
+          "value": 370.46899999980815
+        },
+        {
+          "run_id": "r04",
+          "value": 465.15600000019185
+        },
+        {
+          "run_id": "r05",
+          "value": 592.2029999999795
+        }
+      ]
+    },
+    "evaluated_candidates": {
+      "max": 6.0,
+      "mean": 5.0,
+      "mean_note": "all 5 runs",
+      "min": 4.0,
+      "n_finite": 5,
+      "n_runs": 5,
+      "no_finite_result": [],
+      "sd": 1.0,
+      "sd_note": null,
+      "single_result": false,
+      "values": [
+        {
+          "run_id": "r01",
+          "value": 6
+        },
+        {
+          "run_id": "r02",
+          "value": 4
+        },
+        {
+          "run_id": "r03",
+          "value": 6
+        },
+        {
+          "run_id": "r04",
+          "value": 5
+        },
+        {
+          "run_id": "r05",
+          "value": 4
+        }
+      ]
+    },
+    "input_tokens": {
+      "max": 728654.0,
+      "mean": 561194.6,
+      "mean_note": "all 5 runs",
+      "min": 397827.0,
+      "n_finite": 5,
+      "n_runs": 5,
+      "no_finite_result": [],
+      "sd": 118106.51496551746,
+      "sd_note": null,
+      "single_result": false,
+      "values": [
+        {
+          "run_id": "r01",
+          "value": 728654
+        },
+        {
+          "run_id": "r02",
+          "value": 568605
+        },
+        {
+          "run_id": "r03",
+          "value": 533719
+        },
+        {
+          "run_id": "r04",
+          "value": 397827
+        },
+        {
+          "run_id": "r05",
+          "value": 577168
+        }
+      ]
+    },
+    "oracle_best_S": {
+      "max": 0.04075598138717801,
+      "mean": 0.03815224757772116,
+      "mean_note": "all 5 runs",
+      "min": 0.03642207949353821,
+      "n_finite": 5,
+      "n_runs": 5,
+      "no_finite_result": [],
+      "sd": 0.0016056533789829757,
+      "sd_note": null,
+      "single_result": false,
+      "values": [
+        {
+          "run_id": "r01",
+          "value": 0.03642207949353821
+        },
+        {
+          "run_id": "r02",
+          "value": 0.03746223685521557
+        },
+        {
+          "run_id": "r03",
+          "value": 0.0379077960329791
+        },
+        {
+          "run_id": "r04",
+          "value": 0.04075598138717801
+        },
+        {
+          "run_id": "r05",
+          "value": 0.03821314411969492
+        }
+      ]
+    },
+    "output_tokens": {
+      "max": 20715.0,
+      "mean": 17770.4,
+      "mean_note": "all 5 runs",
+      "min": 14813.0,
+      "n_finite": 5,
+      "n_runs": 5,
+      "no_finite_result": [],
+      "sd": 2469.121969445819,
+      "sd_note": null,
+      "single_result": false,
+      "values": [
+        {
+          "run_id": "r01",
+          "value": 19720
+        },
+        {
+          "run_id": "r02",
+          "value": 17606
+        },
+        {
+          "run_id": "r03",
+          "value": 14813
+        },
+        {
+          "run_id": "r04",
+          "value": 15998
+        },
+        {
+          "run_id": "r05",
+          "value": 20715
+        }
+      ]
+    },
+    "pool_size": {
+      "max": 6.0,
+      "mean": 5.0,
+      "mean_note": "all 5 runs",
+      "min": 4.0,
+      "n_finite": 5,
+      "n_runs": 5,
+      "no_finite_result": [],
+      "sd": 1.0,
+      "sd_note": null,
+      "single_result": false,
+      "values": [
+        {
+          "run_id": "r01",
+          "value": 6
+        },
+        {
+          "run_id": "r02",
+          "value": 4
+        },
+        {
+          "run_id": "r03",
+          "value": 6
+        },
+        {
+          "run_id": "r04",
+          "value": 5
+        },
+        {
+          "run_id": "r05",
+          "value": 4
+        }
+      ]
+    },
+    "recommended_fitted_parameters": {
+      "max": 4.0,
+      "mean": 2.4,
+      "mean_note": "all 5 runs",
+      "min": 2.0,
+      "n_finite": 5,
+      "n_runs": 5,
+      "no_finite_result": [],
+      "sd": 0.8944271909999159,
+      "sd_note": null,
+      "single_result": false,
+      "values": [
+        {
+          "run_id": "r01",
+          "value": 2
+        },
+        {
+          "run_id": "r02",
+          "value": 2
+        },
+        {
+          "run_id": "r03",
+          "value": 2
+        },
+        {
+          "run_id": "r04",
+          "value": 4
+        },
+        {
+          "run_id": "r05",
+          "value": 2
+        }
+      ]
+    },
+    "recommended_node_count": {
+      "max": 43.0,
+      "mean": 31.6,
+      "mean_note": "all 5 runs",
+      "min": 22.0,
+      "n_finite": 5,
+      "n_runs": 5,
+      "no_finite_result": [],
+      "sd": 9.343446901438462,
+      "sd_note": null,
+      "single_result": false,
+      "values": [
+        {
+          "run_id": "r01",
+          "value": 43
+        },
+        {
+          "run_id": "r02",
+          "value": 22
+        },
+        {
+          "run_id": "r03",
+          "value": 22
+        },
+        {
+          "run_id": "r04",
+          "value": 37
+        },
+        {
+          "run_id": "r05",
+          "value": 34
+        }
+      ]
+    },
+    "recommended_test_S": {
+      "max": 0.044314803732791376,
+      "mean": 0.042967765154498114,
+      "mean_note": "all 5 runs",
+      "min": 0.0417201239179014,
+      "n_finite": 5,
+      "n_runs": 5,
+      "no_finite_result": [],
+      "sd": 0.0010386399220309083,
+      "sd_note": null,
+      "single_result": false,
+      "values": [
+        {
+          "run_id": "r01",
+          "value": 0.0417201239179014
+        },
+        {
+          "run_id": "r02",
+          "value": 0.043693085707219095
+        },
+        {
+          "run_id": "r03",
+          "value": 0.04275263736227359
+        },
+        {
+          "run_id": "r04",
+          "value": 0.044314803732791376
+        },
+        {
+          "run_id": "r05",
+          "value": 0.04235817505230509
+        }
+      ]
+    },
+    "recommended_train_rmse": {
+      "max": 0.04058958853367814,
+      "mean": 0.03973520821740652,
+      "mean_note": "all 5 runs",
+      "min": 0.03905131236081998,
+      "n_finite": 5,
+      "n_runs": 5,
+      "no_finite_result": [],
+      "sd": 0.0006638122906720641,
+      "sd_note": null,
+      "single_result": false,
+      "values": [
+        {
+          "run_id": "r01",
+          "value": 0.04021860140331015
+        },
+        {
+          "run_id": "r02",
+          "value": 0.03965061295407078
+        },
+        {
+          "run_id": "r03",
+          "value": 0.04058958853367814
+        },
+        {
+          "run_id": "r04",
+          "value": 0.03916592583515353
+        },
+        {
+          "run_id": "r05",
+          "value": 0.03905131236081998
+        }
+      ]
+    },
+    "sensitivity_deficient": {
+      "max": 0.0,
+      "mean": 0.0,
+      "mean_note": "all 5 runs",
+      "min": 0.0,
+      "n_finite": 5,
+      "n_runs": 5,
+      "no_finite_result": [],
+      "sd": 0.0,
+      "sd_note": null,
+      "single_result": false,
+      "values": [
+        {
+          "run_id": "r01",
+          "value": 0
+        },
+        {
+          "run_id": "r02",
+          "value": 0
+        },
+        {
+          "run_id": "r03",
+          "value": 0
+        },
+        {
+          "run_id": "r04",
+          "value": 0
+        },
+        {
+          "run_id": "r05",
+          "value": 0
+        }
+      ]
+    },
+    "turns": {
+      "max": 33.0,
+      "mean": 28.8,
+      "mean_note": "all 5 runs",
+      "min": 23.0,
+      "n_finite": 5,
+      "n_runs": 5,
+      "no_finite_result": [],
+      "sd": 3.7682887362833544,
+      "sd_note": null,
+      "single_result": false,
+      "values": [
+        {
+          "run_id": "r01",
+          "value": 33
+        },
+        {
+          "run_id": "r02",
+          "value": 29
+        },
+        {
+          "run_id": "r03",
+          "value": 28
+        },
+        {
+          "run_id": "r04",
+          "value": 23
+        },
+        {
+          "run_id": "r05",
+          "value": 31
+        }
+      ]
+    }
+  },
+  "quantity_definitions": {
+    "cost_usd": {
+      "definition": "cost from the dated price schedule (aspire/configs/prices.yaml)",
+      "label": "cost",
+      "unit": "USD"
+    },
+    "distinct_structures": {
+      "definition": "distinct expression structures among the evaluated candidates",
+      "label": "distinct structures",
+      "unit": "-"
+    },
+    "elapsed_s": {
+      "definition": "elapsed execution time of the round, without the final checks and the evaluation",
+      "label": "elapsed execution time",
+      "unit": "s"
+    },
+    "evaluated_candidates": {
+      "definition": "candidates within the pool limit that passed the checks and were evaluated",
+      "label": "evaluated candidates",
+      "unit": "-"
+    },
+    "input_tokens": {
+      "definition": "input tokens of all requests of the run",
+      "label": "input tokens",
+      "unit": "tokens"
+    },
+    "oracle_best_S": {
+      "definition": "smallest S among the eligible candidates of the run; selects on the test data and measures whether the pool contains an accurate model",
+      "label": "best eligible test score S in the pool (oracle-based selection on test data)",
+      "unit": "output"
+    },
+    "output_tokens": {
+      "definition": "output tokens (including reasoning tokens) of all responses",
+      "label": "output tokens",
+      "unit": "tokens"
+    },
+    "pool_size": {
+      "definition": "candidates proposed in the final pool",
+      "label": "pool size",
+      "unit": "-"
+    },
+    "recommended_fitted_parameters": {
+      "definition": "count of fitted parameters",
+      "label": "fitted parameters of the recommended candidate",
+      "unit": "-"
+    },
+    "recommended_node_count": {
+      "definition": "node count under the convention of aspire_sysid/evaluate/complexity.py",
+      "label": "expression-tree nodes of the recommended candidate",
+      "unit": "-"
+    },
+    "recommended_test_S": {
+      "definition": "pooled test RMSE S of the candidate the agent recommended from training and validation evidence",
+      "label": "test score S of the recommended candidate (practical selection)",
+      "unit": "output"
+    },
+    "recommended_train_rmse": {
+      "definition": "pooled RMSE of the recommended candidate on the training data, computed by the harness in the evaluation mode of the task",
+      "label": "training error of the recommended candidate",
+      "unit": "output"
+    },
+    "sensitivity_deficient": {
+      "definition": "evaluated candidates whose sensitivity rank test found dependent fitted parameters",
+      "label": "candidates with a sensitivity rank deficiency",
+      "unit": "-"
+    },
+    "turns": {
+      "definition": "language-model responses of the round",
+      "label": "turns",
+      "unit": "-"
+    }
+  },
+  "ranking_label": "oracle-based selection on test data",
+  "requirements": {
+    "all_evaluated": {},
+    "recommended": {}
+  },
+  "runs": [
+    {
+      "cost_usd": 1.6545079999999999,
+      "delivered": true,
+      "distinct_structures": 6,
+      "elapsed_s": 776.8439999998081,
+      "eligible": true,
+      "eligible_candidates": 6,
+      "evaluated_candidates": 6,
+      "input_tokens": 728654,
+      "leak_findings": 1,
+      "oracle_best_S": 0.03642207949353821,
+      "oracle_best_label": "AngularDeadzone",
+      "oracle_best_trajectory_rmse": {
+        "test-1": 0.051409269011614245,
+        "test-10": 0.010405818703345272,
+        "test-11": 0.05957907183452299,
+        "test-12": 0.008248480604993657,
+        "test-2": 0.01026414290253867,
+        "test-3": 0.0546374087460363,
+        "test-4": 0.022466352557784803,
+        "test-5": 0.03453847975237495,
+        "test-6": 0.04455992693525475,
+        "test-7": 0.043430898544045055,
+        "test-8": 0.00493922781104537,
+        "test-9": 0.029008070553983446
+      },
+      "oracle_candidates_considered": 6,
+      "oracle_pool_size": 6,
+      "order_assigned_by_harness": false,
+      "outcome": "completed",
+      "output": {
+        "name": "x",
+        "unit": "m"
+      },
+      "output_tokens": 19720,
+      "pool_cap": 10,
+      "pool_size": 6,
+      "reasons": {},
+      "recommended_fitted_parameters": 2,
+      "recommended_label": "CalibratedMidpoint",
+      "recommended_node_count": 43,
+      "recommended_test_S": 0.0417201239179014,
+      "recommended_train_rmse": 0.04021860140331015,
+      "recommended_trajectory_rmse": {
+        "test-1": 0.05024049272533911,
+        "test-10": 0.01018634938026587,
+        "test-11": 0.08079981838794577,
+        "test-12": 0.0051943448301932935,
+        "test-2": 0.007828074701624908,
+        "test-3": 0.05994613516694995,
+        "test-4": 0.021296861754010445,
+        "test-5": 0.03544820428577144,
+        "test-6": 0.062218528150624945,
+        "test-7": 0.03701262212476492,
+        "test-8": 0.00477245021249134,
+        "test-9": 0.033033901342160325
+      },
+      "requirements_recommended": {},
+      "run_id": "r01",
+      "sensitivity_deficient": 0,
+      "sensitivity_unavailable": 1,
+      "task": "turtlebot",
+      "termination_reason": "the agent sent the completion message DONE and at least one candidate within the pool limit passed the file and expression checks",
+      "turns": 33
+    },
+    {
+      "cost_usd": 1.3332700000000002,
+      "delivered": true,
+      "distinct_structures": 4,
+      "elapsed_s": 452.375,
+      "eligible": true,
+      "eligible_candidates": 4,
+      "evaluated_candidates": 4,
+      "input_tokens": 568605,
+      "leak_findings": 0,
+      "oracle_best_S": 0.03746223685521557,
+      "oracle_best_label": "AngularDeadZone",
+      "oracle_best_trajectory_rmse": {
+        "test-1": 0.039644284637095094,
+        "test-10": 0.010787077303209497,
+        "test-11": 0.048472834040569186,
+        "test-12": 0.008412618157578208,
+        "test-2": 0.009123330463674159,
+        "test-3": 0.04457697027888066,
+        "test-4": 0.031125694047369,
+        "test-5": 0.04522441356841048,
+        "test-6": 0.05399067011370594,
+        "test-7": 0.05680833994255942,
+        "test-8": 0.01309151525904381,
+        "test-9": 0.03663063795917546
+      },
+      "oracle_candidates_considered": 4,
+      "oracle_pool_size": 4,
+      "order_assigned_by_harness": false,
+      "outcome": "completed",
+      "output": {
+        "name": "x",
+        "unit": "m"
+      },
+      "output_tokens": 17606,
+      "pool_cap": 10,
+      "pool_size": 4,
+      "reasons": {},
+      "recommended_fitted_parameters": 2,
+      "recommended_label": "Euler",
+      "recommended_node_count": 22,
+      "recommended_test_S": 0.043693085707219095,
+      "recommended_train_rmse": 0.03965061295407078,
+      "recommended_trajectory_rmse": {
+        "test-1": 0.0411432586301994,
+        "test-10": 0.011965810565846717,
+        "test-11": 0.06079355692178231,
+        "test-12": 0.0053443081630210835,
+        "test-2": 0.012874634327751856,
+        "test-3": 0.04769498583897068,
+        "test-4": 0.02940064003760591,
+        "test-5": 0.043961393758951785,
+        "test-6": 0.08074821868668931,
+        "test-7": 0.06192707217482706,
+        "test-8": 0.01102766331910702,
+        "test-9": 0.04175491359838592
+      },
+      "requirements_recommended": {},
+      "run_id": "r02",
+      "sensitivity_deficient": 0,
+      "sensitivity_unavailable": 1,
+      "task": "turtlebot",
+      "termination_reason": "the agent sent the completion message DONE and at least one candidate within the pool limit passed the file and expression checks",
+      "turns": 29
+    },
+    {
+      "cost_usd": 1.225568,
+      "delivered": true,
+      "distinct_structures": 6,
+      "elapsed_s": 370.46899999980815,
+      "eligible": true,
+      "eligible_candidates": 6,
+      "evaluated_candidates": 6,
+      "input_tokens": 533719,
+      "leak_findings": 0,
+      "oracle_best_S": 0.0379077960329791,
+      "oracle_best_label": "TurnDeadband",
+      "oracle_best_trajectory_rmse": {
+        "test-1": 0.054794913576182436,
+        "test-10": 0.009734160384647885,
+        "test-11": 0.05232149654348892,
+        "test-12": 0.00791803212353383,
+        "test-2": 0.008271957293773271,
+        "test-3": 0.05231581396769695,
+        "test-4": 0.02375158086455923,
+        "test-5": 0.03492351388342687,
+        "test-6": 0.04909409415620866,
+        "test-7": 0.057962851265698556,
+        "test-8": 0.007557814893414909,
+        "test-9": 0.0302373347050903
+      },
+      "oracle_candidates_considered": 6,
+      "oracle_pool_size": 6,
+      "order_assigned_by_harness": false,
+      "outcome": "completed",
+      "output": {
+        "name": "x",
+        "unit": "m"
+      },
+      "output_tokens": 14813,
+      "pool_cap": 10,
+      "pool_size": 6,
+      "reasons": {},
+      "recommended_fitted_parameters": 2,
+      "recommended_label": "CalibratedEuler",
+      "recommended_node_count": 22,
+      "recommended_test_S": 0.04275263736227359,
+      "recommended_train_rmse": 0.04058958853367814,
+      "recommended_trajectory_rmse": {
+        "test-1": 0.05406851061120916,
+        "test-10": 0.010671866443523019,
+        "test-11": 0.07161882318376246,
+        "test-12": 0.006273655271116765,
+        "test-2": 0.009011859992221555,
+        "test-3": 0.05796538482542188,
+        "test-4": 0.02178156868005425,
+        "test-5": 0.03471411483690894,
+        "test-6": 0.06811566127846258,
+        "test-7": 0.05306076966237625,
+        "test-8": 0.006392026023356854,
+        "test-9": 0.033937256149081454
+      },
+      "requirements_recommended": {},
+      "run_id": "r03",
+      "sensitivity_deficient": 0,
+      "sensitivity_unavailable": 0,
+      "task": "turtlebot",
+      "termination_reason": "the agent sent the completion message DONE and at least one candidate within the pool limit passed the file and expression checks",
+      "turns": 28
+    },
+    {
+      "cost_usd": 0.9556339999999998,
+      "delivered": true,
+      "distinct_structures": 5,
+      "elapsed_s": 465.15600000019185,
+      "eligible": true,
+      "eligible_candidates": 5,
+      "evaluated_candidates": 5,
+      "input_tokens": 397827,
+      "leak_findings": 0,
+      "oracle_best_S": 0.04075598138717801,
+      "oracle_best_label": "TurnDeadzone",
+      "oracle_best_trajectory_rmse": {
+        "test-1": 0.07334945596281803,
+        "test-10": 0.012810809838871241,
+        "test-11": 0.05036596433162133,
+        "test-12": 0.008600665309345237,
+        "test-2": 0.012539728077501826,
+        "test-3": 0.05259614094648397,
+        "test-4": 0.025140530234648018,
+        "test-5": 0.02955692811320993,
+        "test-6": 0.04827002467599971,
+        "test-7": 0.06145468375295711,
+        "test-8": 0.007479078768761652,
+        "test-9": 0.03389758706183191
+      },
+      "oracle_candidates_considered": 5,
+      "oracle_pool_size": 5,
+      "order_assigned_by_harness": false,
+      "outcome": "completed",
+      "output": {
+        "name": "x",
+        "unit": "m"
+      },
+      "output_tokens": 15998,
+      "pool_cap": 10,
+      "pool_size": 5,
+      "reasons": {},
+      "recommended_fitted_parameters": 4,
+      "recommended_label": "RectifiedEuler",
+      "recommended_node_count": 37,
+      "recommended_test_S": 0.044314803732791376,
+      "recommended_train_rmse": 0.03916592583515353,
+      "recommended_trajectory_rmse": {
+        "test-1": 0.05477697068041859,
+        "test-10": 0.015077936824942064,
+        "test-11": 0.060640404368244014,
+        "test-12": 0.006906531652123421,
+        "test-2": 0.013032478423629482,
+        "test-3": 0.04931923996205225,
+        "test-4": 0.03070157606618274,
+        "test-5": 0.04009142212121255,
+        "test-6": 0.07178608697584542,
+        "test-7": 0.06718874728312936,
+        "test-8": 0.011801615593161395,
+        "test-9": 0.041288569762947154
+      },
+      "requirements_recommended": {},
+      "run_id": "r04",
+      "sensitivity_deficient": 0,
+      "sensitivity_unavailable": 1,
+      "task": "turtlebot",
+      "termination_reason": "the agent sent the completion message DONE and at least one candidate within the pool limit passed the file and expression checks",
+      "turns": 23
+    },
+    {
+      "cost_usd": 1.3814859999999998,
+      "delivered": true,
+      "distinct_structures": 4,
+      "elapsed_s": 592.2029999999795,
+      "eligible": true,
+      "eligible_candidates": 4,
+      "evaluated_candidates": 4,
+      "input_tokens": 577168,
+      "leak_findings": 3,
+      "oracle_best_S": 0.03821314411969492,
+      "oracle_best_label": "angular_deadzone",
+      "oracle_best_trajectory_rmse": {
+        "test-1": 0.0528367967714072,
+        "test-10": 0.009894971998308633,
+        "test-11": 0.05599234732969278,
+        "test-12": 0.005459623350378489,
+        "test-2": 0.007905146418147248,
+        "test-3": 0.05251620089161129,
+        "test-4": 0.02110951338355124,
+        "test-5": 0.03452728419316154,
+        "test-6": 0.05924060917351307,
+        "test-7": 0.04929509062031344,
+        "test-8": 0.005849211036740681,
+        "test-9": 0.03257665916182103
+      },
+      "oracle_candidates_considered": 4,
+      "oracle_pool_size": 4,
+      "order_assigned_by_harness": false,
+      "outcome": "completed",
+      "output": {
+        "name": "x",
+        "unit": "m"
+      },
+      "output_tokens": 20715,
+      "pool_cap": 10,
+      "pool_size": 4,
+      "reasons": {},
+      "recommended_fitted_parameters": 2,
+      "recommended_label": "calibrated_unicycle",
+      "recommended_node_count": 34,
+      "recommended_test_S": 0.04235817505230509,
+      "recommended_train_rmse": 0.03905131236081998,
+      "recommended_trajectory_rmse": {
+        "test-1": 0.04073587731975719,
+        "test-10": 0.009689270888649544,
+        "test-11": 0.06768747454634372,
+        "test-12": 0.005395449376690184,
+        "test-2": 0.008349946624261435,
+        "test-3": 0.05005032139945975,
+        "test-4": 0.027482852698227384,
+        "test-5": 0.042365942674721116,
+        "test-6": 0.07737144229020927,
+        "test-7": 0.049820433516958224,
+        "test-8": 0.006825040349035851,
+        "test-9": 0.04029551566193078
+      },
+      "requirements_recommended": {},
+      "run_id": "r05",
+      "sensitivity_deficient": 0,
+      "sensitivity_unavailable": 1,
+      "task": "turtlebot",
+      "termination_reason": "the agent sent the completion message DONE and at least one candidate within the pool limit passed the file and expression checks",
+      "turns": 31
+    }
+  ],
+  "runs_attempted": 5,
+  "runs_not_executed": 0,
+  "runs_planned": 5,
+  "single_run": false,
+  "statistics": {
+    "mean": "xbar = (1/k) sum_i x_i over the k runs with a finite result",
+    "note": "the sample standard deviation divides by k - 1; the output errors use the population convention",
+    "sample_standard_deviation": "s = sqrt( sum_i (x_i - xbar)^2 / (k - 1) ), xbar = (1/k) sum_i x_i, over the k runs with a finite result (divisor k - 1); undefined for k < 2"
+  },
+  "task": "turtlebot",
+  "unfinished_spend": {
+    "attempts": 0,
+    "cost_usd": 0,
+    "input_tokens": 0,
+    "items": [],
+    "output_tokens": 0
+  },
+  "what_varies": "the runs differ only in the responses of the language model; the requests set no seed"
+}

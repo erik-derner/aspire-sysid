@@ -1,0 +1,9 @@
+{
+  "order": [
+    "QuinticDamping",
+    "TrigDamping",
+    "StaticBlend"
+  ],
+  "recommended": "QuinticDamping",
+  "reason": "Recommend QuinticDamping: its training-only fit gave validation RMSE 0.0712333 Y and four-fold trajectory-grouped diagnostic RMSE 0.0543695 Y, compared with 0.0728230 Y / 0.0557991 Y for TrigDamping and 0.0759100 Y / 0.0557450 Y for StaticBlend. Y is the unknown output unit. These small differences are not statistically decisive; it is recommended for its consistent held-trajectory output accuracy, not a proven physical spring interpretation. All three delivered candidates were subsequently refitted on both supplied files, so their final validation-file errors are in-sample. Grouped diagnostics use the final coefficients as numerical warm starts and reuse structure/smoothing choices screened on these files; they are not a completely untouched assessment. Quintic extrapolation can be stiff and have extra equilibria; the trigonometric model is the simpler bounded-force alternative."
+}

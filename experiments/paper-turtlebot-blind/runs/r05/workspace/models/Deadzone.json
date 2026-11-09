@@ -1,0 +1,56 @@
+{
+  "expressions": {
+    "y_next": "y+(a*x3+b)*cos(x2+(g*sign(x4)*Max(Abs(x4)-d,0)+c)/2)",
+    "x1_next": "x1+(a*x3+b)*sin(x2+(g*sign(x4)*Max(Abs(x4)-d,0)+c)/2)",
+    "x2_next": "atan2(sin(x2+(g*sign(x4)*Max(Abs(x4)-d,0)+c)),cos(x2+(g*sign(x4)*Max(Abs(x4)-d,0)+c)))"
+  },
+  "parameters": [
+    {
+      "name": "a",
+      "value": 0.18246313148859392,
+      "unit": "not supplied",
+      "type": "fitted",
+      "description": "`a`: forward-input gain; jointly estimated in this candidate. Units cannot be recovered because column units are not supplied."
+    },
+    {
+      "name": "b",
+      "value": -0.001867455494826844,
+      "unit": "not supplied",
+      "type": "fitted",
+      "description": "`b`: forward displacement offset per sample; jointly estimated in this candidate. Units cannot be recovered because column units are not supplied."
+    },
+    {
+      "name": "g",
+      "value": 0.17061879159731438,
+      "unit": "not supplied",
+      "type": "fitted",
+      "description": "`g`: turn gain outside the dead zone; jointly estimated in this candidate. Units cannot be recovered because column units are not supplied."
+    },
+    {
+      "name": "d",
+      "value": 0.07398195373052183,
+      "unit": "not supplied",
+      "type": "fitted",
+      "description": "`d`: turn-input dead-zone threshold; jointly estimated in this candidate. Units cannot be recovered because column units are not supplied."
+    },
+    {
+      "name": "c",
+      "value": 0.0019644246939075033,
+      "unit": "not supplied",
+      "type": "fitted",
+      "description": "`c`: angular increment offset per sample; jointly estimated in this candidate. Units cannot be recovered because column units are not supplied."
+    }
+  ],
+  "estimation": {
+    "criterion": "Minimize the sum over all post-initial rollout rows of `e_y**2 + e_x1**2 + (0.25*atan2(sin(e_x2),cos(e_x2)))**2`, where `e_y`, `e_x1`, and `e_x2` are simulated minus logged states. The angular discrepancy is circular to avoid treating an angle wrap as a large error. The numerical factor `0.25` balances angular and positional discrepancies on the observed column scales; no physical unit conversion is asserted. Both unscored states regularize the scored-state dynamics. Rollout least squares is used because evaluation does not reset simulated states. The horizon is selected by empirical trajectory validation rather than claimed as a physical delay.",
+    "data": "`data/train.csv`, all three trajectories. All complete windows of 25 consecutive transitions, starting every 8 rows within each trajectory, contribute 48 rollouts. Each window starts from its measured initial state and has no subsequent reset. Incomplete final windows are omitted to keep the criterion horizon uniform; all trajectories and input conditions are represented. The sample period is `0.2` s, given in TASK.md; parameters absorb this period rather than representing continuous-time rates.",
+    "method": "Bound-constrained nonlinear least squares using `scipy.optimize.least_squares`, trust-region reflective algorithm, two-point finite-difference Jacobian and linear loss. All parameters `a, b, g, d, c` are estimated together in each run, not in stages. Parameter order is `['a', 'b', 'g', 'd', 'c']`. Starting vectors are `[[0.16, 0, 0.16, 0.07, 0]]`; these use rough forward and angular gains observed in the motion probes, zero drift, positive input scales and symmetric channel gains. Bounds are `([0.05, -0.01, 0.04, 0, -0.02], [0.3, 0.01, 0.3, 0.3, 0.02])` in the same order. Gains/scales are kept positive, drift/correction ranges restricted and denominator scales bounded away from zero to avoid nonphysical sign reversal or singularities. Bounds are chosen regularization limits, not measured physical constraints. Every numeric parameter setting has unspecified units inherited from the supplied columns. Multiple starts are used only where the turn map has local minima; the run with smallest training sum of squares is selected. `max_nfev = 200`, `ftol = 1e-8`, `xtol = 1e-8`, `gtol = 1e-8`; these are software count/tolerance settings. No random numbers or seeds apply. This method handles nonlinear recursive simulation and parameter bounds, unlike ordinary linear least squares. Reference: SciPy installed `least_squares` function documentation, inspected during the run.",
+    "script": "build_submission.py"
+  },
+  "discussion": {
+    "family": "Unicycle kinematics with a static dead-zone turn nonlinearity. The kinematic backbone is consistent with S. M. LaValle, Planning Algorithms, Cambridge University Press (2006), discussion of differential-drive and nonholonomic vehicle models; bibliographic reference recalled from memory, not independently verified. This reference supports the kinematics, not these empirical input nonlinearities.",
+    "interpretation": "`y` and `x1` are the two supplied positional-state candidates; `x2` is the periodic heading-state candidate; `x3` and `x4` are the supplied inputs, treated as forward-like and turn-like commands. All units except sampling time are unspecified. The dead zone suppresses small turn commands, preserves their sign outside the threshold, and gives linear growth beyond it. Its constant term allows systematic angular drift. The displacement map is `a*x3+b` and the angular-increment map is `g*sign(x4)*Max(Abs(x4)-d,0)+c`. Each named coefficient is defined in the parameter rows. Translation uses the midpoint angle, as written in `y+(a*x3+b)*cos(x2+(g*sign(x4)*Max(Abs(x4)-d,0)+c)/2)` and `x1+(a*x3+b)*sin(x2+(g*sign(x4)*Max(Abs(x4)-d,0)+c)/2)`. The structural number `2` implements midpoint quadrature. The update `atan2(sin(x2+(g*sign(x4)*Max(Abs(x4)-d,0)+c)),cos(x2+(g*sign(x4)*Max(Abs(x4)-d,0)+c)))` wraps the angular state; this does not alter its sine or cosine.",
+    "origin": "A straight linear input map left turn-command-dependent residuals. A guessed symmetric dead zone was supported by near-zero angular increments under small turn inputs; the threshold was subsequently fitted, not assumed. Before fitting, affine, sparse/polynomial and trigonometric/saturating families were proposed. Actual initial regressions were dense ordinary least squares with polynomial degrees 1, 2 and 3, followed by kinematic probes and nonlinear input-map fits; no genetic symbolic regression was run. Midpoint trigonometry and angle wrapping came from the empirical motion geometry. No physical term is asserted from an undisclosed system description. Residuals were inspected in `inspect_residuals.py`; input-change errors motivated the attenuation families, but a true lag state cannot be added under the required state list. Validation: leave-one-trajectory-out free-run RMSE of `y` was `0.125475` in unspecified `y` units, pooled across held-out trajectories after refitting on the other two. Training free-run RMSE was `0.0829514` in those units. A second check fitted the first 100 rows of each trajectory using horizon `25` and freely simulated the final 50 transitions from measured row 99, giving RMSE `0.103553` in unspecified `y` units. These are training-derived checks, not test scores; horizon/structure selection sees these validation outcomes and the three trajectories give uncertain generalization estimates.",
+    "limitations": "The system identity and all column units are unknown. Interpreting `y` and `x1` as planar coordinates and `x2` as an angle is a data-supported hypothesis, not a supplied fact. Only the given sampling period is supported. The forward input was nonnegative in training; negative inputs and larger turn commands are not validated. Parameters conflate command scaling, actuation, sampling and any hidden dynamics. Input-change residuals are substantially larger than steady-command residuals, consistent with missing memory; this memoryless model cannot identify or reproduce actuator lag. Offsets can cause slow displacement/rotation with zero command. No clipping is used to disguise unstable extrapolation. Position-dependent and heading-harmonic corrections lowered training residuals but worsened helper held-out errors and were excluded. Validation: leave-one-trajectory-out free-run RMSE of `y` was `0.125475` in unspecified `y` units, pooled across held-out trajectories after refitting on the other two. Training free-run RMSE was `0.0829514` in those units. A second check fitted the first 100 rows of each trajectory using horizon `25` and freely simulated the final 50 transitions from measured row 99, giving RMSE `0.103553` in unspecified `y` units. These are training-derived checks, not test scores; horizon/structure selection sees these validation outcomes and the three trajectories give uncertain generalization estimates."
+  }
+}

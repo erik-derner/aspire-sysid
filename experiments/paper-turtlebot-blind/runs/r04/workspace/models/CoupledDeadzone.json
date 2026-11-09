@@ -1,0 +1,63 @@
+{
+  "expressions": {
+    "y_next": "y + (a*(sign(x3+l*x4)*Max(Abs(x3+l*x4)-d,0)+sign(x3-l*x4)*Max(Abs(x3-l*x4)-d,0))/2)*cos(x2+m*(c*(sign(x3+l*x4)*Max(Abs(x3+l*x4)-d,0)-sign(x3-l*x4)*Max(Abs(x3-l*x4)-d,0))+e))",
+    "x1_next": "x1 + (a*(sign(x3+l*x4)*Max(Abs(x3+l*x4)-d,0)+sign(x3-l*x4)*Max(Abs(x3-l*x4)-d,0))/2)*sin(x2+m*(c*(sign(x3+l*x4)*Max(Abs(x3+l*x4)-d,0)-sign(x3-l*x4)*Max(Abs(x3-l*x4)-d,0))+e))",
+    "x2_next": "atan2(sin(x2+(c*(sign(x3+l*x4)*Max(Abs(x3+l*x4)-d,0)-sign(x3-l*x4)*Max(Abs(x3-l*x4)-d,0))+e)),cos(x2+(c*(sign(x3+l*x4)*Max(Abs(x3+l*x4)-d,0)-sign(x3-l*x4)*Max(Abs(x3-l*x4)-d,0))+e)))"
+  },
+  "parameters": [
+    {
+      "name": "a",
+      "value": 0.17875451209136484,
+      "unit": "unknown; column units not supplied",
+      "type": "fitted",
+      "description": "Gain `a` multiplying the mean of the two transformed input channels."
+    },
+    {
+      "name": "d",
+      "value": 0.010098372910433646,
+      "unit": "unknown; column units not supplied",
+      "type": "fitted",
+      "description": "Dead-zone threshold `d` of each transformed input channel, estimated from data."
+    },
+    {
+      "name": "l",
+      "value": 0.08260572527967011,
+      "unit": "unknown; column units not supplied",
+      "type": "fitted",
+      "description": "Input mixing coefficient `l` in `x3+l*x4` and `x3-l*x4`; not a known physical length."
+    },
+    {
+      "name": "c",
+      "value": 0.8879471126711778,
+      "unit": "unknown; column units not supplied",
+      "type": "fitted",
+      "description": "Gain `c` multiplying the difference of the transformed channels in the angular increment."
+    },
+    {
+      "name": "e",
+      "value": 0.00035116237117163956,
+      "unit": "unknown; column units not supplied",
+      "type": "fitted",
+      "description": "Additive angular increment `e` per sample."
+    },
+    {
+      "name": "m",
+      "value": -0.3435427375221679,
+      "unit": "-",
+      "type": "fitted",
+      "description": "Dimensionless phase fraction `m` in the trigonometric position update; allows a negative effective phase to compensate missing lag."
+    }
+  ],
+  "estimation": {
+    "criterion": "First minimize squared one-step residuals of body-frame forward displacement and unwrapped angular increment with auxiliary current/previous-input blends, normalized by `0.003` in unspecified coordinate units and `0.02` radians respectively. These scales were chosen from preliminary training residual magnitudes to balance the channels. Then minimize free-running squared errors of `y` and `x1`, plus squared unwrapped angular errors multiplied by `0.04`. Add squared deviations from the auxiliary static forward and angular responses, with residual multipliers `400` and `40` respectively, and a squared phase-deviation residual with multiplier `0.8`. These are numerical balancing factors, not physical unit conversions. The state criterion avoids long-run accumulation being ignored, and the static-map penalty limits trajectory overfitting.",
+    "data": "`data/train.csv`, all three trajectories. The final simulation criterion uses all 447 within-trajectory transitions, never crossing experiment boundaries. Auxiliary lag fits use 444 transitions: the first transition of each trajectory is omitted because its previous input is unknown. Previous logged inputs are used only during estimation; the delivered expressions do not use history. No test data were accessed.",
+    "method": "Bounded nonlinear least squares using `scipy.optimize.least_squares`, the trust-region reflective method with linear loss, because the static nonlinearity and input-delay blends are nonlinear in their coefficients. No random numbers or seeds are used. The auxiliary initial static vector, in the parameter order of the candidate, is `[0.18, 0.015, 0.08, 0.91, 0, -0.25]`; its coefficients have their respective unspecified units and the last phase coordinate is dimensionless. Initial dimensionless forward and angular previous-input fractions are `0.28` and `0.7`. The phase coordinate does not enter the auxiliary criterion and is not identified there; it is replaced by `0.45` minus the fitted angular delay fraction. All other auxiliary coordinates are fitted together. Auxiliary fits use at most 1200 function evaluations; all three termination tolerances are `1e-10`. All final fitted parameters are then refined together, starting from the auxiliary vector `[0.17744721732079458, 0.008614915810828938, 0.08267846279760067, 0.8539774455929288, -0.0004488560947164718, -0.2680672986300195]` in the same parameter order. Refinement uses at most 1000 function evaluations and the same tolerances. Bound constraints and exact residual computations are in `refine.py`; gains and widths are kept positive and `-1 <= m <= 1`. The regularization multiplier `40` was chosen from the tested numerical grid `0, 2, 4, 8, 12, 16, 24, 40` by pooled leave-one-trajectory-out `y` RMSE within this family. Each validation fit used only the other two trajectories, including recomputing its auxiliary reference. The final fit uses all three. This is selection on very limited validation data, not an independent performance guarantee.",
+    "script": "fit_submission.py"
+  },
+  "discussion": {
+    "family": "Discrete-time unicycle-like kinematic model. A relevant general reference is Murray, Li and Sastry, A Mathematical Introduction to Robotic Manipulation (1994), cited from memory, not verified online. Its static response is a coupled dead-zone Hammerstein-type nonlinearity followed by kinematic integration, not a full Hammerstein model with additional dynamic states.",
+    "interpretation": "Define explanatory channel values `L = sign(x3-l*x4)*Max(Abs(x3-l*x4)-d,0)` and `R = sign(x3+l*x4)*Max(Abs(x3+l*x4)-d,0)`. These names are explanatory only, not extra model states. The signed dead zones suppress small channel magnitudes. Define longitudinal displacement `V = a*(L+R)/2` and angular increment `H = c*(R-L)+e`; their mean and difference provide a compact coupled-input response. The position increments are `V*cos(x2+m*H)` and `V*sin(x2+m*H)`. The inferred heading is advanced by `H` and wrapped. No physical interpretation of the channels or coefficients is claimed.",
+    "origin": "Affine and degree-two and degree-three polynomial increment regressions were tried first, using ordinary least squares and leave-one-trajectory-out simulation; they extrapolated poorly or diverged and were excluded. Nearly longitudinal displacement after rotation by `x2` motivated trigonometric kinematics; this is an empirical structural inference rather than a supplied physical law. Large residuals at input changes motivated auxiliary current/previous-input regressions. Absolute-value contrasts, dead zones, smooth friction and input interactions were then compared. No genetic-programming symbolic-regression package was used. The two input combinations and a shared dead-zone threshold were a structural hypothesis to represent weak angular response when one transformed channel is close to zero. The coupling makes both coordinate displacement and rotation depend on the same transformed channels. The numerical mixing coefficient was estimated; no wheel geometry was assumed.",
+    "limitations": "The units and physical system are not supplied. Equal coordinate scales for `y` and `x1`, and an angular interpretation of `x2` in radians, are inferred modelling assumptions, not supplied facts. Only three short trajectories are available; numerical input ranges and initial conditions outside the logged experiments are not validated. Residuals indicate input-change transients with memory missing from the permitted state vector. The memoryless expressions cannot reproduce these exactly. The phase correction is an effective numerical correction, not an identified actuator time constant. Wrapping `x2_next` with `atan2(sin(...),cos(...))` prevents a discontinuity from being treated as a large rotation, but the output coordinates can still drift during long simulations. Training free-running `y` RMSE is `0.0974523`; pooled leave-one-trajectory-out `y` RMSE is `0.11516`, both in unspecified `y` units and computed after the first sample of each training trajectory. One-step angular RMSE immediately after a five-sample input-block boundary is `0.0815593` radians versus `0.0146512` radians at other phases, on the 447 training transitions. This supports the missing-memory limitation."
+  }
+}

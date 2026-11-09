@@ -1,0 +1,96 @@
+schema_version: 1
+id: turtlebot
+title: Motion model of a TurtleBot 2 mobile robot
+formulation: discrete
+description: >
+  A TurtleBot 2 differential-drive mobile robot moves on a flat floor. Its
+  on-board odometry logs the pose of the robot: the position x, y and the
+  heading phi. The robot receives two commands, the forward velocity v_f and
+  the angular velocity v_a. Each pair of commands is held for 5 samples (1 s)
+  and is then replaced by a new random pair. The logged pose is known to carry
+  a considerable measurement error.
+intended_use: >
+  The model will be used to simulate the x position of the robot over about 5 s
+  from one logged pose and the sequence of commands, without correction by
+  later pose measurements.
+columns:
+  - name: x
+    symbol: x
+    roles: [state, output]
+    unit: m
+    description: position
+  - name: y
+    symbol: y
+    roles: [state]
+    unit: m
+    description: position
+  - name: phi
+    symbol: φ
+    roles: [state]
+    unit: rad
+    description: heading, wrapped to (-pi, pi]; phi = 0 points along the x axis
+  - name: v_f
+    symbol: v_f
+    roles: [input]
+    unit: m/s
+    description: forward velocity command
+  - name: v_a
+    symbol: v_a
+    roles: [input]
+    unit: rad/s
+    description: angular velocity command
+dynamics:
+  sampling_period: 0.2
+  states: [x, y, phi]
+  inputs: [v_f, v_a]
+evaluation:
+  mode: simulation
+  initialization: 1
+  scoring: after_initialization
+  failure_limits:
+    - variable: x
+      lower: -100.0
+      upper: 100.0
+      unit: m
+      justification: >-
+        numerical divergence bound, about 39 times the largest training value
+        2.55 m; a path of 5 s at the largest command 0.3 m/s is 1.5 m long
+    - variable: y
+      lower: -100.0
+      upper: 100.0
+      unit: m
+      justification: >-
+        numerical divergence bound, about 62 times the largest training
+        magnitude 1.62 m
+    - variable: phi
+      lower: -1000.0
+      upper: 1000.0
+      unit: rad
+      justification: >-
+        numerical divergence bound; the simulated heading is not wrapped, and
+        5 s at the largest command 1 rad/s change it by 5 rad
+  time_limit_s: 60.0
+  horizon: 25
+data:
+  train: data/train.csv
+  trajectory_column: trajectory
+  source_name:
+    train: [randrealFeb18_5Hz_ep1, randrealFeb18_5Hz_ep2, randrealFeb18_5Hz_ep3]
+pool_cap: 10
+budget:
+  round: {turns: 60, seconds: 3600, usd: 10.0}
+  session: {turns: 180, seconds: 10800, usd: 30.0}
+  analysis_exchange: {turns: 15, seconds: 900, usd: 1.0}
+test:
+  - {file: test/test_trajectory_1.csv, trajectory: test-1}
+  - {file: test/test_trajectory_2.csv, trajectory: test-2}
+  - {file: test/test_trajectory_3.csv, trajectory: test-3}
+  - {file: test/test_trajectory_4.csv, trajectory: test-4}
+  - {file: test/test_trajectory_5.csv, trajectory: test-5}
+  - {file: test/test_trajectory_6.csv, trajectory: test-6}
+  - {file: test/test_trajectory_7.csv, trajectory: test-7}
+  - {file: test/test_trajectory_8.csv, trajectory: test-8}
+  - {file: test/test_trajectory_9.csv, trajectory: test-9}
+  - {file: test/test_trajectory_10.csv, trajectory: test-10}
+  - {file: test/test_trajectory_11.csv, trajectory: test-11}
+  - {file: test/test_trajectory_12.csv, trajectory: test-12}

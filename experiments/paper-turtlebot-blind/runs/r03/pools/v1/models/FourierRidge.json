@@ -1,0 +1,126 @@
+{
+  "expressions": {
+    "y_next": "y + c0*x3*cos(x2) + c1*x3*sin(x2) + c2*cos(x2) + c3*sin(x2) + c4*x3*x4*cos(x2) + c5*x3*x4*sin(x2)",
+    "x1_next": "x1 + c6*x3*cos(x2) + c7*x3*sin(x2) + c8*cos(x2) + c9*sin(x2) + c10*x3*x4*cos(x2) + c11*x3*x4*sin(x2)",
+    "x2_next": "atan2(sin(x2 + (turn_gain*sign(x4)*Max(Abs(x4)-turn_width,0) + turn_bias)), cos(x2 + (turn_gain*sign(x4)*Max(Abs(x4)-turn_width,0) + turn_bias)))"
+  },
+  "parameters": [
+    {
+      "name": "c0",
+      "value": 0.1566410320237867,
+      "unit": "not supplied",
+      "type": "fitted",
+      "description": "Coefficient of `x3*cos(x2)` in `y_next`; estimated first by ordinary least squares and then jointly by regularized free-run nonlinear least squares. Its mathematical effect is a direction-dependent position increment."
+    },
+    {
+      "name": "c1",
+      "value": 0.0037482076268680604,
+      "unit": "not supplied",
+      "type": "fitted",
+      "description": "Coefficient of `x3*sin(x2)` in `y_next`; estimated first by ordinary least squares and then jointly by regularized free-run nonlinear least squares. Its mathematical effect is a direction-dependent position increment."
+    },
+    {
+      "name": "c2",
+      "value": 0.00011603730746227668,
+      "unit": "not supplied",
+      "type": "fitted",
+      "description": "Coefficient of `cos(x2)` in `y_next`; estimated first by ordinary least squares and then jointly by regularized free-run nonlinear least squares. Its mathematical effect is a direction-dependent position increment."
+    },
+    {
+      "name": "c3",
+      "value": -0.0006703643364121828,
+      "unit": "not supplied",
+      "type": "fitted",
+      "description": "Coefficient of `sin(x2)` in `y_next`; estimated first by ordinary least squares and then jointly by regularized free-run nonlinear least squares. Its mathematical effect is a direction-dependent position increment."
+    },
+    {
+      "name": "c4",
+      "value": -0.0008051114964524815,
+      "unit": "not supplied",
+      "type": "fitted",
+      "description": "Coefficient of `x3*x4*cos(x2)` in `y_next`; estimated first by ordinary least squares and then jointly by regularized free-run nonlinear least squares. Its mathematical effect is a direction-dependent position increment."
+    },
+    {
+      "name": "c5",
+      "value": 0.0017080876153045823,
+      "unit": "not supplied",
+      "type": "fitted",
+      "description": "Coefficient of `x3*x4*sin(x2)` in `y_next`; estimated first by ordinary least squares and then jointly by regularized free-run nonlinear least squares. Its mathematical effect is a direction-dependent position increment."
+    },
+    {
+      "name": "c6",
+      "value": 0.0003137409959298544,
+      "unit": "not supplied",
+      "type": "fitted",
+      "description": "Coefficient of `x3*cos(x2)` in `x1_next`; estimated first by ordinary least squares and then jointly by regularized free-run nonlinear least squares. Its mathematical effect is a direction-dependent position increment."
+    },
+    {
+      "name": "c7",
+      "value": 0.16211991020340166,
+      "unit": "not supplied",
+      "type": "fitted",
+      "description": "Coefficient of `x3*sin(x2)` in `x1_next`; estimated first by ordinary least squares and then jointly by regularized free-run nonlinear least squares. Its mathematical effect is a direction-dependent position increment."
+    },
+    {
+      "name": "c8",
+      "value": 0.0008382572285750349,
+      "unit": "not supplied",
+      "type": "fitted",
+      "description": "Coefficient of `cos(x2)` in `x1_next`; estimated first by ordinary least squares and then jointly by regularized free-run nonlinear least squares. Its mathematical effect is a direction-dependent position increment."
+    },
+    {
+      "name": "c9",
+      "value": 0.0008557960848157158,
+      "unit": "not supplied",
+      "type": "fitted",
+      "description": "Coefficient of `sin(x2)` in `x1_next`; estimated first by ordinary least squares and then jointly by regularized free-run nonlinear least squares. Its mathematical effect is a direction-dependent position increment."
+    },
+    {
+      "name": "c10",
+      "value": 0.0052424909984418126,
+      "unit": "not supplied",
+      "type": "fitted",
+      "description": "Coefficient of `x3*x4*cos(x2)` in `x1_next`; estimated first by ordinary least squares and then jointly by regularized free-run nonlinear least squares. Its mathematical effect is a direction-dependent position increment."
+    },
+    {
+      "name": "c11",
+      "value": 0.0017474866627784935,
+      "unit": "not supplied",
+      "type": "fitted",
+      "description": "Coefficient of `x3*x4*sin(x2)` in `x1_next`; estimated first by ordinary least squares and then jointly by regularized free-run nonlinear least squares. Its mathematical effect is a direction-dependent position increment."
+    },
+    {
+      "name": "turn_gain",
+      "value": 0.19102196985932335,
+      "unit": "not supplied",
+      "type": "fitted",
+      "description": "Slope of the odd dead-zone turning increment outside its width."
+    },
+    {
+      "name": "turn_bias",
+      "value": 0.0014683501340661323,
+      "unit": "not supplied",
+      "type": "fitted",
+      "description": "Constant angular increment per sample; an empirical drift, not a known torque."
+    },
+    {
+      "name": "turn_width",
+      "value": 0.118380313195365,
+      "unit": "not supplied",
+      "type": "fitted",
+      "description": "Width of the symmetric dead zone in `x4`; inside it only `turn_bias` remains."
+    }
+  ],
+  "estimation": {
+    "criterion": "First minimize unweighted squared one-step errors of `y_next-y` and `x1_next-x1` separately, and squared principal angular-increment error for the turning law. Then jointly minimize full free-run squared errors, with residual weights `[1, 0.15, 0.1]` for `y`, `x1`, `x2`, plus `100*sum((c_i-c_i_initial)**2)` over the twelve position coefficients. Weights and penalty strength are numerical fitting conventions because native units are unspecified: the score concerns `y`, auxiliary-state penalties preserve useful state behavior, and anchoring to one-step estimates reduces rollout overfitting. Penalty strengths `[0, 1, 10, 100]` were compared on held-out trajectories; `100` gave the smallest pooled validation error.",
+    "data": "`data/train.csv`, all three trajectories and all within-trajectory transitions: `447` transitions (`149` per trajectory). Initial states are the first logged states; no transitions join different trajectories. No data were withheld from the final coefficient fits. Structure and estimation settings were compared using leave-one-trajectory-out validation, each time fitting on the other two complete trajectories. Sampling period is `0.2` s; coefficients below are per-sample displacements, not continuous-time rates. Column units were not supplied.",
+    "method": "For position coefficients, ordinary least squares using `numpy.linalg.lstsq`, which needs no starts because the feature fit is linear. Angular coefficients are initialized by bounded nonlinear least squares using `scipy.optimize.least_squares` (default trust-region reflective method), starting from `[0.15, 0, 0.08]` for `[turn_gain, turn_bias, turn_width]`, a near-linear positive-turn initial hypothesis. Its bounds are `0 <= turn_gain <= 0.5`, `-0.02 <= turn_bias <= 0.02`, `0 <= turn_width <= 0.4`, in unknown native coefficient units. Next all fifteen coefficients are estimated together in regularized nonlinear least squares with the same function, initialized at `[0.160264315709264, -0.001505038147545064, 0.0006051045825107432, 0.0005119334113552839, -0.003761431102079015, -0.009153675025341368, 0.0008580275548284217, 0.1593359684136383, 6.752834553239162e-05, 0.001767470616277857, 0.00648449465419841, -0.0004194123102136522, 0.1322582749436064, -0.00179958058346703, 0.07928170218783891]` in order `[c0, c1, c2, c3, c4, c5, c6, c7, c8, c9, c10, c11, turn_gain, turn_bias, turn_width]`. Position coefficients satisfy `-2 <= c_i <= 2` (unknown native units), a loose guard against very large cancellation; angular bounds remain as above. Rollout optimization uses `max_nfev = 400` and `ftol = xtol = gtol = 1e-9`; these are dimensionless numerical solver settings. This staged method exploits linear one-step initialization, then explicitly targets repeated simulation rather than only local accuracy. No random draws or seeds apply.",
+    "script": "reproduce_final.py"
+  },
+  "discussion": {
+    "family": "Discrete-time nonlinear state-space map with Fourier/polynomial features and regularized nonlinear output-error estimation. The position updates are linear combinations of specified features, not neural-network predictions. The penalty is a centered ridge/Tikhonov penalty; see A. E. Hoerl and R. W. Kennard, Ridge Regression: Biased Estimation for Nonorthogonal Problems, Technometrics (1970), cited from memory without online verification.",
+    "interpretation": "`y`, `x1`, `x2` are the current states; `x3`, `x4` are the current inputs; `_next` denotes the next sample. `c0` through `c11` independently weight the six stated basis functions for each position coordinate. `x3*cos(x2)` and `x3*sin(x2)` are input-scaled directional increments; `cos(x2)` and `sin(x2)` allow a direction-dependent input-independent drift; `x3*x4*cos(x2)` and `x3*x4*sin(x2)` allow bilinear steering-direction modulation. Independent coefficients allow mild anisotropy and cross-direction response without assuming identical gains. `turn_gain*sign(x4)*Max(Abs(x4)-turn_width,0)` is an odd piecewise-linear response with a central dead zone, and `turn_bias` is additive angular drift. `atan2(sin(x2 + (turn_gain*sign(x4)*Max(Abs(x4)-turn_width,0) + turn_bias)), cos(x2 + (turn_gain*sign(x4)*Max(Abs(x4)-turn_width,0) + turn_bias)))` enforces the observed principal-angle convention.",
+    "origin": "The raw affine and degree-two/degree-three polynomial increment fits had poor angular residuals because they ignored wrapping. Directional projection of measured position increments supported sine/cosine features, suggesting an empirical kinematic structure. These two leading features were data-motivated, not given physics. Constant directional terms and the bilinear input terms were deliberately proposed to accommodate observed drift and within-step turning errors; no genetic symbolic regression was run. Independent coordinate coefficients relax the shared-speed constraint of the simpler candidates. The dead-zone angular structure was selected after comparing linear, cubic, hard-dead-zone and smooth rational input laws. Unregularized Fourier rollout fits overfit held-out trajectories, motivating the centered coefficient penalty. Pooled training `y` rollout RMSE is `0.019645` native `y` units (unspecified), and pooled leave-one-trajectory-out `y` RMSE is `0.0611086` in the same units; both exclude the initial sample.",
+    "limitations": "Only three trajectories, all starting at the same zero state, were supplied; units, system identity and hidden dynamics are unknown. Interpreting `x2` as an angle in the trigonometric arguments is an empirical convention, supported by wrapping at `pi`, not supplied physical metadata. Prediction outside the observed input/state ranges is unvalidated. Input-change residuals and serial correlations remain, consistent with omitted dynamics; the permitted memoryless state map cannot explicitly represent actuator-rate states or previous inputs. Parameters are effective prediction coefficients, not claimed physical constants. Angular errors in fitting are reduced to the principal interval using `atan2(sin(error), cos(error))`. Residual diagnostics in `final_residual_report.txt` show much larger angular errors at the first sample after input changes than later in the input block. The dead-zone response can also produce nonsmooth parameter-estimation objectives; the reported optimizer is a local solution, not a certified global minimum."
+  }
+}

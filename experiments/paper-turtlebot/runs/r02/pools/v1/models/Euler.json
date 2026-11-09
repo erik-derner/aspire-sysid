@@ -1,0 +1,42 @@
+{
+  "expressions": {
+    "x_next": "x + Ts*gv*v_f*cos(phi)",
+    "y_next": "y + Ts*gv*v_f*sin(phi)",
+    "phi_next": "phi + Ts*gw*v_a"
+  },
+  "parameters": [
+    {
+      "name": "Ts",
+      "value": 0.2,
+      "unit": "s",
+      "type": "fixed",
+      "description": "Sampling period supplied in TASK.md; fixed because the timestamps are equally spaced."
+    },
+    {
+      "name": "gv",
+      "value": 0.8322675435264847,
+      "unit": "-",
+      "type": "fitted",
+      "description": "Forward-command scale, estimated jointly in this candidate; not imported from another fit."
+    },
+    {
+      "name": "gw",
+      "value": 0.7825774999174929,
+      "unit": "-",
+      "type": "fitted",
+      "description": "Angular-command scale, estimated jointly in this candidate; not imported from another fit."
+    }
+  ],
+  "estimation": {
+    "criterion": "Minimize the sum of squared `x` prediction errors at every step of every complete 25-transition open-loop window; no heading or `y` penalty. This directly matches the scored output and intended 5 s horizon. The two coefficients are sufficiently excited by the varied commands and headings; this estimator had the lowest pooled leave-one-trajectory-out `x` RMSE of the tested settings.",
+    "data": "`data/train.csv`, all three trajectories and all 450 logged samples. Each trajectory is separate. Construct every complete overlapping window of 25 transitions (5 s), starting at sample indices 0 through 124: 125 windows per trajectory, 375 windows total. No window crosses a trajectory boundary. Each window starts from its logged pose; subsequent predictions use only simulated states. Unwrap `phi` within each trajectory before fitting; trigonometric position predictions are invariant to full turns. No rows are excluded. These windows target the intended simulation duration without treating noisy measured differences as exact velocities.",
+    "method": "Bound-constrained nonlinear least squares with `scipy.optimize.least_squares`, trust-region reflective algorithm (`method = trf`), finite-difference Jacobian, linear squared-error loss, `max_nfev = 400`, and `ftol = xtol = gtol = 1e-10` (dimensionless stopping tolerances). All fitted parameters were estimated together in one step in this final candidate; there is no parameter transfer. Starting values: `gv = 0.83`, `gw = 0.68`. They come from diagnostic settled-command gains and small plausible offsets/thresholds, not held-out data. Bounds: `0.2 <= gv <= 1.5`, `0.2 <= gw <= 1.5`. Bounds enforce positive gains, moderate offsets and nondegenerate geometry while allowing timing adjustment; they are chosen constraints, not inferred confidence intervals. Nonlinear least squares is used because repeated state simulation and dead-zone/trigonometric terms depend nonlinearly on the coefficients; ordinary linear regression cannot optimize this rollout criterion. The procedure is deterministic and uses no random seed. `gv` and `gw` are dimensionless; `bw` is in rad/s; angular `dz` is in rad/s; wheel-model `dz` is in m/s; `ell` is in m; `q` is dimensionless, when present. For estimator comparison, refit from the same numerical starting values on each pair of trajectories and predict the third; the final reported coefficients use all three trajectories.",
+    "script": "deliver.py"
+  },
+  "discussion": {
+    "family": "Unicycle/differential-drive kinematic model; see Steven M. LaValle, Planning Algorithms (2006), cited from memory without checking the book. Forward-Euler discretization.",
+    "interpretation": "`x + Ts*gv*v_f*cos(phi)` and `y + Ts*gv*v_f*sin(phi)` add scaled commanded travel along the current heading; `phi + Ts*gw*v_a` accumulates scaled angular command. `Ts` is the sampling period, `gv` the forward gain and `gw` the angular gain. Both gains absorb unresolved calibration and timing effects; they are not ideal chassis constants.",
+    "origin": "The translation-invariant terms `x` and `y`, the projection operators `cos` and `sin`, and heading accumulation came from planar differential-drive kinematics, not symbolic search. Initial diagnostics used within-trajectory pose differences and command-block phase. I compared Euler, constant-twist arc, affine bias, free phase, odd cubic, smooth dead-zone, angular/forward coupling, heading harmonics and lateral-slip structures. Sparse angular regression was diagnostic only; no genetic symbolic-regression search was used. Residuals were much larger at command changes and correlated within blocks, so final parameters were fitted to multi-step trajectories rather than one-step derivatives. This is the minimal baseline; projection uses the current heading rather than an assumed exact command response within the sample. Its small parameter count and held-out `x` error favor it despite inferior one-step heading residuals.",
+    "limitations": "Training commands satisfy approximately `0.000034312 <= v_f <= 0.298155603` m/s and `-0.948147536 <= v_a <= 0.941160627` rad/s, computed on all training rows. Reverse motion and larger commands are not validated. Pose noise, actuator calibration drift and slip cannot be separated with these data. The expressions contain no previous command or actuator state: they cannot reproduce observed command carryover. Calibration coefficients are effective open-loop predictors, not uniquely identified mechanical parameters. Long-duration accuracy is not established by the 5 s fitting criterion. `phi_next` is deliberately unwrapped; periodic sine and cosine make position updates valid across heading wraps."
+  }
+}

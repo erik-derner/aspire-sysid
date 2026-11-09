@@ -1,0 +1,9 @@
+{
+  "order": [
+    "mixed",
+    "bernoulli",
+    "choked"
+  ],
+  "recommended": "mixed",
+  "reason": "Recommend mixed: it has the lowest training-only independent validation RMSE among the final fixed-atmosphere families (0.038665 bar) and the lowest pooled fit RMSE on validation (0.037484 bar, not independent). Its series viscous/inertial pressure-loss model gives a finite, bounded atmospheric restoring slope and an exactly sealed seat without a large ad hoc pressure smoothing scale. The fresh-initialized blocked-tail checks show similar rather than decisive differences between nonlinear families and appreciable experiment drift; no test-performance guarantee is claimed. Bernoulli and choked-nozzle candidates are retained as physically distinct discharge assumptions, not coefficient variants. All three explicitly meet R1\u2013R5 over the physical inlet/stroke domain and use current inputs only."
+}

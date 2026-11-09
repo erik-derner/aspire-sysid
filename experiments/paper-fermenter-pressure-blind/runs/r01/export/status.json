@@ -1,0 +1,36 @@
+{
+  "matlab": {
+    "files": [
+      "task-qtqm/task-qtqm_train.mat",
+      "task-qtqm/task-qtqm_val.mat",
+      "task-qtqm/task-qtqm_test-1.mat",
+      "task-qtqm/splitData.m",
+      "task-qtqm/evaluationSets.m",
+      "task-qtqm/startup.m",
+      "task-qtqm/HP/run=1-pool=1/task-qtqm_train/model01.m",
+      "task-qtqm/HP/run=1-pool=1/task-qtqm_train/model02.m",
+      "task-qtqm/HP/run=1-pool=1/task-qtqm_train/model03.m",
+      "task-qtqm/HP/run=1-pool=1/task-qtqm_train/model04.m",
+      "task-qtqm/README.md",
+      "task-qtqm/aspire_export.json"
+    ],
+    "models": 4,
+    "models_in_framework": 4,
+    "octave": null,
+    "skipped": [],
+    "status": "written",
+    "verified": true
+  },
+  "python": {
+    "file": "export/python/task_qtqm_pool_v1.py",
+    "labels": [
+      "Cubic",
+      "GaussianRBF",
+      "LogInteraction",
+      "Rational"
+    ],
+    "status": "written",
+    "verified": true
+  },
+  "written_at": "2026-10-08T00:18:49.575298+00:00"
+}

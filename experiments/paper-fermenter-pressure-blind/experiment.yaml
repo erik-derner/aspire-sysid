@@ -1,0 +1,30 @@
+# Experiment of the manuscript:
+# the blind variant of the task fermenter-pressure, five runs with identical settings.
+# The runs differ only in the responses of the language model. gpt-6.1-sol (OpenAI) has no dated
+# snapshot; the results are reported with the dates of the runs. Reasoning effort medium
+# (aspire/configs/tools.yaml). Three runs execute concurrently.
+# The working directories of a blind task lie under their own root (--workspace-root), apart from
+# those of the described tasks (aspire/README.md, section Experiments).
+#
+#   aspire experiment run experiments/paper-fermenter-pressure-blind --dry-run --agent-python <exe>
+#   aspire experiment run experiments/paper-fermenter-pressure-blind --yes --agent-python <exe> --workspace-root <folder>
+#   aspire experiment aggregate experiments/paper-fermenter-pressure-blind
+#   aspire experiment report experiments/paper-fermenter-pressure-blind
+
+schema_version: 2
+id: paper-fermenter-pressure-blind
+model: gpt-6.1-sol
+task: task-qtqm
+runs: 5
+concurrency: 3
+# null: the round budget of the task (60 turns, 3600 s, 10 USD).
+budget: null
+exports: {python: true, matlab: true, octave: auto}
+plots: true
+# Pass the agent's interpreter with --agent-python; never commit a path of one computer.
+agent_python: null
+workspace_root: null
+keep_workspaces: true
+notes: >-
+  One of the six experiments of the manuscript (three systems, each as a described and as a
+  blind task). Largest possible cost: 5 runs × 10 USD = 50 USD.

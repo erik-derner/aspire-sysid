@@ -1,0 +1,56 @@
+{
+  "expressions": {
+    "x_next": "x + ts*(gv*v_f*cos(phi + ts*(gw*v_a + bw)/2) - lever*(gw*v_a + bw)*sin(phi + ts*(gw*v_a + bw)/2))",
+    "y_next": "y + ts*(gv*v_f*sin(phi + ts*(gw*v_a + bw)/2) + lever*(gw*v_a + bw)*cos(phi + ts*(gw*v_a + bw)/2))",
+    "phi_next": "phi + ts*(gw*v_a + bw)"
+  },
+  "parameters": [
+    {
+      "name": "ts",
+      "value": 0.2,
+      "unit": "s",
+      "type": "fixed",
+      "description": "Known sampling period from TASK.md; fixed rather than fitted so that velocity gains describe the command response."
+    },
+    {
+      "name": "gv",
+      "value": 0.8357105660369631,
+      "unit": "-",
+      "type": "fitted",
+      "description": "Effective forward command gain, jointly estimated with the other fitted parameters of this candidate from the stated rollout criterion."
+    },
+    {
+      "name": "gw",
+      "value": 0.7858689271358923,
+      "unit": "-",
+      "type": "fitted",
+      "description": "Effective angular command gain, jointly estimated with the other fitted parameters of this candidate from the stated rollout criterion."
+    },
+    {
+      "name": "lever",
+      "value": -0.018382190917988338,
+      "unit": "m",
+      "type": "fitted",
+      "description": "Effective angular-to-lateral velocity coupling length; it can summarize a tracked-point offset or compensate unrepresented timing errors, and is not claimed to identify actual robot geometry."
+    },
+    {
+      "name": "bw",
+      "value": 0.0039873394363196465,
+      "unit": "rad/s",
+      "type": "fitted",
+      "description": "Constant angular-velocity bias in the effective odometry response."
+    }
+  ],
+  "estimation": {
+    "criterion": "Minimize the sum of squared uncorrected multi-step errors in `x`, in m, with equal weight for all predicted samples of the windows. The four fitted parameters are fitted jointly. This tests whether an effective body-frame angular-to-lateral correction improves the scored coordinate without changing translation invariance.",
+    "data": "Only data/train.csv: all three trajectories, 150 samples per trajectory. Heading `phi` is unwrapped separately with numpy.unwrap to avoid artificial jumps across the angle boundary. There are 125 overlapping windows per trajectory, with local initial rows 0 through 124 (zero-based), each containing 25 transitions, or 5 s at the stated sampling period. Thus 375 windows and 9375 predicted state samples enter the final criterion. Every window starts at its logged `x`, `y`, and `phi`, and then receives its 25 logged pairs `v_f`, `v_a`; no later pose resets occur inside a window. No windows cross experiment boundaries. No state measurements are smoothed, excluded as outliers, or imputed. The final-row commands have no observed successor and are not fitted.",
+    "method": "All fitted parameters are estimated simultaneously by nonlinear output-error least squares, using scipy.optimize.least_squares with the trust-region reflective algorithm, `method = 'trf'`, ordinary quadratic loss, a two-point finite-difference Jacobian, a maximum of 600 function evaluations per start, and dimensionless stopping tolerances `ftol = 1e-10`, `xtol = 1e-10`, `gtol = 1e-10`. This bounded nonlinear method is needed because heading-dependent sine and cosine terms make multi-step predictions nonlinear in the gains; ordinary least squares on one-step differences would emphasize command transients and pose differencing error. Starting values are `gv = 0.83`, `gw = 0.68`, `lever = 0` m and `bw = 0` rad/s. The gain guesses are rounded settled-command training regressions; zero coupling and zero bias start at the standard centered no-drift model. Bounds are dimensionless `0.1 <= gv <= 1.5` and `0.1 <= gw <= 1.5`, `-0.3 <= lever <= 0.3` m and `-0.3 <= bw <= 0.3` rad/s. The symmetric latter bounds permit either correction sign while limiting their magnitude; these are conservative fitting constraints, not external geometry measurements.  The procedure is deterministic and uses no random seed. The fitter key in fit_models.py is `body`. SciPy least_squares API documentation, consulted during this round, describes the trust-region reflective method and linear least-squares loss.",
+    "script": "fit_models.py"
+  },
+  "discussion": {
+    "family": "Planar rigid-body kinematics with nonzero body-frame lateral velocity proportional to yaw rate, using explicit midpoint integration. The centered differential-drive component follows Frank Dellaert and Seth Hutchinson, Introduction to Robotics and Perception, section 5.2, Motion Model for the Differential Drive Robot (online text; consulted during this round). The added angular-to-lateral term is derived from the velocity of a body-fixed tracking point, with an effective rather than mechanically fixed offset.",
+    "interpretation": "The state `x`, `y` is world position in m and `phi` is heading in rad; `v_f`, `v_a` are the commanded velocities, and `ts` is the time increment. The body-frame forward velocity is `gv*v_f`. Angular velocity is `gw*v_a + bw` in rad/s, where `gw` is a dimensionless gain and `bw` a constant bias. The effective lateral velocity is `lever*(gw*v_a + bw)` in m/s, treating radians as dimensionless in the rigid-body length conversion. Its world contributions are `-ts*lever*(gw*v_a + bw)*sin(phi + ts*(gw*v_a + bw)/2)` and `ts*lever*(gw*v_a + bw)*cos(phi + ts*(gw*v_a + bw)/2)`. The added terms shift translation sideways during turns, with a sign determined by `lever`; no physical offset is asserted.",
+    "origin": "The baseline residuals are concentrated near command changes and can accumulate into path-direction errors. I tried a calibrated quadrature phase, then this rigid-body extension as a parsimonious way to represent yaw-dependent translation correction in admissible current-state expressions. The angular bias permits persistent effective drift. The structure was proposed by physical geometry and residual reasoning; all values were subsequently fit by output error. The very small directly measured transverse displacement does not establish a real tracked-point offset. This is retained as an effective prediction model rather than an identified mechanical offset. For this final structure, leave-one-trajectory-out validation refits on the other two trajectories using the same window criterion and reports `x` RMSE on all windows of the held-out trajectory; pooled held-out `x` RMSE is 0.029838 m. Training-window `x` RMSE is 0.028925 m. These are training-derived validation summaries, not test scores.",
+    "limitations": "The identified response is an effective map of commands to logged odometry, not a separately identified map to true floor motion. State measurement error, command latency, and gain drift cannot be separated with these data. The required states lack velocity or previous commands, so command-change transients cannot be represented explicitly. All fits were made over 5 s training rollouts, not against inaccessible test data. Heading is propagated unwrapped; this is compatible with periodic translation and with wrapped initial headings, but there is no absolute heading correction. No claims are made outside the observed forward-only command regime or for long-distance extrapolation. The data do not distinguish timing compensation from an actual body-frame offset, and `lever` should not be used to infer sensor mounting geometry. Both the coupling and angular bias vary across trajectory-held-out fits. The slightly smaller training path error does not translate into a decisive validation improvement; the simpler model is preferred."
+  }
+}

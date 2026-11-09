@@ -1,0 +1,90 @@
+{
+  "expressions": {
+    "dp": "a*flow-c*(Max(0, Min(1, 1-valve/vfull))/(Max(0, Min(1, 1-valve/vfull))+k))**m*Max(p,patm)*sqrt(2*gamma/(gamma-1)*Max(Max(Max(Min(p,patm),pfloor)/Max(p,patm),rcrit)**(2/gamma)-Max(Max(Min(p,patm),pfloor)/Max(p,patm),rcrit)**((gamma+1)/gamma),0))*(p-patm)/sqrt((p-patm)**2+eps**2)"
+  },
+  "parameters": [
+    {
+      "name": "a",
+      "value": 0.0012922042501696642,
+      "unit": "bar/(s*(l/min))",
+      "type": "fitted",
+      "description": "Positive inlet mass-flow-to-pressure conversion gain, fitted jointly with the other free parameters by the pressure-rollout least-squares stages described in estimation."
+    },
+    {
+      "name": "c",
+      "value": 0.17014691564980133,
+      "unit": "1/s",
+      "type": "fitted",
+      "description": "Positive outlet pressure-rate scale, fitted jointly by the pressure-rollout criterion. Its units depend on the explicitly normalized outlet law."
+    },
+    {
+      "name": "m",
+      "value": 1.252760603460149,
+      "unit": "-",
+      "type": "fitted",
+      "description": "Curvature exponent of the effective monotone valve conductance, fitted jointly by the pressure-rollout criterion."
+    },
+    {
+      "name": "k",
+      "value": 0.7108058916260938,
+      "unit": "-",
+      "type": "fitted",
+      "description": "Opening scale of the saturating valve characteristic, fitted jointly by the pressure-rollout criterion."
+    },
+    {
+      "name": "patm",
+      "value": 1.0,
+      "unit": "bar",
+      "type": "fixed",
+      "description": "Approximate absolute atmospheric equilibrium from TASK.md; fixed rather than using an empirical intercept so that zero-inlet equilibrium remains exactly atmospheric."
+    },
+    {
+      "name": "vfull",
+      "value": 100.0,
+      "unit": "%",
+      "type": "fixed",
+      "description": "Full closure is defined by TASK.md as `valve = 100` percent; used to normalize and clip the opening."
+    },
+    {
+      "name": "eps",
+      "value": 0.05276782458429569,
+      "unit": "bar",
+      "type": "fitted",
+      "description": "Near-equilibrium pressure smoothing scale, jointly fitted; damps the singular ideal-orifice slope."
+    },
+    {
+      "name": "gamma",
+      "value": 1.4,
+      "unit": "-",
+      "type": "fixed",
+      "description": "Assumed ratio of specific heats for ideal air near room temperature; the standard diatomic-gas value, not estimated from this experiment."
+    },
+    {
+      "name": "rcrit",
+      "value": 0.5282817877171742,
+      "unit": "-",
+      "type": "tied",
+      "description": "Critical downstream/upstream pressure ratio from the assumed isentropic nozzle law.",
+      "equation": "(2/(gamma+1))**(gamma/(gamma-1))"
+    },
+    {
+      "name": "pfloor",
+      "value": 0.01,
+      "unit": "bar",
+      "type": "fixed",
+      "description": "Positive lower downstream pressure floor chosen only to avoid invalid fractional pressure-ratio powers outside physical positive-pressure operation; it is inactive in the observed pressure range."
+    }
+  ],
+  "estimation": {
+    "criterion": "Sum of squared free-running pressure errors in bar squared, excluding the initial row of each simulated segment. This matches the scored state and discourages long-horizon drift; the filtered `dp` column is not a final fitting target. A vector of one-sided slope residuals, each with weight `100` bar*s, penalizes open-valve relaxation slopes above `0.48` per second on a pressure grid around atmospheric pressure. The grid has `120` points below and `180` points above atmospheric pressure, as specified in `fit_stable.py`; it is a numerical safety check, not extra measured data.",
+    "data": "Final fit: all `1452` rows of `data/train.csv` and all `1454` rows of `data/val.csv`, treated as separate trajectories. Earlier selection fit: first `1000` rows of each file; later rows were excluded at that stage to permit independently initialized contiguous-suffix checks. The validation file was deliberately allowed into final estimation after structure comparison to use both available experiments. For this candidate, final full-trajectory RK4 pressure RMSE was `0.027142038` bar on `data/train.csv` and `0.038713966` bar on `data/val.csv`. Prefix-fitted, independently initialized suffix RMSE was `0.029035375` bar on training-file rows `1000:1452` (zero-based) and `0.05780362` bar on validation-file rows `1000:1454` (zero-based). ",
+    "method": "Bound-constrained nonlinear least squares with the trust-region reflective algorithm, `scipy.optimize.least_squares`, using finite-difference Jacobians and `x_scale = \"jac\"`. This method accommodates nonlinear constitutive parameters and sign constraints; direct ordinary least squares would not minimize pressure-rollout error. Deterministic warm starting used the preceding physically matched fits, with starting values `a = 0.001291543207107727` bar/(s*(l/min)), `c = 0.1603114271952672` 1/s, `m = 1.286216697076085` dimensionless, `k = 0.6361484237085423` dimensionless, `eps = 0.04270793143719601` bar. These are numerical starting points taken from `pooled_fits.json` or `stable_fits.json`, not fixed final coefficients. All free parameters of this candidate were fitted together first to both independent trajectory prefixes, then jointly refitted to both full trajectories, starting at that prefix solution. The prefix stage used 20 objective evaluations and the full stage used 27 objective evaluations as reported by SciPy; all stages used at most `240` evaluations, `ftol = 1e-9`, and `xtol = 1e-9`. No random search or stochastic sampling was used, so no seed applies. Bounds and every starting value are recorded in `atmospheric_fits.json` and implemented in the reproduction script. Each simulation uses classical RK4 with a step of `5` s, the current row inputs held constant, and only the segment first pressure as an initial condition; later measured pressures never reset the simulation. `rcrit` is computed from fixed `gamma`, not fitted. ",
+    "script": "fit_atmospheric.py"
+  },
+  "discussion": {
+    "family": "A one-state grey-box isothermal gas mass-balance model: the inlet term increases stored gas mass and the outlet term removes it. Only effective gains, rather than temperature and volume separately, are identifiable. The ideal-gas storage balance is assumed, not inferred from these data. Grey-box identification reference: Ljung, System Identification: Theory for the User, second edition (1999), cited from memory and not source-checked. The outlet uses the standard isentropic compressible-orifice pressure-ratio function with sonic limiting, multiplied by a smooth near-equilibrium correction. Reference: NASA Glenn Research Center, Mass Flow Rate Equations, cited from memory; attempted web retrieval returned no source content, so it was not verified during this run.",
+    "interpretation": "`p` is absolute headspace pressure in bar; `valve` is outlet closure in percent; `flow` is the logged inlet flow in l/min; `dp` is the modeled pressure derivative in bar/s. `a` is the fitted positive inlet conversion gain. `a*flow` is inlet pressurization. `patm = 1` bar is the fixed approximate atmospheric pressure, not a measured atmospheric calibration. `vfull = 100` percent is the declared full-closure position. The clipped opening `Max(0, Min(1, 1-valve/vfull))` is dimensionless. `k` is a positive dimensionless opening scale and `m` a positive dimensionless curvature exponent. The monotone saturating characteristic `(Max(0, Min(1, 1-valve/vfull))/(Max(0, Min(1, 1-valve/vfull))+k))**m` represents an effective valve conductance, including the outlet plumbing; it is an empirical calibration law, not a measured geometric area. Clipping prevents unphysical conductance when an input is outside its declared range. `gamma = 1.4` is the assumed ideal-air heat-capacity ratio. `rcrit = (2/(gamma+1))**(gamma/(gamma-1))` is the dimensionless critical pressure ratio. `Max(p,patm)` is upstream absolute pressure and `Max(Min(p,patm),pfloor)` is downstream absolute pressure. The pressure ratio is clipped below at `rcrit` to represent choking. The ideal compressible outlet factor is multiplied by `(p-patm)/sqrt((p-patm)**2+eps**2)` to give its direction and suppress its singular near-equilibrium slope. This correction is empirical regularization, not a derived isentropic-flow property. `c` has units inverse seconds and absorbs effective discharge area and storage capacity. `pfloor = 0.01` bar is a numerical domain guard, not a measured pressure. The complete outlet pressure factor is `Max(p,patm)*sqrt(2*gamma/(gamma-1)*Max(Max(Max(Min(p,patm),pfloor)/Max(p,patm),rcrit)**(2/gamma)-Max(Max(Min(p,patm),pfloor)/Max(p,patm),rcrit)**((gamma+1)/gamma),0))*(p-patm)/sqrt((p-patm)**2+eps**2)`.",
+    "origin": "Physical reasoning supplied the one-state gas inventory balance, a positive term linear in inlet flow, atmospheric pressure as zero outlet driving pressure, and zero outlet conductance at full closure. A deterministic manual structure comparison, not symbolic regression, supplied the saturating opening law. Derivative-target nonlinear least-squares fits initialized the pressure-rollout fits; valve power, exponential, logistic, saturating and series-restriction characteristics were compared. Saturating conductance was retained because it improved pressure prediction without a high-dimensional calibration curve. Compressible outlet flow was listed before fitting because measured pressure approaches twice atmospheric pressure. A critical pressure-ratio cap came from gas-flow physics rather than a fitted threshold. The smoothing factor was introduced to make an ideal orifice usable near atmospheric pressure. A numerical slope penalty was added after unconstrained parameters gave excessive low-pressure stiffness for the prescribed integration step.",
+    "limitations": "No measured headspace temperature, independently calibrated atmospheric pressure, valve geometry, or standard-flow reference conditions were available. Therefore fitted gains do not separately determine tank volume, temperature, or discharge area. The one-state structure omits bubble residence time, controller lag, valve hysteresis, and sensor dynamics. Both trajectories were used in the final fit, so full-trajectory errors are in-sample diagnostics, not test scores. The suffix checks were not used for parameter estimation at that stage, but were inspected during structure selection, so they are not untouched confirmatory tests. At very large pressure departures, negative absolute pressures, altered water level, or different hardware the model is not established. The data do not cover perfectly sealed operation, exactly zero flow at steady state, or all combinations of pressure and valve opening. The outlet is not known to be an ideal nozzle. Heat exchange, moisture, distributed line loss, and valve geometry may change the ideal pressure-ratio relation. Data close to the sonic threshold do not establish choking independently. The numerical slope penalty samples a finite grid and is not a global stability proof. R1: the flow derivative is `a > 0`, so increasing inlet flow always increases `dp`. R2: on the intended pressurized operating domain `p >= patm`, closing the valve reduces outlet conductance and therefore cannot reduce `dp`. Below atmospheric pressure, ambient backflow restores pressure; closing the valve then reduces that restoration, so R2 cannot hold globally there for this bidirectional-flow model. This is an explicit qualification, not a claimed global monotonicity guarantee. R3: with `flow = 0` and `valve < vfull`, the unique equilibrium is exactly `p = patm = 1` bar. R4: for these same inputs, `dp` has the opposite sign to `p-patm`, giving continuous-time relaxation from either side. R5: at `valve = vfull`, outlet conductance is zero and `dp = a*flow >= 0` for nonnegative supplied flow. No leakage at full closure is assumed; none is identified from the logged range."
+  }
+}

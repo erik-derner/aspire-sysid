@@ -1,0 +1,56 @@
+{
+  "expressions": {
+    "x_next": "x+Piecewise((Ts*(gf*v_f+bf)*cos(phi), Eq((ga*v_a+ba),0)), ((gf*v_f+bf)*(sin(phi+Ts*(ga*v_a+ba))-sin(phi))/(ga*v_a+ba), True))",
+    "y_next": "y+Piecewise((Ts*(gf*v_f+bf)*sin(phi), Eq((ga*v_a+ba),0)), ((gf*v_f+bf)*(cos(phi)-cos(phi+Ts*(ga*v_a+ba)))/(ga*v_a+ba), True))",
+    "phi_next": "phi+Ts*(ga*v_a+ba)"
+  },
+  "parameters": [
+    {
+      "name": "gf",
+      "value": 0.8821799648028058,
+      "unit": "-",
+      "type": "fitted",
+      "description": "Forward-command gain; estimated jointly by the rollout fit described below."
+    },
+    {
+      "name": "ga",
+      "value": 0.7397889252617613,
+      "unit": "-",
+      "type": "fitted",
+      "description": "Angular-command gain; estimated jointly by the rollout fit described below."
+    },
+    {
+      "name": "bf",
+      "value": -0.006606261238109046,
+      "unit": "m/s",
+      "type": "fitted",
+      "description": "Constant forward-speed offset; this is an empirical offset, not an independently established actuator bias."
+    },
+    {
+      "name": "ba",
+      "value": 0.00591500689477945,
+      "unit": "rad/s",
+      "type": "fitted",
+      "description": "Constant angular-rate offset; this is an empirical offset, not an independently established actuator bias."
+    },
+    {
+      "name": "Ts",
+      "value": 0.2,
+      "unit": "s",
+      "type": "fixed",
+      "description": "Sampling period `Ts = 0.2` s specified in TASK.md; fixed, not estimated."
+    }
+  ],
+  "estimation": {
+    "criterion": "Sum of squared `x` rollout errors, because `x` is the scored output; `y` and `phi` are simulated freely but their errors are not included in fitting. Every rollout starts at a logged pose, then uses only commands for `25` steps (`5` s); errors at all steps have equal weight. The optimization is an output-error criterion, not a regression on noisy pose derivatives.",
+    "data": "data/train.csv, all three trajectories, all rows. Heading was unwrapped independently per trajectory. Each trajectory has `150` samples. Starts are rows `0` through `124` inclusive in each trajectory (zero-based), giving `375` overlapping training windows with `25` within-trajectory transitions each. No window crosses a trajectory boundary. Later rows contribute targets; the final input has no successor and is not used. Every window uses its logged initial state without smoothing or later pose correction. No data were discarded for fitting beyond the need for a complete window.",
+    "method": "Bound-constrained nonlinear least squares with scipy.optimize.least_squares, using its trust-region reflective algorithm and finite-difference Jacobian. It is suitable for the small nonlinear rollout parameter vector; ordinary least squares would not minimize the free-run criterion. All fitted parameters were estimated together in one optimization using all training trajectories. Numerical starts: `gf = 0.8`; `ga = 0.65`; `bf = 0` m/s; `ba = 0` rad/s. Starts encode approximately unity speed gains with small offsets and modest nonlinearities, based on exploratory block motion and physically plausible response. Bounds: `0.2 <= gf <= 1.5`; `0.2 <= ga <= 1.5`; `-0.04 <= bf <= 0.04` m/s; `-0.15 <= ba <= 0.15` rad/s. Bounds prevent implausible gains and poorly conditioned searches; they are regularizing assumptions, not independent measurements. Settings: `max_nfev = 400`, `ftol = 1e-10`, `xtol = 1e-10`, `gtol = 1e-10`, and `x_scale = \"jac\"`. All these solver settings are dimensionless. No random numbers are used and no seed applies. For validation only, I repeated fitting on each pair of trajectories from the same starts and rolled out the omitted trajectory; these validation fits are not the submitted values. Running the named script from the working directory reproduces this candidate in its result JSON; imported local modules are dependencies.",
+    "script": "refine_models.py"
+  },
+  "discussion": {
+    "family": "Affine static-command unicycle with exact zero-order-hold circular-arc integration. Standard planar unicycle/nonholonomic kinematics; reference recalled from memory, not checked online: R. M. Murray, Z. Li and S. S. Sastry, A Mathematical Introduction to Robotic Manipulation (1994).",
+    "interpretation": "`x`, `y`, `phi`, `v_f`, `v_a` and `Ts` have the meanings and units in TASK.md. The effective forward speed is `gf*v_f+bf` m/s and the effective angular rate is `ga*v_a+ba` rad/s. The gains `gf` and `ga` scale commands; `bf` and `ba` are empirical constant speed offsets. The sine/cosine differences integrate constant-speed circular motion exactly over `Ts`; `Piecewise` uses the straight-line limit when `ga*v_a+ba = 0`. No lateral velocity is modeled.",
+    "origin": "The geometry came from differential-drive physical reasoning, preserving translation invariance and omitting absolute-position terms. PLAN.md records the families before fitting. Helper block regressions found little transferable forward nonlinearity, near-zero lateral slip and strong switching transients. I compared affine Euler and exact-arc kinematics, cubic and dead-zone angular maps, smooth tanh turning, wheel dead zones, lateral slip, command coupling, forward saturation and fitted integration angle. The latter alternatives did not consistently improve trajectory-held-out `x` error and were not retained. This keeps the most conservative command map and tests whether exact finite-turn geometry helps. The fitting script calls this family `linear_midpoint`, but uses the midpoint projection multiplied by sinc, which is mathematically identical to the submitted exact arc. Training rolling-window `x` RMSE is `0.02894625` m on all three training trajectories; pooled leave-one-trajectory-out rolling-window `x` RMSE is `0.02959318` m. These are local diagnostics, not test scores.",
+    "limitations": "Only three training trajectories and nonnegative `v_f` commands are available; reverse driving is not identified. The observed ranges are `0.0000343124 <= v_f <= 0.2981556034` m/s and `-0.9481475363 <= v_a <= 0.9411606268` rad/s in data/train.csv. Restrict use to similar commands and approximately `5` s rollouts. No actuator velocity or previous input is available as state; all candidates omit the observed switching lag. Parameters therefore describe effective input-to-odometry motion rather than independently established physical constants. Logged pose noise and slowly correlated residuals remain unresolved. `phi_next` is intentionally unwrapped; sine and cosine preserve heading periodicity. Accurate long-duration or high-speed motion is not established. A negative effective speed can occur at very low forward command because of the fitted offset; it represents an approximation and is not evidence of reverse actuation. Exact arc integration assumes instantaneous constant effective velocities during each sample, which the switching residuals contradict."
+  }
+}

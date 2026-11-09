@@ -1,0 +1,71 @@
+{
+  "expressions": {
+    "y_next": "y + (a*x3+b)*cos(x2+m*(c*x4+d))",
+    "x1_next": "x1 + (a*x3+b)*sin(x2+m*(c*x4+d))",
+    "x2_next": "atan2(sin(x2+(c*x4+d)),cos(x2+(c*x4+d)))"
+  },
+  "parameters": [
+    {
+      "name": "a",
+      "value": 0.16912528646031358,
+      "unit": "unknown; column units not supplied",
+      "type": "fitted",
+      "description": "Longitudinal input gain `a` from the auxiliary current/previous-input fit."
+    },
+    {
+      "name": "b",
+      "value": 7.782237369498268e-06,
+      "unit": "unknown; column units not supplied",
+      "type": "fitted",
+      "description": "Longitudinal increment offset `b` from that same fit."
+    },
+    {
+      "name": "c",
+      "value": 0.13726685628581076,
+      "unit": "unknown; column units not supplied",
+      "type": "fitted",
+      "description": "Angular input gain `c` from the auxiliary current/previous-input fit."
+    },
+    {
+      "name": "d",
+      "value": -0.0005003122180341842,
+      "unit": "unknown; column units not supplied",
+      "type": "fitted",
+      "description": "Angular increment offset `d` from that same fit."
+    },
+    {
+      "name": "m",
+      "value": -0.26977637824456996,
+      "unit": "-",
+      "type": "tied",
+      "description": "Dimensionless phase fraction `m`, tied to an assumed local arc fraction minus a fitted input delay fraction.",
+      "equation": "arc-delay"
+    },
+    {
+      "name": "arc",
+      "value": 0.45,
+      "unit": "-",
+      "type": "fixed",
+      "description": "Assumed local arc fraction `arc = 0.45`, chosen as a rounded approximation to the steady-phase least-squares estimate `0.4480684583258992` on 267 training transitions; not optimized within this candidate. It sets the phase-compensation convention."
+    },
+    {
+      "name": "delay",
+      "value": 0.71977637824457,
+      "unit": "-",
+      "type": "fitted",
+      "description": "Auxiliary angular delay fraction `delay`, jointly fitted with the static response using current and previous logged inputs."
+    }
+  ],
+  "estimation": {
+    "criterion": "First minimize squared one-step residuals of body-frame forward displacement and unwrapped angular increment with auxiliary current/previous-input blends, normalized by `0.003` in unspecified coordinate units and `0.02` radians respectively. These scales were chosen from preliminary training residual magnitudes to balance the channels. The final static coefficients are those from this fit, without trajectory-level refinement; the phase is tied to the auxiliary delay to compensate the memory removed from the final model.",
+    "data": "`data/train.csv`, all three trajectories. The final simulation criterion uses all 447 within-trajectory transitions, never crossing experiment boundaries. Auxiliary lag fits use 444 transitions: the first transition of each trajectory is omitted because its previous input is unknown. Previous logged inputs are used only during estimation; the delivered expressions do not use history. No test data were accessed.",
+    "method": "Bounded nonlinear least squares using `scipy.optimize.least_squares`, the trust-region reflective method with linear loss, because the static nonlinearity and input-delay blends are nonlinear in their coefficients. No random numbers or seeds are used. The auxiliary initial static vector, in the parameter order of the candidate, is `[0.169, 0, 0.137, 0, -0.25]`; its coefficients have their respective unspecified units and the last phase coordinate is dimensionless. Initial dimensionless forward and angular previous-input fractions are `0.28` and `0.7`. The phase coordinate does not enter the auxiliary criterion and is not identified there; it is replaced by `0.45` minus the fitted angular delay fraction. All other auxiliary coordinates are fitted together. Auxiliary fits use at most 1200 function evaluations; all three termination tolerances are `1e-10`. No trajectory-level refinement is used, because the tested unregularized refinement degraded leave-one-trajectory-out simulations. `m = arc-delay` is computed after fitting; `arc` is fixed.",
+    "script": "fit_submission.py"
+  },
+  "discussion": {
+    "family": "Discrete-time unicycle-like kinematic model. A relevant general reference is Murray, Li and Sastry, A Mathematical Introduction to Robotic Manipulation (1994), cited from memory, not verified online. The static longitudinal and angular responses are affine, providing the lowest-complexity retained baseline.",
+    "interpretation": "Define explanatory `V = a*x3+b` and `H = c*x4+d`. Offsets and gains allow affine longitudinal displacement and angular increment. Rotation by `x2+m*H` converts displacement to the two coordinates. The phase uses `m = arc-delay`, where `arc` is an assumed local arc fraction and `delay` is an auxiliary fitted previous-input fraction. The latter is not a new dynamic state.",
+    "origin": "Affine and degree-two and degree-three polynomial increment regressions were tried first, using ordinary least squares and leave-one-trajectory-out simulation; they extrapolated poorly or diverged and were excluded. Nearly longitudinal displacement after rotation by `x2` motivated trigonometric kinematics; this is an empirical structural inference rather than a supplied physical law. Large residuals at input changes motivated auxiliary current/previous-input regressions. Absolute-value contrasts, dead zones, smooth friction and input interactions were then compared. No genetic-programming symbolic-regression package was used. This baseline preserves only affine input responses, coordinate rotation and angle wrapping. Unregularized trajectory fitting worsened held-out performance, so this candidate uses the reduced static gain from a lag-aware one-step fit, not a position-dependent correction. It is retained as a low-complexity alternative, although the residuals support nonlinear response.",
+    "limitations": "The units and physical system are not supplied. Equal coordinate scales for `y` and `x1`, and an angular interpretation of `x2` in radians, are inferred modelling assumptions, not supplied facts. Only three short trajectories are available; numerical input ranges and initial conditions outside the logged experiments are not validated. Residuals indicate input-change transients with memory missing from the permitted state vector. The memoryless expressions cannot reproduce these exactly. The phase correction is an effective numerical correction, not an identified actuator time constant. Wrapping `x2_next` with `atan2(sin(...),cos(...))` prevents a discontinuity from being treated as a large rotation, but the output coordinates can still drift during long simulations. Training free-running `y` RMSE is `0.217402`; pooled leave-one-trajectory-out `y` RMSE is `0.212931`, both in unspecified `y` units and computed after the first sample of each training trajectory. One-step angular RMSE immediately after a five-sample input-block boundary is `0.0800096` radians versus `0.0160645` radians at other phases, on the 447 training transitions. This supports the missing-memory limitation."
+  }
+}

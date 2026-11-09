@@ -1,0 +1,12 @@
+{
+  "order": [
+    "CalibratedEuler",
+    "SaturatedTurn",
+    "CircularArc",
+    "RectifiedCalibration",
+    "TurnDeadband",
+    "SpeedTurnCoupling"
+  ],
+  "recommended": "CalibratedEuler",
+  "reason": "Recommend `CalibratedEuler`: its two-parameter model has the lowest pooled trajectory-held-out 25-step `x` RMSE among the submitted candidates, approximately `0.02970` m on `data/train.csv`, and little coefficient instability. The bounded saturation alternative is close, but its extra curvature is weakly identified. More complicated command maps improve some full-training-rollout errors, not the intended held-out 5 s prediction. No test score was accessed."
+}

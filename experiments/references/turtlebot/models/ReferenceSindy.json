@@ -1,0 +1,42 @@
+{
+  "expressions": {
+    "x_next": "c_x_1*x",
+    "y_next": "c_y_1*y",
+    "phi_next": "c_phi_1*phi"
+  },
+  "parameters": [
+    {
+      "name": "c_x_1",
+      "value": 1.0102839799187142,
+      "unit": "m / ((m))",
+      "type": "fitted",
+      "description": "Coefficient of the library term `x` in the expression of `x_next`."
+    },
+    {
+      "name": "c_y_1",
+      "value": 1.0076142703880582,
+      "unit": "m / ((m))",
+      "type": "fitted",
+      "description": "Coefficient of the library term `y` in the expression of `y_next`."
+    },
+    {
+      "name": "c_phi_1",
+      "value": 1.0025689330571401,
+      "unit": "rad / ((rad))",
+      "type": "fitted",
+      "description": "Coefficient of the library term `phi` in the expression of `phi_next`."
+    }
+  ],
+  "estimation": {
+    "criterion": "Sum of squared one-step prediction errors of each next state (`x` in m, `y` in m, `phi` in rad), each state fitted separately, with a ridge penalty; this is the criterion of the default optimizer of the package and is not the simulation error that the task scores. It was kept because the reference model is the result of the tool as it is delivered.",
+    "data": "data/train.csv, all three trajectories, as one-step transitions from a row to the next row of the same trajectory: `442` transitions. `5` transitions in which the logged heading `phi` wraps at pi were left out, because the wrapped next heading is not a continuous function of the present state.",
+    "method": "Sparse identification of nonlinear dynamics (SINDy; Brunton, Proctor and Kutz, 2016) in discrete time, pysindy.DiscreteSINDy (PySINDy 2.1.0) with its default settings: the library of all polynomial terms up to degree `2` in `x`, `y`, `phi`, `v_f` and `v_a` with a constant term, and sequentially thresholded least squares (STLSQ) with threshold `0.1`, ridge parameter `0.05` and at most `20` iterations. The defaults were used because the model is a reference for what the tool gives without tuning. The method needs no starting values and uses no random numbers. All coefficients of one state were estimated together.",
+    "script": "experiments/references/turtlebot/fit_references.py"
+  },
+  "discussion": {
+    "family": "Polynomial discrete-time state-space model found by sparse regression (SINDy). Reference model; it is not a candidate of the agent.",
+    "interpretation": "Each expression is a linear combination of the polynomial library terms that the thresholding kept. The terms have no assigned physical meaning; a coefficient of the present state close to 1 carries the state over to the next sample, and the terms with `v_f` or `v_a` add the effect of the commands.",
+    "origin": "The structure was selected by the sparse-regression algorithm from the polynomial library; no physical reasoning entered, and no other library was tried.",
+    "limitations": "A polynomial library of degree 2 contains no trigonometric function of the heading, so that the model cannot represent the rotation of the displacement with the heading. The criterion is the one-step prediction error, not the simulation error. The polynomial in `phi` is not periodic and is fitted on headings between -pi and pi."
+  }
+}

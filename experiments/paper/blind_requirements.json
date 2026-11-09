@@ -1,0 +1,62 @@
+{
+ "written_by": "experiments/paper/blind_requirements.py",
+ "conditions_of": "tasks/friction-driven",
+ "models_of": "experiments/paper-friction-driven-blind",
+ "runs": {
+  "r01": {
+   "label": "QuinticDamping",
+   "outcomes": {
+    "R1": "proof",
+    "R2": "counterexample",
+    "R3": "proof"
+   },
+   "violated": [
+    "R2"
+   ]
+  },
+  "r02": {
+   "label": "HarmonicFriction",
+   "outcomes": {
+    "R1": "proof",
+    "R2": "counterexample",
+    "R3": "proof"
+   },
+   "violated": [
+    "R2"
+   ]
+  },
+  "r03": {
+   "label": "angle_friction",
+   "outcomes": {
+    "R1": "proof",
+    "R2": "counterexample",
+    "R3": "proof"
+   },
+   "violated": [
+    "R2"
+   ]
+  },
+  "r04": {
+   "label": "ShiftedSine",
+   "outcomes": {
+    "R1": "proof",
+    "R2": "counterexample",
+    "R3": "proof"
+   },
+   "violated": [
+    "R2"
+   ]
+  },
+  "r05": {
+   "label": "TrigSmooth",
+   "outcomes": {
+    "R1": "proof",
+    "R2": "counterexample",
+    "R3": "proof"
+   },
+   "violated": [
+    "R2"
+   ]
+  }
+ }
+}

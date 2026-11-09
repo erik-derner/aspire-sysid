@@ -1,0 +1,2609 @@
+{
+  "candidates": [
+    {
+      "allowed_violations": [],
+      "checks": {
+        "issues": [],
+        "notes": [],
+        "passed": true
+      },
+      "complexity": {
+        "fitted_parameters": 6,
+        "fixed_parameters": 0,
+        "node_count": 49,
+        "node_count_per_key": {
+          "domega": 48,
+          "dtheta": 1
+        },
+        "noninteger_literals": 0,
+        "tied_parameters": 0
+      },
+      "excluded_by_requirements": false,
+      "exclusions": [],
+      "expressions": {
+        "domega": "a*u-g*sin(theta)-b*omega-c*tanh(omega/v)-exp(-(omega/vs)**2)*Min(Max(a*u-g*sin(theta),-c),c)",
+        "dtheta": "omega"
+      },
+      "failed_computations": [],
+      "label": "TwoScaleStick",
+      "position": 1,
+      "requirements": [
+        {
+          "assumptions": [
+            "all variables are real",
+            "parameter values and given constants enter as their recorded binary64 values, exactly",
+            "tied parameters are replaced by their resolved tie equations"
+          ],
+          "counterexample": null,
+          "detail": "the quantity is identically zero on the domain",
+          "domain": {
+            "box": {
+              "omega": [
+                -23.0,
+                23.0
+              ],
+              "theta": [
+                -3.1416,
+                3.1416
+              ],
+              "u": [
+                -10.0,
+                10.0
+              ]
+            }
+          },
+          "exception": null,
+          "exclude_on_violation": true,
+          "excludes": false,
+          "id": "R1",
+          "kind": "formal",
+          "outcome": "proof",
+          "quantity": "|f − (omega)|",
+          "sampling": null,
+          "source": {
+            "date": "2026-09-25",
+            "note": null,
+            "stated_by": "task author"
+          },
+          "statement": null,
+          "status": "satisfied",
+          "symbolic": {
+            "detail": "the quantity is identically zero on the domain",
+            "procedure": "evaluation of a constant",
+            "result": "proof",
+            "time_limit_s": 10.0
+          },
+          "target": "dtheta",
+          "tolerance": {
+            "unit": "rad/s",
+            "value": 0.0
+          },
+          "type": "equation",
+          "verification": "symbolic"
+        },
+        {
+          "assumptions": [
+            "all variables are real",
+            "parameter values and given constants enter as their recorded binary64 values, exactly",
+            "tied parameters are replaced by their resolved tie equations"
+          ],
+          "counterexample": null,
+          "detail": "no violation found at the 10000 sampled points (largest value of Q -0.0, tolerance 0.0); this is not a proof",
+          "domain": {
+            "box": {
+              "omega": [
+                0.0,
+                0.0
+              ],
+              "theta": [
+                -3.141592653589793,
+                3.141592653589793
+              ],
+              "u": [
+                0.0,
+                0.0
+              ]
+            }
+          },
+          "exception": null,
+          "exclude_on_violation": true,
+          "excludes": false,
+          "id": "R2",
+          "kind": "formal",
+          "outcome": "inconclusive",
+          "quantity": "lhs − rhs of the relation 'domega*theta <= 0' with domega = f",
+          "sampling": {
+            "argmax": {
+              "omega": 0.0,
+              "theta": -0.17025743774914703,
+              "u": 0.0
+            },
+            "detail": "no violation found at the 10000 sampled points (largest value of Q -0.0, tolerance 0.0); this is not a proof",
+            "domain": {
+              "omega": [
+                0.0,
+                0.0
+              ],
+              "theta": [
+                -3.141592653589793,
+                3.141592653589793
+              ],
+              "u": [
+                0.0,
+                0.0
+              ]
+            },
+            "max_value": -0.0,
+            "non_finite_points": 0,
+            "procedure": "independent uniform draws on each non-degenerate interval of the box with NumPy default_rng(20261009) (PCG64), variables drawn in the order theta; degenerate intervals fixed at their value; Q evaluated in binary64 arithmetic; the 5 largest values re-evaluated at 30 significant digits",
+            "samples": 10000,
+            "seed": 20261009,
+            "tolerance": 0.0
+          },
+          "source": {
+            "date": "2026-10-09",
+            "note": null,
+            "stated_by": "task author"
+          },
+          "statement": null,
+          "status": "unresolved",
+          "symbolic": {
+            "detail": "interval arithmetic: the box budget (4000 boxes or 5 s) was exhausted before the bound was established; SymPy could not determine the extremum over theta: \nas_set is not implemented for relationals with periodic solutions",
+            "procedure": "interval arithmetic and symbolic simplification",
+            "result": "inconclusive",
+            "time_limit_s": 10.0
+          },
+          "target": "domega",
+          "tolerance": {
+            "unit": "rad^2/s^2",
+            "value": 0.0
+          },
+          "type": "inequality",
+          "verification": "symbolic_then_sampling"
+        },
+        {
+          "assumptions": [
+            "all variables are real",
+            "parameter values and given constants enter as their recorded binary64 values, exactly",
+            "tied parameters are replaced by their resolved tie equations"
+          ],
+          "counterexample": null,
+          "detail": "no violation found at the 10000 sampled points (largest value of Q -0.9656824266290158, tolerance 0.0); this is not a proof",
+          "domain": {
+            "box": {
+              "omega": [
+                -23.0,
+                23.0
+              ],
+              "theta": [
+                -3.1416,
+                3.1416
+              ],
+              "u": [
+                -10.0,
+                10.0
+              ]
+            }
+          },
+          "exception": null,
+          "exclude_on_violation": true,
+          "excludes": false,
+          "id": "R3",
+          "kind": "formal",
+          "outcome": "inconclusive",
+          "quantity": "−∂f/∂u (analytic derivative)",
+          "sampling": {
+            "argmax": {
+              "omega": -0.030523785357260635,
+              "theta": 2.649611531169874,
+              "u": 1.5313079246684005
+            },
+            "detail": "no violation found at the 10000 sampled points (largest value of Q -0.9656824266290158, tolerance 0.0); this is not a proof",
+            "domain": {
+              "omega": [
+                -23.0,
+                23.0
+              ],
+              "theta": [
+                -3.1416,
+                3.1416
+              ],
+              "u": [
+                -10.0,
+                10.0
+              ]
+            },
+            "max_value": -0.9656824266290158,
+            "non_finite_points": 0,
+            "procedure": "independent uniform draws on each non-degenerate interval of the box with NumPy default_rng(20261009) (PCG64), variables drawn in the order theta, omega, u; degenerate intervals fixed at their value; Q evaluated in binary64 arithmetic; the 5 largest values re-evaluated at 30 significant digits",
+            "samples": 10000,
+            "seed": 20261009,
+            "tolerance": 0.0
+          },
+          "source": {
+            "date": "2026-10-09",
+            "note": null,
+            "stated_by": "task author"
+          },
+          "statement": null,
+          "status": "unresolved",
+          "symbolic": {
+            "detail": "interval arithmetic: no interval extension for Heaviside; after simplification the quantity depends on omega, theta, u with 22 operations; no further symbolic procedure applies",
+            "procedure": "interval arithmetic and symbolic simplification",
+            "result": "inconclusive",
+            "time_limit_s": 10.0
+          },
+          "target": "domega",
+          "tolerance": {
+            "unit": "rad/(s^2 V)",
+            "value": 0.0
+          },
+          "type": "monotonicity",
+          "verification": "symbolic_then_sampling"
+        }
+      ],
+      "sealed": {
+        "eligible": true,
+        "failed_computations": [],
+        "failed_numerically": false,
+        "ineligibility": [],
+        "rank": 2,
+        "reference_comparison": null,
+        "score_S": 0.044176101850062634,
+        "test": {
+          "finished": true,
+          "group": "test",
+          "pooled_rmse": 0.044176101850062634,
+          "scored_samples": 978,
+          "trajectories": [
+            {
+              "completed_samples": 449,
+              "failure": null,
+              "finished": true,
+              "group": "test",
+              "measures": {
+                "mean": -0.03131797041752311,
+                "n": 449,
+                "nrmse": 0.09573334260911096,
+                "r2": 0.9908351271128866,
+                "rmse": 0.03614789422434531,
+                "sse": 0.5866949453276514,
+                "std": 0.3775893877636851
+              },
+              "n_samples": 450,
+              "note": null,
+              "prefix_diagnostic": null,
+              "required_samples": 449,
+              "scoring_interval": [
+                1,
+                450
+              ],
+              "trajectory": "test-1"
+            },
+            {
+              "completed_samples": 299,
+              "failure": null,
+              "finished": true,
+              "group": "test",
+              "measures": {
+                "mean": 0.17143219309689317,
+                "n": 299,
+                "nrmse": 0.09899832647983003,
+                "r2": 0.990199331354193,
+                "rmse": 0.061184801388322566,
+                "sse": 1.1193303963576153,
+                "std": 0.6180387443295658
+              },
+              "n_samples": 300,
+              "note": null,
+              "prefix_diagnostic": null,
+              "required_samples": 299,
+              "scoring_interval": [
+                1,
+                300
+              ],
+              "trajectory": "test-2"
+            },
+            {
+              "completed_samples": 140,
+              "failure": null,
+              "finished": true,
+              "group": "test",
+              "measures": {
+                "mean": -0.02670353755551293,
+                "n": 140,
+                "nrmse": 0.48171291747008765,
+                "r2": 0.7679526651424564,
+                "rmse": 0.025499186457513878,
+                "sse": 0.09102919139930829,
+                "std": 0.052934404564929004
+              },
+              "n_samples": 141,
+              "note": null,
+              "prefix_diagnostic": null,
+              "required_samples": 140,
+              "scoring_interval": [
+                1,
+                141
+              ],
+              "trajectory": "test-3"
+            },
+            {
+              "completed_samples": 90,
+              "failure": null,
+              "finished": true,
+              "group": "test",
+              "measures": {
+                "mean": -0.12576842589871143,
+                "n": 90,
+                "nrmse": 0.06667094348402691,
+                "r2": 0.9955549852949497,
+                "rmse": 0.03520413898327795,
+                "sse": 0.11153982613985551,
+                "std": 0.5280282105459058
+              },
+              "n_samples": 91,
+              "note": null,
+              "prefix_diagnostic": null,
+              "required_samples": 90,
+              "scoring_interval": [
+                1,
+                91
+              ],
+              "trajectory": "test-4"
+            }
+          ]
+        }
+      },
+      "sensitivity": {
+        "assumptions": [
+          "the fitting target is the one implied by the formulation (the model file has no structured field for it)"
+        ],
+        "available": true,
+        "data": [
+          "train",
+          "val"
+        ],
+        "deficient": false,
+        "dependent_groups": [],
+        "method": "analytic derivatives (SymPy), ties differentiated through their equations",
+        "parameters": [
+          "a",
+          "g",
+          "b",
+          "c",
+          "v",
+          "vs"
+        ],
+        "rank": 6,
+        "rank_threshold": "s_i / s_1 > 1e-08",
+        "reason": null,
+        "rows": 4714,
+        "rows_dropped": 0,
+        "scaling": "rows of each target divided by the standard deviation of its measured column; columns divided by their Euclidean norm",
+        "singular_values": [
+          1.4671195811005775,
+          1.1349831986149044,
+          1.0315827693538535,
+          0.8737480281807491,
+          0.7570965835362112,
+          0.39822030339178505
+        ],
+        "targets": [
+          "domega"
+        ],
+        "zero_columns": []
+      },
+      "status": "evaluated",
+      "structure": {
+        "domega": "P1*u - P2*omega - P3*tanh(omega/P4) - P5*sin(theta) - exp(-omega**2/P6**2)*Min(P3, Max(-P3, P1*u - P5*sin(theta)))",
+        "dtheta": "omega"
+      },
+      "structure_group": 1,
+      "unresolved_requirements": [
+        "R2",
+        "R3"
+      ],
+      "visible": {
+        "train": {
+          "finished": true,
+          "group": "train",
+          "pooled_rmse": 0.0615559027622248,
+          "scored_samples": 3509,
+          "trajectories": [
+            {
+              "completed_samples": 449,
+              "failure": null,
+              "finished": true,
+              "group": "train",
+              "measures": {
+                "mean": 0.08278691375784947,
+                "n": 449,
+                "nrmse": 0.16876751343421434,
+                "r2": 0.9715175264092323,
+                "rmse": 0.04328508975627496,
+                "sse": 0.841245948848742,
+                "std": 0.25647761749566517
+              },
+              "n_samples": 450,
+              "note": null,
+              "prefix_diagnostic": null,
+              "required_samples": 449,
+              "scoring_interval": [
+                1,
+                450
+              ],
+              "trajectory": "1"
+            },
+            {
+              "completed_samples": 449,
+              "failure": null,
+              "finished": true,
+              "group": "train",
+              "measures": {
+                "mean": -0.01861166249120006,
+                "n": 449,
+                "nrmse": 0.06900672885104162,
+                "r2": 0.9952380713732788,
+                "rmse": 0.045989817445008255,
+                "sse": 0.9496634255727083,
+                "std": 0.6664541010816811
+              },
+              "n_samples": 450,
+              "note": null,
+              "prefix_diagnostic": null,
+              "required_samples": 449,
+              "scoring_interval": [
+                1,
+                450
+              ],
+              "trajectory": "2"
+            },
+            {
+              "completed_samples": 299,
+              "failure": null,
+              "finished": true,
+              "group": "train",
+              "measures": {
+                "mean": -0.3052073023460745,
+                "n": 299,
+                "nrmse": 0.1492205919581654,
+                "r2": 0.9777332149356547,
+                "rmse": 0.0704728239887196,
+                "sse": 1.484959257362571,
+                "std": 0.4722727812826057
+              },
+              "n_samples": 300,
+              "note": null,
+              "prefix_diagnostic": null,
+              "required_samples": 299,
+              "scoring_interval": [
+                1,
+                300
+              ],
+              "trajectory": "3"
+            },
+            {
+              "completed_samples": 299,
+              "failure": null,
+              "finished": true,
+              "group": "train",
+              "measures": {
+                "mean": 0.07273995297927136,
+                "n": 299,
+                "nrmse": 0.06717441040588841,
+                "r2": 0.9954875985866213,
+                "rmse": 0.05505176225698351,
+                "sse": 0.9061782617522306,
+                "std": 0.8195347294355673
+              },
+              "n_samples": 300,
+              "note": null,
+              "prefix_diagnostic": null,
+              "required_samples": 299,
+              "scoring_interval": [
+                1,
+                300
+              ],
+              "trajectory": "4"
+            },
+            {
+              "completed_samples": 441,
+              "failure": null,
+              "finished": true,
+              "group": "train",
+              "measures": {
+                "mean": 0.024313505049210933,
+                "n": 441,
+                "nrmse": 0.05520556922946927,
+                "r2": 0.9969523451260502,
+                "rmse": 0.021130062151872887,
+                "sse": 0.1968974712050269,
+                "std": 0.3827523644225636
+              },
+              "n_samples": 442,
+              "note": null,
+              "prefix_diagnostic": null,
+              "required_samples": 441,
+              "scoring_interval": [
+                1,
+                442
+              ],
+              "trajectory": "5"
+            },
+            {
+              "completed_samples": 441,
+              "failure": null,
+              "finished": true,
+              "group": "train",
+              "measures": {
+                "mean": 0.06467691542390433,
+                "n": 441,
+                "nrmse": 0.06803579961163374,
+                "r2": 0.9953711299712056,
+                "rmse": 0.03105428062989507,
+                "sse": 0.4252864403391618,
+                "std": 0.4564402977132786
+              },
+              "n_samples": 442,
+              "note": null,
+              "prefix_diagnostic": null,
+              "required_samples": 441,
+              "scoring_interval": [
+                1,
+                442
+              ],
+              "trajectory": "6"
+            },
+            {
+              "completed_samples": 441,
+              "failure": null,
+              "finished": true,
+              "group": "train",
+              "measures": {
+                "mean": -0.020089095880097843,
+                "n": 441,
+                "nrmse": 0.2384312357410707,
+                "r2": 0.943150545822986,
+                "rmse": 0.12370780617372938,
+                "sse": 6.748896996967796,
+                "std": 0.518840603200465
+              },
+              "n_samples": 442,
+              "note": null,
+              "prefix_diagnostic": null,
+              "required_samples": 441,
+              "scoring_interval": [
+                1,
+                442
+              ],
+              "trajectory": "7"
+            },
+            {
+              "completed_samples": 140,
+              "failure": null,
+              "finished": true,
+              "group": "train",
+              "measures": {
+                "mean": 0.03621807530638514,
+                "n": 140,
+                "nrmse": 0.5562424080853219,
+                "r2": 0.6905943834474422,
+                "rmse": 0.09134729523398212,
+                "sse": 1.168205968519001,
+                "std": 0.16422209796698992
+              },
+              "n_samples": 141,
+              "note": null,
+              "prefix_diagnostic": null,
+              "required_samples": 140,
+              "scoring_interval": [
+                1,
+                141
+              ],
+              "trajectory": "8"
+            },
+            {
+              "completed_samples": 140,
+              "failure": null,
+              "finished": true,
+              "group": "train",
+              "measures": {
+                "mean": 0.09830941010983475,
+                "n": 140,
+                "nrmse": 0.16749826251275035,
+                "r2": 0.9719443320552098,
+                "rmse": 0.03662966922000903,
+                "sse": 0.18784257340341878,
+                "std": 0.2186868608097991
+              },
+              "n_samples": 141,
+              "note": null,
+              "prefix_diagnostic": null,
+              "required_samples": 140,
+              "scoring_interval": [
+                1,
+                141
+              ],
+              "trajectory": "9"
+            },
+            {
+              "completed_samples": 140,
+              "failure": null,
+              "finished": true,
+              "group": "train",
+              "measures": {
+                "mean": -0.11235681726088624,
+                "n": 140,
+                "nrmse": 0.3520977411462715,
+                "r2": 0.8760271806796932,
+                "rmse": 0.017312238863631348,
+                "sse": 0.04195990602599987,
+                "std": 0.049168843876335314
+              },
+              "n_samples": 141,
+              "note": null,
+              "prefix_diagnostic": null,
+              "required_samples": 140,
+              "scoring_interval": [
+                1,
+                141
+              ],
+              "trajectory": "10"
+            },
+            {
+              "completed_samples": 90,
+              "failure": null,
+              "finished": true,
+              "group": "train",
+              "measures": {
+                "mean": 0.05358160803622594,
+                "n": 90,
+                "nrmse": 0.21774412054067677,
+                "r2": 0.9525874979699672,
+                "rmse": 0.035836963112149775,
+                "sse": 0.11558591325914253,
+                "std": 0.16458291972781453
+              },
+              "n_samples": 91,
+              "note": null,
+              "prefix_diagnostic": null,
+              "required_samples": 90,
+              "scoring_interval": [
+                1,
+                91
+              ],
+              "trajectory": "11"
+            },
+            {
+              "completed_samples": 90,
+              "failure": null,
+              "finished": true,
+              "group": "train",
+              "measures": {
+                "mean": -0.05777039824101206,
+                "n": 90,
+                "nrmse": 0.764597169659727,
+                "r2": 0.41539116814833466,
+                "rmse": 0.0039011396566624315,
+                "sse": 0.0013697001558705846,
+                "std": 0.005102215665274536
+              },
+              "n_samples": 91,
+              "note": null,
+              "prefix_diagnostic": null,
+              "required_samples": 90,
+              "scoring_interval": [
+                1,
+                91
+              ],
+              "trajectory": "12"
+            },
+            {
+              "completed_samples": 90,
+              "failure": null,
+              "finished": true,
+              "group": "train",
+              "measures": {
+                "mean": -0.06147049625524025,
+                "n": 90,
+                "nrmse": 0.0926362841566398,
+                "r2": 0.9914185188576503,
+                "rmse": 0.05032807656057559,
+                "sse": 0.22796237612584422,
+                "std": 0.5432868666825544
+              },
+              "n_samples": 91,
+              "note": null,
+              "prefix_diagnostic": null,
+              "required_samples": 90,
+              "scoring_interval": [
+                1,
+                91
+              ],
+              "trajectory": "13"
+            }
+          ]
+        },
+        "val": {
+          "finished": true,
+          "group": "val",
+          "pooled_rmse": 0.08557273722808531,
+          "scored_samples": 1189,
+          "trajectories": [
+            {
+              "completed_samples": 449,
+              "failure": null,
+              "finished": true,
+              "group": "val",
+              "measures": {
+                "mean": 0.2512644404967997,
+                "n": 449,
+                "nrmse": 0.21595867747008132,
+                "r2": 0.9533618496253734,
+                "rmse": 0.11807963539041895,
+                "sse": 6.260317331976491,
+                "std": 0.5467695800590258
+              },
+              "n_samples": 450,
+              "note": null,
+              "prefix_diagnostic": null,
+              "required_samples": 449,
+              "scoring_interval": [
+                1,
+                450
+              ],
+              "trajectory": "1"
+            },
+            {
+              "completed_samples": 299,
+              "failure": null,
+              "finished": true,
+              "group": "val",
+              "measures": {
+                "mean": -0.25228354918175416,
+                "n": 299,
+                "nrmse": 0.12484756152951888,
+                "r2": 0.984413086380133,
+                "rmse": 0.06980492336817781,
+                "sse": 1.4569454706047158,
+                "std": 0.559121239638094
+              },
+              "n_samples": 300,
+              "note": null,
+              "prefix_diagnostic": null,
+              "required_samples": 299,
+              "scoring_interval": [
+                1,
+                300
+              ],
+              "trajectory": "2"
+            },
+            {
+              "completed_samples": 441,
+              "failure": null,
+              "finished": true,
+              "group": "val",
+              "measures": {
+                "mean": -0.06533230436751053,
+                "n": 441,
+                "nrmse": 0.12602232077933945,
+                "r2": 0.9841183746653893,
+                "rmse": 0.04736646341144073,
+                "sse": 0.9894195985433428,
+                "std": 0.3758577299522813
+              },
+              "n_samples": 442,
+              "note": null,
+              "prefix_diagnostic": null,
+              "required_samples": 441,
+              "scoring_interval": [
+                1,
+                442
+              ],
+              "trajectory": "3"
+            }
+          ]
+        }
+      },
+      "within_limit": true
+    },
+    {
+      "allowed_violations": [],
+      "checks": {
+        "issues": [],
+        "notes": [],
+        "passed": true
+      },
+      "complexity": {
+        "fitted_parameters": 7,
+        "fixed_parameters": 0,
+        "node_count": 60,
+        "node_count_per_key": {
+          "domega": 59,
+          "dtheta": 1
+        },
+        "noninteger_literals": 0,
+        "tied_parameters": 0
+      },
+      "excluded_by_requirements": false,
+      "exclusions": [],
+      "expressions": {
+        "domega": "a*u-g*sin(theta)*(1+h*cos(theta))-b*omega-Min(Max(a*u-g*sin(theta)*(1+h*cos(theta))-b*omega+omega/tau,-c-d),c-d)",
+        "dtheta": "omega"
+      },
+      "failed_computations": [],
+      "label": "ProjectionStick",
+      "position": 2,
+      "requirements": [
+        {
+          "assumptions": [
+            "all variables are real",
+            "parameter values and given constants enter as their recorded binary64 values, exactly",
+            "tied parameters are replaced by their resolved tie equations"
+          ],
+          "counterexample": null,
+          "detail": "the quantity is identically zero on the domain",
+          "domain": {
+            "box": {
+              "omega": [
+                -23.0,
+                23.0
+              ],
+              "theta": [
+                -3.1416,
+                3.1416
+              ],
+              "u": [
+                -10.0,
+                10.0
+              ]
+            }
+          },
+          "exception": null,
+          "exclude_on_violation": true,
+          "excludes": false,
+          "id": "R1",
+          "kind": "formal",
+          "outcome": "proof",
+          "quantity": "|f − (omega)|",
+          "sampling": null,
+          "source": {
+            "date": "2026-09-25",
+            "note": null,
+            "stated_by": "task author"
+          },
+          "statement": null,
+          "status": "satisfied",
+          "symbolic": {
+            "detail": "the quantity is identically zero on the domain",
+            "procedure": "evaluation of a constant",
+            "result": "proof",
+            "time_limit_s": 10.0
+          },
+          "target": "dtheta",
+          "tolerance": {
+            "unit": "rad/s",
+            "value": 0.0
+          },
+          "type": "equation",
+          "verification": "symbolic"
+        },
+        {
+          "assumptions": [
+            "all variables are real",
+            "parameter values and given constants enter as their recorded binary64 values, exactly",
+            "tied parameters are replaced by their resolved tie equations"
+          ],
+          "counterexample": null,
+          "detail": "no violation found at the 10000 sampled points (largest value of Q -0.0, tolerance 0.0); this is not a proof",
+          "domain": {
+            "box": {
+              "omega": [
+                0.0,
+                0.0
+              ],
+              "theta": [
+                -3.141592653589793,
+                3.141592653589793
+              ],
+              "u": [
+                0.0,
+                0.0
+              ]
+            }
+          },
+          "exception": null,
+          "exclude_on_violation": true,
+          "excludes": false,
+          "id": "R2",
+          "kind": "formal",
+          "outcome": "inconclusive",
+          "quantity": "lhs − rhs of the relation 'domega*theta <= 0' with domega = f",
+          "sampling": {
+            "argmax": {
+              "omega": 0.0,
+              "theta": 3.0200382951000693,
+              "u": 0.0
+            },
+            "detail": "no violation found at the 10000 sampled points (largest value of Q -0.0, tolerance 0.0); this is not a proof",
+            "domain": {
+              "omega": [
+                0.0,
+                0.0
+              ],
+              "theta": [
+                -3.141592653589793,
+                3.141592653589793
+              ],
+              "u": [
+                0.0,
+                0.0
+              ]
+            },
+            "max_value": -0.0,
+            "non_finite_points": 0,
+            "procedure": "independent uniform draws on each non-degenerate interval of the box with NumPy default_rng(20261009) (PCG64), variables drawn in the order theta; degenerate intervals fixed at their value; Q evaluated in binary64 arithmetic; the 5 largest values re-evaluated at 30 significant digits",
+            "samples": 10000,
+            "seed": 20261009,
+            "tolerance": 0.0
+          },
+          "source": {
+            "date": "2026-10-09",
+            "note": null,
+            "stated_by": "task author"
+          },
+          "statement": null,
+          "status": "unresolved",
+          "symbolic": {
+            "detail": "the symbolic computation exceeded the time limit of 10 s",
+            "procedure": "SymPy simplification and extremum",
+            "result": "time limit",
+            "time_limit_s": 10.0
+          },
+          "target": "domega",
+          "tolerance": {
+            "unit": "rad^2/s^2",
+            "value": 0.0
+          },
+          "type": "inequality",
+          "verification": "symbolic_then_sampling"
+        },
+        {
+          "assumptions": [
+            "all variables are real",
+            "parameter values and given constants enter as their recorded binary64 values, exactly",
+            "tied parameters are replaced by their resolved tie equations"
+          ],
+          "counterexample": null,
+          "detail": "no violation found at the 10000 sampled points (largest value of Q 0.0, tolerance 0.0); this is not a proof",
+          "domain": {
+            "box": {
+              "omega": [
+                -23.0,
+                23.0
+              ],
+              "theta": [
+                -3.1416,
+                3.1416
+              ],
+              "u": [
+                -10.0,
+                10.0
+              ]
+            }
+          },
+          "exception": null,
+          "exclude_on_violation": true,
+          "excludes": false,
+          "id": "R3",
+          "kind": "formal",
+          "outcome": "inconclusive",
+          "quantity": "−∂f/∂u (analytic derivative)",
+          "sampling": {
+            "argmax": {
+              "omega": -0.4013033107197721,
+              "theta": 1.6111703874332712,
+              "u": 6.468582913441445
+            },
+            "detail": "no violation found at the 10000 sampled points (largest value of Q 0.0, tolerance 0.0); this is not a proof",
+            "domain": {
+              "omega": [
+                -23.0,
+                23.0
+              ],
+              "theta": [
+                -3.1416,
+                3.1416
+              ],
+              "u": [
+                -10.0,
+                10.0
+              ]
+            },
+            "max_value": 0.0,
+            "non_finite_points": 0,
+            "procedure": "independent uniform draws on each non-degenerate interval of the box with NumPy default_rng(20261009) (PCG64), variables drawn in the order theta, omega, u; degenerate intervals fixed at their value; Q evaluated in binary64 arithmetic; the 5 largest values re-evaluated at 30 significant digits",
+            "samples": 10000,
+            "seed": 20261009,
+            "tolerance": 0.0
+          },
+          "source": {
+            "date": "2026-10-09",
+            "note": null,
+            "stated_by": "task author"
+          },
+          "statement": null,
+          "status": "unresolved",
+          "symbolic": {
+            "detail": "interval arithmetic: no interval extension for Heaviside; after simplification the quantity depends on omega, theta, u with 30 operations; no further symbolic procedure applies",
+            "procedure": "interval arithmetic and symbolic simplification",
+            "result": "inconclusive",
+            "time_limit_s": 10.0
+          },
+          "target": "domega",
+          "tolerance": {
+            "unit": "rad/(s^2 V)",
+            "value": 0.0
+          },
+          "type": "monotonicity",
+          "verification": "symbolic_then_sampling"
+        }
+      ],
+      "sealed": {
+        "eligible": true,
+        "failed_computations": [],
+        "failed_numerically": false,
+        "ineligibility": [],
+        "rank": 3,
+        "reference_comparison": null,
+        "score_S": 0.04874029950922162,
+        "test": {
+          "finished": true,
+          "group": "test",
+          "pooled_rmse": 0.04874029950922162,
+          "scored_samples": 978,
+          "trajectories": [
+            {
+              "completed_samples": 449,
+              "failure": null,
+              "finished": true,
+              "group": "test",
+              "measures": {
+                "mean": -0.03131797041752311,
+                "n": 449,
+                "nrmse": 0.11902492876335118,
+                "r2": 0.9858330663328791,
+                "rmse": 0.044942549980370006,
+                "sse": 0.9069049266333871,
+                "std": 0.3775893877636851
+              },
+              "n_samples": 450,
+              "note": null,
+              "prefix_diagnostic": null,
+              "required_samples": 449,
+              "scoring_interval": [
+                1,
+                450
+              ],
+              "trajectory": "test-1"
+            },
+            {
+              "completed_samples": 299,
+              "failure": null,
+              "finished": true,
+              "group": "test",
+              "measures": {
+                "mean": 0.17143219309689317,
+                "n": 299,
+                "nrmse": 0.10867351546428758,
+                "r2": 0.9881900670366333,
+                "rmse": 0.06716444303942795,
+                "sse": 1.3488076602301717,
+                "std": 0.6180387443295658
+              },
+              "n_samples": 300,
+              "note": null,
+              "prefix_diagnostic": null,
+              "required_samples": 299,
+              "scoring_interval": [
+                1,
+                300
+              ],
+              "trajectory": "test-2"
+            },
+            {
+              "completed_samples": 140,
+              "failure": null,
+              "finished": true,
+              "group": "test",
+              "measures": {
+                "mean": -0.02670353755551293,
+                "n": 140,
+                "nrmse": 0.0807321931852902,
+                "r2": 0.993482312983493,
+                "rmse": 0.0042735105754841555,
+                "sse": 0.0025568049694284886,
+                "std": 0.052934404564929004
+              },
+              "n_samples": 141,
+              "note": null,
+              "prefix_diagnostic": null,
+              "required_samples": 140,
+              "scoring_interval": [
+                1,
+                141
+              ],
+              "trajectory": "test-3"
+            },
+            {
+              "completed_samples": 90,
+              "failure": null,
+              "finished": true,
+              "group": "test",
+              "measures": {
+                "mean": -0.12576842589871143,
+                "n": 90,
+                "nrmse": 0.05092818357983726,
+                "r2": 0.9974063201172584,
+                "rmse": 0.02689151764201485,
+                "sse": 0.06508383489817164,
+                "std": 0.5280282105459058
+              },
+              "n_samples": 91,
+              "note": null,
+              "prefix_diagnostic": null,
+              "required_samples": 90,
+              "scoring_interval": [
+                1,
+                91
+              ],
+              "trajectory": "test-4"
+            }
+          ]
+        }
+      },
+      "sensitivity": {
+        "assumptions": [
+          "the fitting target is the one implied by the formulation (the model file has no structured field for it)"
+        ],
+        "available": true,
+        "data": [
+          "train",
+          "val"
+        ],
+        "deficient": false,
+        "dependent_groups": [],
+        "method": "analytic derivatives (SymPy), ties differentiated through their equations",
+        "parameters": [
+          "a",
+          "g",
+          "b",
+          "c",
+          "tau",
+          "d",
+          "h"
+        ],
+        "rank": 7,
+        "rank_threshold": "s_i / s_1 > 1e-08",
+        "reason": null,
+        "rows": 4714,
+        "rows_dropped": 0,
+        "scaling": "rows of each target divided by the standard deviation of its measured column; columns divided by their Euclidean norm",
+        "singular_values": [
+          1.4379903491229775,
+          1.3306152844474601,
+          1.0015333347006503,
+          1.0,
+          0.809436161906147,
+          0.5226667854408967,
+          0.47980228355327376
+        ],
+        "targets": [
+          "domega"
+        ],
+        "zero_columns": []
+      },
+      "status": "evaluated",
+      "structure": {
+        "domega": "P3*u - P5*omega - P6*(P7*cos(theta) + 1)*sin(theta) - Min(P1 - P2, Max(-P1 - P2, P3*u - P5*omega - P6*(P7*cos(theta) + 1)*sin(theta) + omega/P4))",
+        "dtheta": "omega"
+      },
+      "structure_group": 2,
+      "unresolved_requirements": [
+        "R2",
+        "R3"
+      ],
+      "visible": {
+        "train": {
+          "finished": true,
+          "group": "train",
+          "pooled_rmse": 0.053654509775837786,
+          "scored_samples": 3509,
+          "trajectories": [
+            {
+              "completed_samples": 449,
+              "failure": null,
+              "finished": true,
+              "group": "train",
+              "measures": {
+                "mean": 0.08278691375784947,
+                "n": 449,
+                "nrmse": 0.14528696241954664,
+                "r2": 0.9788916985509012,
+                "rmse": 0.03726285397454756,
+                "sse": 0.6234456085614762,
+                "std": 0.25647761749566517
+              },
+              "n_samples": 450,
+              "note": null,
+              "prefix_diagnostic": null,
+              "required_samples": 449,
+              "scoring_interval": [
+                1,
+                450
+              ],
+              "trajectory": "1"
+            },
+            {
+              "completed_samples": 449,
+              "failure": null,
+              "finished": true,
+              "group": "train",
+              "measures": {
+                "mean": -0.01861166249120006,
+                "n": 449,
+                "nrmse": 0.061373400518094,
+                "r2": 0.9962333057088456,
+                "rmse": 0.04090255447261232,
+                "sse": 0.751185514110873,
+                "std": 0.6664541010816811
+              },
+              "n_samples": 450,
+              "note": null,
+              "prefix_diagnostic": null,
+              "required_samples": 449,
+              "scoring_interval": [
+                1,
+                450
+              ],
+              "trajectory": "2"
+            },
+            {
+              "completed_samples": 299,
+              "failure": null,
+              "finished": true,
+              "group": "train",
+              "measures": {
+                "mean": -0.3052073023460745,
+                "n": 299,
+                "nrmse": 0.1596302785674496,
+                "r2": 0.9745181741644784,
+                "rmse": 0.07538903563596655,
+                "sse": 1.6993685015421893,
+                "std": 0.4722727812826057
+              },
+              "n_samples": 300,
+              "note": null,
+              "prefix_diagnostic": null,
+              "required_samples": 299,
+              "scoring_interval": [
+                1,
+                300
+              ],
+              "trajectory": "3"
+            },
+            {
+              "completed_samples": 299,
+              "failure": null,
+              "finished": true,
+              "group": "train",
+              "measures": {
+                "mean": 0.07273995297927136,
+                "n": 299,
+                "nrmse": 0.06244407253531923,
+                "r2": 0.9961007378052038,
+                "rmse": 0.05117508609008778,
+                "sse": 0.7830479414620407,
+                "std": 0.8195347294355673
+              },
+              "n_samples": 300,
+              "note": null,
+              "prefix_diagnostic": null,
+              "required_samples": 299,
+              "scoring_interval": [
+                1,
+                300
+              ],
+              "trajectory": "4"
+            },
+            {
+              "completed_samples": 441,
+              "failure": null,
+              "finished": true,
+              "group": "train",
+              "measures": {
+                "mean": 0.024313505049210933,
+                "n": 441,
+                "nrmse": 0.05799987376606731,
+                "r2": 0.9966360146431202,
+                "rmse": 0.02219958882017248,
+                "sse": 0.2173343890090646,
+                "std": 0.3827523644225636
+              },
+              "n_samples": 442,
+              "note": null,
+              "prefix_diagnostic": null,
+              "required_samples": 441,
+              "scoring_interval": [
+                1,
+                442
+              ],
+              "trajectory": "5"
+            },
+            {
+              "completed_samples": 441,
+              "failure": null,
+              "finished": true,
+              "group": "train",
+              "measures": {
+                "mean": 0.06467691542390433,
+                "n": 441,
+                "nrmse": 0.08625015490475765,
+                "r2": 0.9925609107789053,
+                "rmse": 0.03936804638254398,
+                "sse": 0.6834807965063572,
+                "std": 0.4564402977132786
+              },
+              "n_samples": 442,
+              "note": null,
+              "prefix_diagnostic": null,
+              "required_samples": 441,
+              "scoring_interval": [
+                1,
+                442
+              ],
+              "trajectory": "6"
+            },
+            {
+              "completed_samples": 441,
+              "failure": null,
+              "finished": true,
+              "group": "train",
+              "measures": {
+                "mean": -0.020089095880097843,
+                "n": 441,
+                "nrmse": 0.16577067912586702,
+                "r2": 0.9725200819421489,
+                "rmse": 0.08600855915061557,
+                "sse": 3.2622852609997373,
+                "std": 0.518840603200465
+              },
+              "n_samples": 442,
+              "note": null,
+              "prefix_diagnostic": null,
+              "required_samples": 441,
+              "scoring_interval": [
+                1,
+                442
+              ],
+              "trajectory": "7"
+            },
+            {
+              "completed_samples": 140,
+              "failure": null,
+              "finished": true,
+              "group": "train",
+              "measures": {
+                "mean": 0.03621807530638514,
+                "n": 140,
+                "nrmse": 0.6871975582609169,
+                "r2": 0.5277595159202337,
+                "rmse": 0.11285302473540056,
+                "sse": 1.78301272687005,
+                "std": 0.16422209796698992
+              },
+              "n_samples": 141,
+              "note": null,
+              "prefix_diagnostic": null,
+              "required_samples": 140,
+              "scoring_interval": [
+                1,
+                141
+              ],
+              "trajectory": "8"
+            },
+            {
+              "completed_samples": 140,
+              "failure": null,
+              "finished": true,
+              "group": "train",
+              "measures": {
+                "mean": 0.09830941010983475,
+                "n": 140,
+                "nrmse": 0.0748260321961096,
+                "r2": 0.9944010649057867,
+                "rmse": 0.016363470087820166,
+                "sse": 0.03748684146409794,
+                "std": 0.2186868608097991
+              },
+              "n_samples": 141,
+              "note": null,
+              "prefix_diagnostic": null,
+              "required_samples": 140,
+              "scoring_interval": [
+                1,
+                141
+              ],
+              "trajectory": "9"
+            },
+            {
+              "completed_samples": 140,
+              "failure": null,
+              "finished": true,
+              "group": "train",
+              "measures": {
+                "mean": -0.11235681726088624,
+                "n": 140,
+                "nrmse": 0.14850572835574832,
+                "r2": 0.9779460486455287,
+                "rmse": 0.007301854972265251,
+                "sse": 0.007464392045039269,
+                "std": 0.049168843876335314
+              },
+              "n_samples": 141,
+              "note": null,
+              "prefix_diagnostic": null,
+              "required_samples": 140,
+              "scoring_interval": [
+                1,
+                141
+              ],
+              "trajectory": "10"
+            },
+            {
+              "completed_samples": 90,
+              "failure": null,
+              "finished": true,
+              "group": "train",
+              "measures": {
+                "mean": 0.05358160803622594,
+                "n": 90,
+                "nrmse": 0.06999699608515665,
+                "r2": 0.9951004205390546,
+                "rmse": 0.011520309987871485,
+                "sse": 0.011944578799498633,
+                "std": 0.16458291972781453
+              },
+              "n_samples": 91,
+              "note": null,
+              "prefix_diagnostic": null,
+              "required_samples": 90,
+              "scoring_interval": [
+                1,
+                91
+              ],
+              "trajectory": "11"
+            },
+            {
+              "completed_samples": 90,
+              "failure": null,
+              "finished": true,
+              "group": "train",
+              "measures": {
+                "mean": -0.05777039824101206,
+                "n": 90,
+                "nrmse": 2.123046518238918,
+                "r2": -3.5073265186063933,
+                "rmse": 0.01083224120346517,
+                "sse": 0.01056037045410437,
+                "std": 0.005102215665274536
+              },
+              "n_samples": 91,
+              "note": null,
+              "prefix_diagnostic": null,
+              "required_samples": 90,
+              "scoring_interval": [
+                1,
+                91
+              ],
+              "trajectory": "12"
+            },
+            {
+              "completed_samples": 90,
+              "failure": null,
+              "finished": true,
+              "group": "train",
+              "measures": {
+                "mean": -0.06147049625524025,
+                "n": 90,
+                "nrmse": 0.09327460544884357,
+                "r2": 0.9912998479783626,
+                "rmse": 0.05067486813535374,
+                "sse": 0.2311148034481941,
+                "std": 0.5432868666825544
+              },
+              "n_samples": 91,
+              "note": null,
+              "prefix_diagnostic": null,
+              "required_samples": 90,
+              "scoring_interval": [
+                1,
+                91
+              ],
+              "trajectory": "13"
+            }
+          ]
+        },
+        "val": {
+          "finished": true,
+          "group": "val",
+          "pooled_rmse": 0.08429789635561998,
+          "scored_samples": 1189,
+          "trajectories": [
+            {
+              "completed_samples": 449,
+              "failure": null,
+              "finished": true,
+              "group": "val",
+              "measures": {
+                "mean": 0.2512644404967997,
+                "n": 449,
+                "nrmse": 0.20890803662324975,
+                "r2": 0.956357432234219,
+                "rmse": 0.11422455945544983,
+                "sse": 5.858215242273426,
+                "std": 0.5467695800590258
+              },
+              "n_samples": 450,
+              "note": null,
+              "prefix_diagnostic": null,
+              "required_samples": 449,
+              "scoring_interval": [
+                1,
+                450
+              ],
+              "trajectory": "1"
+            },
+            {
+              "completed_samples": 299,
+              "failure": null,
+              "finished": true,
+              "group": "val",
+              "measures": {
+                "mean": -0.25228354918175416,
+                "n": 299,
+                "nrmse": 0.10772411776511764,
+                "r2": 0.988395514451727,
+                "rmse": 0.0602308422637526,
+                "sse": 1.084698553580513,
+                "std": 0.559121239638094
+              },
+              "n_samples": 300,
+              "note": null,
+              "prefix_diagnostic": null,
+              "required_samples": 299,
+              "scoring_interval": [
+                1,
+                300
+              ],
+              "trajectory": "2"
+            },
+            {
+              "completed_samples": 441,
+              "failure": null,
+              "finished": true,
+              "group": "val",
+              "measures": {
+                "mean": -0.06533230436751053,
+                "n": 441,
+                "nrmse": 0.15549278203017666,
+                "r2": 0.975821994736516,
+                "rmse": 0.05844316407782708,
+                "sse": 1.5062811114956673,
+                "std": 0.3758577299522813
+              },
+              "n_samples": 442,
+              "note": null,
+              "prefix_diagnostic": null,
+              "required_samples": 441,
+              "scoring_interval": [
+                1,
+                442
+              ],
+              "trajectory": "3"
+            }
+          ]
+        }
+      },
+      "within_limit": true
+    },
+    {
+      "allowed_violations": [],
+      "checks": {
+        "issues": [],
+        "notes": [],
+        "passed": true
+      },
+      "complexity": {
+        "fitted_parameters": 9,
+        "fixed_parameters": 0,
+        "node_count": 65,
+        "node_count_per_key": {
+          "domega": 64,
+          "dtheta": 1
+        },
+        "noninteger_literals": 0,
+        "tied_parameters": 0
+      },
+      "excluded_by_requirements": false,
+      "exclusions": [],
+      "expressions": {
+        "domega": "a*u-g*sin(theta)-b*omega-c*(1+h*sin(theta)+j*cos(theta))*tanh(omega/v)-exp(-(omega/vs)**2)*Min(Max(a*u-g*sin(theta),-(c+delta)),c+delta)",
+        "dtheta": "omega"
+      },
+      "failed_computations": [],
+      "label": "PeriodicContact",
+      "position": 3,
+      "requirements": [
+        {
+          "assumptions": [
+            "all variables are real",
+            "parameter values and given constants enter as their recorded binary64 values, exactly",
+            "tied parameters are replaced by their resolved tie equations"
+          ],
+          "counterexample": null,
+          "detail": "the quantity is identically zero on the domain",
+          "domain": {
+            "box": {
+              "omega": [
+                -23.0,
+                23.0
+              ],
+              "theta": [
+                -3.1416,
+                3.1416
+              ],
+              "u": [
+                -10.0,
+                10.0
+              ]
+            }
+          },
+          "exception": null,
+          "exclude_on_violation": true,
+          "excludes": false,
+          "id": "R1",
+          "kind": "formal",
+          "outcome": "proof",
+          "quantity": "|f − (omega)|",
+          "sampling": null,
+          "source": {
+            "date": "2026-09-25",
+            "note": null,
+            "stated_by": "task author"
+          },
+          "statement": null,
+          "status": "satisfied",
+          "symbolic": {
+            "detail": "the quantity is identically zero on the domain",
+            "procedure": "evaluation of a constant",
+            "result": "proof",
+            "time_limit_s": 10.0
+          },
+          "target": "dtheta",
+          "tolerance": {
+            "unit": "rad/s",
+            "value": 0.0
+          },
+          "type": "equation",
+          "verification": "symbolic"
+        },
+        {
+          "assumptions": [
+            "all variables are real",
+            "parameter values and given constants enter as their recorded binary64 values, exactly",
+            "tied parameters are replaced by their resolved tie equations"
+          ],
+          "counterexample": null,
+          "detail": "no violation found at the 10000 sampled points (largest value of Q -0.0, tolerance 0.0); this is not a proof",
+          "domain": {
+            "box": {
+              "omega": [
+                0.0,
+                0.0
+              ],
+              "theta": [
+                -3.141592653589793,
+                3.141592653589793
+              ],
+              "u": [
+                0.0,
+                0.0
+              ]
+            }
+          },
+          "exception": null,
+          "exclude_on_violation": true,
+          "excludes": false,
+          "id": "R2",
+          "kind": "formal",
+          "outcome": "inconclusive",
+          "quantity": "lhs − rhs of the relation 'domega*theta <= 0' with domega = f",
+          "sampling": {
+            "argmax": {
+              "omega": 0.0,
+              "theta": -0.17025743774914703,
+              "u": 0.0
+            },
+            "detail": "no violation found at the 10000 sampled points (largest value of Q -0.0, tolerance 0.0); this is not a proof",
+            "domain": {
+              "omega": [
+                0.0,
+                0.0
+              ],
+              "theta": [
+                -3.141592653589793,
+                3.141592653589793
+              ],
+              "u": [
+                0.0,
+                0.0
+              ]
+            },
+            "max_value": -0.0,
+            "non_finite_points": 0,
+            "procedure": "independent uniform draws on each non-degenerate interval of the box with NumPy default_rng(20261009) (PCG64), variables drawn in the order theta; degenerate intervals fixed at their value; Q evaluated in binary64 arithmetic; the 5 largest values re-evaluated at 30 significant digits",
+            "samples": 10000,
+            "seed": 20261009,
+            "tolerance": 0.0
+          },
+          "source": {
+            "date": "2026-10-09",
+            "note": null,
+            "stated_by": "task author"
+          },
+          "statement": null,
+          "status": "unresolved",
+          "symbolic": {
+            "detail": "interval arithmetic: the box budget (4000 boxes or 5 s) was exhausted before the bound was established; SymPy could not determine the extremum over theta: \nas_set is not implemented for relationals with periodic solutions",
+            "procedure": "interval arithmetic and symbolic simplification",
+            "result": "inconclusive",
+            "time_limit_s": 10.0
+          },
+          "target": "domega",
+          "tolerance": {
+            "unit": "rad^2/s^2",
+            "value": 0.0
+          },
+          "type": "inequality",
+          "verification": "symbolic_then_sampling"
+        },
+        {
+          "assumptions": [
+            "all variables are real",
+            "parameter values and given constants enter as their recorded binary64 values, exactly",
+            "tied parameters are replaced by their resolved tie equations"
+          ],
+          "counterexample": null,
+          "detail": "no violation found at the 10000 sampled points (largest value of Q -0.1515299502518488, tolerance 0.0); this is not a proof",
+          "domain": {
+            "box": {
+              "omega": [
+                -23.0,
+                23.0
+              ],
+              "theta": [
+                -3.1416,
+                3.1416
+              ],
+              "u": [
+                -10.0,
+                10.0
+              ]
+            }
+          },
+          "exception": null,
+          "exclude_on_violation": true,
+          "excludes": false,
+          "id": "R3",
+          "kind": "formal",
+          "outcome": "inconclusive",
+          "quantity": "−∂f/∂u (analytic derivative)",
+          "sampling": {
+            "argmax": {
+              "omega": -0.01009732170214761,
+              "theta": 1.5077703753839828,
+              "u": 3.030459516049957
+            },
+            "detail": "no violation found at the 10000 sampled points (largest value of Q -0.1515299502518488, tolerance 0.0); this is not a proof",
+            "domain": {
+              "omega": [
+                -23.0,
+                23.0
+              ],
+              "theta": [
+                -3.1416,
+                3.1416
+              ],
+              "u": [
+                -10.0,
+                10.0
+              ]
+            },
+            "max_value": -0.1515299502518488,
+            "non_finite_points": 0,
+            "procedure": "independent uniform draws on each non-degenerate interval of the box with NumPy default_rng(20261009) (PCG64), variables drawn in the order theta, omega, u; degenerate intervals fixed at their value; Q evaluated in binary64 arithmetic; the 5 largest values re-evaluated at 30 significant digits",
+            "samples": 10000,
+            "seed": 20261009,
+            "tolerance": 0.0
+          },
+          "source": {
+            "date": "2026-10-09",
+            "note": null,
+            "stated_by": "task author"
+          },
+          "statement": null,
+          "status": "unresolved",
+          "symbolic": {
+            "detail": "interval arithmetic: no interval extension for Heaviside; after simplification the quantity depends on omega, theta, u with 22 operations; no further symbolic procedure applies",
+            "procedure": "interval arithmetic and symbolic simplification",
+            "result": "inconclusive",
+            "time_limit_s": 10.0
+          },
+          "target": "domega",
+          "tolerance": {
+            "unit": "rad/(s^2 V)",
+            "value": 0.0
+          },
+          "type": "monotonicity",
+          "verification": "symbolic_then_sampling"
+        }
+      ],
+      "sealed": {
+        "eligible": true,
+        "failed_computations": [],
+        "failed_numerically": false,
+        "ineligibility": [],
+        "rank": 1,
+        "reference_comparison": null,
+        "score_S": 0.02278070161650102,
+        "test": {
+          "finished": true,
+          "group": "test",
+          "pooled_rmse": 0.02278070161650102,
+          "scored_samples": 978,
+          "trajectories": [
+            {
+              "completed_samples": 449,
+              "failure": null,
+              "finished": true,
+              "group": "test",
+              "measures": {
+                "mean": -0.03131797041752311,
+                "n": 449,
+                "nrmse": 0.057901651337661696,
+                "r2": 0.9966473987723719,
+                "rmse": 0.02186304907909404,
+                "sse": 0.21461881885065875,
+                "std": 0.3775893877636851
+              },
+              "n_samples": 450,
+              "note": null,
+              "prefix_diagnostic": null,
+              "required_samples": 449,
+              "scoring_interval": [
+                1,
+                450
+              ],
+              "trajectory": "test-1"
+            },
+            {
+              "completed_samples": 299,
+              "failure": null,
+              "finished": true,
+              "group": "test",
+              "measures": {
+                "mean": 0.17143219309689317,
+                "n": 299,
+                "nrmse": 0.04148584926805938,
+                "r2": 0.9982789243105079,
+                "rmse": 0.025639862189077055,
+                "sse": 0.1965633573893841,
+                "std": 0.6180387443295658
+              },
+              "n_samples": 300,
+              "note": null,
+              "prefix_diagnostic": null,
+              "required_samples": 299,
+              "scoring_interval": [
+                1,
+                300
+              ],
+              "trajectory": "test-2"
+            },
+            {
+              "completed_samples": 140,
+              "failure": null,
+              "finished": true,
+              "group": "test",
+              "measures": {
+                "mean": -0.02670353755551293,
+                "n": 140,
+                "nrmse": 0.2760969015801513,
+                "r2": 0.9237705009378402,
+                "rmse": 0.014615025087367117,
+                "sse": 0.029903854162611827,
+                "std": 0.052934404564929004
+              },
+              "n_samples": 141,
+              "note": null,
+              "prefix_diagnostic": null,
+              "required_samples": 140,
+              "scoring_interval": [
+                1,
+                141
+              ],
+              "trajectory": "test-3"
+            },
+            {
+              "completed_samples": 90,
+              "failure": null,
+              "finished": true,
+              "group": "test",
+              "measures": {
+                "mean": -0.12576842589871143,
+                "n": 90,
+                "nrmse": 0.05146271142818993,
+                "r2": 0.9973515893324588,
+                "rmse": 0.027173763425267464,
+                "sse": 0.06645720768231633,
+                "std": 0.5280282105459058
+              },
+              "n_samples": 91,
+              "note": null,
+              "prefix_diagnostic": null,
+              "required_samples": 90,
+              "scoring_interval": [
+                1,
+                91
+              ],
+              "trajectory": "test-4"
+            }
+          ]
+        }
+      },
+      "sensitivity": {
+        "assumptions": [
+          "the fitting target is the one implied by the formulation (the model file has no structured field for it)"
+        ],
+        "available": true,
+        "data": [
+          "train",
+          "val"
+        ],
+        "deficient": false,
+        "dependent_groups": [],
+        "method": "analytic derivatives (SymPy), ties differentiated through their equations",
+        "parameters": [
+          "a",
+          "g",
+          "b",
+          "c",
+          "v",
+          "delta",
+          "vs",
+          "h",
+          "j"
+        ],
+        "rank": 9,
+        "rank_threshold": "s_i / s_1 > 1e-08",
+        "reason": null,
+        "rows": 4714,
+        "rows_dropped": 0,
+        "scaling": "rows of each target divided by the standard deviation of its measured column; columns divided by their Euclidean norm",
+        "singular_values": [
+          1.7037979276328852,
+          1.1992604212955358,
+          1.0881797964018216,
+          0.9867516815912457,
+          0.9681959999840435,
+          0.7995023472010331,
+          0.7696774512960558,
+          0.48639326603544975,
+          0.30893952069038716
+        ],
+        "targets": [
+          "domega"
+        ],
+        "zero_columns": []
+      },
+      "status": "evaluated",
+      "structure": {
+        "domega": "P1*u - P2*omega - P3*sin(theta) - P4*(P7*sin(theta) + P8*cos(theta) + 1)*tanh(omega/P9) - exp(-omega**2/P6**2)*Min(P4 + P5, Max(-P4 - P5, P1*u - P3*sin(theta)))",
+        "dtheta": "omega"
+      },
+      "structure_group": 3,
+      "unresolved_requirements": [
+        "R2",
+        "R3"
+      ],
+      "visible": {
+        "train": {
+          "finished": true,
+          "group": "train",
+          "pooled_rmse": 0.04744078194754382,
+          "scored_samples": 3509,
+          "trajectories": [
+            {
+              "completed_samples": 449,
+              "failure": null,
+              "finished": true,
+              "group": "train",
+              "measures": {
+                "mean": 0.08278691375784947,
+                "n": 449,
+                "nrmse": 0.18913173036691364,
+                "r2": 0.9642291885684171,
+                "rmse": 0.048508055597338555,
+                "sse": 1.0565111245676853,
+                "std": 0.25647761749566517
+              },
+              "n_samples": 450,
+              "note": null,
+              "prefix_diagnostic": null,
+              "required_samples": 449,
+              "scoring_interval": [
+                1,
+                450
+              ],
+              "trajectory": "1"
+            },
+            {
+              "completed_samples": 449,
+              "failure": null,
+              "finished": true,
+              "group": "train",
+              "measures": {
+                "mean": -0.01861166249120006,
+                "n": 449,
+                "nrmse": 0.04121713611394828,
+                "r2": 0.9983011476905642,
+                "rmse": 0.0274693293979827,
+                "sse": 0.3387992618511195,
+                "std": 0.6664541010816811
+              },
+              "n_samples": 450,
+              "note": null,
+              "prefix_diagnostic": null,
+              "required_samples": 449,
+              "scoring_interval": [
+                1,
+                450
+              ],
+              "trajectory": "2"
+            },
+            {
+              "completed_samples": 299,
+              "failure": null,
+              "finished": true,
+              "group": "train",
+              "measures": {
+                "mean": -0.3052073023460745,
+                "n": 299,
+                "nrmse": 0.08390807702438016,
+                "r2": 0.9929594346100706,
+                "rmse": 0.039627500908379125,
+                "sse": 0.469531309644833,
+                "std": 0.4722727812826057
+              },
+              "n_samples": 300,
+              "note": null,
+              "prefix_diagnostic": null,
+              "required_samples": 299,
+              "scoring_interval": [
+                1,
+                300
+              ],
+              "trajectory": "3"
+            },
+            {
+              "completed_samples": 299,
+              "failure": null,
+              "finished": true,
+              "group": "train",
+              "measures": {
+                "mean": 0.07273995297927136,
+                "n": 299,
+                "nrmse": 0.03308730370669033,
+                "r2": 0.9989052303334213,
+                "rmse": 0.027116194491014902,
+                "sse": 0.21985111309868954,
+                "std": 0.8195347294355673
+              },
+              "n_samples": 300,
+              "note": null,
+              "prefix_diagnostic": null,
+              "required_samples": 299,
+              "scoring_interval": [
+                1,
+                300
+              ],
+              "trajectory": "4"
+            },
+            {
+              "completed_samples": 441,
+              "failure": null,
+              "finished": true,
+              "group": "train",
+              "measures": {
+                "mean": 0.024313505049210933,
+                "n": 441,
+                "nrmse": 0.04785790541905857,
+                "r2": 0.9977096208889005,
+                "rmse": 0.01831772645545609,
+                "sse": 0.1479727442011399,
+                "std": 0.3827523644225636
+              },
+              "n_samples": 442,
+              "note": null,
+              "prefix_diagnostic": null,
+              "required_samples": 441,
+              "scoring_interval": [
+                1,
+                442
+              ],
+              "trajectory": "5"
+            },
+            {
+              "completed_samples": 441,
+              "failure": null,
+              "finished": true,
+              "group": "train",
+              "measures": {
+                "mean": 0.06467691542390433,
+                "n": 441,
+                "nrmse": 0.09057655288279035,
+                "r2": 0.9917958880678711,
+                "rmse": 0.041342788763663346,
+                "sse": 0.7537687465957879,
+                "std": 0.4564402977132786
+              },
+              "n_samples": 442,
+              "note": null,
+              "prefix_diagnostic": null,
+              "required_samples": 441,
+              "scoring_interval": [
+                1,
+                442
+              ],
+              "trajectory": "6"
+            },
+            {
+              "completed_samples": 441,
+              "failure": null,
+              "finished": true,
+              "group": "train",
+              "measures": {
+                "mean": -0.020089095880097843,
+                "n": 441,
+                "nrmse": 0.1594555785251563,
+                "r2": 0.9745739184772078,
+                "rmse": 0.0827320285456712,
+                "sse": 3.018463549351254,
+                "std": 0.518840603200465
+              },
+              "n_samples": 442,
+              "note": null,
+              "prefix_diagnostic": null,
+              "required_samples": 441,
+              "scoring_interval": [
+                1,
+                442
+              ],
+              "trajectory": "7"
+            },
+            {
+              "completed_samples": 140,
+              "failure": null,
+              "finished": true,
+              "group": "train",
+              "measures": {
+                "mean": 0.03621807530638514,
+                "n": 140,
+                "nrmse": 0.5959864959798988,
+                "r2": 0.644800096609602,
+                "rmse": 0.09787415272981398,
+                "sse": 1.3411089681610535,
+                "std": 0.16422209796698992
+              },
+              "n_samples": 141,
+              "note": null,
+              "prefix_diagnostic": null,
+              "required_samples": 140,
+              "scoring_interval": [
+                1,
+                141
+              ],
+              "trajectory": "8"
+            },
+            {
+              "completed_samples": 140,
+              "failure": null,
+              "finished": true,
+              "group": "train",
+              "measures": {
+                "mean": 0.09830941010983475,
+                "n": 140,
+                "nrmse": 0.17477826876488833,
+                "r2": 0.9694525567675485,
+                "rmse": 0.03822171093396479,
+                "sse": 0.2045258861407389,
+                "std": 0.2186868608097991
+              },
+              "n_samples": 141,
+              "note": null,
+              "prefix_diagnostic": null,
+              "required_samples": 140,
+              "scoring_interval": [
+                1,
+                141
+              ],
+              "trajectory": "9"
+            },
+            {
+              "completed_samples": 140,
+              "failure": null,
+              "finished": true,
+              "group": "train",
+              "measures": {
+                "mean": -0.11235681726088624,
+                "n": 140,
+                "nrmse": 0.6576562757161689,
+                "r2": 0.5674882230111384,
+                "rmse": 0.03233619874498044,
+                "sse": 0.14638816489848244,
+                "std": 0.049168843876335314
+              },
+              "n_samples": 141,
+              "note": null,
+              "prefix_diagnostic": null,
+              "required_samples": 140,
+              "scoring_interval": [
+                1,
+                141
+              ],
+              "trajectory": "10"
+            },
+            {
+              "completed_samples": 90,
+              "failure": null,
+              "finished": true,
+              "group": "train",
+              "measures": {
+                "mean": 0.05358160803622594,
+                "n": 90,
+                "nrmse": 0.1892557734863261,
+                "r2": 0.9641822522020924,
+                "rmse": 0.03114826777572546,
+                "sse": 0.08731931268854673,
+                "std": 0.16458291972781453
+              },
+              "n_samples": 91,
+              "note": null,
+              "prefix_diagnostic": null,
+              "required_samples": 90,
+              "scoring_interval": [
+                1,
+                91
+              ],
+              "trajectory": "11"
+            },
+            {
+              "completed_samples": 90,
+              "failure": null,
+              "finished": true,
+              "group": "train",
+              "measures": {
+                "mean": -0.05777039824101206,
+                "n": 90,
+                "nrmse": 2.5288439804052016,
+                "r2": -5.395051877231623,
+                "rmse": 0.012902707371858632,
+                "sse": 0.014983187177143356,
+                "std": 0.005102215665274536
+              },
+              "n_samples": 91,
+              "note": null,
+              "prefix_diagnostic": null,
+              "required_samples": 90,
+              "scoring_interval": [
+                1,
+                91
+              ],
+              "trajectory": "12"
+            },
+            {
+              "completed_samples": 90,
+              "failure": null,
+              "finished": true,
+              "group": "train",
+              "measures": {
+                "mean": -0.06147049625524025,
+                "n": 90,
+                "nrmse": 0.06080938660427187,
+                "r2": 0.9963022185008122,
+                "rmse": 0.03303694111312296,
+                "sse": 0.0982295530300759,
+                "std": 0.5432868666825544
+              },
+              "n_samples": 91,
+              "note": null,
+              "prefix_diagnostic": null,
+              "required_samples": 90,
+              "scoring_interval": [
+                1,
+                91
+              ],
+              "trajectory": "13"
+            }
+          ]
+        },
+        "val": {
+          "finished": true,
+          "group": "val",
+          "pooled_rmse": 0.08545058481748041,
+          "scored_samples": 1189,
+          "trajectories": [
+            {
+              "completed_samples": 449,
+              "failure": null,
+              "finished": true,
+              "group": "val",
+              "measures": {
+                "mean": 0.2512644404967997,
+                "n": 449,
+                "nrmse": 0.2445745263039422,
+                "r2": 0.9401833010832022,
+                "rmse": 0.13372591104034162,
+                "sse": 8.029296058322643,
+                "std": 0.5467695800590258
+              },
+              "n_samples": 450,
+              "note": null,
+              "prefix_diagnostic": null,
+              "required_samples": 449,
+              "scoring_interval": [
+                1,
+                450
+              ],
+              "trajectory": "1"
+            },
+            {
+              "completed_samples": 299,
+              "failure": null,
+              "finished": true,
+              "group": "val",
+              "measures": {
+                "mean": -0.25228354918175416,
+                "n": 299,
+                "nrmse": 0.0612922957596872,
+                "r2": 0.996243254480507,
+                "rmse": 0.034269824385421,
+                "sse": 0.35115183815887113,
+                "std": 0.559121239638094
+              },
+              "n_samples": 300,
+              "note": null,
+              "prefix_diagnostic": null,
+              "required_samples": 299,
+              "scoring_interval": [
+                1,
+                300
+              ],
+              "trajectory": "2"
+            },
+            {
+              "completed_samples": 441,
+              "failure": null,
+              "finished": true,
+              "group": "val",
+              "measures": {
+                "mean": -0.06533230436751053,
+                "n": 441,
+                "nrmse": 0.06955452559028459,
+                "r2": 0.9951621679699104,
+                "rmse": 0.026142606096272225,
+                "sse": 0.3013952113956387,
+                "std": 0.3758577299522813
+              },
+              "n_samples": 442,
+              "note": null,
+              "prefix_diagnostic": null,
+              "required_samples": 441,
+              "scoring_interval": [
+                1,
+                442
+              ],
+              "trajectory": "3"
+            }
+          ]
+        }
+      },
+      "within_limit": true
+    }
+  ],
+  "counts": {
+    "accepted_by_checks": 3,
+    "eligible": 3,
+    "evaluated": 3,
+    "excluded_by_requirements": 0,
+    "failed_numerically": 0,
+    "failed_numerically_on_visible_data": 0,
+    "outside_limit": 0,
+    "overlap": {
+      "excluded_and_failed_numerically": [],
+      "note": "the categories overlap: the candidates accepted by the checks include those outside the pool limit, and a candidate can be both excluded by requirements and failed numerically; the counts need not sum to the pool size"
+    },
+    "proposed": 3
+  },
+  "format_version": 1,
+  "formulation": "continuous",
+  "pool_file": {
+    "issues": [],
+    "order": [
+      "TwoScaleStick",
+      "ProjectionStick",
+      "PeriodicContact"
+    ],
+    "order_from_pool_file": true,
+    "pool_cap": 10,
+    "pool_version": 1,
+    "valid": true
+  },
+  "recommendation": {
+    "agent": {
+      "label": "TwoScaleStick",
+      "reason": "`TwoScaleStick` is the six-parameter symmetric Coulomb-viscous static model with independent regularization speeds. It had the lowest three-fold trajectory cross-validation angle RMSE among the retained structures: 0.076358 rad across the supplied training and validation files, compared with 0.080005 rad for `ProjectionStick` and 0.080707 rad for `PeriodicContact`. All three preserve the nine observed stationary free-response endpoints in 20 s unforced persistence tests and analytically satisfy the restoring-sign and nondecreasing input constraints. The simpler symmetric model is recommended rather than the most flexible angular-friction structure, whose lower pooled fitting error is not independently predictive. The projection model is a distinct physically defensible sticking alternative. Scores used for selection are not untouched test scores."
+    },
+    "notes": [
+      "the recommendation involves unresolved formal requirement(s) R2, R3, for human assessment"
+    ],
+    "present": true,
+    "sealed": {
+      "eligible": true,
+      "note": "the test error of the recommended candidate (practical selection); sealed",
+      "rank": 2,
+      "test_score_S": 0.044176101850062634
+    }
+  },
+  "sealed": {
+    "no_ranking_reason": null,
+    "ranking": {
+      "candidates_considered": 3,
+      "criterion": "pooled test RMSE S, increasing",
+      "entries": [
+        {
+          "allowed_violations": [],
+          "label": "PeriodicContact",
+          "rank": 1,
+          "score_S": 0.02278070161650102,
+          "tied_with_previous": false,
+          "unresolved_requirements": [
+            "R2",
+            "R3"
+          ]
+        },
+        {
+          "allowed_violations": [],
+          "label": "TwoScaleStick",
+          "rank": 2,
+          "score_S": 0.044176101850062634,
+          "tied_with_previous": false,
+          "unresolved_requirements": [
+            "R2",
+            "R3"
+          ]
+        },
+        {
+          "allowed_violations": [],
+          "label": "ProjectionStick",
+          "rank": 3,
+          "score_S": 0.04874029950922162,
+          "tied_with_previous": false,
+          "unresolved_requirements": [
+            "R2",
+            "R3"
+          ]
+        }
+      ],
+      "label": "oracle-based selection on test data",
+      "note": "This ranking selects on the test data. It measures whether the pool contains an accurate model, not whether the agent can recognize that model without test data. A rank is not evidence of physical admissibility: each entry carries its unresolved requirements and any violation allowed by the user.",
+      "pool_size": 3,
+      "tie_rule": "|S_a - S_b| <= 1e-12 * max(S_a, S_b) for consecutive candidates; tied candidates share a rank",
+      "ties": []
+    },
+    "test_trajectories": [
+      {
+        "n_samples": 450,
+        "scored_samples": 449,
+        "trajectory": "test-1"
+      },
+      {
+        "n_samples": 300,
+        "scored_samples": 299,
+        "trajectory": "test-2"
+      },
+      {
+        "n_samples": 141,
+        "scored_samples": 140,
+        "trajectory": "test-3"
+      },
+      {
+        "n_samples": 91,
+        "scored_samples": 90,
+        "trajectory": "test-4"
+      }
+    ]
+  },
+  "settings": {
+    "discontinuities": "expressions with jumps (Piecewise, sign) are evaluated pointwise at the sample instants and Runge-Kutta stages; no event detection or step refinement is applied at a jump",
+    "failure_limits": [
+      {
+        "justification": "numerical divergence bound, about 318 times the bound pi of the declared range; a physically plausible simulation stays within a few revolutions",
+        "lower": -1000.0,
+        "unit": "rad",
+        "upper": 1000.0,
+        "variable": "theta"
+      },
+      {
+        "justification": "numerical divergence bound, about 50 times the largest training magnitude 20.1 rad/s",
+        "lower": -1000.0,
+        "unit": "rad/s",
+        "upper": 1000.0,
+        "variable": "omega"
+      }
+    ],
+    "harness_version": "0.1.0.dev0",
+    "horizon": null,
+    "horizon_note": null,
+    "initialization": 1,
+    "input_hold": "zero_order",
+    "integrator": "rk4",
+    "measurement": "theta",
+    "mode": "simulation",
+    "pool_cap": 10,
+    "reference_samples": 2000,
+    "reference_seed": 20260925,
+    "requirement_confirmation_points": 5,
+    "sampling_period_s": 0.01,
+    "scoring": "after_initialization",
+    "sensitivity_rank_threshold": 1e-08,
+    "software": {
+      "numpy": "2.5.1",
+      "sympy": "1.14.0"
+    },
+    "substeps": 1,
+    "symbolic_time_limit_s": 10.0,
+    "tie_relative_tolerance": 1e-12,
+    "time_limit_s": 60.0,
+    "top_k": 5
+  },
+  "structures": {
+    "convention": "ties resolved, fixed values kept, given constants kept, fitted parameters renamed P1..Pn in order of first occurrence; equal when a one-to-one renaming of the fitted parameters makes every expression identical in SymPy's canonical form",
+    "distinct": 3,
+    "exhaustive": true,
+    "groups": [
+      [
+        "TwoScaleStick"
+      ],
+      [
+        "ProjectionStick"
+      ],
+      [
+        "PeriodicContact"
+      ]
+    ]
+  },
+  "task_id": "friction-driven"
+}

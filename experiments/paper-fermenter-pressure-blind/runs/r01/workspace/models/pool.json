@@ -1,0 +1,10 @@
+{
+  "order": [
+    "Cubic",
+    "GaussianRBF",
+    "LogInteraction",
+    "Rational"
+  ],
+  "recommended": "Cubic",
+  "reason": "Recommend `Cubic` for its compact, transparent vector field and direct reproducible estimation. Validation free-running RMSE is `0.0365253` in unknown state units versus `0.0359194` for `GaussianRBF`; the small radial-basis gain after a larger validation search does not convincingly justify its much larger representation. `LogInteraction` and `Rational` provide structurally different alternatives with validation errors `0.0379691` and `0.0383590` in unknown state units. All comparisons use classical RK4 with `T_s = 5` s, held inputs, and no measured-state resets; first samples are excluded. No test data or results were accessed."
+}

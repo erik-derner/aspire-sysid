@@ -1,0 +1,40 @@
+# Model identifiers accepted by the harness. Read by aspire_sysid.agent.providers.make_provider.
+#
+# Rule: a model is named by its dated
+# snapshot identifier where the vendor publishes one; a floating alias of such a model is never
+# accepted. Where the vendor publishes no dated snapshot, the vendor's identifier is accepted when
+# it is listed here, and results obtained with it are reported with the dates of the runs,
+# because the harness cannot show that the model behind an undated identifier stayed the same.
+#
+# OpenAI: an identifier that ends with a snapshot date YYYY-MM-DD, for example
+# gpt-5.5-2026-04-23, is accepted by a rule in code. An identifier without a date, such as gpt-5
+# or gpt-5.5, is rejected, unless it is listed under openai.undated below: the models for which
+# OpenAI publishes no dated snapshot, so that the listed identifier is the only one there is.
+#
+# Anthropic: identifiers are accepted only when listed below. Anthropic's dateless Claude 5
+# identifiers are pinned snapshots according to Anthropic's model versioning documentation.
+# An identifier containing
+# "latest" is always rejected.
+#
+# Acceptance of an identifier does not give it a price: cost_usd requires an entry in
+# prices.yaml, and no Anthropic price has been verified.
+
+schema_version: 1
+
+# The default model: used by `aspire session` and `aspire web` when --model is not
+# given. An experiment always names its model in experiment.yaml.
+default_model: gpt-6.1-sol
+
+openai:
+  undated:
+    # GPT-6.1 Sol, released 2026-09-29: the model of the experiments of the paper. The model
+    # page lists the single snapshot "gpt-6.1-sol" and no
+    # dated one (https://developers.openai.com/api/docs/models/gpt-6.1-sol, consulted
+    # 2026-10-05).
+    - gpt-6.1-sol
+
+anthropic:
+  pinned:
+    # Accepted Anthropic identifier; it has no entry in prices.yaml and therefore cannot be
+    # used for a run until a verified price is added there.
+    - claude-opus-5

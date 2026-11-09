@@ -1,0 +1,145 @@
+{
+  "expressions": {
+    "dy": "(p0 + p1*((y-yc)/ys) + p2*((x1-uc)/us) + p3*((x2-vc)/vs) + p4*((y-yc)/ys)*((x1-uc)/us) + p5*((x1-uc)/us)**2 + p6*((x2-vc)/vs)**2 + p7*((x1-uc)/us)*((x2-vc)/vs))/Max(1 + p8*((y-yc)/ys) + p9*((x1-uc)/us) + p10*((x2-vc)/vs),dmin)"
+  },
+  "parameters": [
+    {
+      "name": "p0",
+      "value": -0.011963507685852203,
+      "unit": "unknown",
+      "type": "fitted",
+      "description": "Numerator coefficient of `1`. Estimated jointly in the final simulation-error fit; not fixed from another candidate."
+    },
+    {
+      "name": "p1",
+      "value": -0.02196754916759911,
+      "unit": "unknown",
+      "type": "fitted",
+      "description": "Numerator coefficient of `((y-yc)/ys)`. Estimated jointly in the final simulation-error fit; not fixed from another candidate."
+    },
+    {
+      "name": "p2",
+      "value": 0.015165471016791764,
+      "unit": "unknown",
+      "type": "fitted",
+      "description": "Numerator coefficient of `((x1-uc)/us)`. Estimated jointly in the final simulation-error fit; not fixed from another candidate."
+    },
+    {
+      "name": "p3",
+      "value": 0.007709420746862277,
+      "unit": "unknown",
+      "type": "fitted",
+      "description": "Numerator coefficient of `((x2-vc)/vs)`. Estimated jointly in the final simulation-error fit; not fixed from another candidate."
+    },
+    {
+      "name": "p4",
+      "value": 0.014207041071363684,
+      "unit": "unknown",
+      "type": "fitted",
+      "description": "Numerator coefficient of `((y-yc)/ys)*((x1-uc)/us)`. Estimated jointly in the final simulation-error fit; not fixed from another candidate."
+    },
+    {
+      "name": "p5",
+      "value": 0.0005428455426810142,
+      "unit": "unknown",
+      "type": "fitted",
+      "description": "Numerator coefficient of `((x1-uc)/us)**2`. Estimated jointly in the final simulation-error fit; not fixed from another candidate."
+    },
+    {
+      "name": "p6",
+      "value": 0.0014413028514435153,
+      "unit": "unknown",
+      "type": "fitted",
+      "description": "Numerator coefficient of `((x2-vc)/vs)**2`. Estimated jointly in the final simulation-error fit; not fixed from another candidate."
+    },
+    {
+      "name": "p7",
+      "value": 0.0004676201642737667,
+      "unit": "unknown",
+      "type": "fitted",
+      "description": "Numerator coefficient of `((x1-uc)/us)*((x2-vc)/vs)`. Estimated jointly in the final simulation-error fit; not fixed from another candidate."
+    },
+    {
+      "name": "p8",
+      "value": 0.24999999999999997,
+      "unit": "-",
+      "type": "fitted",
+      "description": "Denominator coefficient of `((y-yc)/ys)`; changes the effective rate and curvature. Estimated jointly in the final simulation-error fit; not fixed from another candidate."
+    },
+    {
+      "name": "p9",
+      "value": -0.17233925065669456,
+      "unit": "-",
+      "type": "fitted",
+      "description": "Denominator coefficient of `((x1-uc)/us)`; changes the effective rate and curvature. Estimated jointly in the final simulation-error fit; not fixed from another candidate."
+    },
+    {
+      "name": "p10",
+      "value": 0.11784594530784942,
+      "unit": "-",
+      "type": "fitted",
+      "description": "Denominator coefficient of `((x2-vc)/vs)`; changes the effective rate and curvature. Estimated jointly in the final simulation-error fit; not fixed from another candidate."
+    },
+    {
+      "name": "yc",
+      "value": 1.3,
+      "unit": "unknown",
+      "type": "fixed",
+      "description": "Center for `y`, chosen as a convenient round value near the training mean, not response-fitted."
+    },
+    {
+      "name": "ys",
+      "value": 0.3,
+      "unit": "unknown",
+      "type": "fixed",
+      "description": "Scale for `y`, chosen as a convenient round spread from inspection of data/train.csv, not response-fitted."
+    },
+    {
+      "name": "uc",
+      "value": 60.0,
+      "unit": "unknown",
+      "type": "fixed",
+      "description": "Center for `x1`, chosen as a convenient round value near the training mean, not response-fitted."
+    },
+    {
+      "name": "us",
+      "value": 20.0,
+      "unit": "unknown",
+      "type": "fixed",
+      "description": "Scale for `x1`, chosen as a convenient round spread from inspection of data/train.csv, not response-fitted."
+    },
+    {
+      "name": "vc",
+      "value": 18.0,
+      "unit": "unknown",
+      "type": "fixed",
+      "description": "Center for `x2`, chosen as a convenient round value near the training mean, not response-fitted."
+    },
+    {
+      "name": "vs",
+      "value": 7.0,
+      "unit": "unknown",
+      "type": "fixed",
+      "description": "Scale for `x2`, chosen as a convenient round spread from inspection of data/train.csv, not response-fitted."
+    },
+    {
+      "name": "dmin",
+      "value": 0.25,
+      "unit": "-",
+      "type": "fixed",
+      "description": "Dimensionless denominator floor chosen to remove poles; not optimized. It is a safeguard rather than a fitted physical saturation."
+    }
+  ],
+  "estimation": {
+    "criterion": "Minimize the sum of squared free-running simulated-minus-observed `y` errors on both supplied trajectories, excluding each initial sample. Classical RK4 uses a step of 5 s and constant logged inputs per step, with no replacement of simulated states by later observations. This matches the scored variable and integration convention; equal row weights are used because no measurement variances are supplied. The derivative training fit supplies initialization, not the final criterion.",
+    "data": "Initialization: all 1452 rows in data/train.csv, one trajectory, using `dy` as target. Structural checks use all 1454 rows of the separate data/val.csv trajectory. Final coefficient fit uses both files, retaining their separate initial conditions: 1451 and 1453 post-initial `y` residuals, respectively. No rows are arbitrarily discarded; the first state of each file is an initial condition, and the last input does not drive a scored subsequent sample. Validation is therefore used for selection and final estimation, not claimed as an independent final test.",
+    "method": "All eleven coefficients were first estimated together on every derivative row of data/train.csv by scipy.optimize.least_squares with method trf, linear least-squares loss, two-point numerical derivative Jacobian, x_scale=jac, max_nfev=500 and ftol=xtol=gtol=1e-9. The training fit began at [0,-0.015,0.012,0.008,0.006,0.002,0.001,0,0.1,0,0], with bounds [-1,1] on numerator coefficients and [-0.25,0.25] on denominator coefficients; the wide numerator bounds exclude explosive iterates and the denominator bounds discourage extreme curvature. fit_nonlinear.py reproduces that fit. The derivative solution in nonlinear_results.json under rational_all.derivative supplies the numerical starting vector below. The final floor is part of fit_final.py. Final step: all fitted parameters, including shape parameters, were estimated together by bounded nonlinear least squares (scipy.optimize.least_squares, default method trf, loss linear). Analytical state and parameter partial derivatives were generated with sympy.lambdify; RK4 sensitivity recurrences supply the trajectory Jacobian. This is used rather than derivative-only fitting because the evaluation is a free-running state simulation. Starting values, in parameter-table order, are `[-0.010550849499927961, -0.019784716508730996, 0.01350160497818385, 0.006661866541854366, 0.013084175681460185, 0.00026481120711304204, 0.0011287964826540398, -0.00010420195791167397, 0.1726891618417374, -0.22150317730163713, 0.13316693877063804]`, with the heterogeneous units given in the parameter table. Lower and upper bound vectors are `[-1, -1, -1, -1, -1, -1, -1, -1, -0.25, -0.25, -0.25]` and `[1, 1, 1, 1, 1, 1, 1, 1, 0.25, 0.25, 0.25]` in those same units. The broad coefficient bounds prevent explosive iterates; shape bounds preserve the chosen family. Settings: `max_nfev = 150`, `ftol = 1e-10`, `xtol = 1e-10`, `gtol = 1e-10`, `x_scale = \"jac\"`. The method is deterministic and uses no random seed. scipy.optimize.least_squares API documentation, SciPy v1.18.0 manual, was checked online for the trust-region reflective method; actual installed SciPy is 1.18.1. A local optimum, not a global guarantee, is obtained. fit_final.py writes all final values; make_submission.py formats the candidate.",
+    "script": "fit_final.py"
+  },
+  "discussion": {
+    "family": "Guarded multivariate rational regression (a Pad\u00e9-type numerator/denominator approximation, not a Taylor-matched Pad\u00e9 approximant). Reference for rational approximations: G. A. Baker Jr. and P. Graves-Morris, Pad\u00e9 Approximants, second edition, 1996; cited from memory, bibliographic source not checked.",
+    "interpretation": "The state `y`, inputs `x1` and `x2`, and derivative `dy` have unspecified physical units; time is in s. No physical interpretation is assumed. The fixed parameters `yc` and `ys` center and scale `y`; `uc` and `us` center and scale `x1`; `vc` and `vs` center and scale `x2`. Their ratios are dimensionless. The coefficients `p0` through `p7` control the numerator forcing and state-input interactions, as specified in their parameter descriptions. The coefficients `p8`, `p9` and `p10` modulate the denominator with normalized state and inputs, allowing curvature without higher-order numerator terms. The fixed dimensionless `dmin` prevents division by zero. No term is assigned a physical mechanism.",
+    "origin": "Quadratic polynomial residuals and the improvement from inverse-state fits motivated testing rational curvature. A quadratic numerator and affine denominator were hand-chosen, then compared against polynomial and transformed-state models. A denominator floor was added as an explicit extrapolation safeguard, not learned from observations.",
+    "limitations": "The floor removes a numerical pole but cannot justify the extrapolated response. The denominator state coefficient reaches its upper bound, indicating that this particular curvature constraint is active. Despite negative observed state slopes, stability over arbitrary inputs is unproved. Residuals remain temporally structured: in the final fit the validation derivative-residual lag-one correlation is `0.432` and its correlation with the next `x2` increment is `0.678` (both dimensionless, computed on data/val.csv). That increment is diagnostic only, never a model argument. This may reflect omitted dynamics or timing; causation cannot be determined. Final refit RMSE on data/train.csv is `0.024865` and on data/val.csv is `0.037114`, in the unspecified units of `y`; these are in-sample after refitting. No test performance is known. The observed combined envelope is approximately `0.992 <= y <= 2.187`, `1.628 <= x1 <= 94.449`, and `0.083 <= x2 <= 30.797`, all in their respective unspecified units; independently combining those extrema is not necessarily supported by either trajectory."
+  }
+}

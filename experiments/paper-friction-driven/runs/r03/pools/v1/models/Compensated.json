@@ -1,0 +1,55 @@
+{
+  "expressions": {
+    "dtheta": "omega",
+    "domega": "k*u-g*sin(theta)-b*omega-cp*tanh(omega/v)-exp(-(omega/v)**2)*Min(cp,Max(-cp,k*u-g*sin(theta)-b*omega))"
+  },
+  "parameters": [
+    {
+      "name": "g",
+      "value": 113.1373572025995,
+      "unit": "rad/s^2",
+      "type": "fitted",
+      "description": "Restoring-acceleration scale; torque divided by unknown inertia."
+    },
+    {
+      "name": "b",
+      "value": 1.8837355630704296,
+      "unit": "1/s",
+      "type": "fitted",
+      "description": "Positive linear viscous damping rate, including effective motor back EMF."
+    },
+    {
+      "name": "cp",
+      "value": 20.360438696236482,
+      "unit": "rad/s^2",
+      "type": "fitted",
+      "description": "Positive-direction dry-friction acceleration capacity; symmetric capacity when no negative-direction parameter is present."
+    },
+    {
+      "name": "k",
+      "value": 28.904253847715772,
+      "unit": "rad/(s^2 V)",
+      "type": "fitted",
+      "description": "Positive voltage-to-acceleration gain, or zero-voltage slope when motor saturation is present."
+    },
+    {
+      "name": "v",
+      "value": 0.2504533576141212,
+      "unit": "rad/s",
+      "type": "fitted",
+      "description": "Speed width of the smooth dry-friction and rest-compensation transition."
+    }
+  ],
+  "estimation": {
+    "criterion": "Sum of squared open-loop angle errors `theta_sim-theta` (rad), pooled over all samples except the first in each trajectory, with equal weight per sample. This directly matches the intended long-horizon angle criterion and avoids treating centrally differenced acceleration as an exact torque measurement. Each run starts from its logged initial angle and angular velocity; input voltage is held constant for each integration interval of `T_s = 0.01` s, as specified in TASK.md.",
+    "data": "Final coefficient fit: all trajectories and rows of `data/train.csv` and `data/val.csv`, with first rows used only as initial states. Validation data were deliberately included after preliminary train-only comparisons because there are few independent driven records. No test data were accessed. Separate train-only validation and leave-one-trajectory-out analyses are recorded in `refine_results.json`; all within-trajectory ordering is preserved.",
+    "method": "Bound-constrained nonlinear least squares by the trust-region reflective method, `scipy.optimize.least_squares`, with classical RK4 simulation implemented in NumPy/Numba. Every fitted parameter in this candidate was estimated jointly in the final supplied-data fit, with no parameter transferred as fixed from another candidate. Starting values were `g = 108` rad/s^2, `b = 1.6` 1/s, `cp = 19` rad/s^2, `k = 26.5` rad/(s^2 V), `v = 0.5` rad/s. The first four starts were rounded pilot moving-row derivative estimates; the regularization and extension starts were deliberately moderate physically admissible guesses. Bounds were `70 <= g <= 150` rad/s^2, `0.05 <= b <= 6` 1/s, `5 <= cp <= 40` rad/s^2, `15 <= k <= 40` rad/(s^2 V), `0.2 <= v <= 2` rad/s. Positive dissipation/gain and bounded modulation enforce physical sign constraints; the relaxation lower bound limits stiffness at the prescribed integration step. For the compensated model the speed-width lower bound limits stiffness instead. The upper bounds prevent poorly identified extreme regimes, not claimed hardware limits. Jacobian-based variable scaling and relative finite-difference step `diff_step = 0.0001` were used; stopping tolerances were `ftol = 1e-9`, `xtol = 1e-9`, `gtol = 1e-7`, with at most `max_nfev = 400` function evaluations per fit. These optimizer settings are dimensionless. No random numbers were used in estimation. A train-only fit and leave-one-trajectory-out fits were separate diagnostics and did not supply fixed coefficients to the final candidate. Cross-validation fits started from this candidate's full-data optimum, excluding the held trajectory from the objective; these are not independently initialized, untouched validation tests. ",
+    "script": "refine_models.py"
+  },
+  "discussion": {
+    "family": "Smooth Coulomb/viscous friction with explicit Gaussian-weighted static-force compensation. Physical dry-friction modeling follows the Coulomb/viscous and static-friction distinctions in B. Armstrong-Helouvry, Control of Machines with Friction (1991), cited from memory, not source-checked. The algebraic regularizations below are proposed approximations, not the exact algorithm of that reference.",
+    "interpretation": "`theta` is angle (rad), `omega` is angular velocity (rad/s), `u` is motor voltage (V), `dtheta` and `domega` are their time derivatives (rad/s and rad/s^2). `g`, `b`, `cp`, `k`, and `v` are defined by the parameter rows. `k*u` drives the motor, `-g*sin(theta)` restores the hanging equilibrium, and `-b*omega` dissipates motion. `-cp*tanh(omega/v)` is smooth moving friction. `-exp(-(omega/v)**2)*Min(cp,Max(-cp,k*u-g*sin(theta)-b*omega))` cancels admissible net force exactly at zero speed and fades during motion. This Gaussian fade is a mathematical interpolation, not an independently identified microscopic law. ",
+    "origin": "The sinusoidal restoring term, linear motor gain, viscous damping, and bounded opposing dry-friction force came from physical reasoning. Pilot constrained linear derivative regressions in `helper_analysis.py` on moving training rows supported this starting structure. The static projection was proposed to cover the many resting samples, rather than applying `sign(omega)` at rest. A plain hyperbolic-tangent Coulomb law simulated reasonably but slowly crept toward zero instead of retaining nonzero resting angles. It was excluded from the submitted pool. The Gaussian rest-force cancellation is a proposed smooth alternative to the clipped velocity-relaxation projection. No unrestricted symbolic-regression search was used: compact constrained force-balance families allowed exact sign arguments, and the derivative diagnostics did not justify a high-complexity search.",
+    "limitations": "Only effective torque/inertia ratios are identifiable; inertia, motor resistance, contact forces, and separate bearing/motor losses are unknown. Encoder quantization and numerical differentiation contaminate the derivative target. Actual training voltage spans approximately `-4.9451 <= u <= 3.9525` V; the required larger voltage domain is extrapolation. The low-speed transition is poorly identified, and is partly a numerical regularization for the specified RK4 step `T_s = 0.01` s from TASK.md. No hysteresis, electrical state, friction aging, or trajectory-specific calibration is represented. Some residual free-response endpoint differences remain; I did not add per-trajectory offsets because there must be one autonomous state law. At zero speed the acceleration is the restoring force minus its symmetric clip, which preserves its sign or makes it zero. The voltage slope is `k` outside the force clip and `k*(1-exp(-(omega/v)**2))` inside it, hence never negative. `dtheta = omega` enforces R1 identically. Supplied-data cross-validation RMSE was `0.085209` rad; final-fit pooled RMSE was `0.075661` rad, both computed on angle samples after each trajectory's first sample. The train-only fit scored `0.097399` rad on `data/val.csv`, before this final refit. Model structures were compared using the supplied data, so cross-validation is selection evidence, not an unbiased hidden-test estimate. Dense physical grids and stress runs in `diagnostics.py` supplement the sign arguments but do not prove global simulation accuracy."
+  }
+}

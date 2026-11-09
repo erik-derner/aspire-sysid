@@ -1,0 +1,13 @@
+{"at": "2026-10-08T00:45:33.268147+00:00", "dry_run": false, "event": "grid_start", "experiment": "paper-friction-driven-blind", "pid": 99636, "resume": false, "runs": 5, "task": "task-jdhj"}
+{"at": "2026-10-08T00:45:33.272705+00:00", "attempt": 1, "event": "run_start", "mode": "worker process", "run": "r01"}
+{"at": "2026-10-08T00:45:33.274729+00:00", "attempt": 1, "event": "run_start", "mode": "worker process", "run": "r02"}
+{"at": "2026-10-08T00:45:33.277275+00:00", "attempt": 1, "event": "run_start", "mode": "worker process", "run": "r03"}
+{"at": "2026-10-08T00:55:39.029873+00:00", "attempt": 1, "cost_usd": 1.5423120000000001, "event": "run_end", "exit_status": 0, "leak_findings": 0, "outcome": "completed", "run": "r03"}
+{"at": "2026-10-08T00:55:39.029873+00:00", "attempt": 1, "event": "run_start", "mode": "worker process", "run": "r04"}
+{"at": "2026-10-08T00:58:38.929214+00:00", "attempt": 1, "cost_usd": 2.475758, "event": "run_end", "exit_status": 0, "leak_findings": 0, "outcome": "completed", "run": "r01"}
+{"at": "2026-10-08T00:58:38.929214+00:00", "attempt": 1, "event": "run_start", "mode": "worker process", "run": "r05"}
+{"at": "2026-10-08T01:07:28.539239+00:00", "attempt": 1, "cost_usd": 1.7590620000000003, "event": "run_end", "exit_status": 0, "leak_findings": 0, "outcome": "completed", "run": "r04"}
+{"at": "2026-10-08T01:20:42.985222+00:00", "attempt": 1, "cost_usd": 2.0627120000000003, "event": "run_end", "exit_status": 0, "leak_findings": 3, "outcome": "completed", "run": "r05"}
+{"at": "2026-10-08T01:24:31.199152+00:00", "attempt": 1, "cost_usd": 2.5895320000000006, "event": "run_end", "exit_status": 0, "leak_findings": 0, "outcome": "completed", "run": "r02"}
+{"added": ["r01", "r02", "r03", "r04", "r05"], "at": "2026-10-08T01:24:35.728974+00:00", "event": "experiment_export", "folder": "experiments/paper-friction-driven-blind/export/matlab", "status": "written", "verified": true}
+{"at": "2026-10-08T01:24:35.733020+00:00", "event": "grid_end", "executed": 5, "failed": 0, "leak_findings": 3, "skipped_finished": 0}

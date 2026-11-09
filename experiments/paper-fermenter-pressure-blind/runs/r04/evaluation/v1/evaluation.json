@@ -1,0 +1,1128 @@
+{
+  "candidates": [
+    {
+      "allowed_violations": [],
+      "checks": {
+        "issues": [],
+        "notes": [],
+        "passed": true
+      },
+      "complexity": {
+        "fitted_parameters": 20,
+        "fixed_parameters": 4,
+        "node_count": 224,
+        "node_count_per_key": {
+          "dy": 224
+        },
+        "noninteger_literals": 0,
+        "tied_parameters": 0
+      },
+      "excluded_by_requirements": false,
+      "exclusions": [],
+      "expressions": {
+        "dy": "c0*1 + c1*((y-yc)/ys) + c2*(x1/n1) + c3*(x2/n2) + c4*((y-yc)/ys)**2 + c5*((y-yc)/ys)*(x1/n1) + c6*((y-yc)/ys)*(x2/n2) + c7*(x1/n1)**2 + c8*(x1/n1)*(x2/n2) + c9*(x2/n2)**2 + c10*((y-yc)/ys)**3 + c11*((y-yc)/ys)**2*(x1/n1) + c12*((y-yc)/ys)**2*(x2/n2) + c13*((y-yc)/ys)*(x1/n1)**2 + c14*((y-yc)/ys)*(x1/n1)*(x2/n2) + c15*((y-yc)/ys)*(x2/n2)**2 + c16*(x1/n1)**3 + c17*(x1/n1)**2*(x2/n2) + c18*(x1/n1)*(x2/n2)**2 + c19*(x2/n2)**3"
+      },
+      "failed_computations": [],
+      "label": "CubicPolynomial",
+      "position": 1,
+      "requirements": [],
+      "sealed": {
+        "eligible": true,
+        "failed_computations": [],
+        "failed_numerically": false,
+        "ineligibility": [],
+        "rank": 1,
+        "reference_comparison": null,
+        "score_S": 0.021766850373946548,
+        "test": {
+          "finished": true,
+          "group": "test",
+          "pooled_rmse": 0.021766850373946548,
+          "scored_samples": 1209,
+          "trajectories": [
+            {
+              "completed_samples": 1209,
+              "failure": null,
+              "finished": true,
+              "group": "test",
+              "measures": {
+                "mean": 1.2166959096125278,
+                "n": 1209,
+                "nrmse": 0.15619274657046045,
+                "r2": 0.9756038259187759,
+                "rmse": 0.021766850373946548,
+                "sse": 0.5728190922189483,
+                "std": 0.13935890655541586
+              },
+              "n_samples": 1210,
+              "note": null,
+              "prefix_diagnostic": null,
+              "required_samples": 1209,
+              "scoring_interval": [
+                1,
+                1210
+              ],
+              "trajectory": "test-1"
+            }
+          ]
+        }
+      },
+      "sensitivity": {
+        "assumptions": [
+          "the fitting target is the one implied by the formulation (the model file has no structured field for it)"
+        ],
+        "available": true,
+        "data": [
+          "train",
+          "val"
+        ],
+        "deficient": false,
+        "dependent_groups": [],
+        "method": "analytic derivatives (SymPy), ties differentiated through their equations",
+        "parameters": [
+          "c0",
+          "c1",
+          "c2",
+          "c3",
+          "c4",
+          "c5",
+          "c6",
+          "c7",
+          "c8",
+          "c9",
+          "c10",
+          "c11",
+          "c12",
+          "c13",
+          "c14",
+          "c15",
+          "c16",
+          "c17",
+          "c18",
+          "c19"
+        ],
+        "rank": 20,
+        "rank_threshold": "s_i / s_1 > 1e-08",
+        "reason": null,
+        "rows": 2906,
+        "rows_dropped": 0,
+        "scaling": "rows of each target divided by the standard deviation of its measured column; columns divided by their Euclidean norm",
+        "singular_values": [
+          3.6874542038925604,
+          2.150558428964602,
+          0.929398659744739,
+          0.7478820795710434,
+          0.377272211183166,
+          0.3527909128236013,
+          0.17361783434360029,
+          0.15492201514787496,
+          0.12343760580074631,
+          0.10316729967141637,
+          0.06065033149700739,
+          0.04469862753416508,
+          0.03042368227501554,
+          0.023464722503626134,
+          0.0179500003305944,
+          0.015873429526161876,
+          0.00808558543997203,
+          0.006591644540133494,
+          0.003481526175195289,
+          0.0016302657161994171
+        ],
+        "targets": [
+          "dy"
+        ],
+        "zero_columns": []
+      },
+      "status": "evaluated",
+      "structure": {
+        "dy": "P1 + 0.014285714285714286*P10*x1 + 0.0083333333333333337*P11*x2**2*(y - 1.3) + 3.5714285714285714e-5*P12*x1*x2**2 + 0.5555555555555556*P13*x2*(y - 1.3)**2 + 0.15873015873015874*P14*x1*(y - 1.3)**2 + 0.16666666666666667*P15*x2*(y - 1.3) + 1.0204081632653061e-5*P16*x1**2*x2 + 0.00068027210884353744*P17*x1**2*(y - 1.3) + 0.00071428571428571429*P18*x1*x2 + 0.047619047619047621*P19*x1*(y - 1.3) + 11.111111111111112*P2*(y - 1.3)**2 + 0.002380952380952381*P20*x1*x2*(y - 1.3) + 0.000125*P3*x2**3 + 0.00020408163265306122*P4*x1**2 + 2.9154518950437318e-6*P5*x1**3 + 37.037037037037041*P6*(y - 1.3)**3 + 0.0025*P7*x2**2 + 0.05*P8*x2 + 3.3333333333333335*P9*(y - 1.3)"
+      },
+      "structure_group": 1,
+      "unresolved_requirements": [],
+      "visible": {
+        "train": {
+          "finished": true,
+          "group": "train",
+          "pooled_rmse": 0.02332518017707772,
+          "scored_samples": 1451,
+          "trajectories": [
+            {
+              "completed_samples": 1451,
+              "failure": null,
+              "finished": true,
+              "group": "train",
+              "measures": {
+                "mean": 1.298373536846705,
+                "n": 1451,
+                "nrmse": 0.08945224143045195,
+                "r2": 0.9919982965030681,
+                "rmse": 0.02332518017707772,
+                "sse": 0.7894369079553454,
+                "std": 0.2607556815131655
+              },
+              "n_samples": 1452,
+              "note": null,
+              "prefix_diagnostic": null,
+              "required_samples": 1451,
+              "scoring_interval": [
+                1,
+                1452
+              ],
+              "trajectory": "train"
+            }
+          ]
+        },
+        "val": {
+          "finished": true,
+          "group": "val",
+          "pooled_rmse": 0.03337517694661438,
+          "scored_samples": 1453,
+          "trajectories": [
+            {
+              "completed_samples": 1453,
+              "failure": null,
+              "finished": true,
+              "group": "val",
+              "measures": {
+                "mean": 1.306534241456782,
+                "n": 1453,
+                "nrmse": 0.12712759161649356,
+                "r2": 0.98383857544979,
+                "rmse": 0.03337517694661438,
+                "sse": 1.6185002398244923,
+                "std": 0.26253291297531567
+              },
+              "n_samples": 1454,
+              "note": null,
+              "prefix_diagnostic": null,
+              "required_samples": 1453,
+              "scoring_interval": [
+                1,
+                1454
+              ],
+              "trajectory": "val"
+            }
+          ]
+        }
+      },
+      "within_limit": true
+    },
+    {
+      "allowed_violations": [],
+      "checks": {
+        "issues": [],
+        "notes": [],
+        "passed": true
+      },
+      "complexity": {
+        "fitted_parameters": 11,
+        "fixed_parameters": 4,
+        "node_count": 107,
+        "node_count_per_key": {
+          "dy": 107
+        },
+        "noninteger_literals": 0,
+        "tied_parameters": 0
+      },
+      "excluded_by_requirements": false,
+      "exclusions": [],
+      "expressions": {
+        "dy": "(c0*1 + c1*((y-yc)/ys) + c2*(x1/n1) + c3*(x2/n2) + c4*((y-yc)/ys)**2 + c5*((y-yc)/ys)*(x1/n1) + c6*((y-yc)/ys)*(x2/n2) + c7*(x1/n1)**2 + c8*(x1/n1)*(x2/n2) + c9*(x2/n2)**2)/(1+d*((y-yc)/ys)**2)"
+      },
+      "failed_computations": [],
+      "label": "RationalGain",
+      "position": 2,
+      "requirements": [],
+      "sealed": {
+        "eligible": true,
+        "failed_computations": [],
+        "failed_numerically": false,
+        "ineligibility": [],
+        "rank": 5,
+        "reference_comparison": null,
+        "score_S": 0.025255349944020455,
+        "test": {
+          "finished": true,
+          "group": "test",
+          "pooled_rmse": 0.025255349944020455,
+          "scored_samples": 1209,
+          "trajectories": [
+            {
+              "completed_samples": 1209,
+              "failure": null,
+              "finished": true,
+              "group": "test",
+              "measures": {
+                "mean": 1.2166959096125278,
+                "n": 1209,
+                "nrmse": 0.18122523036572266,
+                "r2": 0.9671574158788907,
+                "rmse": 0.025255349944020455,
+                "sse": 0.7711397352610752,
+                "std": 0.13935890655541586
+              },
+              "n_samples": 1210,
+              "note": null,
+              "prefix_diagnostic": null,
+              "required_samples": 1209,
+              "scoring_interval": [
+                1,
+                1210
+              ],
+              "trajectory": "test-1"
+            }
+          ]
+        }
+      },
+      "sensitivity": {
+        "assumptions": [
+          "the fitting target is the one implied by the formulation (the model file has no structured field for it)"
+        ],
+        "available": true,
+        "data": [
+          "train",
+          "val"
+        ],
+        "deficient": false,
+        "dependent_groups": [],
+        "method": "analytic derivatives (SymPy), ties differentiated through their equations",
+        "parameters": [
+          "c0",
+          "c1",
+          "c2",
+          "c3",
+          "c4",
+          "c5",
+          "c6",
+          "c7",
+          "c8",
+          "c9",
+          "d"
+        ],
+        "rank": 11,
+        "rank_threshold": "s_i / s_1 > 1e-08",
+        "reason": null,
+        "rows": 2906,
+        "rows_dropped": 0,
+        "scaling": "rows of each target divided by the standard deviation of its measured column; columns divided by their Euclidean norm",
+        "singular_values": [
+          2.4673852579192537,
+          1.7193320092599746,
+          1.0037005541193929,
+          0.7459773246349372,
+          0.5469642001602556,
+          0.23240904351943742,
+          0.1600148003702479,
+          0.08639333313864543,
+          0.06887367765784536,
+          0.029756293358286647,
+          0.011362004412978048
+        ],
+        "targets": [
+          "dy"
+        ],
+        "zero_columns": []
+      },
+      "status": "evaluated",
+      "structure": {
+        "dy": "(0.00071428571428571429*P10*x1*x2 + 0.047619047619047621*P11*x1*(y - 1.3) + P2 + 11.111111111111112*P3*(y - 1.3)**2 + 0.00020408163265306122*P4*x1**2 + 0.0025*P5*x2**2 + 0.05*P6*x2 + 3.3333333333333335*P7*(y - 1.3) + 0.014285714285714286*P8*x1 + 0.16666666666666667*P9*x2*(y - 1.3))/(11.111111111111112*P1*(y - 1.3)**2 + 1)"
+      },
+      "structure_group": 2,
+      "unresolved_requirements": [],
+      "visible": {
+        "train": {
+          "finished": true,
+          "group": "train",
+          "pooled_rmse": 0.02654186136637496,
+          "scored_samples": 1451,
+          "trajectories": [
+            {
+              "completed_samples": 1451,
+              "failure": null,
+              "finished": true,
+              "group": "train",
+              "measures": {
+                "mean": 1.298373536846705,
+                "n": 1451,
+                "nrmse": 0.10178823798719364,
+                "r2": 0.9896391546074624,
+                "rmse": 0.02654186136637496,
+                "sse": 1.022186557353,
+                "std": 0.2607556815131655
+              },
+              "n_samples": 1452,
+              "note": null,
+              "prefix_diagnostic": null,
+              "required_samples": 1451,
+              "scoring_interval": [
+                1,
+                1452
+              ],
+              "trajectory": "train"
+            }
+          ]
+        },
+        "val": {
+          "finished": true,
+          "group": "val",
+          "pooled_rmse": 0.03696830494524539,
+          "scored_samples": 1453,
+          "trajectories": [
+            {
+              "completed_samples": 1453,
+              "failure": null,
+              "finished": true,
+              "group": "val",
+              "measures": {
+                "mean": 1.306534241456782,
+                "n": 1453,
+                "nrmse": 0.14081398224047165,
+                "r2": 0.9801714224055801,
+                "rmse": 0.03696830494524539,
+                "sse": 1.9857505439723235,
+                "std": 0.26253291297531567
+              },
+              "n_samples": 1454,
+              "note": null,
+              "prefix_diagnostic": null,
+              "required_samples": 1453,
+              "scoring_interval": [
+                1,
+                1454
+              ],
+              "trajectory": "val"
+            }
+          ]
+        }
+      },
+      "within_limit": true
+    },
+    {
+      "allowed_violations": [],
+      "checks": {
+        "issues": [],
+        "notes": [],
+        "passed": true
+      },
+      "complexity": {
+        "fitted_parameters": 11,
+        "fixed_parameters": 4,
+        "node_count": 93,
+        "node_count_per_key": {
+          "dy": 93
+        },
+        "noninteger_literals": 0,
+        "tied_parameters": 0
+      },
+      "excluded_by_requirements": false,
+      "exclusions": [],
+      "expressions": {
+        "dy": "c0 + c1*(Max(y-h,epsy)**b) + c2*(Max(x1/n1,epsu)**a*Max(x2/n2,epsu)**d) + c3*(Max(x2/n2,epsu)**e) + c4*(Max(x1/n1,epsu)**a*Max(x2/n2,epsu)**d)*(Max(y-h,epsy)**b) + c5*(Max(x2/n2,epsu)**e)*(Max(y-h,epsy)**b)"
+      },
+      "failed_computations": [],
+      "label": "PowerFeedback",
+      "position": 3,
+      "requirements": [],
+      "sealed": {
+        "eligible": true,
+        "failed_computations": [],
+        "failed_numerically": false,
+        "ineligibility": [],
+        "rank": 2,
+        "reference_comparison": null,
+        "score_S": 0.022284936899453888,
+        "test": {
+          "finished": true,
+          "group": "test",
+          "pooled_rmse": 0.022284936899453888,
+          "scored_samples": 1209,
+          "trajectories": [
+            {
+              "completed_samples": 1209,
+              "failure": null,
+              "finished": true,
+              "group": "test",
+              "measures": {
+                "mean": 1.2166959096125278,
+                "n": 1209,
+                "nrmse": 0.15991038858067042,
+                "r2": 0.974428667623979,
+                "rmse": 0.022284936899453888,
+                "sse": 0.6004116608486836,
+                "std": 0.13935890655541586
+              },
+              "n_samples": 1210,
+              "note": null,
+              "prefix_diagnostic": null,
+              "required_samples": 1209,
+              "scoring_interval": [
+                1,
+                1210
+              ],
+              "trajectory": "test-1"
+            }
+          ]
+        }
+      },
+      "sensitivity": {
+        "assumptions": [
+          "the fitting target is the one implied by the formulation (the model file has no structured field for it)"
+        ],
+        "available": true,
+        "data": [
+          "train",
+          "val"
+        ],
+        "deficient": false,
+        "dependent_groups": [],
+        "method": "analytic derivatives (SymPy), ties differentiated through their equations",
+        "parameters": [
+          "c0",
+          "c1",
+          "c2",
+          "c3",
+          "c4",
+          "c5",
+          "h",
+          "b",
+          "a",
+          "d",
+          "e"
+        ],
+        "rank": 11,
+        "rank_threshold": "s_i / s_1 > 1e-08",
+        "reason": null,
+        "rows": 2906,
+        "rows_dropped": 0,
+        "scaling": "rows of each target divided by the standard deviation of its measured column; columns divided by their Euclidean norm",
+        "singular_values": [
+          2.5368090948284965,
+          1.4497808954922566,
+          1.123450187607596,
+          0.9084005378793971,
+          0.4881681206438703,
+          0.31687092387112137,
+          0.16899310457414907,
+          0.07536742021970091,
+          0.0363110228272757,
+          0.02944059874112125,
+          0.01623752262213012
+        ],
+        "targets": [
+          "dy"
+        ],
+        "zero_columns": []
+      },
+      "status": "evaluated",
+      "structure": {
+        "dy": "P1 + P10*Max(9.9999999999999995e-7, 0.05*x2)**P6*Max(9.9999999999999995e-7, -P3 + y)**P4 + P11*Max(9.9999999999999995e-7, 0.014285714285714286*x1)**P9*Max(9.9999999999999995e-7, 0.05*x2)**P8*Max(9.9999999999999995e-7, -P3 + y)**P4 + P2*Max(9.9999999999999995e-7, -P3 + y)**P4 + P5*Max(9.9999999999999995e-7, 0.05*x2)**P6 + P7*Max(9.9999999999999995e-7, 0.014285714285714286*x1)**P9*Max(9.9999999999999995e-7, 0.05*x2)**P8"
+      },
+      "structure_group": 3,
+      "unresolved_requirements": [],
+      "visible": {
+        "train": {
+          "finished": true,
+          "group": "train",
+          "pooled_rmse": 0.02374327774145672,
+          "scored_samples": 1451,
+          "trajectories": [
+            {
+              "completed_samples": 1451,
+              "failure": null,
+              "finished": true,
+              "group": "train",
+              "measures": {
+                "mean": 1.298373536846705,
+                "n": 1451,
+                "nrmse": 0.09105564873476371,
+                "r2": 0.9917088688334913,
+                "rmse": 0.02374327774145672,
+                "sse": 0.8179914382044413,
+                "std": 0.2607556815131655
+              },
+              "n_samples": 1452,
+              "note": null,
+              "prefix_diagnostic": null,
+              "required_samples": 1451,
+              "scoring_interval": [
+                1,
+                1452
+              ],
+              "trajectory": "train"
+            }
+          ]
+        },
+        "val": {
+          "finished": true,
+          "group": "val",
+          "pooled_rmse": 0.036825268619240806,
+          "scored_samples": 1453,
+          "trajectories": [
+            {
+              "completed_samples": 1453,
+              "failure": null,
+              "finished": true,
+              "group": "val",
+              "measures": {
+                "mean": 1.306534241456782,
+                "n": 1453,
+                "nrmse": 0.1402691502634691,
+                "r2": 0.9803245654843643,
+                "rmse": 0.036825268619240806,
+                "sse": 1.9704138941015383,
+                "std": 0.26253291297531567
+              },
+              "n_samples": 1454,
+              "note": null,
+              "prefix_diagnostic": null,
+              "required_samples": 1453,
+              "scoring_interval": [
+                1,
+                1454
+              ],
+              "trajectory": "val"
+            }
+          ]
+        }
+      },
+      "within_limit": true
+    },
+    {
+      "allowed_violations": [],
+      "checks": {
+        "issues": [],
+        "notes": [],
+        "passed": true
+      },
+      "complexity": {
+        "fitted_parameters": 7,
+        "fixed_parameters": 3,
+        "node_count": 52,
+        "node_count_per_key": {
+          "dy": 52
+        },
+        "noninteger_literals": 0,
+        "tied_parameters": 0
+      },
+      "excluded_by_requirements": false,
+      "exclusions": [],
+      "expressions": {
+        "dy": "c0 + c1*sqrt(Max(y-h,epsy)) + c2*exp(a*(x1/n1-1)) + c3*(x2/n2) + c4*exp(a*(x1/n1-1))*sqrt(Max(y-h,epsy))"
+      },
+      "failed_computations": [],
+      "label": "ExponentialFeedback",
+      "position": 4,
+      "requirements": [],
+      "sealed": {
+        "eligible": true,
+        "failed_computations": [],
+        "failed_numerically": false,
+        "ineligibility": [],
+        "rank": 3,
+        "reference_comparison": null,
+        "score_S": 0.022370606076304974,
+        "test": {
+          "finished": true,
+          "group": "test",
+          "pooled_rmse": 0.022370606076304974,
+          "scored_samples": 1209,
+          "trajectories": [
+            {
+              "completed_samples": 1209,
+              "failure": null,
+              "finished": true,
+              "group": "test",
+              "measures": {
+                "mean": 1.2166959096125278,
+                "n": 1209,
+                "nrmse": 0.16052512630335067,
+                "r2": 0.9742316838252933,
+                "rmse": 0.022370606076304974,
+                "sse": 0.6050368156114465,
+                "std": 0.13935890655541586
+              },
+              "n_samples": 1210,
+              "note": null,
+              "prefix_diagnostic": null,
+              "required_samples": 1209,
+              "scoring_interval": [
+                1,
+                1210
+              ],
+              "trajectory": "test-1"
+            }
+          ]
+        }
+      },
+      "sensitivity": {
+        "assumptions": [
+          "the fitting target is the one implied by the formulation (the model file has no structured field for it)"
+        ],
+        "available": true,
+        "data": [
+          "train",
+          "val"
+        ],
+        "deficient": false,
+        "dependent_groups": [],
+        "method": "analytic derivatives (SymPy), ties differentiated through their equations",
+        "parameters": [
+          "c0",
+          "c1",
+          "c2",
+          "c3",
+          "c4",
+          "h",
+          "a"
+        ],
+        "rank": 7,
+        "rank_threshold": "s_i / s_1 > 1e-08",
+        "reason": null,
+        "rows": 2906,
+        "rows_dropped": 0,
+        "scaling": "rows of each target divided by the standard deviation of its measured column; columns divided by their Euclidean norm",
+        "singular_values": [
+          2.2596092038351006,
+          1.1138017117481775,
+          0.7298707403120275,
+          0.2831165776087366,
+          0.17380401521045008,
+          0.10135367057569819,
+          0.016287925822034473
+        ],
+        "targets": [
+          "dy"
+        ],
+        "zero_columns": []
+      },
+      "status": "evaluated",
+      "structure": {
+        "dy": "P1 + P2*sqrt(Max(9.9999999999999995e-7, -P3 + y)) + P4*exp(P5*(0.014285714285714286*x1 - 1)) + 0.05*P6*x2 + P7*exp(P5*(0.014285714285714286*x1 - 1))*sqrt(Max(9.9999999999999995e-7, -P3 + y))"
+      },
+      "structure_group": 4,
+      "unresolved_requirements": [],
+      "visible": {
+        "train": {
+          "finished": true,
+          "group": "train",
+          "pooled_rmse": 0.023866663313085935,
+          "scored_samples": 1451,
+          "trajectories": [
+            {
+              "completed_samples": 1451,
+              "failure": null,
+              "finished": true,
+              "group": "train",
+              "measures": {
+                "mean": 1.298373536846705,
+                "n": 1451,
+                "nrmse": 0.0915288333300646,
+                "r2": 0.9916224726692373,
+                "rmse": 0.023866663313085935,
+                "sse": 0.8265151632829932,
+                "std": 0.2607556815131655
+              },
+              "n_samples": 1452,
+              "note": null,
+              "prefix_diagnostic": null,
+              "required_samples": 1451,
+              "scoring_interval": [
+                1,
+                1452
+              ],
+              "trajectory": "train"
+            }
+          ]
+        },
+        "val": {
+          "finished": true,
+          "group": "val",
+          "pooled_rmse": 0.03741128871331501,
+          "scored_samples": 1453,
+          "trajectories": [
+            {
+              "completed_samples": 1453,
+              "failure": null,
+              "finished": true,
+              "group": "val",
+              "measures": {
+                "mean": 1.306534241456782,
+                "n": 1453,
+                "nrmse": 0.14250132788810582,
+                "r2": 0.9796933715501266,
+                "rmse": 0.03741128871331501,
+                "sse": 2.033625372196539,
+                "std": 0.26253291297531567
+              },
+              "n_samples": 1454,
+              "note": null,
+              "prefix_diagnostic": null,
+              "required_samples": 1453,
+              "scoring_interval": [
+                1,
+                1454
+              ],
+              "trajectory": "val"
+            }
+          ]
+        }
+      },
+      "within_limit": true
+    },
+    {
+      "allowed_violations": [],
+      "checks": {
+        "issues": [],
+        "notes": [],
+        "passed": true
+      },
+      "complexity": {
+        "fitted_parameters": 11,
+        "fixed_parameters": 3,
+        "node_count": 87,
+        "node_count_per_key": {
+          "dy": 87
+        },
+        "noninteger_literals": 0,
+        "tied_parameters": 0
+      },
+      "excluded_by_requirements": false,
+      "exclusions": [],
+      "expressions": {
+        "dy": "c0 + c1*sqrt(Max(y-h,epsy)) + c2*tanh(a*(x1/n1-u0)) + c3*tanh(b*(x2/n2-w0)) + c4*tanh(a*(x1/n1-u0))*sqrt(Max(y-h,epsy)) + c5*tanh(b*(x2/n2-w0))*sqrt(Max(y-h,epsy))"
+      },
+      "failed_computations": [],
+      "label": "SaturatingFeedback",
+      "position": 5,
+      "requirements": [],
+      "sealed": {
+        "eligible": true,
+        "failed_computations": [],
+        "failed_numerically": false,
+        "ineligibility": [],
+        "rank": 4,
+        "reference_comparison": null,
+        "score_S": 0.022785474832744998,
+        "test": {
+          "finished": true,
+          "group": "test",
+          "pooled_rmse": 0.022785474832744998,
+          "scored_samples": 1209,
+          "trajectories": [
+            {
+              "completed_samples": 1209,
+              "failure": null,
+              "finished": true,
+              "group": "test",
+              "measures": {
+                "mean": 1.2166959096125278,
+                "n": 1209,
+                "nrmse": 0.16350210686881636,
+                "r2": 0.9732670610494581,
+                "rmse": 0.022785474832744998,
+                "sse": 0.6276860367945698,
+                "std": 0.13935890655541586
+              },
+              "n_samples": 1210,
+              "note": null,
+              "prefix_diagnostic": null,
+              "required_samples": 1209,
+              "scoring_interval": [
+                1,
+                1210
+              ],
+              "trajectory": "test-1"
+            }
+          ]
+        }
+      },
+      "sensitivity": {
+        "assumptions": [
+          "the fitting target is the one implied by the formulation (the model file has no structured field for it)"
+        ],
+        "available": true,
+        "data": [
+          "train",
+          "val"
+        ],
+        "deficient": false,
+        "dependent_groups": [],
+        "method": "analytic derivatives (SymPy), ties differentiated through their equations",
+        "parameters": [
+          "c0",
+          "c1",
+          "c2",
+          "c3",
+          "c4",
+          "c5",
+          "h",
+          "a",
+          "u0",
+          "b",
+          "w0"
+        ],
+        "rank": 11,
+        "rank_threshold": "s_i / s_1 > 1e-08",
+        "reason": null,
+        "rows": 2906,
+        "rows_dropped": 0,
+        "scaling": "rows of each target divided by the standard deviation of its measured column; columns divided by their Euclidean norm",
+        "singular_values": [
+          2.995235439054808,
+          1.1130689751010543,
+          0.6208380429619286,
+          0.49700335388020817,
+          0.3285123160143582,
+          0.17547994167032924,
+          0.12132248693505587,
+          0.060515599365879774,
+          0.009743692478118309,
+          0.00036067012747535715,
+          8.372701585383571e-05
+        ],
+        "targets": [
+          "dy"
+        ],
+        "zero_columns": []
+      },
+      "status": "evaluated",
+      "structure": {
+        "dy": "P1 + P10*tanh(P5*(-P6 + 0.014285714285714286*x1))*sqrt(Max(9.9999999999999995e-7, -P3 + y)) + P11*tanh(P8*(-P9 + 0.05*x2))*sqrt(Max(9.9999999999999995e-7, -P3 + y)) + P2*sqrt(Max(9.9999999999999995e-7, -P3 + y)) + P4*tanh(P5*(-P6 + 0.014285714285714286*x1)) + P7*tanh(P8*(-P9 + 0.05*x2))"
+      },
+      "structure_group": 5,
+      "unresolved_requirements": [],
+      "visible": {
+        "train": {
+          "finished": true,
+          "group": "train",
+          "pooled_rmse": 0.02375094221483194,
+          "scored_samples": 1451,
+          "trajectories": [
+            {
+              "completed_samples": 1451,
+              "failure": null,
+              "finished": true,
+              "group": "train",
+              "measures": {
+                "mean": 1.298373536846705,
+                "n": 1451,
+                "nrmse": 0.09108504204780964,
+                "r2": 0.9917035151151488,
+                "rmse": 0.02375094221483194,
+                "sse": 0.8185196285899071,
+                "std": 0.2607556815131655
+              },
+              "n_samples": 1452,
+              "note": null,
+              "prefix_diagnostic": null,
+              "required_samples": 1451,
+              "scoring_interval": [
+                1,
+                1452
+              ],
+              "trajectory": "train"
+            }
+          ]
+        },
+        "val": {
+          "finished": true,
+          "group": "val",
+          "pooled_rmse": 0.03702427361346761,
+          "scored_samples": 1453,
+          "trajectories": [
+            {
+              "completed_samples": 1453,
+              "failure": null,
+              "finished": true,
+              "group": "val",
+              "measures": {
+                "mean": 1.306534241456782,
+                "n": 1453,
+                "nrmse": 0.1410271694846458,
+                "r2": 0.980111337467149,
+                "rmse": 0.03702427361346761,
+                "sse": 1.9917678035869404,
+                "std": 0.26253291297531567
+              },
+              "n_samples": 1454,
+              "note": null,
+              "prefix_diagnostic": null,
+              "required_samples": 1453,
+              "scoring_interval": [
+                1,
+                1454
+              ],
+              "trajectory": "val"
+            }
+          ]
+        }
+      },
+      "within_limit": true
+    }
+  ],
+  "counts": {
+    "accepted_by_checks": 5,
+    "eligible": 5,
+    "evaluated": 5,
+    "excluded_by_requirements": 0,
+    "failed_numerically": 0,
+    "failed_numerically_on_visible_data": 0,
+    "outside_limit": 0,
+    "overlap": {
+      "excluded_and_failed_numerically": [],
+      "note": "the categories overlap: the candidates accepted by the checks include those outside the pool limit, and a candidate can be both excluded by requirements and failed numerically; the counts need not sum to the pool size"
+    },
+    "proposed": 5
+  },
+  "format_version": 1,
+  "formulation": "continuous",
+  "pool_file": {
+    "issues": [],
+    "order": [
+      "CubicPolynomial",
+      "RationalGain",
+      "PowerFeedback",
+      "ExponentialFeedback",
+      "SaturatingFeedback"
+    ],
+    "order_from_pool_file": true,
+    "pool_cap": 10,
+    "pool_version": 1,
+    "valid": true
+  },
+  "recommendation": {
+    "agent": {
+      "label": "CubicPolynomial",
+      "reason": "The complete cubic polynomial had the best validation free-running error among the derivative-fitted polynomial screens, approximately 0.0365 state-unit, without the singularity risks seen in higher degrees. Final output-error refitting on both files gives approximately 0.0233 state-unit training and 0.0334 state-unit validation RMSE, better than the other retained final fits. Those final figures are fitting diagnostics, not independent validation. Its interactions are explicit and it avoids fitted fractional-power branch thresholds. RationalGain is a lower-complexity alternative. Test performance remains unknown."
+    },
+    "notes": [],
+    "present": true,
+    "sealed": {
+      "eligible": true,
+      "note": "the test error of the recommended candidate (practical selection); sealed",
+      "rank": 1,
+      "test_score_S": 0.021766850373946548
+    }
+  },
+  "sealed": {
+    "no_ranking_reason": null,
+    "ranking": {
+      "candidates_considered": 5,
+      "criterion": "pooled test RMSE S, increasing",
+      "entries": [
+        {
+          "allowed_violations": [],
+          "label": "CubicPolynomial",
+          "rank": 1,
+          "score_S": 0.021766850373946548,
+          "tied_with_previous": false,
+          "unresolved_requirements": []
+        },
+        {
+          "allowed_violations": [],
+          "label": "PowerFeedback",
+          "rank": 2,
+          "score_S": 0.022284936899453888,
+          "tied_with_previous": false,
+          "unresolved_requirements": []
+        },
+        {
+          "allowed_violations": [],
+          "label": "ExponentialFeedback",
+          "rank": 3,
+          "score_S": 0.022370606076304974,
+          "tied_with_previous": false,
+          "unresolved_requirements": []
+        },
+        {
+          "allowed_violations": [],
+          "label": "SaturatingFeedback",
+          "rank": 4,
+          "score_S": 0.022785474832744998,
+          "tied_with_previous": false,
+          "unresolved_requirements": []
+        },
+        {
+          "allowed_violations": [],
+          "label": "RationalGain",
+          "rank": 5,
+          "score_S": 0.025255349944020455,
+          "tied_with_previous": false,
+          "unresolved_requirements": []
+        }
+      ],
+      "label": "oracle-based selection on test data",
+      "note": "This ranking selects on the test data. It measures whether the pool contains an accurate model, not whether the agent can recognize that model without test data. A rank is not evidence of physical admissibility: each entry carries its unresolved requirements and any violation allowed by the user.",
+      "pool_size": 5,
+      "tie_rule": "|S_a - S_b| <= 1e-12 * max(S_a, S_b) for consecutive candidates; tied candidates share a rank",
+      "ties": []
+    },
+    "test_trajectories": [
+      {
+        "n_samples": 1210,
+        "scored_samples": 1209,
+        "trajectory": "test-1"
+      }
+    ]
+  },
+  "settings": {
+    "discontinuities": "expressions with jumps (Piecewise, sign) are evaluated pointwise at the sample instants and Runge-Kutta stages; no event detection or step refinement is applied at a jump",
+    "failure_limits": [
+      {
+        "justification": "numerical divergence bound, about 46 times the largest training magnitude of y",
+        "lower": -100.0,
+        "unit": "not supplied",
+        "upper": 100.0,
+        "variable": "y"
+      }
+    ],
+    "harness_version": "0.1.0.dev0",
+    "horizon": null,
+    "horizon_note": null,
+    "initialization": 1,
+    "input_hold": "zero_order",
+    "integrator": "rk4",
+    "measurement": "y",
+    "mode": "simulation",
+    "pool_cap": 10,
+    "reference_samples": 2000,
+    "reference_seed": 20260925,
+    "requirement_confirmation_points": 5,
+    "sampling_period_s": 5.0,
+    "scoring": "after_initialization",
+    "sensitivity_rank_threshold": 1e-08,
+    "software": {
+      "numpy": "2.5.1",
+      "sympy": "1.14.0"
+    },
+    "substeps": 1,
+    "symbolic_time_limit_s": 10.0,
+    "tie_relative_tolerance": 1e-12,
+    "time_limit_s": 60.0,
+    "top_k": 5
+  },
+  "structures": {
+    "convention": "ties resolved, fixed values kept, given constants kept, fitted parameters renamed P1..Pn in order of first occurrence; equal when a one-to-one renaming of the fitted parameters makes every expression identical in SymPy's canonical form",
+    "distinct": 5,
+    "exhaustive": true,
+    "groups": [
+      [
+        "CubicPolynomial"
+      ],
+      [
+        "RationalGain"
+      ],
+      [
+        "PowerFeedback"
+      ],
+      [
+        "ExponentialFeedback"
+      ],
+      [
+        "SaturatingFeedback"
+      ]
+    ]
+  },
+  "task_id": "task-qtqm"
+}

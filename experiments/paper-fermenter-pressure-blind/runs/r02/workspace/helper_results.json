@@ -1,0 +1,252 @@
+[
+  {
+    "family": "exp_affine",
+    "stage": "derivative",
+    "parameters": {
+      "k": 0.02713942251566236,
+      "b0": 0.9968652036251948,
+      "c0": -7.8413979930928255,
+      "c1": 4.263414951898158,
+      "c2": 1.4920545084874584
+    },
+    "train_derivative_rmse": 0.0029920459329412885,
+    "val_derivative_rmse": 0.002761168182706235,
+    "train_rollout_rmse": 0.057256484083059084,
+    "val_rollout_rmse": 0.07103228719251656
+  },
+  {
+    "family": "exp_affine",
+    "stage": "rollout",
+    "parameters": {
+      "k": 0.03338658502771937,
+      "b0": 1.0243963109964869,
+      "c0": -8.5427355463255,
+      "c1": 4.425691786363608,
+      "c2": 1.851107437607051
+    },
+    "train_derivative_rmse": 0.003338451364845,
+    "val_derivative_rmse": 0.0031242196693761523,
+    "train_rollout_rmse": 0.049396275956455266,
+    "val_rollout_rmse": 0.0723229313272148
+  },
+  {
+    "family": "exp_product_interaction",
+    "stage": "derivative",
+    "parameters": {
+      "k": 0.02781307867587978,
+      "b0": 1.0171811276243163,
+      "c0": -12.333494197224312,
+      "c1": 7.497524058359687,
+      "c2": 5.1259915634805076,
+      "c3": -2.6371699790508725
+    },
+    "train_derivative_rmse": 0.002901336853132615,
+    "val_derivative_rmse": 0.002761481213727377,
+    "train_rollout_rmse": 0.052441809220454313,
+    "val_rollout_rmse": 0.0697499247607727
+  },
+  {
+    "family": "exp_product_interaction",
+    "stage": "rollout",
+    "parameters": {
+      "k": 0.03370729988331117,
+      "b0": 1.0386061163092664,
+      "c0": -14.330551570718615,
+      "c1": 8.664628796996514,
+      "c2": 6.556644831431444,
+      "c3": -3.463394012065299
+    },
+    "train_derivative_rmse": 0.0031913907476985226,
+    "val_derivative_rmse": 0.003172308874163851,
+    "train_rollout_rmse": 0.04618555273647253,
+    "val_rollout_rmse": 0.07248306442340544
+  },
+  {
+    "family": "sigmoid_exp",
+    "stage": "derivative",
+    "parameters": {
+      "k": 0.027079091008493265,
+      "b0": 0.9987255435327612,
+      "A": 19.999999999999996,
+      "c": 2.1586906844569094,
+      "s": 0.22704320198595732,
+      "d": 1.4962040132861387
+    },
+    "train_derivative_rmse": 0.0029930752527313727,
+    "val_derivative_rmse": 0.0027550927793021573,
+    "train_rollout_rmse": 0.05745217192998245,
+    "val_rollout_rmse": 0.07088300645767706
+  },
+  {
+    "family": "sigmoid_exp",
+    "stage": "rollout",
+    "parameters": {
+      "k": 0.03342117459627124,
+      "b0": 1.0252766449242148,
+      "A": 19.999999999999996,
+      "c": 2.163479168981593,
+      "s": 0.22061687292882137,
+      "d": 1.854787908571937
+    },
+    "train_derivative_rmse": 0.003340850441039154,
+    "val_derivative_rmse": 0.003122215552143808,
+    "train_rollout_rmse": 0.04957091695587082,
+    "val_rollout_rmse": 0.07218912062031484
+  },
+  {
+    "family": "sigmoid_product",
+    "stage": "derivative",
+    "parameters": {
+      "k": 0.02818876413702057,
+      "b0": 1.007679258547736,
+      "A": 19.999999999999996,
+      "c": 1.9666366663412795,
+      "s": 0.22249242442249542,
+      "d": 1.0053273160213556,
+      "t": 0.30974253147990116
+    },
+    "train_derivative_rmse": 0.0028797881279247766,
+    "val_derivative_rmse": 0.002546912863050129,
+    "train_rollout_rmse": 0.0528609170995092,
+    "val_rollout_rmse": 0.060499396037496996
+  },
+  {
+    "family": "sigmoid_product",
+    "stage": "rollout",
+    "parameters": {
+      "k": 0.03400025766797593,
+      "b0": 1.0306321173304303,
+      "A": 19.999999999999996,
+      "c": 1.9078799840721834,
+      "s": 0.2125363615781675,
+      "d": 1.1416113549789908,
+      "t": 0.303488479982771
+    },
+    "train_derivative_rmse": 0.003178778227104673,
+    "val_derivative_rmse": 0.0028876633270106806,
+    "train_rollout_rmse": 0.04656591740150901,
+    "val_rollout_rmse": 0.06214412142284777
+  },
+  {
+    "family": "threshold_power_exp",
+    "stage": "derivative",
+    "parameters": {
+      "k": 0.02669877306034695,
+      "b0": 1.0096044154916657,
+      "A": 0.0041223497630799065,
+      "c": -0.4922775304198411,
+      "n": 7.999999999999999,
+      "d": 1.5230687972341603
+    },
+    "train_derivative_rmse": 0.0030140463290385636,
+    "val_derivative_rmse": 0.0027502425014353338,
+    "train_rollout_rmse": 0.05897193223476405,
+    "val_rollout_rmse": 0.07122597778406499
+  },
+  {
+    "family": "threshold_power_exp",
+    "stage": "rollout",
+    "parameters": {
+      "k": 0.033530335906346194,
+      "b0": 1.0317946924208388,
+      "A": 0.003778381623946702,
+      "c": -0.48530385746095306,
+      "n": 7.999999999999997,
+      "d": 1.8829851796680732
+    },
+    "train_derivative_rmse": 0.0033697127557531324,
+    "val_derivative_rmse": 0.00314201929576254,
+    "train_rollout_rmse": 0.0509824602537413,
+    "val_rollout_rmse": 0.07253330063137453
+  },
+  {
+    "family": "exp_input_product",
+    "stage": "derivative",
+    "parameters": {
+      "k": 0.022024952551909695,
+      "b0": 0.9721619871152436,
+      "c0": -3.3978250166709136,
+      "c1": 1.8984889256072168
+    },
+    "train_derivative_rmse": 0.004576288917388689,
+    "val_derivative_rmse": 0.004357417789943435,
+    "train_rollout_rmse": 0.10559070571033649,
+    "val_rollout_rmse": 0.12758767043002772
+  },
+  {
+    "family": "exp_input_product",
+    "stage": "rollout",
+    "parameters": {
+      "k": 0.04460995416826476,
+      "b0": 0.9701129732723133,
+      "c0": -3.1259093905850586,
+      "c1": 1.7038766920890223
+    },
+    "train_derivative_rmse": 0.005709440702684208,
+    "val_derivative_rmse": 0.00645039512807685,
+    "train_rollout_rmse": 0.09253186270001175,
+    "val_rollout_rmse": 0.12903083281577524
+  },
+  {
+    "family": "power_product",
+    "stage": "derivative",
+    "parameters": {
+      "k": 0.027574278369010833,
+      "b0": 1.020084922428101,
+      "A": 0.0989027948210846,
+      "n": 5.817338126145302,
+      "m": 1.5436518900650429
+    },
+    "train_derivative_rmse": 0.0029071359108608355,
+    "val_derivative_rmse": 0.0025877015276308066,
+    "train_rollout_rmse": 0.05403369762162263,
+    "val_rollout_rmse": 0.06305653237862538
+  },
+  {
+    "family": "power_product",
+    "stage": "rollout",
+    "parameters": {
+      "k": 0.033747130504317525,
+      "b0": 1.0387189247618567,
+      "A": 0.08816558550833205,
+      "n": 5.880576788770824,
+      "m": 1.9008707309524946
+    },
+    "train_derivative_rmse": 0.003208573760400727,
+    "val_derivative_rmse": 0.00289333758229314,
+    "train_rollout_rmse": 0.04743009401817505,
+    "val_rollout_rmse": 0.0630432802687513
+  },
+  {
+    "family": "softplus_exp",
+    "stage": "derivative",
+    "parameters": {
+      "k": 0.027109897561270538,
+      "b0": 0.9977782364127553,
+      "A": 19.999999999999996,
+      "c": 2.175405133519016,
+      "s": 0.23082900619505364,
+      "d": 1.4940901157801947
+    },
+    "train_derivative_rmse": 0.0029925133735381163,
+    "val_derivative_rmse": 0.002758165638619062,
+    "train_rollout_rmse": 0.05735092849261503,
+    "val_rollout_rmse": 0.07095940319253234
+  },
+  {
+    "family": "softplus_exp",
+    "stage": "rollout",
+    "parameters": {
+      "k": 0.033403178435497935,
+      "b0": 1.0248302175178026,
+      "A": 19.999999999999996,
+      "c": 2.1762489245623864,
+      "s": 0.22330241498089887,
+      "d": 1.852914245962301
+    },
+    "train_derivative_rmse": 0.003339569166154867,
+    "val_derivative_rmse": 0.0031231688174409838,
+    "train_rollout_rmse": 0.04948094328272575,
+    "val_rollout_rmse": 0.07225687935069233
+  }
+]

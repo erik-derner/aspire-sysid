@@ -1,0 +1,21 @@
+# Python
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+*.egg-info/
+.pytest_cache/
+
+# Secrets - never commit
+.env
+*.env
+
+# Records of interactive sessions and the lock file of a running experiment
+sessions/
+experiments/*/campaign.lock
+experiments/*/dry-run/
+
+# Editor and operating system
+.vscode/
+Thumbs.db
+desktop.ini

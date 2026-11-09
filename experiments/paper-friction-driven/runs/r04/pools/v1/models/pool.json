@@ -1,0 +1,10 @@
+{
+  "order": [
+    "AngleClip",
+    "StaticBlend",
+    "SmoothAngle",
+    "SpeedWeakening"
+  ],
+  "recommended": "AngleClip",
+  "reason": "AngleClip had the smallest aggregate leave-one-trajectory-out angle RMSE (`0.06048971` rad) among the retained final families on the 16 known trajectories, compared with `0.06128174` rad for SmoothAngle, `0.06320398` rad for StaticBlend and `0.07691553` rad for SpeedWeakening. The small gap to SmoothAngle alone is not decisive, but AngleClip also preserves a genuine nonzero static stick band, has positive dissipative friction limits, and uses a stopping rate compatible with the required fixed-step RK4 integration. The remaining free-response stopping-angle and driven residuals mean this is a recommendation under uncertainty, not a claim about unavailable test performance."
+}

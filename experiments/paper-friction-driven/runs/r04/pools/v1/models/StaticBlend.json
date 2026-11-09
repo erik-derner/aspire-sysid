@@ -1,0 +1,76 @@
+{
+  "expressions": {
+    "dtheta": "omega",
+    "domega": "exp(-(omega/v)**2)*(Max(a*u-g*sin(theta)-c*(1+hs*sin(theta)+hc*cos(theta)),0)+Min(a*u-g*sin(theta)+c*(1+hs*sin(theta)+hc*cos(theta)),0))+(1-exp(-(omega/v)**2))*(a*u-g*sin(theta)-c*(1+hs*sin(theta)+hc*cos(theta))*tanh(omega/v))-b*omega-k*exp(-(omega/v)**2)*omega"
+  },
+  "parameters": [
+    {
+      "name": "a",
+      "value": 29.185543980875646,
+      "unit": "rad/(s^2*V)",
+      "type": "fitted",
+      "description": "Voltage-to-acceleration gain; positive motor torque per effective inertia. Estimated jointly with all other parameters of this candidate by the output-error procedure below."
+    },
+    {
+      "name": "b",
+      "value": 1.785601247958602,
+      "unit": "1/s",
+      "type": "fitted",
+      "description": "Viscous acceleration coefficient, including mechanical drag and motor back-EMF effects that cannot be separated by these data. Estimated jointly with all other parameters of this candidate by the output-error procedure below."
+    },
+    {
+      "name": "g",
+      "value": 114.72644681069698,
+      "unit": "rad/s^2",
+      "type": "fitted",
+      "description": "Sinusoidal restoring-acceleration amplitude, interpreted as gravitational torque divided by effective inertia. Estimated jointly with all other parameters of this candidate by the output-error procedure below."
+    },
+    {
+      "name": "c",
+      "value": 28.554746284108955,
+      "unit": "rad/s^2",
+      "type": "fitted",
+      "description": "Dry-friction acceleration scale. Estimated jointly with all other parameters of this candidate by the output-error procedure below."
+    },
+    {
+      "name": "k",
+      "value": 11.00544713849265,
+      "unit": "1/s",
+      "type": "fitted",
+      "description": "Low-speed stopping relaxation rate used by the algebraic friction regularization, not a separately measured material property. Estimated jointly with all other parameters of this candidate by the output-error procedure below."
+    },
+    {
+      "name": "hs",
+      "value": -0.19936853563070686,
+      "unit": "-",
+      "type": "fitted",
+      "description": "Dimensionless sine coefficient of angular friction modulation. Estimated jointly with all other parameters of this candidate by the output-error procedure below."
+    },
+    {
+      "name": "hc",
+      "value": -0.30669901578195163,
+      "unit": "-",
+      "type": "fitted",
+      "description": "Dimensionless cosine coefficient of angular friction modulation. Estimated jointly with all other parameters of this candidate by the output-error procedure below."
+    },
+    {
+      "name": "v",
+      "value": 0.16898398020616937,
+      "unit": "rad/s",
+      "type": "fitted",
+      "description": "Low-speed regularization width of the friction transition. Estimated jointly with all other parameters of this candidate by the output-error procedure below."
+    }
+  ],
+  "estimation": {
+    "criterion": "SciPy soft-L1 loss on open-loop angle residuals, defined as simulated `theta` minus measured `theta`, with loss scale `0.04` rad. This downweights large encoder/transient/stopping discrepancies without discarding their samples. The angle output-error criterion matches the intended autonomous simulation use; differentiation-based acceleration residuals were only used for initialization and structural diagnostics.",
+    "data": "data/train.csv, all 13 trajectories, and data/val.csv, all 3 trajectories. The validation file was first reserved for comparison of training-only structures, then included in the final estimation to reduce parameter uncertainty. The final loss uses every angle sample after the first of each trajectory, with equal weight per sample; the first logged `theta` and `omega` initialize that trajectory. Inputs `u` are held at the logged value between samples. No test data were accessed. In cross-validation the three validation trajectories are internally numbered 14 through 16; their file IDs remain 1 through 3.",
+    "method": "All 8 fitted parameters were optimized together by bounded nonlinear least squares using scipy.optimize.least_squares (Trust Region Reflective algorithm), with `soft_l1` loss, `x_scale = \"jac\"`, `diff_step = 0.0001`, `max_nfev = 350`, `ftol = 2e-8`, `xtol = 2e-8`, and `gtol = 1e-7`. Here solver tolerances and finite-difference scale are numerical settings, not physical parameters. Each residual evaluation integrates separate trajectories by classical RK4, one step of `0.01` s, with zero-order-held `u`, exactly as the task specifies. Numba compiles the simulator; it does not change the model. Parameter ordering is `a` (rad/(s^2*V)), `b` (1/s), `g` (rad/s^2), `c` (rad/s^2), `k` (1/s), `hs` (dimensionless), `hc` (dimensionless), `v` (rad/s). Six initial vectors in that ordering were `[29.129999999999999, 1.71, 115.33, 28.82, 14.279999999999999, -0.19, -0.28999999999999998, 0.435]`; `[28.165475069545128, 1.7283622282593316, 118.6263665969024, 31.857238934335431, 178.08690792890459, -0.2262206096183062, -0.27321525981186207, 0.435]`; `[28.70694283752491, 1.8030899665782099, 112.4595373115546, 28.66679129006253, 33.734018422183958, -0.27089090680201028, -0.32624763227022774, 0.435]`; `[31.239150982642581, 1.5179677904966991, 114.55692202551526, 27.820049066330476, 117.33797776253888, -0.11712060784478076, -0.31840200780792499, 0.435]`; `[26.377799117366774, 1.9924047606172615, 122.69844819442299, 28.556079973922724, 155.45940380404545, -0.29665163269275541, -0.27435177321509097, 0.435]`; `[29.32429707074197, 1.5423220711778369, 109.62629718697762, 25.729848870848805, 114.64073582176601, -0.25985033058761781, -0.387598203485996, 0.435]`; each component has the corresponding unit just listed. Bounds in that same order are lower `[1, 0, 20, 0, 3, -0.65000000000000002, -0.65000000000000002, 0.12]` and upper `[60, 10, 200, 60, 220, 0.65000000000000002, 0.65000000000000002, 5]`, with the corresponding component units. The first start came from the preceding torque-balance/output-error fit; the other five are deterministic local perturbations, using numpy.random.default_rng with seed `271828`, to reduce sensitivity to local minima. The same script evaluates both ordinary squared loss and soft-L1 loss (scale `0.04` rad), with six starts per loss; the best fitting objective is retained within each loss. Leave-one-trajectory-out refits on the 16 available trajectories then select the loss by aggregate held-out angle RMSE. Those refits are warm-started from the full-data estimate but exclude the held-out trajectory from their objective; their limit is `max_nfev = 180`. The delivered values are the selected full-data fit, not an average of cross-validation parameters. Every other setting is identical between those refits and the full-data fit. Positive gain, restoring amplitude and friction scale, nonnegative viscous drag, and bounded modulation coefficients were imposed for stability and the physical requirements. The velocity-width lower bound `0.12` rad/s avoids an excessively stiff explicit-RK4 regularization; stopping rates are bounded below the approximately `278` 1/s scalar RK4 stability limit for this sampling period. Bounds on `hs` and `hc` guarantee a positive angular envelope even at their extreme combinations. This direct low-dimensional output-error method was preferred to a black-box predictor because states are never corrected after initialization.",
+    "script": "fit_final.py"
+  },
+  "discussion": {
+    "family": "Continuous static/kinetic friction blending model with a force dead zone, a Gaussian velocity blending function and a nonlinear pendulum torque balance. Background: B. Armstrong-Helouvry, P. Dupont and C. Canudas de Wit, 'A survey of models, analysis tools and compensation methods for the control of machines with friction', Automatica (1994). This bibliographic reference is recalled from memory; the attempted web retrieval did not return usable source text. The custom algebraic closures here are not claimed to be the exact models in that survey.",
+    "interpretation": "`dtheta = omega` is kinematics. Define the external acceleration as `a*u-g*sin(theta)`, the angular dry-friction scale as `c*(1+hs*sin(theta)+hc*cos(theta))`, and the near-rest weight as `exp(-(omega/v)**2)`. The dead-zone term `Max(a*u-g*sin(theta)-c*(1+hs*sin(theta)+hc*cos(theta)),0)+Min(a*u-g*sin(theta)+c*(1+hs*sin(theta)+hc*cos(theta)),0)` transmits only torque beyond the friction threshold. Its weight tends to one at rest. The kinetic term `(1-exp(-(omega/v)**2))*(a*u-g*sin(theta)-c*(1+hs*sin(theta)+hc*cos(theta))*tanh(omega/v))` takes over with increasing speed. `-b*omega` is viscous drag; `-k*exp(-(omega/v)**2)*omega` damps the near-rest motion. Static and kinetic friction scales are assumed equal. Angular modulation is empirical.",
+    "origin": "The dead zone came from the need to reproduce nonzero sticking angles. A Gaussian velocity blend was a deliberate smooth-closure design choice, not a symbolic-search discovery. Angular modulation was added after moving-sample library diagnostics, as for the projection model. An unconstrained version fitted a static limit below the sliding scale, which was not physically convincing. An additional nonnegative static-friction excess was then tested and fitted essentially to zero on the training data; it was removed. The delivered model imposes equal static and kinetic scales and refits all remaining parameters. Robust loss was selected by leave-one-trajectory-out output-error comparison.",
+    "limitations": "This closure is a smooth algebraic approximation, not a hybrid model with exact slip events or a presliding displacement state. Its finite velocity transition and additional low-speed damping can affect breakaway and small perturbations of static equilibria. The data do not determine a separate static excess, so equality of static and kinetic scales is an explicit assumption. Directional friction and hidden motor-current dynamics are not included. The angle envelope is empirical, and extrapolation in voltage is unverified. Full-data angle RMSE is `0.05810928` rad and aggregate leave-one-trajectory-out angle RMSE is `0.06320398` rad across all 16 known trajectories; these are not test scores."
+  }
+}

@@ -1,0 +1,10 @@
+{
+  "order": [
+    "PowerOutlet",
+    "ChokedOrifice",
+    "SeriesResistance",
+    "LinearResistance"
+  ],
+  "recommended": "PowerOutlet",
+  "reason": "`PowerOutlet` combines the lowest final pooled pressure-rollout error among these atmosphere-anchored candidates with a finite near-equilibrium slope and exactly atmospheric zero-flow equilibrium. Its final RMSE is `0.024786824` bar on `data/train.csv` and `0.037505993` bar on `data/val.csv`; these are in-sample after pooled refitting, not test results. The compressible candidate has the better validation-file suffix result but the worse final pooled fit and assumes ideal nozzle behavior not established by the data. The series model is a more directly interpretable alternative with slightly worse pressure accuracy. The linear candidate is retained only as a transparent small-overpressure baseline. Selection also considered physical monotonicity in the pressurized domain and the required five-second RK4 stability, not derivative error alone."
+}

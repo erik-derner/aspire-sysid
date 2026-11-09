@@ -1,0 +1,84 @@
+{
+  "expressions": {
+    "y_next": "y + (speed_gain*x3 + speed_bias)*cos(x2 + direction_factor*((turn_gain*sign(x4)*Max(Abs(x4)-turn_width,0) + turn_bias) + sine_bias*sin(x2) + cosine_bias*cos(x2)) + direction_bias)",
+    "x1_next": "x1 + (speed_gain*x3 + speed_bias)*sin(x2 + direction_factor*((turn_gain*sign(x4)*Max(Abs(x4)-turn_width,0) + turn_bias) + sine_bias*sin(x2) + cosine_bias*cos(x2)) + direction_bias)",
+    "x2_next": "atan2(sin(x2 + ((turn_gain*sign(x4)*Max(Abs(x4)-turn_width,0) + turn_bias) + sine_bias*sin(x2) + cosine_bias*cos(x2))), cos(x2 + ((turn_gain*sign(x4)*Max(Abs(x4)-turn_width,0) + turn_bias) + sine_bias*sin(x2) + cosine_bias*cos(x2))))"
+  },
+  "parameters": [
+    {
+      "name": "speed_gain",
+      "value": 0.18217814961467807,
+      "unit": "not supplied",
+      "type": "fitted",
+      "description": "Input coefficient in the common displacement magnitude."
+    },
+    {
+      "name": "speed_bias",
+      "value": -0.0021504052800333006,
+      "unit": "not supplied",
+      "type": "fitted",
+      "description": "Input-independent common displacement increment."
+    },
+    {
+      "name": "turn_gain",
+      "value": 0.1641321414508208,
+      "unit": "not supplied",
+      "type": "fitted",
+      "description": "Scale coefficient in the turning response."
+    },
+    {
+      "name": "turn_bias",
+      "value": -0.00035328402528358766,
+      "unit": "not supplied",
+      "type": "fitted",
+      "description": "Additive angular increment per sample."
+    },
+    {
+      "name": "turn_width",
+      "value": 0.06495574708909115,
+      "unit": "not supplied",
+      "type": "fitted",
+      "description": "Dead-zone width in the turning input, or rational smoothing width."
+    },
+    {
+      "name": "direction_factor",
+      "value": -0.3450058118853701,
+      "unit": "-",
+      "type": "fitted",
+      "description": "Multiplier of the predicted angular increment in the displacement direction; estimated to accommodate within-sample motion and omitted transients."
+    },
+    {
+      "name": "direction_bias",
+      "value": 0.006586826120673903,
+      "unit": "not supplied",
+      "type": "fitted",
+      "description": "Additive shift in the displacement direction."
+    },
+    {
+      "name": "sine_bias",
+      "value": 0.0029052024106956858,
+      "unit": "not supplied",
+      "type": "fitted",
+      "description": "Coefficient of `sin(x2)` in the angular increment."
+    },
+    {
+      "name": "cosine_bias",
+      "value": 0.0027061860719484313,
+      "unit": "not supplied",
+      "type": "fitted",
+      "description": "Coefficient of `cos(x2)` in the angular increment."
+    }
+  ],
+  "estimation": {
+    "criterion": "Initialization minimizes the sum of squared discrepancies of displacement magnitude and angular increment using residuals `[v - 0.2*q0, 0.3*(h-q1)]`, where `v = speed_gain*x3 + speed_bias` is the predicted displacement magnitude, `h` denotes the input-only part of the stated angular increment, and `q0` is measured displacement projected on the midpoint direction and divided by `0.2` s and `q1` is the principal observed angular increment. The initial criterion uses input-only `h`, even for Periodic. Then minimize full free-run squared state errors, with residual weights `[1, 1, 0.3]` in the order `y`, `x1`, `x2`. Numerical weights are empirical fitting conventions because units are unknown; simulated `y` is the scored output, while auxiliary errors discourage implausible state paths. All initial samples are excluded from the objective.",
+    "data": "`data/train.csv`, all three trajectories and all within-trajectory transitions: `447` transitions (`149` per trajectory). Initial states are the first logged states; no transitions join different trajectories. No data were withheld from the final coefficient fits. Structure and estimation settings were compared using leave-one-trajectory-out validation, each time fitting on the other two complete trajectories. Sampling period is `0.2` s; coefficients below are per-sample displacements, not continuous-time rates. Column units were not supplied.",
+    "method": "Bounded nonlinear least squares with `scipy.optimize.least_squares`, default trust-region reflective method, both stages. This handles the nonlinear width and multi-step dependence; ordinary least squares cannot optimize these jointly. Initialization starts from `[0.16, 0, 0.19, 0.001, 0.1, -0.4, 0, 0, 0]` in order `[speed_gain, speed_bias, turn_gain, turn_bias, turn_width, direction_factor, direction_bias, sine_bias, cosine_bias]`, representing a small positive input gain, small drift, moderate dead-zone width and direction-lag hypothesis. The actual second-stage start is `[0.1597761296703865, 0.001119596470303432, 0.1340913833399042, -0.001805858644315972, 0.08728982381566711, -0.4, 0, 0, 0]` in the same order. Both stages include all coefficients in the optimizer vector; `direction_factor`, `direction_bias` and any angular harmonic coefficients do not affect the first-stage input-only criterion and retain their initial values until the joint rollout fit. First-stage settings are `max_nfev = 100` with other tolerances at SciPy defaults; second-stage settings are `max_nfev = 200`, `ftol = xtol = gtol = 1e-9`. Bounds are `0 <= speed_gain <= 0.4`, `-0.01 <= speed_bias <= 0.01`, `0 <= turn_gain <= 0.5`, `-0.02 <= turn_bias <= 0.02`, `0 <= turn_width <= 0.4`, `-3 <= direction_factor <= 2`, `-0.5 <= direction_bias <= 0.5`, `-0.01 <= sine_bias <= 0.01`, `-0.01 <= cosine_bias <= 0.01`; except the dimensionless `direction_factor`, native coefficient units are unknown. Bounds are loose numerical guards for gains/drifts; positive rational width prevents division by zero. No random numbers are used; no seed applies. All final parameters are estimated together in the second stage.",
+    "script": "reproduce_final.py"
+  },
+  "discussion": {
+    "family": "Kinematic unicycle-like discrete-time state map with a sparse first-harmonic angular feedback correction and hard-dead-zone input response. For the basic directional kinematic structure, see S. M. LaValle, Planning Algorithms, Cambridge University Press (2006), differential constraints chapter, cited from memory without online verification. No supplied system description establishes that this is physically a vehicle.",
+    "interpretation": "`y`, `x1`, `x2` are current states; `x3`, `x4` are current inputs; the suffix `_next` denotes the next sample. `(speed_gain*x3 + speed_bias)` is the common signed displacement magnitude per sample: `speed_gain` scales the input, while `speed_bias` adds input-independent drift. `((turn_gain*sign(x4)*Max(Abs(x4)-turn_width,0) + turn_bias) + sine_bias*sin(x2) + cosine_bias*cos(x2))` is the angular increment: `turn_gain` scales the input response, `turn_width` sets its width, and `turn_bias` adds constant angular drift. `(x2 + direction_factor*((turn_gain*sign(x4)*Max(Abs(x4)-turn_width,0) + turn_bias) + sine_bias*sin(x2) + cosine_bias*cos(x2)) + direction_bias)` is the displacement direction; `direction_factor` and `direction_bias` are empirical fitted adjustments, not known physical averaging constants. The coordinate updates are `y + (speed_gain*x3 + speed_bias)*cos(x2 + direction_factor*((turn_gain*sign(x4)*Max(Abs(x4)-turn_width,0) + turn_bias) + sine_bias*sin(x2) + cosine_bias*cos(x2)) + direction_bias)` and `x1 + (speed_gain*x3 + speed_bias)*sin(x2 + direction_factor*((turn_gain*sign(x4)*Max(Abs(x4)-turn_width,0) + turn_bias) + sine_bias*sin(x2) + cosine_bias*cos(x2)) + direction_bias)`. The expression `atan2(sin(x2 + ((turn_gain*sign(x4)*Max(Abs(x4)-turn_width,0) + turn_bias) + sine_bias*sin(x2) + cosine_bias*cos(x2))), cos(x2 + ((turn_gain*sign(x4)*Max(Abs(x4)-turn_width,0) + turn_bias) + sine_bias*sin(x2) + cosine_bias*cos(x2))))` wraps the angular update. The term `sign(x4)*Max(Abs(x4)-turn_width,0)` suppresses small inputs and is odd outside its central dead zone. The terms `sine_bias*sin(x2)` and `cosine_bias*cos(x2)` are bounded first-harmonic angular corrections; no physical mechanism is identified.",
+    "origin": "State wrapping and observed alignment of displacement with `x2` motivated common directional increments. Shared displacement magnitude and additive angular increments are a deliberately parsimonious kinematic hypothesis; the system identity remains unknown. Affine and polynomial increment maps, linear-input kinematics, and cubic angular-input laws were examined first. Hard dead zones improved leave-one-trajectory-out simulation relative to the linear/cubic laws. The estimated direction factor and offset were proposed after residuals concentrated at input changes, to approximate averaging and omitted transients without introducing unavailable lag variables. The proposed terms `sine_bias*sin(x2)` and `cosine_bias*cos(x2)` allow a bounded orientation-dependent angular residual. They were an empirical alternative to radial position-dependent speed correction and saturation/asymmetric dead-zone fits, not a known force law. They reduced balanced-state trajectory error; the balanced residual weights were retained because they validated better for this particular family than the output-emphasized weights. Pooled training `y` free-run RMSE is `0.032097` native `y` units (unspecified); pooled leave-one-trajectory-out `y` RMSE is `0.146327` in the same units, excluding each initial sample.",
+    "limitations": "Only three trajectories, all starting at the same zero state, were supplied; units, system identity and hidden dynamics are unknown. Interpreting `x2` as an angle in the trigonometric arguments is an empirical convention, supported by wrapping at `pi`, not supplied physical metadata. Prediction outside the observed input/state ranges is unvalidated. Input-change residuals and serial correlations remain, consistent with omitted dynamics; the permitted memoryless state map cannot explicitly represent actuator-rate states or previous inputs. Parameters are effective prediction coefficients, not claimed physical constants. Angular errors in fitting are reduced to the principal interval using `atan2(sin(error), cos(error))`. The common-magnitude constraint may miss directional anisotropy. The direction correction does not actually supply an actuator-memory state; validation cannot guarantee extrapolation to other input switching rates."
+  }
+}

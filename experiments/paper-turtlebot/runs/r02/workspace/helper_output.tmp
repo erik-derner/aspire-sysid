@@ -1,0 +1,101 @@
+# Independent diagnostics of `data/train.csv`
+All diagnostics use training data only. The sample period is `Ts = 0.2` s, as supplied in TASK.md. `omega = atan2(sin(phi_next-phi),cos(phi_next-phi))/Ts` rad/s. `speed = (dx*cos(phi+Ts*omega/2)+dy*sin(phi+Ts*omega/2))/Ts` m/s is signed midpoint-projected speed. `lateral` m/s is its orthogonal component. Fits use ordinary least squares (`numpy.linalg.lstsq`) unless stated otherwise, with no starting values or random seed. Errors are root mean square residuals on the stated rows, not rollout errors. All coefficient lists are ordered as the named design-matrix columns; coefficient units are target units divided by column units. Sample indices and counts are dimensionless. Phase indices denote elapsed samples since a command change.
+Rows: 450 samples; 447 within-trajectory transitions; 90 command-change transitions (includes initial transitions).
+Command ranges on all training rows: `v_f` [0.000034312, 0.298155603] m/s; `v_a` [-0.948147536, 0.941160627] rad/s.
+On all transitions lateral RMS = 0.000877932158 m/s; speed median = 0.106803458 m/s.
+
+## omega
+all; gain; n=447 transitions; coefficients=[0.5812569156474632]; residual RMS=0.184674239 rad/s.
+all; affine; n=447 transitions; coefficients=[0.5795976002879816, -0.009743440617559123]; residual RMS=0.184419249 rad/s.
+all; cubic; n=447 transitions; coefficients=[0.5249588116138275, 0.026370357741144476, 0.10188873242394694, -0.01629904030251023]; residual RMS=0.183842036 rad/s.
+all; current+previous; n=447 transitions; coefficients=[0.18868640305252576, 0.49036254705169946, -0.0027170308043857477]; residual RMS=0.0906223696 rad/s.
+settled phases 1-4; gain; n=357 transitions; coefficients=[0.6775337953422622]; residual RMS=0.0802091214 rad/s.
+settled phases 1-4; affine; n=357 transitions; coefficients=[0.6770639245322457, -0.002701653768638226]; residual RMS=0.0801640187 rad/s.
+settled phases 1-4; cubic; n=357 transitions; coefficients=[0.5826499274738656, 0.0337172553488725, 0.1744542672433832, -0.0105555627674121]; residual RMS=0.0765082415 rad/s.
+settled phases 1-4; current+previous; n=357 transitions; coefficients=[0.3385319622661228, 0.3385319622661229, -0.0027016537686382694]; residual RMS=0.0801640187 rad/s.
+late phases 2-4; gain; n=267 transitions; coefficients=[0.6835019245427146]; residual RMS=0.081160012 rad/s.
+late phases 2-4; affine; n=267 transitions; coefficients=[0.6829657713452322, -0.0029788373736727774]; residual RMS=0.0811058536 rad/s.
+late phases 2-4; cubic; n=267 transitions; coefficients=[0.5830243978354556, 0.03367288463978563, 0.18466914049535332, -0.010672653667422156]; residual RMS=0.0771304121 rad/s.
+late phases 2-4; current+previous; n=267 transitions; coefficients=[0.3414828856726161, 0.34148288567261603, -0.0029788373736727644]; residual RMS=0.0811058536 rad/s.
+change phase 0; gain; n=90 transitions; coefficients=[0.20041213712564004]; residual RMS=0.299446275 rad/s.
+change phase 0; affine; n=90 transitions; coefficients=[0.19486288252198788, -0.03557550981058072]; residual RMS=0.297340949 rad/s.
+change phase 0; cubic; n=90 transitions; coefficients=[0.2888137740852635, 0.009552736789393085, -0.16658405235004026, -0.04029809678271278]; residual RMS=0.296444106 rad/s.
+change phase 0; current+previous; n=90 transitions; coefficients=[0.1965599263643059, 0.4982417734164805, -0.0022939711412295893]; residual RMS=0.123515357 rad/s.
+phase=0 samples after command change; current/previous/offset coefficients=[0.1965599263643059, 0.4982417734164805, -0.0022939711412295893]; residual RMS=0.123515357 rad/s; n=90 transitions. For phases greater than zero, current and previous commands coincide; their separate coefficients are unidentifiable and only their sum is meaningful.
+phase=1 samples after command change; current/previous/offset coefficients=[0.32980999220536994, 0.3298099922053699, -0.001754443489102274]; residual RMS=0.0764919183 rad/s; n=90 transitions. For phases greater than zero, current and previous commands coincide; their separate coefficients are unidentifiable and only their sum is meaningful.
+phase=2 samples after command change; current/previous/offset coefficients=[0.33510831706078054, 0.3351083170607805, -0.006836784171314524]; residual RMS=0.0856853394 rad/s; n=90 transitions. For phases greater than zero, current and previous commands coincide; their separate coefficients are unidentifiable and only their sum is meaningful.
+phase=3 samples after command change; current/previous/offset coefficients=[0.34052546091415176, 0.34052546091415165, -0.0030262819391356777]; residual RMS=0.0787467509 rad/s; n=90 transitions. For phases greater than zero, current and previous commands coincide; their separate coefficients are unidentifiable and only their sum is meaningful.
+phase=4 samples after command change; current/previous/offset coefficients=[0.3493424864413968, 0.34934248644139665, 0.0014226068305928374]; residual RMS=0.0776745174 rad/s; n=87 transitions. For phases greater than zero, current and previous commands coincide; their separate coefficients are unidentifiable and only their sum is meaningful.
+trajectory=1; settled affine coefficients=[0.6302009024301862, 0.007089377680747455]; RMS=0.0843715199 rad/s; n=119 transitions.
+trajectory=2; settled affine coefficients=[0.7051469760866912, -0.004506243432018845]; RMS=0.0649394547 rad/s; n=119 transitions.
+trajectory=3; settled affine coefficients=[0.6961498775713781, -0.003924038193270289]; RMS=0.0825641112 rad/s; n=119 transitions.
+Settled block affine residual summaries, gain estimated globally on phases 1-4:
+k in [0,50) samples; mean=0.00462917564 rad/s; RMS=0.0728728634 rad/s; n=120 transitions.
+k in [50,100) samples; mean=-0.00383439332 rad/s; RMS=0.0670071915 rad/s; n=120 transitions.
+k in [100,150) samples; mean=-0.000815161352 rad/s; RMS=0.0977581264 rad/s; n=117 transitions.
+Settled residual correlation at lag 1 samples (0.2 s) = 0.924448, dimensionless; n=267 pairs.
+Settled residual correlation at lag 2 samples (0.4 s) = 0.765623, dimensionless; n=264 pairs.
+Settled residual correlation at lag 5 samples (1.0 s) = 0.396122, dimensionless; n=345 pairs.
+Settled asymmetric-bias dead-zone fit `gain*sign(v_a)*Max(Abs(v_a)-threshold,0)+bias`: gain=0.784058735 dimensionless; threshold=0.0875858022 rad/s; bias=-0.0018574965 rad/s; RMS=0.0745560007 rad/s. Nonlinear least squares (`scipy.optimize.least_squares`), starting gain 0.8 dimensionless, threshold 0.1 rad/s, bias 0 rad/s; bounded to gain [0,3], threshold [0,0.5] rad/s, bias [-1,1] rad/s.
+Angular command magnitude [0,0.1) rad/s; n=44; mean abs omega=0.0224909474 rad/s; mean abs command=0.0486974508 rad/s.
+Angular command magnitude [0.1,0.2) rad/s; n=48; mean abs omega=0.0349247656 rad/s; mean abs command=0.142536073 rad/s.
+Angular command magnitude [0.2,0.4) rad/s; n=66; mean abs omega=0.188165004 rad/s; mean abs command=0.335647181 rad/s.
+Angular command magnitude [0.4,0.6) rad/s; n=84; mean abs omega=0.33762771 rad/s; mean abs command=0.501774864 rad/s.
+Angular command magnitude [0.6,1) rad/s; n=115; mean abs omega=0.561624188 rad/s; mean abs command=0.807202657 rad/s.
+
+## speed
+all; gain; n=447 transitions; coefficients=[0.8292634506436969]; residual RMS=0.0175732996 m/s.
+all; affine; n=447 transitions; coefficients=[0.7985588995370888, 0.005563004988303883]; residual RMS=0.0173273751 m/s.
+all; cubic; n=447 transitions; coefficients=[0.708256303464866, 0.9224252584275198, -2.2933933544994956, 0.007044378760354464]; residual RMS=0.0172775033 m/s.
+all; current+previous; n=447 transitions; coefficients=[0.6061991554931161, 0.23878167919217802, -0.00037552548787037066]; residual RMS=0.0131532125 m/s.
+settled phases 1-4; gain; n=357 transitions; coefficients=[0.8300777072558424]; residual RMS=0.00978835679 m/s.
+settled phases 1-4; affine; n=357 transitions; coefficients=[0.8340030171405679, -0.0007105171751756576]; residual RMS=0.00978119652 m/s.
+settled phases 1-4; cubic; n=357 transitions; coefficients=[0.7703341167142186, 0.5724273603529993, -1.3260385932070644, 0.0007188291270111558]; residual RMS=0.00975782464 m/s.
+settled phases 1-4; current+previous; n=357 transitions; coefficients=[0.41700150857028356, 0.41700150857028373, -0.0007105171751757289]; residual RMS=0.00978119652 m/s.
+late phases 2-4; gain; n=267 transitions; coefficients=[0.8311795571754025]; residual RMS=0.00967077991 m/s.
+late phases 2-4; affine; n=267 transitions; coefficients=[0.8332857902383879, -0.00038064850460011037]; residual RMS=0.00966869764 m/s.
+late phases 2-4; cubic; n=267 transitions; coefficients=[0.7713443581774019, 0.5925372210960251, -1.4237409450816978, 0.0008367655101649829]; residual RMS=0.009639137 m/s.
+late phases 2-4; current+previous; n=267 transitions; coefficients=[0.4166428951191946, 0.4166428951191943, -0.0003806485046000674]; residual RMS=0.00966869764 m/s.
+change phase 0; gain; n=90 transitions; coefficients=[0.826068112014628]; residual RMS=0.0339624754 m/s.
+change phase 0; affine; n=90 transitions; coefficients=[0.6581203371782093, 0.030540639285560715]; residual RMS=0.0299263936 m/s.
+change phase 0; cubic; n=90 transitions; coefficients=[0.47236545577435385, 2.1902491157929953, -5.804783353643494, 0.03211799861576248]; residual RMS=0.0296653839 m/s.
+change phase 0; current+previous; n=90 transitions; coefficients=[0.6467364866352106, 0.285391205858267, -0.004683359037436385]; residual RMS=0.0197352859 m/s.
+phase=0 samples after command change; current/previous/offset coefficients=[0.6467364866352106, 0.285391205858267, -0.004683359037436385]; residual RMS=0.0197352859 m/s; n=90 transitions. For phases greater than zero, current and previous commands coincide; their separate coefficients are unidentifiable and only their sum is meaningful.
+phase=1 samples after command change; current/previous/offset coefficients=[0.41811282136151146, 0.41811282136151146, -0.0017038991935078296]; residual RMS=0.0100729106 m/s; n=90 transitions. For phases greater than zero, current and previous commands coincide; their separate coefficients are unidentifiable and only their sum is meaningful.
+phase=2 samples after command change; current/previous/offset coefficients=[0.41538736899840406, 0.415387368998404, -0.00037646637045896103]; residual RMS=0.00979320293 m/s; n=90 transitions. For phases greater than zero, current and previous commands coincide; their separate coefficients are unidentifiable and only their sum is meaningful.
+phase=3 samples after command change; current/previous/offset coefficients=[0.41609673506023354, 0.41609673506023354, -0.00038333789674838137]; residual RMS=0.00978161822 m/s; n=90 transitions. For phases greater than zero, current and previous commands coincide; their separate coefficients are unidentifiable and only their sum is meaningful.
+phase=4 samples after command change; current/previous/offset coefficients=[0.41868799604150647, 0.4186879960415072, -0.0004163788673396951]; residual RMS=0.0093901498 m/s; n=87 transitions. For phases greater than zero, current and previous commands coincide; their separate coefficients are unidentifiable and only their sum is meaningful.
+trajectory=1; settled affine coefficients=[0.81368500032859, -0.002746062061802671]; RMS=0.00811839548 m/s; n=119 transitions.
+trajectory=2; settled affine coefficients=[0.8242757114149505, 0.0019732137817079273]; RMS=0.00802250403 m/s; n=119 transitions.
+trajectory=3; settled affine coefficients=[0.8565285140422334, -0.0006262136445840832]; RMS=0.0109457513 m/s; n=119 transitions.
+Settled block affine residual summaries, gain estimated globally on phases 1-4:
+k in [0,50) samples; mean=-0.00606586244 m/s; RMS=0.00970190808 m/s; n=120 transitions.
+k in [50,100) samples; mean=0.00180148564 m/s; RMS=0.00921623654 m/s; n=120 transitions.
+k in [100,150) samples; mean=0.0043737198 m/s; RMS=0.0104050079 m/s; n=117 transitions.
+Settled residual correlation at lag 1 samples (0.2 s) = 0.963676, dimensionless; n=267 pairs.
+Settled residual correlation at lag 2 samples (0.4 s) = 0.882391, dimensionless; n=264 pairs.
+Settled residual correlation at lag 5 samples (1.0 s) = 0.677868, dimensionless; n=345 pairs.
+
+Chord-angle relation on 428 transitions with abs speed > 0.005 m/s: `angle(displacement)-phi = a*(phi_next-phi)+b`; a=0.453937404 dimensionless, b=-0.000222725264 rad; RMS=0.00562997482 rad.
+Angular settled odd quadratic (v_a,v_a*Abs(v_a),sign(v_a),1); coefficients=[0.6314034735117431, 0.13025544462028502, -0.03083052037733, -0.0007774544799520507]; RMS=0.0753212291 rad/s; n=357 transitions.
+Angular settled forward-speed coupling (v_a,v_a*Abs(v_a),v_f,v_a*v_f,1); coefficients=[0.4728436189351395, 0.2196472584215638, 0.02466208993092578, 0.3237643100411391, -0.007018916043982991]; RMS=0.0749579706 rad/s; n=357 transitions.
+Angular settled time-varying gain (v_a,v_a*t,1); coefficients=[0.6283097291446702, 0.002975491868041632, -0.0023871747258489995]; RMS=0.0788783124 rad/s; n=357 transitions.
+Angular settled orientation offset (v_a,sin(phi),cos(phi),1); coefficients=[0.6739943841596442, 0.02872347624077071, -0.0025047156191303176, -0.009508866477695763]; RMS=0.0782392306 rad/s; n=357 transitions.
+Speed settled time offset (v_f,t,1); coefficients=[0.8213514430052203, 0.000571593033501394, -0.007558905206024913]; RMS=0.00852238322 m/s; n=357 transitions. Here `t=k*Ts` s is diagnostic only, not an allowed model input.
+Speed settled time-varying gain (v_f,v_f*t,1); coefficients=[0.771526737499754, 0.0035348890958824594, 6.90745565084987e-05]; RMS=0.00876396081 m/s; n=357 transitions. Here `t=k*Ts` s is diagnostic only, not an allowed model input.
+Speed settled orientation gain (v_f,v_f*sin(phi),v_f*cos(phi),1); coefficients=[0.8329983866983983, 0.004997557482783752, -0.02070496863061669, -0.00017577378668588804]; RMS=0.00949771059 m/s; n=357 transitions. Here `t=k*Ts` s is diagnostic only, not an allowed model input.
+Speed settled angular coupling (v_f,Abs(v_a),v_f*Abs(v_a),1); coefficients=[0.8655544400916935, 0.013107386835103537, -0.07632612646139321, -0.006197647947954046]; RMS=0.009596343 m/s; n=357 transitions. Here `t=k*Ts` s is diagnostic only, not an allowed model input.
+
+## Settled block means (average phases 1-4)
+Block count=90; median within-block angular SD=0.0174118231 rad/s; median speed SD=0.00102419488 m/s.
+Block mean omega affine coefficients=[0.6760372040391429, -0.0034090329369470887]; RMS=0.0776055641 rad/s.
+Block mean speed affine coefficients=[0.8338814026666971, -0.0006925691618498174]; RMS=0.0096157847 m/s.
+Noninitial phase0 omega: current/previous/offset=[0.23295252342988543, 0.5347534351964907, 0.0010305462346095196]; RMS=0.0897467619 rad/s; n=87 transitions.
+Noninitial phase0 speed: current/previous/offset=[0.6517197801857524, 0.2922419658798631, -0.0030542512244242648]; RMS=0.0098871796 m/s; n=87 transitions.
+
+## Interpretation and suggestions
+Most useful allowed families: calibrated unicycle with midpoint orientation `x_next = x + Ts*v*cos(phi + q*Ts*w)` and analogous sine for `y_next`, where `v` m/s is a static forward response and `w` rad/s a static angular response, `q` dimensionless is a within-step orientation fraction; affine or gain-only forward response; dead-zone angular response; smooth dead-zone alternative `w = a*v_a-b*tanh(v_a/c)+d`, with `a` dimensionless and `b`, `c`, `d` rad/s. Try exact constant-twist integration as a distinct physically motivated integrator, using a guarded zero-rate limit.
+Angular response is clearly suppressed near zero commands; odd cubic improves modestly, but a dead zone is more interpretable. Forward cubic gives negligible improvement and is not supported as a necessary static nonlinearity. Angular forward-speed coupling is modest and should be judged by held-out trajectory rollouts, not training residual reduction alone.
+There is a dominant command-change timing effect. The previous angular command has more influence than the current command in the first changed-command interval; forward velocity shows a smaller but clear carryover. Settled intervals are reached by the second logged interval. A fractional-delay or actuator-lag structure would describe this if extra memory were allowed. The requested expressions do not allow previous commands or actuator states, so they cannot reproduce this exactly; do not claim a purely static model estimates this delay. Diagnose the influence by phase-dependent residuals, and estimate allowed static parameters by multi-step rollout objectives, because those parameters must compromise over transitions.
+Residuals are highly temporally correlated and blockwise coherent rather than independent pose noise. Forward residuals also trend upward within trajectories; a time feature improves diagnostic fit but elapsed time is not allowed. Position or heading dependence might proxy drift in training, but that does not establish a physical law and risks failing on new trajectories. Neither actuator calibration drift nor correlated odometry error can be separated from these data. Prefer conservative parameter counts and trajectory-wise validation.
+No external references were used or required. Family names here refer to differential-drive/unicycle kinematics, static dead-zone nonlinearities, and fractional command delay; no unverified citation is supplied. No candidate files or main scripts were written or modified.

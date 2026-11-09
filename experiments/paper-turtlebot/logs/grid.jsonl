@@ -1,0 +1,13 @@
+{"at": "2026-10-07T23:27:53.072724+00:00", "dry_run": false, "event": "grid_start", "experiment": "paper-turtlebot", "pid": 94412, "resume": false, "runs": 5, "task": "turtlebot"}
+{"at": "2026-10-07T23:27:53.072724+00:00", "attempt": 1, "event": "run_start", "mode": "worker process", "run": "r01"}
+{"at": "2026-10-07T23:27:53.096655+00:00", "attempt": 1, "event": "run_start", "mode": "worker process", "run": "r02"}
+{"at": "2026-10-07T23:27:53.099275+00:00", "attempt": 1, "event": "run_start", "mode": "worker process", "run": "r03"}
+{"at": "2026-10-07T23:36:07.816585+00:00", "attempt": 1, "cost_usd": 1.225568, "event": "run_end", "exit_status": 0, "leak_findings": 0, "outcome": "completed", "run": "r03"}
+{"at": "2026-10-07T23:36:07.827373+00:00", "attempt": 1, "event": "run_start", "mode": "worker process", "run": "r04"}
+{"at": "2026-10-07T23:37:07.196528+00:00", "attempt": 1, "cost_usd": 1.3332700000000002, "event": "run_end", "exit_status": 0, "leak_findings": 0, "outcome": "completed", "run": "r02"}
+{"at": "2026-10-07T23:37:07.198546+00:00", "attempt": 1, "event": "run_start", "mode": "worker process", "run": "r05"}
+{"at": "2026-10-07T23:45:38.704489+00:00", "attempt": 1, "cost_usd": 1.6545079999999999, "event": "run_end", "exit_status": 0, "leak_findings": 1, "outcome": "completed", "run": "r01"}
+{"at": "2026-10-07T23:47:47.845869+00:00", "attempt": 1, "cost_usd": 0.9556339999999998, "event": "run_end", "exit_status": 0, "leak_findings": 0, "outcome": "completed", "run": "r04"}
+{"at": "2026-10-07T23:50:00.299336+00:00", "attempt": 1, "cost_usd": 1.3814859999999998, "event": "run_end", "exit_status": 0, "leak_findings": 3, "outcome": "completed", "run": "r05"}
+{"added": ["r01", "r02", "r03", "r04", "r05"], "at": "2026-10-07T23:50:06.878963+00:00", "event": "experiment_export", "folder": "experiments/paper-turtlebot/export/matlab", "status": "written", "verified": true}
+{"at": "2026-10-07T23:50:06.889054+00:00", "event": "grid_end", "executed": 5, "failed": 0, "leak_findings": 4, "skipped_finished": 0}

@@ -1,0 +1,10 @@
+{
+  "order": [
+    "CoupledDeadzone",
+    "SmoothAngular",
+    "AbsoluteCoupling",
+    "LinearKinematic"
+  ],
+  "recommended": "CoupledDeadzone",
+  "reason": "`CoupledDeadzone` has the lowest pooled leave-one-trajectory-out free-running `y` RMSE among the retained structurally different families: `0.115160` versus `0.127536` for `SmoothAngular`, `0.142038` for `AbsoluteCoupling` and `0.212931` for `LinearKinematic`, all in unspecified `y` units on the three training trajectories. The nonlinear coupled-input response is supported by residual structure and its static-map regularization limits path-specific fitting. `SmoothAngular` fits training paths better and remains a useful alternative. With only three validation trajectories and apparent missing input memory, the ranking is uncertain and is not a claim about unavailable test performance."
+}

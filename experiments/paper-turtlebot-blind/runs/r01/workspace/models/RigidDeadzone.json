@@ -1,0 +1,56 @@
+{
+  "expressions": {
+    "y_next": "y + (sb + sv*x3)*cos(x2 + 0.5*(hb + hg*sign(x4)*Max(Abs(x4)-hd, 0)))",
+    "x1_next": "x1 + (sb + sv*x3)*sin(x2 + 0.5*(hb + hg*sign(x4)*Max(Abs(x4)-hd, 0)))",
+    "x2_next": "atan2(sin(x2 + (hb + hg*sign(x4)*Max(Abs(x4)-hd, 0))), cos(x2 + (hb + hg*sign(x4)*Max(Abs(x4)-hd, 0))))"
+  },
+  "parameters": [
+    {
+      "name": "sb",
+      "value": -0.0006147198767471145,
+      "unit": "P",
+      "type": "fitted",
+      "description": "Intercept in signed forward step `sb + sv*x3`; P is the assumed shared coordinate unit, unknown physically."
+    },
+    {
+      "name": "sv",
+      "value": 0.16841738920412258,
+      "unit": "P/U",
+      "type": "fitted",
+      "description": "Slope of signed forward step with recorded input `x3`; U is its unknown unit."
+    },
+    {
+      "name": "hb",
+      "value": 0.0015983976587002936,
+      "unit": "rad",
+      "type": "fitted",
+      "description": "Input-independent angle increment; radian interpretation is assumed from wrapping."
+    },
+    {
+      "name": "hg",
+      "value": 0.17700543676267302,
+      "unit": "rad/W",
+      "type": "fitted",
+      "description": "Scale of the nonlinear angle response to recorded input `x4`; W is its unknown unit, and `hp` is the fitted exponent for the signed-power map."
+    },
+    {
+      "name": "hd",
+      "value": 0.09770312115972146,
+      "unit": "W",
+      "type": "fitted",
+      "description": "Fitted threshold in `sign(x4)*Max(Abs(x4)-hd, 0)`; this is an empirical dead zone, not established actuator friction."
+    }
+  ],
+  "estimation": {
+    "criterion": "Nonlinear least squares on the concatenation of two residual vectors: free-running coordinate errors in `y` and `x1` and wrapped angle errors multiplied by `0.25` P/rad; and local increment errors multiplied by `100`, a dimensionless regularization weight. Thus the local sum of squares has relative weight `10000`. The local coordinate errors have units P and local angle errors are multiplied by `0.25` P/rad. Free-running residuals include all samples after the initial state. Local residuals use block-interior transitions only. The coordinate criterion addresses accumulated trajectory errors; the local penalty discourages spurious nonlinear response curves introduced to explain persistent disturbances and unavailable input history. The angle weighting is a chosen geometric scale, not a known physical length. The regularization weight was selected using leave-one-trajectory-out `y` prediction errors among `5`, `20`, `100`, and local-only fits for rigid maps, and `20`, `100`, and `300` for the Fourier map; it is not an estimated model constant.",
+    "data": "`data/train.csv`, all three trajectories, each with 150 samples at `T_s = 0.2` s. The final fit uses all 447 within-trajectory transitions for the free-running residual and 267 transitions with zero-based within-trajectory index modulo five in {2, 3, 4} for the local regularizer. The latter excludes switch and immediate post-switch samples because diagnostics show actuator-memory effects; no cross-trajectory transition is used. ",
+    "method": "All five parameters were estimated jointly by the trust-region reflective nonlinear least-squares algorithm in `scipy.optimize.least_squares`, as implemented by `fit_regularized.fit`, with the family `deadzone_mid` and the multiplier `100`. This algorithm handles the chosen parameter bounds and a nonlinear multi-step residual, unlike ordinary linear least squares. The starting vector in parameter order `sb, sv, hb, hg, hd` was `[0, 0.1667, 0, 0.1667, 0.09]`; its entries have the corresponding parameter units. These rounded starts were motivated by preliminary block-interior input regressions (a forward gain near one sixth and a small angle offset), not copied fitted values from another submitted candidate. Bounds were `-0.02 <= sb <= 0.02` P, `0 <= sv <= 0.4` P/U, `-0.05 <= hb <= 0.05` rad, and `0 <= hg <= 0.5` rad/W and `0 <= hd <= 0.3` W. They keep the response in a modest range seen in training and prevent unconstrained nonlinear gains; they are assumptions rather than known physical bounds. Maximum function evaluations were `3000`, and `ftol = xtol = gtol = 1e-10`, dimensionless convergence tolerances. There is no random seed because the procedure is deterministic. Starting values, the data selection, objective, and settings are reproduced by `fit_regularized.py`; `reproduce_submission.py` reruns this fit and writes the candidate. Other fits were used only for structural comparison and regularization selection; no fitted parameter was held over or fixed. Reference: SciPy API documentation, least_squares, checked directly; NumPy API documentation, numpy.linalg.lstsq, checked directly. SciPy documents the trust-region reflective bounded least-squares method; NumPy documents its direct least-squares solve. Defaults used were linear loss and a two-point finite-difference Jacobian for the nonlinear solve.",
+    "script": "reproduce_submission.py"
+  },
+  "discussion": {
+    "family": "Discrete-time planar kinematic (unicycle-type) map with midpoint integration and a static dead-zone input nonlinearity, also called a Hammerstein-type input block. The terminology describes mathematical structure only; no specific vehicle is claimed. A related reference is R. M. Murray, Z. X. Li, and S. S. Sastry, A Mathematical Introduction to Robotic Manipulation, CRC Press, 1994. Book authorship and publication were verified on the author-hosted MLS archive; the nonholonomic-kinematics association is recalled from memory and its chapter text was not checked. The empirical input-response function and discrete midpoint map are choices made here, not equations attributed to that book.",
+    "interpretation": "Physical units were not supplied. Here P denotes the assumed shared logged coordinate unit of `y` and `x1`, U denotes the unknown recorded unit of `x3`, and W denotes the unknown recorded unit of `x4`. `x2` is treated as an angle in radians, inferred from its wrapping, not given by the task. The signed forward step is `sb + sv*x3`: `sb` adds a constant offset and `sv*x3` adds a linear response. The angle step is `hb + hg*sign(x4)*Max(Abs(x4)-hd, 0)`: `hb` is drift and the remaining term is zero inside the fitted input dead zone and affine in input magnitude outside it. Position increments use `cos(x2 + 0.5*(hb + hg*sign(x4)*Max(Abs(x4)-hd, 0)))` and `sin(x2 + 0.5*(hb + hg*sign(x4)*Max(Abs(x4)-hd, 0)))`, tying the two coordinates to the same forward step and midpoint direction. The factor `0.5` defines midpoint integration. The expression `atan2(sin(x2 + (hb + hg*sign(x4)*Max(Abs(x4)-hd, 0))), cos(x2 + (hb + hg*sign(x4)*Max(Abs(x4)-hd, 0))))` wraps the updated angle to the principal branch. No attraction to coordinate zero or coordinate-dependent force is assumed.",
+    "origin": "Before fitting I listed affine, polynomial, and bounded/periodic model families. Ordinary least squares affine and polynomial maps of degrees one through three were explored on within-trajectory increments; their poor trajectory-held-out increment behavior, and angle wrapping, motivated periodic coordinates. A bicycle-like `x3*x4` angle response was rejected after comparison with an independent `x4` response. Body-frame projection showed that midpoint-angle integration greatly reduced lateral residuals. I then fitted Euler and midpoint linear maps, midpoint cubic, signed-power and dead-zone maps, and a cubic exact-arc map by free-running nonlinear least squares. Residuals showed strong switch transients and serial dependence rather than evidence for coordinate-dependent forces; adding coordinate and heading predictors to scalar input regressions did not reliably improve held-out local errors. This motivated the interior-increment regularizer rather than extra state-dependent terms. No symbolic-regression package or random search was used. The selected dead-zone threshold is an empirical input-response choice suggested by scalar block-interior regressions. It is not physical knowledge. I retained this candidate because it achieves nearly the best trajectory-held-out scored-output error with only five coefficients.",
+    "limitations": "The interpretation is inferred, not a known description of this system. Recorded units, hardware, actuator state, noise model, and input behavior outside the observed range are unknown. No previous inputs may enter the required expressions, so switch transients cannot be represented exactly. Residual autocorrelation and persistent block disturbances remain. Long-horizon heading bias accumulates into coordinate error, and validation contains only three trajectories; model choice is consequently uncertain. Prefix-to-tail validation is materially worse than whole-trajectory holdout. The map is intended only near the observed input and state coverage, not arbitrary large inputs. On all training trajectories the free-running `y` RMSE is `0.06550882978238272` P. Leave-one-trajectory-out `y` RMSE values for held-out trajectories one, two, and three are `0.030288680766855716`, `0.1227901397156689`, and `0.09027610485305522` P, respectively; their equal-size aggregate is `0.08971175638571534` P. Refitting on the first 100 samples of every trajectory and continuing free runs from the original initial states gives final-50-sample `y` RMSE `0.1799907732638144` P. All validation uses only the training file, not hidden test data. On all 447 transitions the one-step `y` RMSE is `0.002674389398512461` P; on the 90 switch-step transitions it is `0.005186941664228186` P, versus `0.001458944721420497` P on the 267 interior transitions. Adjacent one-step `y` residual correlation is `0.4021713697226039`, dimensionless, computed only within trajectories. The block phase is used only to choose fitting rows, never as an expression argument. "
+  }
+}

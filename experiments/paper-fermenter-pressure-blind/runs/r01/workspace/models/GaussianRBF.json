@@ -1,0 +1,768 @@
+{
+  "expressions": {
+    "dy": "b0*1 + b1*((y-oy)/sy) + b2*((x1-ox)/sx) + b3*((x2-oz)/sz) + w0*exp(-((((y-oy)/sy)-m0_0)**2 + (((x1-ox)/sx)-m0_1)**2 + (((x2-oz)/sz)-m0_2)**2)/(2*width**2)) + w1*exp(-((((y-oy)/sy)-m1_0)**2 + (((x1-ox)/sx)-m1_1)**2 + (((x2-oz)/sz)-m1_2)**2)/(2*width**2)) + w2*exp(-((((y-oy)/sy)-m2_0)**2 + (((x1-ox)/sx)-m2_1)**2 + (((x2-oz)/sz)-m2_2)**2)/(2*width**2)) + w3*exp(-((((y-oy)/sy)-m3_0)**2 + (((x1-ox)/sx)-m3_1)**2 + (((x2-oz)/sz)-m3_2)**2)/(2*width**2)) + w4*exp(-((((y-oy)/sy)-m4_0)**2 + (((x1-ox)/sx)-m4_1)**2 + (((x2-oz)/sz)-m4_2)**2)/(2*width**2)) + w5*exp(-((((y-oy)/sy)-m5_0)**2 + (((x1-ox)/sx)-m5_1)**2 + (((x2-oz)/sz)-m5_2)**2)/(2*width**2)) + w6*exp(-((((y-oy)/sy)-m6_0)**2 + (((x1-ox)/sx)-m6_1)**2 + (((x2-oz)/sz)-m6_2)**2)/(2*width**2)) + w7*exp(-((((y-oy)/sy)-m7_0)**2 + (((x1-ox)/sx)-m7_1)**2 + (((x2-oz)/sz)-m7_2)**2)/(2*width**2)) + w8*exp(-((((y-oy)/sy)-m8_0)**2 + (((x1-ox)/sx)-m8_1)**2 + (((x2-oz)/sz)-m8_2)**2)/(2*width**2)) + w9*exp(-((((y-oy)/sy)-m9_0)**2 + (((x1-ox)/sx)-m9_1)**2 + (((x2-oz)/sz)-m9_2)**2)/(2*width**2)) + w10*exp(-((((y-oy)/sy)-m10_0)**2 + (((x1-ox)/sx)-m10_1)**2 + (((x2-oz)/sz)-m10_2)**2)/(2*width**2)) + w11*exp(-((((y-oy)/sy)-m11_0)**2 + (((x1-ox)/sx)-m11_1)**2 + (((x2-oz)/sz)-m11_2)**2)/(2*width**2)) + w12*exp(-((((y-oy)/sy)-m12_0)**2 + (((x1-ox)/sx)-m12_1)**2 + (((x2-oz)/sz)-m12_2)**2)/(2*width**2)) + w13*exp(-((((y-oy)/sy)-m13_0)**2 + (((x1-ox)/sx)-m13_1)**2 + (((x2-oz)/sz)-m13_2)**2)/(2*width**2)) + w14*exp(-((((y-oy)/sy)-m14_0)**2 + (((x1-ox)/sx)-m14_1)**2 + (((x2-oz)/sz)-m14_2)**2)/(2*width**2)) + w15*exp(-((((y-oy)/sy)-m15_0)**2 + (((x1-ox)/sx)-m15_1)**2 + (((x2-oz)/sz)-m15_2)**2)/(2*width**2)) + w16*exp(-((((y-oy)/sy)-m16_0)**2 + (((x1-ox)/sx)-m16_1)**2 + (((x2-oz)/sz)-m16_2)**2)/(2*width**2)) + w17*exp(-((((y-oy)/sy)-m17_0)**2 + (((x1-ox)/sx)-m17_1)**2 + (((x2-oz)/sz)-m17_2)**2)/(2*width**2)) + w18*exp(-((((y-oy)/sy)-m18_0)**2 + (((x1-ox)/sx)-m18_1)**2 + (((x2-oz)/sz)-m18_2)**2)/(2*width**2)) + w19*exp(-((((y-oy)/sy)-m19_0)**2 + (((x1-ox)/sx)-m19_1)**2 + (((x2-oz)/sz)-m19_2)**2)/(2*width**2)) + w20*exp(-((((y-oy)/sy)-m20_0)**2 + (((x1-ox)/sx)-m20_1)**2 + (((x2-oz)/sz)-m20_2)**2)/(2*width**2)) + w21*exp(-((((y-oy)/sy)-m21_0)**2 + (((x1-ox)/sx)-m21_1)**2 + (((x2-oz)/sz)-m21_2)**2)/(2*width**2)) + w22*exp(-((((y-oy)/sy)-m22_0)**2 + (((x1-ox)/sx)-m22_1)**2 + (((x2-oz)/sz)-m22_2)**2)/(2*width**2)) + w23*exp(-((((y-oy)/sy)-m23_0)**2 + (((x1-ox)/sx)-m23_1)**2 + (((x2-oz)/sz)-m23_2)**2)/(2*width**2))"
+  },
+  "parameters": [
+    {
+      "name": "oy",
+      "value": 1.0,
+      "unit": "unknown state unit",
+      "type": "fixed",
+      "description": "State centering value; chosen near the lower observed range to condition the library."
+    },
+    {
+      "name": "ox",
+      "value": 60.0,
+      "unit": "unknown input x1 unit",
+      "type": "fixed",
+      "description": "Input centering value; convenient round value near the training mean."
+    },
+    {
+      "name": "oz",
+      "value": 18.0,
+      "unit": "unknown input x2 unit",
+      "type": "fixed",
+      "description": "Input centering value; convenient round value near the training mean."
+    },
+    {
+      "name": "sy",
+      "value": 0.4,
+      "unit": "unknown state unit",
+      "type": "fixed",
+      "description": "State scale; chosen to put the observed state variation near order one."
+    },
+    {
+      "name": "sx",
+      "value": 30.0,
+      "unit": "unknown input x1 unit",
+      "type": "fixed",
+      "description": "Input scale; chosen for order-one variation and smooth interpolation."
+    },
+    {
+      "name": "sz",
+      "value": 10.0,
+      "unit": "unknown input x2 unit",
+      "type": "fixed",
+      "description": "Input scale; chosen for order-one variation and smooth interpolation."
+    },
+    {
+      "name": "width",
+      "value": 1.5,
+      "unit": "-",
+      "type": "fitted",
+      "description": "Dimensionless Gaussian width selected by validation free-running RMSE from the tested width grid, conditional on the chosen center count and ridge strength."
+    },
+    {
+      "name": "b0",
+      "value": 0.09728601418127847,
+      "unit": "unknown state unit/s",
+      "type": "fitted",
+      "description": "Affine baseline coefficient multiplying `1`; jointly estimated with radial-basis weights by ridge regression."
+    },
+    {
+      "name": "b1",
+      "value": -0.03367789502438894,
+      "unit": "unknown state unit/s",
+      "type": "fitted",
+      "description": "Affine baseline coefficient multiplying `((y-oy)/sy)`; jointly estimated with radial-basis weights by ridge regression."
+    },
+    {
+      "name": "b2",
+      "value": 0.021650872272317975,
+      "unit": "unknown state unit/s",
+      "type": "fitted",
+      "description": "Affine baseline coefficient multiplying `((x1-ox)/sx)`; jointly estimated with radial-basis weights by ridge regression."
+    },
+    {
+      "name": "b3",
+      "value": -0.006455571564415639,
+      "unit": "unknown state unit/s",
+      "type": "fitted",
+      "description": "Affine baseline coefficient multiplying `((x2-oz)/sz)`; jointly estimated with radial-basis weights by ridge regression."
+    },
+    {
+      "name": "m0_0",
+      "value": 0.353037922569875,
+      "unit": "-",
+      "type": "fitted",
+      "description": "Dimensionless center coordinate in normalized `y`, obtained by training-only K-means clustering before coefficient fitting."
+    },
+    {
+      "name": "m0_1",
+      "value": 0.2910814049538602,
+      "unit": "-",
+      "type": "fitted",
+      "description": "Dimensionless center coordinate in normalized `x1`, obtained by training-only K-means clustering before coefficient fitting."
+    },
+    {
+      "name": "m0_2",
+      "value": -0.436294461368175,
+      "unit": "-",
+      "type": "fitted",
+      "description": "Dimensionless center coordinate in normalized `x2`, obtained by training-only K-means clustering before coefficient fitting."
+    },
+    {
+      "name": "w0",
+      "value": 0.23926419927749293,
+      "unit": "unknown state unit/s",
+      "type": "fitted",
+      "description": "Weight of Gaussian radial basis `exp(-((((y-oy)/sy)-m0_0)**2 + (((x1-ox)/sx)-m0_1)**2 + (((x2-oz)/sz)-m0_2)**2)/(2*width**2))`; jointly estimated by ridge regression after centers were estimated."
+    },
+    {
+      "name": "m1_0",
+      "value": 1.7505896145647222,
+      "unit": "-",
+      "type": "fitted",
+      "description": "Dimensionless center coordinate in normalized `y`, obtained by training-only K-means clustering before coefficient fitting."
+    },
+    {
+      "name": "m1_1",
+      "value": 0.3762172028512666,
+      "unit": "-",
+      "type": "fitted",
+      "description": "Dimensionless center coordinate in normalized `x1`, obtained by training-only K-means clustering before coefficient fitting."
+    },
+    {
+      "name": "m1_2",
+      "value": 0.7822819033536043,
+      "unit": "-",
+      "type": "fitted",
+      "description": "Dimensionless center coordinate in normalized `x2`, obtained by training-only K-means clustering before coefficient fitting."
+    },
+    {
+      "name": "w1",
+      "value": 0.1538766013198183,
+      "unit": "unknown state unit/s",
+      "type": "fitted",
+      "description": "Weight of Gaussian radial basis `exp(-((((y-oy)/sy)-m1_0)**2 + (((x1-ox)/sx)-m1_1)**2 + (((x2-oz)/sz)-m1_2)**2)/(2*width**2))`; jointly estimated by ridge regression after centers were estimated."
+    },
+    {
+      "name": "m2_0",
+      "value": 1.076273112506657,
+      "unit": "-",
+      "type": "fitted",
+      "description": "Dimensionless center coordinate in normalized `y`, obtained by training-only K-means clustering before coefficient fitting."
+    },
+    {
+      "name": "m2_1",
+      "value": 0.37156530526968157,
+      "unit": "-",
+      "type": "fitted",
+      "description": "Dimensionless center coordinate in normalized `x1`, obtained by training-only K-means clustering before coefficient fitting."
+    },
+    {
+      "name": "m2_2",
+      "value": 0.8090200403234463,
+      "unit": "-",
+      "type": "fitted",
+      "description": "Dimensionless center coordinate in normalized `x2`, obtained by training-only K-means clustering before coefficient fitting."
+    },
+    {
+      "name": "w2",
+      "value": -1.333533306285579,
+      "unit": "unknown state unit/s",
+      "type": "fitted",
+      "description": "Weight of Gaussian radial basis `exp(-((((y-oy)/sy)-m2_0)**2 + (((x1-ox)/sx)-m2_1)**2 + (((x2-oz)/sz)-m2_2)**2)/(2*width**2))`; jointly estimated by ridge regression after centers were estimated."
+    },
+    {
+      "name": "m3_0",
+      "value": 0.08500796777230735,
+      "unit": "-",
+      "type": "fitted",
+      "description": "Dimensionless center coordinate in normalized `y`, obtained by training-only K-means clustering before coefficient fitting."
+    },
+    {
+      "name": "m3_1",
+      "value": -1.0775393227000296,
+      "unit": "-",
+      "type": "fitted",
+      "description": "Dimensionless center coordinate in normalized `x1`, obtained by training-only K-means clustering before coefficient fitting."
+    },
+    {
+      "name": "m3_2",
+      "value": -0.5779401425962094,
+      "unit": "-",
+      "type": "fitted",
+      "description": "Dimensionless center coordinate in normalized `x2`, obtained by training-only K-means clustering before coefficient fitting."
+    },
+    {
+      "name": "w3",
+      "value": 0.10241018336214769,
+      "unit": "unknown state unit/s",
+      "type": "fitted",
+      "description": "Weight of Gaussian radial basis `exp(-((((y-oy)/sy)-m3_0)**2 + (((x1-ox)/sx)-m3_1)**2 + (((x2-oz)/sz)-m3_2)**2)/(2*width**2))`; jointly estimated by ridge regression after centers were estimated."
+    },
+    {
+      "name": "m4_0",
+      "value": 0.19584127491520276,
+      "unit": "-",
+      "type": "fitted",
+      "description": "Dimensionless center coordinate in normalized `y`, obtained by training-only K-means clustering before coefficient fitting."
+    },
+    {
+      "name": "m4_1",
+      "value": -1.1204990253653573,
+      "unit": "-",
+      "type": "fitted",
+      "description": "Dimensionless center coordinate in normalized `x1`, obtained by training-only K-means clustering before coefficient fitting."
+    },
+    {
+      "name": "m4_2",
+      "value": 0.06686652091241649,
+      "unit": "-",
+      "type": "fitted",
+      "description": "Dimensionless center coordinate in normalized `x2`, obtained by training-only K-means clustering before coefficient fitting."
+    },
+    {
+      "name": "w4",
+      "value": 0.15210675222167674,
+      "unit": "unknown state unit/s",
+      "type": "fitted",
+      "description": "Weight of Gaussian radial basis `exp(-((((y-oy)/sy)-m4_0)**2 + (((x1-ox)/sx)-m4_1)**2 + (((x2-oz)/sz)-m4_2)**2)/(2*width**2))`; jointly estimated by ridge regression after centers were estimated."
+    },
+    {
+      "name": "m5_0",
+      "value": 0.6126241547030371,
+      "unit": "-",
+      "type": "fitted",
+      "description": "Dimensionless center coordinate in normalized `y`, obtained by training-only K-means clustering before coefficient fitting."
+    },
+    {
+      "name": "m5_1",
+      "value": 0.6174105807467624,
+      "unit": "-",
+      "type": "fitted",
+      "description": "Dimensionless center coordinate in normalized `x1`, obtained by training-only K-means clustering before coefficient fitting."
+    },
+    {
+      "name": "m5_2",
+      "value": -0.14000435777612635,
+      "unit": "-",
+      "type": "fitted",
+      "description": "Dimensionless center coordinate in normalized `x2`, obtained by training-only K-means clustering before coefficient fitting."
+    },
+    {
+      "name": "w5",
+      "value": -0.3793623218209314,
+      "unit": "unknown state unit/s",
+      "type": "fitted",
+      "description": "Weight of Gaussian radial basis `exp(-((((y-oy)/sy)-m5_0)**2 + (((x1-ox)/sx)-m5_1)**2 + (((x2-oz)/sz)-m5_2)**2)/(2*width**2))`; jointly estimated by ridge regression after centers were estimated."
+    },
+    {
+      "name": "m6_0",
+      "value": 1.1870559382794508,
+      "unit": "-",
+      "type": "fitted",
+      "description": "Dimensionless center coordinate in normalized `y`, obtained by training-only K-means clustering before coefficient fitting."
+    },
+    {
+      "name": "m6_1",
+      "value": 0.635347937588668,
+      "unit": "-",
+      "type": "fitted",
+      "description": "Dimensionless center coordinate in normalized `x1`, obtained by training-only K-means clustering before coefficient fitting."
+    },
+    {
+      "name": "m6_2",
+      "value": 0.37473634748316526,
+      "unit": "-",
+      "type": "fitted",
+      "description": "Dimensionless center coordinate in normalized `x2`, obtained by training-only K-means clustering before coefficient fitting."
+    },
+    {
+      "name": "w6",
+      "value": 1.0847723695048468,
+      "unit": "unknown state unit/s",
+      "type": "fitted",
+      "description": "Weight of Gaussian radial basis `exp(-((((y-oy)/sy)-m6_0)**2 + (((x1-ox)/sx)-m6_1)**2 + (((x2-oz)/sz)-m6_2)**2)/(2*width**2))`; jointly estimated by ridge regression after centers were estimated."
+    },
+    {
+      "name": "m7_0",
+      "value": 0.11338991920153296,
+      "unit": "-",
+      "type": "fitted",
+      "description": "Dimensionless center coordinate in normalized `y`, obtained by training-only K-means clustering before coefficient fitting."
+    },
+    {
+      "name": "m7_1",
+      "value": -0.2035799259609646,
+      "unit": "-",
+      "type": "fitted",
+      "description": "Dimensionless center coordinate in normalized `x1`, obtained by training-only K-means clustering before coefficient fitting."
+    },
+    {
+      "name": "m7_2",
+      "value": -0.8190250849723816,
+      "unit": "-",
+      "type": "fitted",
+      "description": "Dimensionless center coordinate in normalized `x2`, obtained by training-only K-means clustering before coefficient fitting."
+    },
+    {
+      "name": "w7",
+      "value": 0.7029880725923117,
+      "unit": "unknown state unit/s",
+      "type": "fitted",
+      "description": "Weight of Gaussian radial basis `exp(-((((y-oy)/sy)-m7_0)**2 + (((x1-ox)/sx)-m7_1)**2 + (((x2-oz)/sz)-m7_2)**2)/(2*width**2))`; jointly estimated by ridge regression after centers were estimated."
+    },
+    {
+      "name": "m8_0",
+      "value": 0.4630354148420421,
+      "unit": "-",
+      "type": "fitted",
+      "description": "Dimensionless center coordinate in normalized `y`, obtained by training-only K-means clustering before coefficient fitting."
+    },
+    {
+      "name": "m8_1",
+      "value": 0.22498902696551698,
+      "unit": "-",
+      "type": "fitted",
+      "description": "Dimensionless center coordinate in normalized `x1`, obtained by training-only K-means clustering before coefficient fitting."
+    },
+    {
+      "name": "m8_2",
+      "value": -0.06564657796512952,
+      "unit": "-",
+      "type": "fitted",
+      "description": "Dimensionless center coordinate in normalized `x2`, obtained by training-only K-means clustering before coefficient fitting."
+    },
+    {
+      "name": "w8",
+      "value": 0.46431776292549687,
+      "unit": "unknown state unit/s",
+      "type": "fitted",
+      "description": "Weight of Gaussian radial basis `exp(-((((y-oy)/sy)-m8_0)**2 + (((x1-ox)/sx)-m8_1)**2 + (((x2-oz)/sz)-m8_2)**2)/(2*width**2))`; jointly estimated by ridge regression after centers were estimated."
+    },
+    {
+      "name": "m9_0",
+      "value": 2.2458795837636263,
+      "unit": "-",
+      "type": "fitted",
+      "description": "Dimensionless center coordinate in normalized `y`, obtained by training-only K-means clustering before coefficient fitting."
+    },
+    {
+      "name": "m9_1",
+      "value": 0.6056205077741131,
+      "unit": "-",
+      "type": "fitted",
+      "description": "Dimensionless center coordinate in normalized `x1`, obtained by training-only K-means clustering before coefficient fitting."
+    },
+    {
+      "name": "m9_2",
+      "value": 0.8461626808598358,
+      "unit": "-",
+      "type": "fitted",
+      "description": "Dimensionless center coordinate in normalized `x2`, obtained by training-only K-means clustering before coefficient fitting."
+    },
+    {
+      "name": "w9",
+      "value": -0.42295127371177293,
+      "unit": "unknown state unit/s",
+      "type": "fitted",
+      "description": "Weight of Gaussian radial basis `exp(-((((y-oy)/sy)-m9_0)**2 + (((x1-ox)/sx)-m9_1)**2 + (((x2-oz)/sz)-m9_2)**2)/(2*width**2))`; jointly estimated by ridge regression after centers were estimated."
+    },
+    {
+      "name": "m10_0",
+      "value": 0.1911968139351392,
+      "unit": "-",
+      "type": "fitted",
+      "description": "Dimensionless center coordinate in normalized `y`, obtained by training-only K-means clustering before coefficient fitting."
+    },
+    {
+      "name": "m10_1",
+      "value": -0.2763644963665738,
+      "unit": "-",
+      "type": "fitted",
+      "description": "Dimensionless center coordinate in normalized `x1`, obtained by training-only K-means clustering before coefficient fitting."
+    },
+    {
+      "name": "m10_2",
+      "value": -0.31808514360521656,
+      "unit": "-",
+      "type": "fitted",
+      "description": "Dimensionless center coordinate in normalized `x2`, obtained by training-only K-means clustering before coefficient fitting."
+    },
+    {
+      "name": "w10",
+      "value": -0.995752766581238,
+      "unit": "unknown state unit/s",
+      "type": "fitted",
+      "description": "Weight of Gaussian radial basis `exp(-((((y-oy)/sy)-m10_0)**2 + (((x1-ox)/sx)-m10_1)**2 + (((x2-oz)/sz)-m10_2)**2)/(2*width**2))`; jointly estimated by ridge regression after centers were estimated."
+    },
+    {
+      "name": "m11_0",
+      "value": 0.10104169569364396,
+      "unit": "-",
+      "type": "fitted",
+      "description": "Dimensionless center coordinate in normalized `y`, obtained by training-only K-means clustering before coefficient fitting."
+    },
+    {
+      "name": "m11_1",
+      "value": 0.35880946337692143,
+      "unit": "-",
+      "type": "fitted",
+      "description": "Dimensionless center coordinate in normalized `x1`, obtained by training-only K-means clustering before coefficient fitting."
+    },
+    {
+      "name": "m11_2",
+      "value": -1.354134193008266,
+      "unit": "-",
+      "type": "fitted",
+      "description": "Dimensionless center coordinate in normalized `x2`, obtained by training-only K-means clustering before coefficient fitting."
+    },
+    {
+      "name": "w11",
+      "value": -0.7259418856239392,
+      "unit": "unknown state unit/s",
+      "type": "fitted",
+      "description": "Weight of Gaussian radial basis `exp(-((((y-oy)/sy)-m11_0)**2 + (((x1-ox)/sx)-m11_1)**2 + (((x2-oz)/sz)-m11_2)**2)/(2*width**2))`; jointly estimated by ridge regression after centers were estimated."
+    },
+    {
+      "name": "m12_0",
+      "value": 0.6186973381983607,
+      "unit": "-",
+      "type": "fitted",
+      "description": "Dimensionless center coordinate in normalized `y`, obtained by training-only K-means clustering before coefficient fitting."
+    },
+    {
+      "name": "m12_1",
+      "value": 0.6875175844159042,
+      "unit": "-",
+      "type": "fitted",
+      "description": "Dimensionless center coordinate in normalized `x1`, obtained by training-only K-means clustering before coefficient fitting."
+    },
+    {
+      "name": "m12_2",
+      "value": -0.6663530895584509,
+      "unit": "-",
+      "type": "fitted",
+      "description": "Dimensionless center coordinate in normalized `x2`, obtained by training-only K-means clustering before coefficient fitting."
+    },
+    {
+      "name": "w12",
+      "value": 0.18857147564032625,
+      "unit": "unknown state unit/s",
+      "type": "fitted",
+      "description": "Weight of Gaussian radial basis `exp(-((((y-oy)/sy)-m12_0)**2 + (((x1-ox)/sx)-m12_1)**2 + (((x2-oz)/sz)-m12_2)**2)/(2*width**2))`; jointly estimated by ridge regression after centers were estimated."
+    },
+    {
+      "name": "m13_0",
+      "value": 0.32381128697168243,
+      "unit": "-",
+      "type": "fitted",
+      "description": "Dimensionless center coordinate in normalized `y`, obtained by training-only K-means clustering before coefficient fitting."
+    },
+    {
+      "name": "m13_1",
+      "value": -1.1588368960789273,
+      "unit": "-",
+      "type": "fitted",
+      "description": "Dimensionless center coordinate in normalized `x1`, obtained by training-only K-means clustering before coefficient fitting."
+    },
+    {
+      "name": "m13_2",
+      "value": 0.7511376835051035,
+      "unit": "-",
+      "type": "fitted",
+      "description": "Dimensionless center coordinate in normalized `x2`, obtained by training-only K-means clustering before coefficient fitting."
+    },
+    {
+      "name": "w13",
+      "value": -0.17569079779919877,
+      "unit": "unknown state unit/s",
+      "type": "fitted",
+      "description": "Weight of Gaussian radial basis `exp(-((((y-oy)/sy)-m13_0)**2 + (((x1-ox)/sx)-m13_1)**2 + (((x2-oz)/sz)-m13_2)**2)/(2*width**2))`; jointly estimated by ridge regression after centers were estimated."
+    },
+    {
+      "name": "m14_0",
+      "value": 0.4252084758546617,
+      "unit": "-",
+      "type": "fitted",
+      "description": "Dimensionless center coordinate in normalized `y`, obtained by training-only K-means clustering before coefficient fitting."
+    },
+    {
+      "name": "m14_1",
+      "value": -0.1085641689401455,
+      "unit": "-",
+      "type": "fitted",
+      "description": "Dimensionless center coordinate in normalized `x1`, obtained by training-only K-means clustering before coefficient fitting."
+    },
+    {
+      "name": "m14_2",
+      "value": 0.2521230304051959,
+      "unit": "-",
+      "type": "fitted",
+      "description": "Dimensionless center coordinate in normalized `x2`, obtained by training-only K-means clustering before coefficient fitting."
+    },
+    {
+      "name": "w14",
+      "value": -0.018896238213797795,
+      "unit": "unknown state unit/s",
+      "type": "fitted",
+      "description": "Weight of Gaussian radial basis `exp(-((((y-oy)/sy)-m14_0)**2 + (((x1-ox)/sx)-m14_1)**2 + (((x2-oz)/sz)-m14_2)**2)/(2*width**2))`; jointly estimated by ridge regression after centers were estimated."
+    },
+    {
+      "name": "m15_0",
+      "value": 1.1600200159876954,
+      "unit": "-",
+      "type": "fitted",
+      "description": "Dimensionless center coordinate in normalized `y`, obtained by training-only K-means clustering before coefficient fitting."
+    },
+    {
+      "name": "m15_1",
+      "value": 0.6680585973403033,
+      "unit": "-",
+      "type": "fitted",
+      "description": "Dimensionless center coordinate in normalized `x1`, obtained by training-only K-means clustering before coefficient fitting."
+    },
+    {
+      "name": "m15_2",
+      "value": -0.31475294898538025,
+      "unit": "-",
+      "type": "fitted",
+      "description": "Dimensionless center coordinate in normalized `x2`, obtained by training-only K-means clustering before coefficient fitting."
+    },
+    {
+      "name": "w15",
+      "value": -0.1827803541689388,
+      "unit": "unknown state unit/s",
+      "type": "fitted",
+      "description": "Weight of Gaussian radial basis `exp(-((((y-oy)/sy)-m15_0)**2 + (((x1-ox)/sx)-m15_1)**2 + (((x2-oz)/sz)-m15_2)**2)/(2*width**2))`; jointly estimated by ridge regression after centers were estimated."
+    },
+    {
+      "name": "m16_0",
+      "value": 2.0264431461691856,
+      "unit": "-",
+      "type": "fitted",
+      "description": "Dimensionless center coordinate in normalized `y`, obtained by training-only K-means clustering before coefficient fitting."
+    },
+    {
+      "name": "m16_1",
+      "value": 0.815750821431478,
+      "unit": "-",
+      "type": "fitted",
+      "description": "Dimensionless center coordinate in normalized `x1`, obtained by training-only K-means clustering before coefficient fitting."
+    },
+    {
+      "name": "m16_2",
+      "value": 0.2533656924962998,
+      "unit": "-",
+      "type": "fitted",
+      "description": "Dimensionless center coordinate in normalized `x2`, obtained by training-only K-means clustering before coefficient fitting."
+    },
+    {
+      "name": "w16",
+      "value": -0.4246207033835109,
+      "unit": "unknown state unit/s",
+      "type": "fitted",
+      "description": "Weight of Gaussian radial basis `exp(-((((y-oy)/sy)-m16_0)**2 + (((x1-ox)/sx)-m16_1)**2 + (((x2-oz)/sz)-m16_2)**2)/(2*width**2))`; jointly estimated by ridge regression after centers were estimated."
+    },
+    {
+      "name": "m17_0",
+      "value": -0.0007411908535729372,
+      "unit": "-",
+      "type": "fitted",
+      "description": "Dimensionless center coordinate in normalized `y`, obtained by training-only K-means clustering before coefficient fitting."
+    },
+    {
+      "name": "m17_1",
+      "value": -1.0794605361090759,
+      "unit": "-",
+      "type": "fitted",
+      "description": "Dimensionless center coordinate in normalized `x1`, obtained by training-only K-means clustering before coefficient fitting."
+    },
+    {
+      "name": "m17_2",
+      "value": -1.38669003510759,
+      "unit": "-",
+      "type": "fitted",
+      "description": "Dimensionless center coordinate in normalized `x2`, obtained by training-only K-means clustering before coefficient fitting."
+    },
+    {
+      "name": "w17",
+      "value": -0.24150971061386775,
+      "unit": "unknown state unit/s",
+      "type": "fitted",
+      "description": "Weight of Gaussian radial basis `exp(-((((y-oy)/sy)-m17_0)**2 + (((x1-ox)/sx)-m17_1)**2 + (((x2-oz)/sz)-m17_2)**2)/(2*width**2))`; jointly estimated by ridge regression after centers were estimated."
+    },
+    {
+      "name": "m18_0",
+      "value": 0.0028630310580849416,
+      "unit": "-",
+      "type": "fitted",
+      "description": "Dimensionless center coordinate in normalized `y`, obtained by training-only K-means clustering before coefficient fitting."
+    },
+    {
+      "name": "m18_1",
+      "value": -0.18638995942615325,
+      "unit": "-",
+      "type": "fitted",
+      "description": "Dimensionless center coordinate in normalized `x1`, obtained by training-only K-means clustering before coefficient fitting."
+    },
+    {
+      "name": "m18_2",
+      "value": -1.5276197419634887,
+      "unit": "-",
+      "type": "fitted",
+      "description": "Dimensionless center coordinate in normalized `x2`, obtained by training-only K-means clustering before coefficient fitting."
+    },
+    {
+      "name": "w18",
+      "value": 0.25545825447984766,
+      "unit": "unknown state unit/s",
+      "type": "fitted",
+      "description": "Weight of Gaussian radial basis `exp(-((((y-oy)/sy)-m18_0)**2 + (((x1-ox)/sx)-m18_1)**2 + (((x2-oz)/sz)-m18_2)**2)/(2*width**2))`; jointly estimated by ridge regression after centers were estimated."
+    },
+    {
+      "name": "m19_0",
+      "value": 1.6162807930190608,
+      "unit": "-",
+      "type": "fitted",
+      "description": "Dimensionless center coordinate in normalized `y`, obtained by training-only K-means clustering before coefficient fitting."
+    },
+    {
+      "name": "m19_1",
+      "value": 0.7641347969103158,
+      "unit": "-",
+      "type": "fitted",
+      "description": "Dimensionless center coordinate in normalized `x1`, obtained by training-only K-means clustering before coefficient fitting."
+    },
+    {
+      "name": "m19_2",
+      "value": 0.7685165189347176,
+      "unit": "-",
+      "type": "fitted",
+      "description": "Dimensionless center coordinate in normalized `x2`, obtained by training-only K-means clustering before coefficient fitting."
+    },
+    {
+      "name": "w19",
+      "value": 0.5911732215459691,
+      "unit": "unknown state unit/s",
+      "type": "fitted",
+      "description": "Weight of Gaussian radial basis `exp(-((((y-oy)/sy)-m19_0)**2 + (((x1-ox)/sx)-m19_1)**2 + (((x2-oz)/sz)-m19_2)**2)/(2*width**2))`; jointly estimated by ridge regression after centers were estimated."
+    },
+    {
+      "name": "m20_0",
+      "value": 0.7584872317534906,
+      "unit": "-",
+      "type": "fitted",
+      "description": "Dimensionless center coordinate in normalized `y`, obtained by training-only K-means clustering before coefficient fitting."
+    },
+    {
+      "name": "m20_1",
+      "value": 0.38419551260677387,
+      "unit": "-",
+      "type": "fitted",
+      "description": "Dimensionless center coordinate in normalized `x1`, obtained by training-only K-means clustering before coefficient fitting."
+    },
+    {
+      "name": "m20_2",
+      "value": 0.3747056837435122,
+      "unit": "-",
+      "type": "fitted",
+      "description": "Dimensionless center coordinate in normalized `x2`, obtained by training-only K-means clustering before coefficient fitting."
+    },
+    {
+      "name": "w20",
+      "value": -1.1430947099893063,
+      "unit": "unknown state unit/s",
+      "type": "fitted",
+      "description": "Weight of Gaussian radial basis `exp(-((((y-oy)/sy)-m20_0)**2 + (((x1-ox)/sx)-m20_1)**2 + (((x2-oz)/sz)-m20_2)**2)/(2*width**2))`; jointly estimated by ridge regression after centers were estimated."
+    },
+    {
+      "name": "m21_0",
+      "value": 0.7248290926218033,
+      "unit": "-",
+      "type": "fitted",
+      "description": "Dimensionless center coordinate in normalized `y`, obtained by training-only K-means clustering before coefficient fitting."
+    },
+    {
+      "name": "m21_1",
+      "value": 0.04626531918843586,
+      "unit": "-",
+      "type": "fitted",
+      "description": "Dimensionless center coordinate in normalized `x1`, obtained by training-only K-means clustering before coefficient fitting."
+    },
+    {
+      "name": "m21_2",
+      "value": 0.7066697502136232,
+      "unit": "-",
+      "type": "fitted",
+      "description": "Dimensionless center coordinate in normalized `x2`, obtained by training-only K-means clustering before coefficient fitting."
+    },
+    {
+      "name": "w21",
+      "value": 1.3154394602860007,
+      "unit": "unknown state unit/s",
+      "type": "fitted",
+      "description": "Weight of Gaussian radial basis `exp(-((((y-oy)/sy)-m21_0)**2 + (((x1-ox)/sx)-m21_1)**2 + (((x2-oz)/sz)-m21_2)**2)/(2*width**2))`; jointly estimated by ridge regression after centers were estimated."
+    },
+    {
+      "name": "m22_0",
+      "value": 0.28362390853590874,
+      "unit": "-",
+      "type": "fitted",
+      "description": "Dimensionless center coordinate in normalized `y`, obtained by training-only K-means clustering before coefficient fitting."
+    },
+    {
+      "name": "m22_1",
+      "value": 0.4474452778444452,
+      "unit": "-",
+      "type": "fitted",
+      "description": "Dimensionless center coordinate in normalized `x1`, obtained by training-only K-means clustering before coefficient fitting."
+    },
+    {
+      "name": "m22_2",
+      "value": -0.8434391110630358,
+      "unit": "-",
+      "type": "fitted",
+      "description": "Dimensionless center coordinate in normalized `x2`, obtained by training-only K-means clustering before coefficient fitting."
+    },
+    {
+      "name": "w22",
+      "value": 0.2825662044383113,
+      "unit": "unknown state unit/s",
+      "type": "fitted",
+      "description": "Weight of Gaussian radial basis `exp(-((((y-oy)/sy)-m22_0)**2 + (((x1-ox)/sx)-m22_1)**2 + (((x2-oz)/sz)-m22_2)**2)/(2*width**2))`; jointly estimated by ridge regression after centers were estimated."
+    },
+    {
+      "name": "m23_0",
+      "value": 2.6318338116010027,
+      "unit": "-",
+      "type": "fitted",
+      "description": "Dimensionless center coordinate in normalized `y`, obtained by training-only K-means clustering before coefficient fitting."
+    },
+    {
+      "name": "m23_1",
+      "value": 0.7750290086534289,
+      "unit": "-",
+      "type": "fitted",
+      "description": "Dimensionless center coordinate in normalized `x1`, obtained by training-only K-means clustering before coefficient fitting."
+    },
+    {
+      "name": "m23_2",
+      "value": 0.6325786272684732,
+      "unit": "-",
+      "type": "fitted",
+      "description": "Dimensionless center coordinate in normalized `x2`, obtained by training-only K-means clustering before coefficient fitting."
+    },
+    {
+      "name": "w23",
+      "value": 0.3036810561913741,
+      "unit": "unknown state unit/s",
+      "type": "fitted",
+      "description": "Weight of Gaussian radial basis `exp(-((((y-oy)/sy)-m23_0)**2 + (((x1-ox)/sx)-m23_1)**2 + (((x2-oz)/sz)-m23_2)**2)/(2*width**2))`; jointly estimated by ridge regression after centers were estimated."
+    }
+  ],
+  "estimation": {
+    "criterion": "The centers minimize K-means within-cluster squared Euclidean distances on normalized training variables. Conditional on centers and width, weights minimize squared residuals on logged `dy` plus a ridge penalty: `1e-5` times the squared Gaussian weights plus `1e-7` times the squared affine weights. Residual and penalty units are squared unknown state units per second squared. Regularization limits large canceling coefficients; width is chosen by validation free-running state RMSE.",
+    "data": "All rows of `data/train.csv` estimate centers and coefficients. `data/val.csv` selects library size, width, and regularization and checks free-running behavior; no validation rows enter center clustering or coefficient regression.",
+    "method": "First, `sklearn.cluster.KMeans` estimates `24` centers with K-means++ initialization, `n_init = 10`, and `random_state = 42` on the fixed normalized variables. Coefficient starting values are not needed. Conditional on each trial width, all affine coefficients and Gaussian weights are estimated together by solving the ridge normal equations with `numpy.linalg.solve`. Center counts `12`, `24`, `40`, and `64`, widths `0.7`, `1`, `1.5`, and `2`, and ridge strengths `1e-5`, `0.001`, `0.1`, and `1` were tested. These counts and normalized widths are dimensionless; strengths multiply squared coefficient penalties in the criterion stated above. The selected width is `1.5` and selected ridge strength is `1e-5`. The globally best RBF validation error used more centers, but the retained `24`-center model was almost identical in validation error and is smaller. All center estimates precede weight estimates because the fixed basis makes the latter convex and reproducible. No trajectory refinement of weights is included.",
+    "script": "rbf_screen.py"
+  },
+  "discussion": {
+    "family": "Gaussian radial-basis-function regression with an affine baseline, used as a continuous-time nonlinear state-space vector field. Reference: Broomhead and Lowe, Multivariable functional interpolation and adaptive networks, 1988 (cited from memory, not checked).",
+    "interpretation": "The affine terms provide global drift and linear restoring or forcing effects. Each Gaussian creates a smooth local correction around a training-derived center in normalized state-input space. Coefficients and centers have no known physical interpretation. Gaussian corrections vanish far from all centers, leaving the fitted affine baseline.",
+    "origin": "Polynomial, rational, and transformed-state models reached similar validation errors, while residuals retained nonlinear patterns. A smooth radial-basis interpolation library was tested to capture patterns not confined to a low-degree polynomial. Center locations come from unsupervised clustering, not physical reasoning. Width, number of centers, and ridge penalty were selected over explicitly reported grids. This is not a genetic symbolic-regression result and no hidden black-box predictor remains in the expression.",
+    "limitations": "The units and physical system are unknown. Only one supplied training trajectory and one supplied validation trajectory are available. Validation was used repeatedly for structure selection, so its error is not an unbiased estimate of generalization. Inputs and state are correlated, and global behavior is not identified. No delayed or future input is present. Residuals suggest sampling alignment or omitted dynamics: cubic derivative residual correlation with `x2` at the next sample minus its current value is approximately `0.8375` on training and `0.7193` on validation; this diagnostic is not proof of causation. These memoryless models cannot explicitly reproduce that dependence. This is the least compact candidate. It interpolates the sampled manifold but is weakly identified away from it; the affine extrapolation is not a guaranteed physical stability law. Extensive validation selection can favor this flexible family. Validation free-running RMSE is `0.0359194` in unknown state units, and training free-running RMSE is `0.0290418` in unknown state units, excluding first samples. Validation derivative RMSE is `0.00192984` in unknown state units per second."
+  }
+}

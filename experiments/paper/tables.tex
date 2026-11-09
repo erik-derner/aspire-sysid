@@ -1,0 +1,41 @@
+% Bodies of the tables of the manuscript; written by experiments/paper/collect_results.py.
+% tab:aspire (training error, S recommended, lowest S in the pool, pool sizes, fitted parameters of the recommended model, cost per run)
+Mobile robot & described & 0.0397 $\pm$ 0.0007 & 0.0430 $\pm$ 0.0010 & 0.0382 $\pm$ 0.0016 & 6, 4, 6, 5, 4 & 2.4 $\pm$ 0.9 & 1.31 $\pm$ 0.25 \\
+Mobile robot & blind & 0.0394 $\pm$ 0.0014 & 0.0401 $\pm$ 0.0015 & 0.0365 $\pm$ 0.0019 & 3, 3, 4, 4, 6 & 9.6 $\pm$ 5.9 & 1.91 $\pm$ 0.47 \\
+Friction system & described & 0.0511 $\pm$ 0.0085 & 0.0417 $\pm$ 0.0070 & 0.0279 $\pm$ 0.0075 & 6, 3, 6, 4, 3 & 7.6 $\pm$ 1.7 & 2.20 $\pm$ 0.50 \\
+Friction system & blind & 0.0459 $\pm$ 0.0096 & 0.0408 $\pm$ 0.0079 & 0.0387 $\pm$ 0.0067 & 3, 3, 3, 4, 3 & 8.4 $\pm$ 1.5 & 2.09 $\pm$ 0.45 \\
+Fermenter & described & 0.0253 $\pm$ 0.0008 & 0.0232 $\pm$ 0.0006 & 0.0231 $\pm$ 0.0005 & 4, 3, 4, 5, 3 & 5.6 $\pm$ 1.1 & 2.01 $\pm$ 0.45 \\
+Fermenter & blind & 0.0250 $\pm$ 0.0024 & 0.0225 $\pm$ 0.0010 & 0.0223 $\pm$ 0.0007 & 4, 6, 5, 5, 4 & 19.0 $\pm$ 2.2 & 2.70 $\pm$ 0.44 \\
+% tab:methods (per system: fitted parameters, test score S), systems in the order mobile robot, friction system, fermenter
+ASPIRE, described task & 2.4 $\pm$ 0.9 & 0.0430 $\pm$ 0.0010 & 7.6 $\pm$ 1.7 & 0.0417 $\pm$ 0.0070 & 5.6 $\pm$ 1.1 & 0.0232 $\pm$ 0.0006 \\
+ASPIRE, blind task & 9.6 $\pm$ 5.9 & 0.0401 $\pm$ 0.0015 & 8.4 $\pm$ 1.5 & 0.0408 $\pm$ 0.0079 & 19.0 $\pm$ 2.2 & 0.0225 $\pm$ 0.0010 \\
+PySINDy, default & 3 & 0.2140 & 8 & 0.2668 & 0 & 0.2631 \\
+PySINDy, matched & 55 & 0.1530 & 10 & 0.2692 & 10 & 0.0284 \\
+PySR, default & 6--8 & 0.0504 $\pm$ 0.0068 & 4 & 0.1440 $\pm$ 0.0010 & 3--5 & 0.0418 $\pm$ 0.0054 \\
+PySR, matched & 8--14 & 0.0558 $\pm$ 0.0129 & 5--6 & 0.0363 $\pm$ 0.0039 & 1--5 & 0.0748 $\pm$ 0.0632 \\
+% text: turns and elapsed time per run; training error of PySINDy and PySR
+% Mobile robot & described: turns 28.8 ± 3.8, time 531 ± 158 s, pool size 5.0 ± 1.0, rank-deficient candidates 0
+% Mobile robot & blind: turns 37.0 ± 4.6, time 685 ± 320 s, pool size 4.0 ± 1.2, rank-deficient candidates 1
+% Friction system & described: turns 36.2 ± 5.5, time 665 ± 119 s, pool size 4.4 ± 1.5, rank-deficient candidates 1
+% Friction system & blind: turns 36.2 ± 5.4, time 1085 ± 702 s, pool size 3.2 ± 0.4, rank-deficient candidates 1
+% Fermenter & described: turns 33.2 ± 4.0, time 795 ± 126 s, pool size 3.8 ± 0.8, rank-deficient candidates 0
+% Fermenter & blind: turns 45.4 ± 4.8, time 1260 ± 249 s, pool size 4.8 ± 0.8, rank-deficient candidates 2
+% text: formal requirements (candidates evaluated, excluded, eligible; tool models with a demonstrated violation)
+% Mobile robot & described: evaluated 25, excluded by requirements 0, eligible 25, runs with an excluded recommended model 0
+% Mobile robot & blind: evaluated 20, excluded by requirements 0, eligible 20, runs with an excluded recommended model 0
+% Friction system & described: evaluated 22, excluded by requirements 0, eligible 22, runs with an excluded recommended model 0
+% Friction system & blind: evaluated 16, excluded by requirements 0, eligible 16, runs with an excluded recommended model 0
+% Fermenter & described: evaluated 19, excluded by requirements 0, eligible 19, runs with an excluded recommended model 0
+% Fermenter & blind: evaluated 24, excluded by requirements 0, eligible 24, runs with an excluded recommended model 0
+% Mobile robot, PySINDy: 0 of 2 models violate a requirement (none)
+% Mobile robot, PySR, default setting: 0 of 5 models violate a requirement (none)
+% Mobile robot, PySR, matched setting: 0 of 5 models violate a requirement (none)
+% Friction system, PySINDy: 2 of 2 models violate a requirement (R2)
+% Friction system, PySR, default setting: 5 of 5 models violate a requirement (R2)
+% Friction system, PySR, matched setting: 5 of 5 models violate a requirement (R2)
+% Fermenter, PySINDy: 0 of 2 models violate a requirement (none)
+% Fermenter, PySR, default setting: 0 of 5 models violate a requirement (none)
+% Fermenter, PySR, matched setting: 0 of 5 models violate a requirement (none)
+% Mobile robot: training error ReferenceSindy 0.2217, ReferenceSindyThreshold 0.0446, pysr-default 0.0654 ± 0.0240, pysr-matched 0.0263 ± 0.0033
+% Friction system: training error ReferenceSindy 0.1957, ReferenceSindyThreshold 0.1934, pysr-default 0.1391 ± 0.0002, pysr-matched 0.0666 ± 0.0070
+% Fermenter: training error ReferenceSindy 0.4020, ReferenceSindyThreshold 0.0309, pysr-default 0.0489 ± 0.0056, pysr-matched 0.1043 ± 0.1092

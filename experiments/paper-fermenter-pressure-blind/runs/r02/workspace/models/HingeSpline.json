@@ -1,0 +1,138 @@
+{
+  "expressions": {
+    "dy": "c1 + c2*((y-yref)/ys) + c3*(x1/uone) + c4*(x2/utwo) + c5*((y-yref)/ys)*(x1/uone) + c6*((y-yref)/ys)**2 + c7*(x1/uone)**2 + c8*Max((x1/uone)-h1,0)**2 + c9*Max(((y-yref)/ys)-h2,0)**2 + c10*Max(((y-yref)/ys)-h3,0)**2"
+  },
+  "parameters": [
+    {
+      "name": "uone",
+      "value": 60.0,
+      "unit": "U_1",
+      "type": "fixed",
+      "description": "`uone = 60` U_1 is a round input scale chosen before fitting, comparable to the training input magnitude, solely for conditioning; it is not a fitted threshold."
+    },
+    {
+      "name": "utwo",
+      "value": 20.0,
+      "unit": "U_2",
+      "type": "fixed",
+      "description": "`utwo = 20` U_2 is a round input scale chosen before fitting, comparable to the training input magnitude, solely for conditioning; it is not a fitted threshold."
+    },
+    {
+      "name": "yref",
+      "value": 1.0,
+      "unit": "U_y",
+      "type": "fixed",
+      "description": "`yref = 1` U_y is a convenient fixed expansion origin near the lower observed training state, chosen rather than estimated; it is not an asserted equilibrium."
+    },
+    {
+      "name": "ys",
+      "value": 1.0,
+      "unit": "U_y",
+      "type": "fixed",
+      "description": "`ys = 1` U_y is a chosen numerical state scale, making the centered state dimensionless without changing its numeric value."
+    },
+    {
+      "name": "h1",
+      "value": 1.1575241088867188,
+      "unit": "-",
+      "type": "fixed",
+      "description": "Fixed dimensionless knot selected from training quartiles before coefficient fitting. `h1 = 1.1575241088867188`; it is one of the original training quartiles in the indicated normalized coordinate and was retained by backward elimination, not optimized continuously."
+    },
+    {
+      "name": "h2",
+      "value": 0.093694686889648,
+      "unit": "-",
+      "type": "fixed",
+      "description": "Fixed dimensionless knot selected from training quartiles before coefficient fitting. `h2 = 0.093694686889647993`; it is one of the original training quartiles in the indicated normalized coordinate and was retained by backward elimination, not optimized continuously."
+    },
+    {
+      "name": "h3",
+      "value": 0.42705857753753707,
+      "unit": "-",
+      "type": "fixed",
+      "description": "Fixed dimensionless knot selected from training quartiles before coefficient fitting. `h3 = 0.42705857753753707`; it is one of the original training quartiles in the indicated normalized coordinate and was retained by backward elimination, not optimized continuously."
+    },
+    {
+      "name": "c1",
+      "value": -0.003058930685597116,
+      "unit": "U_y/s",
+      "type": "fitted",
+      "description": "Coefficient multiplying `1`; jointly estimated by ordinary least squares in the final fit."
+    },
+    {
+      "name": "c2",
+      "value": -0.2849556745153013,
+      "unit": "U_y/s",
+      "type": "fitted",
+      "description": "Coefficient multiplying `((y-yref)/ys)`; jointly estimated by ordinary least squares in the final fit."
+    },
+    {
+      "name": "c3",
+      "value": -0.008526576354928067,
+      "unit": "U_y/s",
+      "type": "fitted",
+      "description": "Coefficient multiplying `(x1/uone)`; jointly estimated by ordinary least squares in the final fit."
+    },
+    {
+      "name": "c4",
+      "value": 0.020664608241549753,
+      "unit": "U_y/s",
+      "type": "fitted",
+      "description": "Coefficient multiplying `(x2/utwo)`; jointly estimated by ordinary least squares in the final fit."
+    },
+    {
+      "name": "c5",
+      "value": 0.07852445963388047,
+      "unit": "U_y/s",
+      "type": "fitted",
+      "description": "Coefficient multiplying `((y-yref)/ys)*(x1/uone)`; jointly estimated by ordinary least squares in the final fit."
+    },
+    {
+      "name": "c6",
+      "value": 0.7257309139811353,
+      "unit": "U_y/s",
+      "type": "fitted",
+      "description": "Coefficient multiplying `((y-yref)/ys)**2`; jointly estimated by ordinary least squares in the final fit."
+    },
+    {
+      "name": "c7",
+      "value": 0.009290811883096106,
+      "unit": "U_y/s",
+      "type": "fitted",
+      "description": "Coefficient multiplying `(x1/uone)**2`; jointly estimated by ordinary least squares in the final fit."
+    },
+    {
+      "name": "c8",
+      "value": 0.04081033208438472,
+      "unit": "U_y/s",
+      "type": "fitted",
+      "description": "Coefficient multiplying `Max((x1/uone)-h1,0)**2`; jointly estimated by ordinary least squares in the final fit."
+    },
+    {
+      "name": "c9",
+      "value": -0.6902888775708337,
+      "unit": "U_y/s",
+      "type": "fitted",
+      "description": "Coefficient multiplying `Max(((y-yref)/ys)-h2,0)**2`; jointly estimated by ordinary least squares in the final fit."
+    },
+    {
+      "name": "c10",
+      "value": -0.035331077390801394,
+      "unit": "U_y/s",
+      "type": "fitted",
+      "description": "Coefficient multiplying `Max(((y-yref)/ys)-h3,0)**2`; jointly estimated by ordinary least squares in the final fit."
+    }
+  ],
+  "estimation": {
+    "criterion": "Minimize the unweighted sum of squared predicted-minus-logged `dy` residuals over both files. This directly uses the supplied derivative target and was selected over rollout-only and joint criteria by the internal suffix simulation comparison. ",
+    "data": "Final parameter estimation uses every derivative row of data/train.csv and data/val.csv as two separate trajectories. Where rollout residuals enter, it also uses all states after the first of each trajectory. Initial structural searches fitted data/train.csv only and compared free-running simulation on data/val.csv. A subsequent criterion comparison fitted the full training file plus zero-based validation rows 0 through 727 and evaluated rows 728 through 1453, with an independent measured initialization at row 728. The suffix was then included in the final refit to use all supplied identification information. No test data were accessed. No rows were discarded in the final fit.",
+    "method": "Coefficients in each backward-elimination step and the final derivative fit were jointly estimated by ordinary least squares using scipy.linalg.lstsq; linearity makes nonlinear iterative estimation unnecessary for the selected criterion. No starting values or random seed are needed for the final fit. Rollout and mixed-criterion alternatives were fitted by scipy.optimize.least_squares from the preliminary training coefficient vector `c1 = -0.0022611852572861518`, `c2 = -0.29872517310729679`, `c3 = -0.011456238327229445`, `c4 = 0.02125698225066662`, `c5 = 0.070956013406961144`, `c6 = 0.81795306826994796`, `c7 = 0.012069314075264737`, `c8 = 0.042139135873607632`, `c9 = -0.77266709056060545`, `c10 = -0.045519149779047127`. Iterative alternatives used a maximum of 800 evaluations, Jacobian scaling and all three solver tolerances equal to dimensionless `1e-10`; their final criterion was rejected in favor of derivative fitting. Criterion selection compared derivative-only least squares, rollout-only least squares, and joint least squares with derivative residuals multiplied by `10*sqrt(w)` s for dimensionless trial weights `w = 1` and `w = 10`. The 10 s residual scale is a chosen conditioning/tradeoff scale, not an identified time constant. The criterion with smallest suffix rollout RMSE was selected. Every rollout uses classical RK4 with 5 s steps, logged inputs held constant, and a single first-state initialization, never later measured-state resets. All fitted parameters are jointly reestimated at each fitting stage; intermediate estimates are not frozen. ",
+    "script": "final_spline.py"
+  },
+  "discussion": {
+    "family": "Quadratic regression-spline vector field in the truncated-power basis, with an input-state interaction; it is not a full MARS implementation. Basis reference: C. de Boor, A Practical Guide to Splines, Springer, 1978 (recalled from memory, not externally checked). ",
+    "interpretation": "The state `y`, inputs `x1` and `x2`, and target `dy` are the logged columns. Their physical units are unknown. `U_y`, `U_1` and `U_2` below denote unspecified native units of `y`, `x1` and `x2`; `dy` has units `U_y/s`. The full vector field is `c1 + c2*((y-yref)/ys) + c3*(x1/uone) + c4*(x2/utwo) + c5*((y-yref)/ys)*(x1/uone) + c6*((y-yref)/ys)**2 + c7*(x1/uone)**2 + c8*Max((x1/uone)-h1,0)**2 + c9*Max(((y-yref)/ys)-h2,0)**2 + c10*Max(((y-yref)/ys)-h3,0)**2`. Input-only terms give additive forcing, state terms give nonlinear feedback, and the input-state product changes its rate. Each `Max` term is inactive below its knot and contributes quadratic curvature above it, with continuous first derivative at the knot. Coefficients carry no asserted physical interpretation. ",
+    "origin": "After polynomial and rational fits, a local spline basis was tried to avoid requiring one global cubic shape. Start with constant, linear, squared and input-state terms plus input/state hinges at training quartiles and state times input hinges. One, two and three internal knots per coordinate were explored. Deterministic backward elimination used the smallest refitted training derivative SSE at each removal. The ten-term, three-original-knot-per-coordinate model retained three hinges and gave competitive training-only validation performance with fewer fitted coefficients than the cubic. Knots are data-derived fixed structure settings, not physical thresholds. In the internal criterion comparison, the best suffix rollout RMSE was 0.051648101 U_y on rows 728 through 1453 of data/val.csv, initialized only at row 728 (zero-based rows). This suffix was excluded from that fitting stage but had already been inspected in exploratory validation, so this is not a pristine independent estimate. After refitting on both complete files, the training and validation rollout RMSE values are 0.028137827 and 0.038301547 U_y; these final values are in-sample, not unseen-data scores. Final predicted-minus-logged derivative residual lag-one correlations are 0.432794 and 0.397854 (dimensionless) on training and validation, respectively. ",
+    "limitations": "There is no supplied physical description or intended use; no term is assigned a physical mechanism. This is a scalar autonomous-in-state, memoryless-in-input approximation, not evidence that omitted dynamics are absent. It cannot represent input histories, disturbances or time-dependent hidden states. Observed derivative residual correlation motivated nonlinear feedback and input-rate interactions, but remained after these extensions. Sampled derivatives need not be exact continuous-time derivatives, and integration-method effects are absorbed into fitted values. Extrapolation beyond the sampled state/input ranges is unverified; uncertainty intervals were not estimated. Quadratic spline tails and cross terms remain unbounded; no monotonicity or global stability constraint was imposed. Only the observed neighborhood of each knot is supported by data. "
+  }
+}

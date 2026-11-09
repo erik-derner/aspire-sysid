@@ -1,0 +1,9 @@
+{
+  "order": [
+    "K_deadzone",
+    "K_smooth",
+    "K_linear"
+  ],
+  "recommended": "K_deadzone",
+  "reason": "The hard dead-zone family has the lowest pooled leave-one-trajectory-out `y` rollout RMSE among retained candidates: approximately `0.116` in unknown `y` units, compared with `0.122` for the smooth monotone family and `0.216` for the affine-input kinematic reference. All use only training data. The smooth family is competitive and has lower full-training error, so the recommendation is provisional given only three experiments. The threshold candidate also avoids local command-response reversal and prevents negative displacement length at small positive `x3`. Residuals still show unresolved input-change transients."
+}

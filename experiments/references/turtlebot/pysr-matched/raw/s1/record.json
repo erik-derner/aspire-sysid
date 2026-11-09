@@ -1,0 +1,56 @@
+{
+  "task": "turtlebot",
+  "setting": "matched",
+  "seed": 1,
+  "threads": false,
+  "pysr": "1.5.10",
+  "parameters_of_the_search": {
+    "batching": false,
+    "binary_operators": null,
+    "deterministic": true,
+    "elementwise_loss": null,
+    "maxdepth": null,
+    "maxsize": 30,
+    "model_selection": "best",
+    "ncycles_per_iteration": 380,
+    "niterations": 100,
+    "parallelism": "serial",
+    "parsimony": 0.0,
+    "population_size": 27,
+    "populations": 31,
+    "precision": 32,
+    "random_state": 1,
+    "unary_operators": [
+      "sin",
+      "cos",
+      "tanh",
+      "exp",
+      "log",
+      "sqrt",
+      "abs",
+      "sign"
+    ]
+  },
+  "seconds": {
+    "x_next": 494.85786485671997,
+    "y_next": 339.8647744655609,
+    "phi_next": 306.6183078289032
+  },
+  "selected_by_package": {
+    "x_next": 15,
+    "y_next": 4,
+    "phi_next": 2
+  },
+  "selected": {
+    "x_next": 18,
+    "y_next": 3,
+    "phi_next": 16
+  },
+  "training_error": 0.026572264782869854,
+  "training_error_package_selection": 0.04554889607556824,
+  "front_sizes": {
+    "x_next": 23,
+    "y_next": 23,
+    "phi_next": 19
+  }
+}

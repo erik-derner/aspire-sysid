@@ -1,0 +1,97 @@
+{
+  "expressions": {
+    "dy": "x1",
+    "dx1": "bias - linearRest*y + quadraticForce*y**2 + cubicRest*y**3 - quinticRest*y**5 - visc*exp(Min(Max(-dampSlope*y, -expCap), expCap))*x1 + gain*x2 - fric*tanh(x1/velScale)"
+  },
+  "parameters": [
+    {
+      "name": "bias",
+      "value": 3.0480805919898484,
+      "unit": "V/s",
+      "type": "fitted",
+      "description": "`bias` is the constant acceleration offset. Estimated jointly in the final free-run output-error fit on both supplied files, from the training-only starting value reported in estimation."
+    },
+    {
+      "name": "linearRest",
+      "value": 112.20583846930326,
+      "unit": "V/(s*Y)",
+      "type": "fitted",
+      "description": "`linearRest` is the linear restoring coefficient. Estimated jointly in the final free-run output-error fit on both supplied files, from the training-only starting value reported in estimation."
+    },
+    {
+      "name": "visc",
+      "value": 1.7748074018074274,
+      "unit": "1/s",
+      "type": "fitted",
+      "description": "`visc` is the positive baseline velocity damping coefficient. Estimated jointly in the final free-run output-error fit on both supplied files, from the training-only starting value reported in estimation."
+    },
+    {
+      "name": "gain",
+      "value": 28.460470011047324,
+      "unit": "V/(s*U)",
+      "type": "fitted",
+      "description": "`gain` is the linear input coefficient. Estimated jointly in the final free-run output-error fit on both supplied files, from the training-only starting value reported in estimation."
+    },
+    {
+      "name": "cubicRest",
+      "value": 17.50985205409289,
+      "unit": "V/(s*Y**3)",
+      "type": "fitted",
+      "description": "`cubicRest` is the cubic softening coefficient. Estimated jointly in the final free-run output-error fit on both supplied files, from the training-only starting value reported in estimation."
+    },
+    {
+      "name": "fric",
+      "value": 21.028562398998815,
+      "unit": "V/s",
+      "type": "fitted",
+      "description": "`fric` is the magnitude of saturating moving-velocity damping. Estimated jointly in the final free-run output-error fit on both supplied files, from the training-only starting value reported in estimation."
+    },
+    {
+      "name": "velScale",
+      "value": 0.2,
+      "unit": "V",
+      "type": "fixed",
+      "description": "`velScale` is the velocity width of the hyperbolic tangent transition. Fixed at `velScale = 0.2` V in the final fit. This is a manually chosen smoothing hyperparameter, not a continuously optimized final coefficient: sensitivity fits on all training trajectories tested `velScale = 0.09`, `velScale = 0.12`, `velScale = 0.2` and `velScale = 0.4` V and compared their held-out validation simulations. The choice balances validation performance with resolution of the damping transition at `T_s = 0.01` s; its precise value is not identified physically."
+    },
+    {
+      "name": "dampSlope",
+      "value": 0.2406770604835919,
+      "unit": "1/Y",
+      "type": "fitted",
+      "description": "`dampSlope` is the state dependence of positive exponential velocity damping. Estimated jointly in the final free-run output-error fit on both supplied files, from the training-only starting value reported in estimation."
+    },
+    {
+      "name": "quadraticForce",
+      "value": -1.3177885068710964,
+      "unit": "V/(s*Y**2)",
+      "type": "fitted",
+      "description": "`quadraticForce` is the coefficient of the even quadratic force correction. Estimated jointly in the final free-run output-error fit on both supplied files, from the training-only starting value reported in estimation."
+    },
+    {
+      "name": "quinticRest",
+      "value": 0.47212874075869254,
+      "unit": "V/(s*Y**5)",
+      "type": "fitted",
+      "description": "`quinticRest` is the fifth-degree inward restoring coefficient. Estimated jointly in the final free-run output-error fit on both supplied files, from the training-only starting value reported in estimation."
+    },
+    {
+      "name": "expCap",
+      "value": 40.0,
+      "unit": "-",
+      "type": "fixed",
+      "description": "`expCap = 40` is a chosen dimensionless numerical safety cap for the exponential argument. It prevents overflow far beyond observed states; it is inactive over all fitted and screened trajectories. It is not inferred physical saturation."
+    }
+  ],
+  "estimation": {
+    "criterion": "Sum of squared free-run errors in `y` at every within-trajectory row after its initial sample, with equal weight per sample. This matches the scored output and long-run simulation requirement rather than optimizing the noisy centered derivative target. Errors have unit Y and the minimized sum has unit Y**2.",
+    "data": "Final coefficient estimation uses data/train.csv (all trajectories, all 3522 rows) and data/val.csv (all trajectories, all 1192 rows), with each initial row used solely to initialize simulation. No rows or trajectories are otherwise omitted. Structural screening first fits training data only and evaluates all validation trajectories without resetting the states; final refitting then uses both files to exploit all available experiments. Consequently final validation-file errors are in-sample, not new held-out evidence. The file names, sample counts and row roles are as supplied in TASK.md.",
+    "method": "Classical fourth-order Runge-Kutta with `T_s = 0.01` s and `x2` held at the preceding logged sample is used, with measured initial states and no subsequent state replacement. Every trajectory is separate. SciPy `scipy.optimize.least_squares` uses trust-region reflective bounded nonlinear least squares, linear loss, two-point finite-difference Jacobians, Jacobian-based parameter scaling, `max_nfev = 350`, and `ftol = xtol = gtol = 1e-10`; the last four are dimensionless numerical settings. This method handles the small bounded nonlinear output-error problem directly; derivative least squares alone is insufficient because centered differentiated, quantized measurements need not be instantaneous acceleration. Numba only accelerates the deterministic RK4 calculations. No random numbers or seeds are used. All fitted parameters listed in this candidate are re-estimated together in one final step on both files. They start from this family's preceding training-only simulation least-squares fit, whose numerical values are: `bias = 2.77417124188919` V/s; `linearRest = 112.6618440092835` V/(s*Y); `visc = 1.756275632617062` 1/s; `gain = 28.10769596142475` V/(s*U); `cubicRest = 18.23598194210358` V/(s*Y**3); `fric = 20.63625984806124` V/s; `dampSlope = 0.2252355291447888` 1/Y; `quadraticForce = -1.242501287061591` V/(s*Y**2); `quinticRest = 0.5710307258253193` V/(s*Y**5). These warm starts were chosen because the preliminary fit already tracked the measured trajectories. The final optimization bounds are `-10 <= bias <= 10` V/s; `1 <= linearRest <= 300` V/(s*Y); `0.05 <= visc <= 30` 1/s; `1 <= gain <= 100` V/(s*U); `0 <= cubicRest <= 50` V/(s*Y**3); `0 <= fric <= 60` V/s; `-1 <= dampSlope <= 1` 1/Y; `-30 <= quadraticForce <= 30` V/(s*Y**2); `0.005 <= quinticRest <= 8` V/(s*Y**5). Bounds keep damping positive, constrain plausible local restoring and forcing magnitudes, and avoid unresolved velocity transitions; they are search restrictions, not established physical limits. The fifth-degree coefficient starts from a training-only fit obtained by adding `quinticRest = 0.5` V/(s*Y**5) to the preliminary cubic model. It is estimated, not fixed. The final smoothing width remains a manually selected fixed hyperparameter. The earlier training-only search and its initial values are reproducible in the scripts stated in origin. `reproduce_candidates.py` reproduces the final joint step from the exact numerical training-fit starting values. References: the SciPy reference documentation for `scipy.optimize.least_squares` describes the trust-region reflective method; Steven H. Strogatz, Nonlinear Dynamics and Chaos, is a general oscillator reference. These bibliographic references are cited from memory; attempted web checking returned no usable content, so neither source was verified online in this round. Neither reference establishes the identity or physics of this undisclosed system.",
+    "script": "reproduce_candidates.py"
+  },
+  "discussion": {
+    "family": "Continuous-time generalized Duffing-type polynomial oscillator, with restoring acceleration through degree five and smooth velocity damping. The fifth-degree inward term extends a cubic softening oscillator rather than assuming an exact spring law. References: the SciPy reference documentation for `scipy.optimize.least_squares` describes the trust-region reflective method; Steven H. Strogatz, Nonlinear Dynamics and Chaos, is a general oscillator reference. These bibliographic references are cited from memory; attempted web checking returned no usable content, so neither source was verified online in this round. Neither reference establishes the identity or physics of this undisclosed system.",
+    "interpretation": "Units are not supplied. In this record, Y denotes the unknown unit of `y`, V the unknown unit of `x1`, U the unknown unit of `x2`, and s seconds; these are unit placeholders, not expression symbols. The numerical relation `dy = x1` is assumed from within-trajectory centered differences, implying compatible numerical scaling V = Y/s, not a known physical calibration. The expressions use only the logged states and input; the column `dx1` is not an argument. In `bias - linearRest*y + quadraticForce*y**2 + cubicRest*y**3 - quinticRest*y**5 - visc*exp(Min(Max(-dampSlope*y, -expCap), expCap))*x1 + gain*x2 - fric*tanh(x1/velScale)`, `bias` gives constant acceleration, `-linearRest*y` gives locally inward linear restoring acceleration, `quadraticForce*y**2` gives an even state asymmetry, `cubicRest*y**3` softens the linear restoring action, and `-quinticRest*y**5` gives an inward high-amplitude correction because its fitted coefficient is positive. `-visc*exp(Min(Max(-dampSlope*y, -expCap), expCap))*x1` is positive state-dependent velocity damping, `gain*x2` is input forcing, and `-fric*tanh(x1/velScale)` is smooth saturating velocity damping. All force descriptions are mathematical effects, not known device physics; `dy = x1` is the assumed kinematic equation.",
+    "origin": "After the prefit PLAN.md, fit_models.py compared affine and cubic acceleration with trigonometric alternatives. Its velocity residuals motivated the hyperbolic tangent term. The one-term output-error screen in search_terms.py supported `y*x1` and `y**2` corrections. fit_final.py used positive exponential damping instead of the affine state-velocity damping, and fitted an even quadratic force. The positive cubic-only acceleration becomes outward beyond its fitted local range; therefore fit_quintic.py tested the additional guessed stabilizing term `-quinticRest*y**5`, fitting its magnitude with a positive bound. It slightly improved held-out validation and gives inward acceleration at sufficiently large state magnitudes. This is an empirically fitted polynomial family, not a polynomial expansion asserted to be exact physics.",
+    "limitations": "Units are not supplied. In this record, Y denotes the unknown unit of `y`, V the unknown unit of `x1`, U the unknown unit of `x2`, and s seconds; these are unit placeholders, not expression symbols. The numerical relation `dy = x1` is assumed from within-trajectory centered differences, implying compatible numerical scaling V = Y/s, not a known physical calibration. The expressions use only the logged states and input; the column `dx1` is not an argument. Physical identity, calibrated units, independent measurement noise, hidden actuator dynamics and friction memory are unknown. The derivative columns are centered finite differences, not independent acceleration measurements. Training coverage is approximately `-2.514 <= y <= 2.536` Y, `-20.107 <= x1 <= 14.452` V and `-4.946 <= x2 <= 3.954` U, computed from data/train.csv and rounded outward. There is no guarantee outside this support or beyond the supplied trajectory durations. In particular, the asserted kinematic equation does not resolve quantization or initial-velocity error.  Degree-five coefficients are correlated because the large-amplitude support is short. Positive highest-degree inward acceleration does not guarantee one-step RK4 stability on large extrapolations; it can be stiff and the polynomial can have additional equilibria outside the observed range. No energy, symmetry or parameter interpretation beyond mathematical term effects is established. Saturating damping is smooth and does not create exact sticking."
+  }
+}

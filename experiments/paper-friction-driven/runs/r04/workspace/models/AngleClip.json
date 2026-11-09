@@ -1,0 +1,76 @@
+{
+  "expressions": {
+    "dtheta": "omega",
+    "domega": "a*u-g*sin(theta)-b*omega-Min(Max(a*u-g*sin(theta)+k*omega,-c*(1+hs*sin(theta)+hc*cos(theta))*(1-eta)),c*(1+hs*sin(theta)+hc*cos(theta))*(1+eta))"
+  },
+  "parameters": [
+    {
+      "name": "a",
+      "value": 28.83427283912018,
+      "unit": "rad/(s^2*V)",
+      "type": "fitted",
+      "description": "Voltage-to-acceleration gain; positive motor torque per effective inertia. Estimated jointly with all other parameters of this candidate by the output-error procedure below."
+    },
+    {
+      "name": "b",
+      "value": 1.9074375364327696,
+      "unit": "1/s",
+      "type": "fitted",
+      "description": "Viscous acceleration coefficient, including mechanical drag and motor back-EMF effects that cannot be separated by these data. Estimated jointly with all other parameters of this candidate by the output-error procedure below."
+    },
+    {
+      "name": "g",
+      "value": 114.38271495945442,
+      "unit": "rad/s^2",
+      "type": "fitted",
+      "description": "Sinusoidal restoring-acceleration amplitude, interpreted as gravitational torque divided by effective inertia. Estimated jointly with all other parameters of this candidate by the output-error procedure below."
+    },
+    {
+      "name": "c",
+      "value": 28.334252644314297,
+      "unit": "rad/s^2",
+      "type": "fitted",
+      "description": "Dry-friction acceleration scale. Estimated jointly with all other parameters of this candidate by the output-error procedure below."
+    },
+    {
+      "name": "k",
+      "value": 203.96127961061012,
+      "unit": "1/s",
+      "type": "fitted",
+      "description": "Low-speed stopping relaxation rate used by the algebraic friction regularization, not a separately measured material property. Estimated jointly with all other parameters of this candidate by the output-error procedure below."
+    },
+    {
+      "name": "hs",
+      "value": -0.2591914819957549,
+      "unit": "-",
+      "type": "fitted",
+      "description": "Dimensionless sine coefficient of angular friction modulation. Estimated jointly with all other parameters of this candidate by the output-error procedure below."
+    },
+    {
+      "name": "hc",
+      "value": -0.33523306573928163,
+      "unit": "-",
+      "type": "fitted",
+      "description": "Dimensionless cosine coefficient of angular friction modulation. Estimated jointly with all other parameters of this candidate by the output-error procedure below."
+    },
+    {
+      "name": "eta",
+      "value": -0.10095565980120201,
+      "unit": "-",
+      "type": "fitted",
+      "description": "Dimensionless directional asymmetry of positive and negative sliding friction limits. Estimated jointly with all other parameters of this candidate by the output-error procedure below."
+    }
+  ],
+  "estimation": {
+    "criterion": "Sum of squared open-loop angle residuals, with residual defined as simulated `theta` minus measured `theta`, on all samples except trajectory initial samples. The angle output-error criterion matches the intended autonomous simulation use; differentiation-based acceleration residuals were only used for initialization and structural diagnostics.",
+    "data": "data/train.csv, all 13 trajectories, and data/val.csv, all 3 trajectories. The validation file was first reserved for comparison of training-only structures, then included in the final estimation to reduce parameter uncertainty. The final loss uses every angle sample after the first of each trajectory, with equal weight per sample; the first logged `theta` and `omega` initialize that trajectory. Inputs `u` are held at the logged value between samples. No test data were accessed. In cross-validation the three validation trajectories are internally numbered 14 through 16; their file IDs remain 1 through 3.",
+    "method": "All 8 fitted parameters were optimized together by bounded nonlinear least squares using scipy.optimize.least_squares (Trust Region Reflective algorithm), with `linear` loss, `x_scale = \"jac\"`, `diff_step = 0.0001`, `max_nfev = 350`, `ftol = 2e-8`, `xtol = 2e-8`, and `gtol = 1e-7`. Here solver tolerances and finite-difference scale are numerical settings, not physical parameters. Each residual evaluation integrates separate trajectories by classical RK4, one step of `0.01` s, with zero-order-held `u`, exactly as the task specifies. Numba compiles the simulator; it does not change the model. Parameter ordering is `a` (rad/(s^2*V)), `b` (1/s), `g` (rad/s^2), `c` (rad/s^2), `k` (1/s), `hs` (dimensionless), `hc` (dimensionless), `eta` (dimensionless). Six initial vectors in that ordering were `[28.976700866752516, 1.9240228352943147, 114.97355582218454, 28.000932461052411, 159.43100557581116, -0.26184262827859656, -0.3223173910087635, -0.10294744130119626]`; `[29.236509160180972, 2.011373458298344, 102.16567735778651, 29.209628393449407, 27.217875498435763, -0.26039429718621521, -0.26089806115104347, -0.10294744130119626]`; `[33.79239918120058, 1.8317011607308498, 116.74661344661101, 27.452936533964877, 55.789315172020231, -0.29081939792897699, -0.32102739501309019, -0.10294744130119626]`; `[26.63032233701465, 1.9207050272399782, 116.23644271314627, 28.088917376050677, 61.7274466599834, -0.18396778855069107, -0.26292019623025908, -0.10294744130119626]`; `[29.393450672278099, 1.8471671256503239, 120.87438607879723, 28.137312280770338, 99.670535820346743, -0.28100088318901567, -0.31958348012430632, -0.10294744130119626]`; `[30.206182622892456, 2.1020103295362405, 107.5747675482975, 30.709892536201522, 155.51593042908129, -0.3941790371002154, -0.20548451505513876, -0.10294744130119626]`; each component has the corresponding unit just listed. Bounds in that same order are lower `[1, 0, 20, 0, 3, -0.65000000000000002, -0.65000000000000002, -0.80000000000000004]` and upper `[60, 10, 200, 60, 240, 0.65000000000000002, 0.65000000000000002, 0.80000000000000004]`, with the corresponding component units. The first start came from the preceding torque-balance/output-error fit; the other five are deterministic local perturbations, using numpy.random.default_rng with seed `271828`, to reduce sensitivity to local minima. The same script evaluates both ordinary squared loss and soft-L1 loss (scale `0.04` rad), with six starts per loss; the best fitting objective is retained within each loss. Leave-one-trajectory-out refits on the 16 available trajectories then select the loss by aggregate held-out angle RMSE. Those refits are warm-started from the full-data estimate but exclude the held-out trajectory from their objective; their limit is `max_nfev = 180`. The delivered values are the selected full-data fit, not an average of cross-validation parameters. Every other setting is identical between those refits and the full-data fit. Positive gain, restoring amplitude and friction scale, nonnegative viscous drag, and bounded modulation coefficients were imposed for stability and the physical requirements. The velocity-width lower bound `0.12` rad/s avoids an excessively stiff explicit-RK4 regularization; stopping rates are bounded below the approximately `278` 1/s scalar RK4 stability limit for this sampling period. Bounds on `hs` and `hc` guarantee a positive angular envelope even at their extreme combinations. This direct low-dimensional output-error method was preferred to a black-box predictor because states are never corrected after initialization.",
+    "script": "fit_final.py"
+  },
+  "discussion": {
+    "family": "Second-order nonlinear pendulum torque balance with an algebraic projected Coulomb/stiction closure and a trigonometric friction envelope. Background: B. Armstrong-Helouvry, P. Dupont and C. Canudas de Wit, 'A survey of models, analysis tools and compensation methods for the control of machines with friction', Automatica (1994). This bibliographic reference is recalled from memory; the attempted web retrieval did not return usable source text. The custom algebraic closures here are not claimed to be the exact models in that survey.",
+    "interpretation": "`dtheta = omega` is the exact kinematic identity. `a*u` is motor acceleration, `-g*sin(theta)` is restoring acceleration, and `-b*omega` is viscous drag. The friction magnitude `c*(1+hs*sin(theta)+hc*cos(theta))` varies periodically with angle; this is an empirical positive envelope, not an identified pad-pressure law. Its positive-direction limit is multiplied by `1+eta` and its negative-direction limit by `1-eta`. The clipped term `Min(Max(a*u-g*sin(theta)+k*omega,-c*(1+hs*sin(theta)+hc*cos(theta))*(1-eta)),c*(1+hs*sin(theta)+hc*cos(theta))*(1+eta))` opposes motion when saturated. When unsaturated it cancels the external torque and leaves acceleration `-(b+k)*omega`. At `omega = 0` it supports a whole stick band rather than causing slow creep. `k` controls the numerically resolved stopping relaxation, not a new state.",
+    "origin": "The motor, viscous and sine terms came from torque-balance physics. Coulomb friction was first diagnosed by ordinary least squares on moving training samples. A force projection was chosen instead of an abrupt velocity sign switch to maintain a stick band with stable fixed-step RK4 integration. The expanded moving-sample linear-library residual fit supported angular friction terms `-sign(omega)*sin(theta)` and `-sign(omega)*cos(theta)`; these motivated the positive periodic friction envelope. Directional mean residuals motivated separate positive and negative limits. A fitted restoring harmonic, quadratic drag and cubic voltage gain did not produce a convincing improvement and were not retained. This expression was designed from those diagnostics, not produced by genetic programming.",
+    "limitations": "Torque and inertia are identified only through their ratios. The angular envelope and directional asymmetry may include encoder processing, unmodelled loads and run-to-run friction differences; they do not establish a specific physical preload mechanism. The force projection approximates set-valued dry friction with a finite stopping rate, so it is not an exact event-driven Coulomb solver. Stick/slip transition derivatives are not smooth. Training voltages actually cover roughly `-4.95 <= u <= 3.96` V, much less than the formal `-10 <= u <= 10` V domain; linear motor behavior outside the observed range is assumed. Several stopping-angle and noisy driven-trajectory residuals remain. No hidden-state hysteresis, motor-current dynamics, drift or temperature dependence is identifiable here. Full-data angle RMSE is `0.05323582` rad and aggregate leave-one-trajectory-out angle RMSE is `0.06048971` rad across all 16 known trajectories; these are not test scores."
+  }
+}

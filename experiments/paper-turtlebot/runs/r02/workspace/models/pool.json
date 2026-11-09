@@ -1,0 +1,10 @@
+{
+  "order": [
+    "Euler",
+    "WheelDeadZone",
+    "ExactArc",
+    "AngularDeadZone"
+  ],
+  "recommended": "Euler",
+  "reason": "The two-parameter Euler model had the lowest pooled leave-one-trajectory-out 5 s `x` RMSE among the tested family/criterion combinations (approximately 0.0291 m across all held-out windows in data/train.csv). It is translation invariant, compact and finite. The nonlinear alternatives explain settled-command residuals but do not consistently improve held-out `x` simulation. These validation windows overlap and involve only three trajectories, so the small differences are uncertain; this is not a claim about hidden test performance."
+}

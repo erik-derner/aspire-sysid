@@ -1,0 +1,9 @@
+{
+  "order": [
+    "BlendedStiction",
+    "ProjectedFriction",
+    "KarnoppBand"
+  ],
+  "recommended": "BlendedStiction",
+  "reason": "Recommended for exact resting force cancellation, continuous low-speed dynamics and the best final all-data angle fit: training RMSE `0.04552` rad and reused-validation RMSE `0.07699` rad. The independent audit excluded training tails of validation recordings: blended and Karnopp validation RMSEs were nearly tied (`0.08554` rad versus `0.08520` rad), while projection gave `0.08963` rad. Thus the recommendation also rests on avoiding Karnopp discontinuous mode switches, not on claiming a decisive independent validation win. All three satisfy the requirements analytically and in the recorded sampled checks. Test data were not accessed."
+}

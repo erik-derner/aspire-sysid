@@ -1,0 +1,48 @@
+{
+  "expressions": {
+    "dtheta": "omega",
+    "domega": "cb2*omega + cb3*u - theta*(cb1*theta**2 + cb4)"
+  },
+  "parameters": [
+    {
+      "name": "cb1",
+      "value": -12.411948088764792,
+      "unit": "not assigned",
+      "type": "fitted",
+      "description": "Constant of the equation found by the search, optimized by the package together with the structure; its unit follows from its position in the expression and was not derived."
+    },
+    {
+      "name": "cb2",
+      "value": -3.903038683445726,
+      "unit": "not assigned",
+      "type": "fitted",
+      "description": "Constant of the equation found by the search, optimized by the package together with the structure; its unit follows from its position in the expression and was not derived."
+    },
+    {
+      "name": "cb3",
+      "value": 25.598947535110618,
+      "unit": "not assigned",
+      "type": "fitted",
+      "description": "Constant of the equation found by the search, optimized by the package together with the structure; its unit follows from its position in the expression and was not derived."
+    },
+    {
+      "name": "cb4",
+      "value": 98.23866,
+      "unit": "not assigned",
+      "type": "fitted",
+      "description": "Constant of the equation found by the search, optimized by the package together with the structure; its unit follows from its position in the expression and was not derived."
+    }
+  ],
+  "estimation": {
+    "criterion": "Mean squared error between the equation and its target, the default loss of the package, for each target separately (`domega`); the target is the supplied derivative column. This is not the simulation error that the task scores.",
+    "data": "data/train.csv, all `3522` rows of all trajectories. The validation data were not used.",
+    "method": "Symbolic regression by regularized evolution with PySR 1.5.10 (Cranmer, 2023, arXiv:2305.01582), pysr.PySRRegressor, one search per target, with binary operators `+`, `-`, `*`, `/` and no unary operator, `niterations=100`, `populations=31`, `population_size=27`, `maxsize=30` and the other settings of the package at their defaults. The equation of each target is the one that the package selects with `model_selection=\"best\"`: the equation with the highest score (the decrease of the logarithm of the loss per unit of complexity) among those whose loss is at most 1.5 times the smallest loss of the front. The defaults were used because the model is a reference for what the tool gives without tuning. The expression `dtheta` is `omega`, as the task prescribes. The search needs no starting values from the user: it starts from random expressions and optimizes the constants of an equation inside the search. Seed `random_state=5`, `deterministic=True`, `parallelism=\"serial\"`, so that the seed determines the result. Search time: domega 950 s.",
+    "script": "experiments/references/fit_pysr.py"
+  },
+  "discussion": {
+    "family": "Closed-form expression found by symbolic regression (genetic search over expression trees). Reference model; it is not a candidate of the agent.",
+    "interpretation": "The terms have no assigned physical meaning; each expression is the equation that the search returned for its target, written with its constants as named parameters.",
+    "origin": "The structure was found by the search of the package from the operators listed in the estimation record; no physical reasoning entered.",
+    "limitations": "The search minimizes the error of one step or of the derivative, not the simulation error, so that a small loss does not bound the error of a long simulation. The result depends on the seed. Outside the range of the training data the expression is not expected to hold."
+  }
+}

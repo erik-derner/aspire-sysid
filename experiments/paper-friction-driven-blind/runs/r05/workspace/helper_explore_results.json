@@ -1,0 +1,1635 @@
+{
+  "fits": [
+    {
+      "family": "affine",
+      "eps": 0.3,
+      "dz": 0.1,
+      "coefficients": {
+        "offset": 1.4434633858362402,
+        "input": 24.842103631815956,
+        "velocity": -3.8616766164085705,
+        "y": -66.52132983801613
+      },
+      "train_derivative_rmse": 17.126687223844684,
+      "per_trajectory": {
+        "train_1": {
+          "derivative_rmse": 15.014684950564046,
+          "residual_mean": 2.2886267376761156,
+          "y_rollout_rmse": 0.21523627491851471,
+          "n": 450
+        },
+        "train_2": {
+          "derivative_rmse": 21.666909491966944,
+          "residual_mean": 0.4755328602226814,
+          "y_rollout_rmse": 0.30820516469484005,
+          "n": 450
+        },
+        "train_3": {
+          "derivative_rmse": 15.077281128644549,
+          "residual_mean": -1.8551015722766593,
+          "y_rollout_rmse": 0.13931248247059513,
+          "n": 300
+        },
+        "train_4": {
+          "derivative_rmse": 23.062494373366487,
+          "residual_mean": -0.04068257323980229,
+          "y_rollout_rmse": 0.26739623774119303,
+          "n": 300
+        },
+        "train_5": {
+          "derivative_rmse": 12.450178510001983,
+          "residual_mean": -0.5461978863012538,
+          "y_rollout_rmse": 0.1068422542514377,
+          "n": 442
+        },
+        "train_6": {
+          "derivative_rmse": 16.808291602836135,
+          "residual_mean": 1.6977589094320251,
+          "y_rollout_rmse": 0.1505311091901716,
+          "n": 442
+        },
+        "train_7": {
+          "derivative_rmse": 21.88343461619197,
+          "residual_mean": -1.3088467815644826,
+          "y_rollout_rmse": 0.2665208833118658,
+          "n": 442
+        },
+        "train_8": {
+          "derivative_rmse": 9.202524961346546,
+          "residual_mean": 0.09457490986660652,
+          "y_rollout_rmse": 0.1261780929734019,
+          "n": 141
+        },
+        "train_9": {
+          "derivative_rmse": 11.1664439298133,
+          "residual_mean": 7.234003653187297,
+          "y_rollout_rmse": 0.14735992229058786,
+          "n": 141
+        },
+        "train_10": {
+          "derivative_rmse": 10.375044228166924,
+          "residual_mean": -6.065503404141472,
+          "y_rollout_rmse": 0.14811742340079387,
+          "n": 141
+        },
+        "train_11": {
+          "derivative_rmse": 9.526642568770942,
+          "residual_mean": 2.563652814058194,
+          "y_rollout_rmse": 0.13638570609279213,
+          "n": 91
+        },
+        "train_12": {
+          "derivative_rmse": 6.7968246581278535,
+          "residual_mean": -6.071461972691634,
+          "y_rollout_rmse": 0.09329942711120855,
+          "n": 91
+        },
+        "train_13": {
+          "derivative_rmse": 18.279110795073258,
+          "residual_mean": -5.104387188382709,
+          "y_rollout_rmse": 0.19678915516679624,
+          "n": 91
+        },
+        "val_1": {
+          "derivative_rmse": 21.47852285619791,
+          "residual_mean": 3.3176253822026247,
+          "y_rollout_rmse": 0.26628696586383044,
+          "n": 450
+        },
+        "val_2": {
+          "derivative_rmse": 28.497296876707455,
+          "residual_mean": 5.479541529121593,
+          "y_rollout_rmse": 0.4073212847052098,
+          "n": 300
+        },
+        "val_3": {
+          "derivative_rmse": 12.867173140468287,
+          "residual_mean": -5.058647226479204,
+          "y_rollout_rmse": 0.130898218810467,
+          "n": 442
+        }
+      },
+      "train_y_rollout_rmse": 0.2076268282536327,
+      "val_derivative_rmse": 20.974682236489933,
+      "val_y_rollout_rmse": 0.273594814328665
+    },
+    {
+      "family": "sin",
+      "eps": 0.3,
+      "dz": 0.1,
+      "coefficients": {
+        "offset": 0.8360545908479604,
+        "input": 25.556892431587613,
+        "velocity": -3.8862574840049593,
+        "sin_y": -101.63756757132971
+      },
+      "train_derivative_rmse": 12.586242304431464,
+      "per_trajectory": {
+        "train_1": {
+          "derivative_rmse": 14.935609265334726,
+          "residual_mean": 5.812831422577868,
+          "y_rollout_rmse": 0.1619821202080881,
+          "n": 450
+        },
+        "train_2": {
+          "derivative_rmse": 15.8485717200923,
+          "residual_mean": -2.7453315120606097,
+          "y_rollout_rmse": 0.18698731962336348,
+          "n": 450
+        },
+        "train_3": {
+          "derivative_rmse": 15.202080653372883,
+          "residual_mean": -6.085958998226568,
+          "y_rollout_rmse": 0.16262025174530106,
+          "n": 300
+        },
+        "train_4": {
+          "derivative_rmse": 15.463352309146888,
+          "residual_mean": -2.7284191262060022,
+          "y_rollout_rmse": 0.1496931907829238,
+          "n": 300
+        },
+        "train_5": {
+          "derivative_rmse": 7.398183437735726,
+          "residual_mean": -1.4018558599195123,
+          "y_rollout_rmse": 0.07001441970840414,
+          "n": 442
+        },
+        "train_6": {
+          "derivative_rmse": 7.767594293888349,
+          "residual_mean": 0.2122496487251681,
+          "y_rollout_rmse": 0.07057219539942498,
+          "n": 442
+        },
+        "train_7": {
+          "derivative_rmse": 9.962846730609039,
+          "residual_mean": 4.315253266333001,
+          "y_rollout_rmse": 0.13142317366256742,
+          "n": 442
+        },
+        "train_8": {
+          "derivative_rmse": 10.981495880792396,
+          "residual_mean": 1.8293944731238818,
+          "y_rollout_rmse": 0.14721190524276442,
+          "n": 141
+        },
+        "train_9": {
+          "derivative_rmse": 15.575809141754437,
+          "residual_mean": 11.3248079869598,
+          "y_rollout_rmse": 0.1741160934725687,
+          "n": 141
+        },
+        "train_10": {
+          "derivative_rmse": 12.258603091140122,
+          "residual_mean": -9.35662687757159,
+          "y_rollout_rmse": 0.12964471651972903,
+          "n": 141
+        },
+        "train_11": {
+          "derivative_rmse": 12.654859393062344,
+          "residual_mean": 4.958766624549462,
+          "y_rollout_rmse": 0.15190222315042456,
+          "n": 91
+        },
+        "train_12": {
+          "derivative_rmse": 8.144115039467186,
+          "residual_mean": -7.503302599359096,
+          "y_rollout_rmse": 0.0800706968307646,
+          "n": 91
+        },
+        "train_13": {
+          "derivative_rmse": 13.140553112930606,
+          "residual_mean": -4.631900046162274,
+          "y_rollout_rmse": 0.07736467970799582,
+          "n": 91
+        },
+        "val_1": {
+          "derivative_rmse": 20.578188307201838,
+          "residual_mean": 6.3713677625408085,
+          "y_rollout_rmse": 0.18078229062711013,
+          "n": 450
+        },
+        "val_2": {
+          "derivative_rmse": 25.137442922713515,
+          "residual_mean": 1.9914624680186592,
+          "y_rollout_rmse": 0.275939536337757,
+          "n": 300
+        },
+        "val_3": {
+          "derivative_rmse": 7.475395111859389,
+          "residual_mean": -4.293744178222496,
+          "y_rollout_rmse": 0.0781392105348317,
+          "n": 442
+        }
+      },
+      "train_y_rollout_rmse": 0.13806252201212904,
+      "val_derivative_rmse": 18.42873024831015,
+      "val_y_rollout_rmse": 0.1837228312390543
+    },
+    {
+      "family": "cubic",
+      "eps": 0.3,
+      "dz": 0.1,
+      "coefficients": {
+        "offset": 0.8324246387701714,
+        "input": 25.648290164620416,
+        "velocity": -3.9084958820771645,
+        "y": -98.14325871647301,
+        "y_cubed": 12.386634386071561
+      },
+      "train_derivative_rmse": 12.387119760846748,
+      "per_trajectory": {
+        "train_1": {
+          "derivative_rmse": 14.755319694205475,
+          "residual_mean": 5.504476870013053,
+          "y_rollout_rmse": 0.16208974089169517,
+          "n": 450
+        },
+        "train_2": {
+          "derivative_rmse": 15.700197931193753,
+          "residual_mean": -2.3758093136130474,
+          "y_rollout_rmse": 0.18650214506316903,
+          "n": 450
+        },
+        "train_3": {
+          "derivative_rmse": 15.00629062412353,
+          "residual_mean": -5.967127138538658,
+          "y_rollout_rmse": 0.15402093789311708,
+          "n": 300
+        },
+        "train_4": {
+          "derivative_rmse": 15.181321430501239,
+          "residual_mean": -2.7243562594993156,
+          "y_rollout_rmse": 0.17009629016875982,
+          "n": 300
+        },
+        "train_5": {
+          "derivative_rmse": 7.326123103217359,
+          "residual_mean": -1.295929751454545,
+          "y_rollout_rmse": 0.0681500649999743,
+          "n": 442
+        },
+        "train_6": {
+          "derivative_rmse": 7.635282022339974,
+          "residual_mean": 0.17157130026248552,
+          "y_rollout_rmse": 0.07209057559829975,
+          "n": 442
+        },
+        "train_7": {
+          "derivative_rmse": 9.62993547450445,
+          "residual_mean": 4.1433326775209265,
+          "y_rollout_rmse": 0.1257272329526255,
+          "n": 442
+        },
+        "train_8": {
+          "derivative_rmse": 10.747903414032209,
+          "residual_mean": 1.7546826313822124,
+          "y_rollout_rmse": 0.1453530609892285,
+          "n": 141
+        },
+        "train_9": {
+          "derivative_rmse": 15.064654597715432,
+          "residual_mean": 10.964801774903846,
+          "y_rollout_rmse": 0.17151868898301897,
+          "n": 141
+        },
+        "train_10": {
+          "derivative_rmse": 11.980962282814744,
+          "residual_mean": -8.972352286274528,
+          "y_rollout_rmse": 0.1302466815730559,
+          "n": 141
+        },
+        "train_11": {
+          "derivative_rmse": 12.271567798764977,
+          "residual_mean": 4.784633623575093,
+          "y_rollout_rmse": 0.1506634828206093,
+          "n": 91
+        },
+        "train_12": {
+          "derivative_rmse": 7.947975978389258,
+          "residual_mean": -7.296107426754798,
+          "y_rollout_rmse": 0.08006253380494219,
+          "n": 91
+        },
+        "train_13": {
+          "derivative_rmse": 13.409906389503872,
+          "residual_mean": -4.7763022180027415,
+          "y_rollout_rmse": 0.07553595908627622,
+          "n": 91
+        },
+        "val_1": {
+          "derivative_rmse": 20.34569465100598,
+          "residual_mean": 6.529996563931315,
+          "y_rollout_rmse": 0.1711464010080234,
+          "n": 450
+        },
+        "val_2": {
+          "derivative_rmse": 25.164797192386278,
+          "residual_mean": 2.0265366927430803,
+          "y_rollout_rmse": 0.2462811195760809,
+          "n": 300
+        },
+        "val_3": {
+          "derivative_rmse": 7.559652194309754,
+          "residual_mean": -4.303348586655197,
+          "y_rollout_rmse": 0.07976828358817091,
+          "n": 442
+        }
+      },
+      "train_y_rollout_rmse": 0.13823589871951433,
+      "val_derivative_rmse": 18.35326244814574,
+      "val_y_rollout_rmse": 0.16933411368395476
+    },
+    {
+      "family": "affine_coul",
+      "eps": 0.3,
+      "dz": 0.1,
+      "coefficients": {
+        "offset": 2.1991992446185447,
+        "input": 25.52070750759771,
+        "velocity": -2.0593412369826245,
+        "y": -68.48147988636849,
+        "sign_v": -14.800328131931014
+      },
+      "train_derivative_rmse": 15.54155853423248,
+      "per_trajectory": {
+        "train_1": {
+          "derivative_rmse": 12.013063927897623,
+          "residual_mean": 2.0697833891481308,
+          "y_rollout_rmse": 0.14384563338697598,
+          "n": 450
+        },
+        "train_2": {
+          "derivative_rmse": 18.917907968391717,
+          "residual_mean": 0.26731010527293114,
+          "y_rollout_rmse": 0.29356956115413174,
+          "n": 450
+        },
+        "train_3": {
+          "derivative_rmse": 13.88980172027902,
+          "residual_mean": 0.23091206889191881,
+          "y_rollout_rmse": 0.1837943746934513,
+          "n": 300
+        },
+        "train_4": {
+          "derivative_rmse": 21.53817318234566,
+          "residual_mean": 0.7066462502086635,
+          "y_rollout_rmse": 0.2334051417080838,
+          "n": 300
+        },
+        "train_5": {
+          "derivative_rmse": 11.395702758109092,
+          "residual_mean": -1.340108684547411,
+          "y_rollout_rmse": 0.11973656421022975,
+          "n": 442
+        },
+        "train_6": {
+          "derivative_rmse": 15.676088452758124,
+          "residual_mean": 0.9801938044109252,
+          "y_rollout_rmse": 0.16960766246166442,
+          "n": 442
+        },
+        "train_7": {
+          "derivative_rmse": 20.95228651658606,
+          "residual_mean": -1.7023834409230674,
+          "y_rollout_rmse": 0.2971887937730262,
+          "n": 442
+        },
+        "train_8": {
+          "derivative_rmse": 8.685275518973071,
+          "residual_mean": 0.26212284970502403,
+          "y_rollout_rmse": 0.05313982864028373,
+          "n": 141
+        },
+        "train_9": {
+          "derivative_rmse": 10.202845000928317,
+          "residual_mean": 6.090493636614317,
+          "y_rollout_rmse": 0.08503035630572195,
+          "n": 141
+        },
+        "train_10": {
+          "derivative_rmse": 8.330371966309611,
+          "residual_mean": -4.600796109361627,
+          "y_rollout_rmse": 0.031495521446790305,
+          "n": 141
+        },
+        "train_11": {
+          "derivative_rmse": 8.220193851913303,
+          "residual_mean": 2.239039125175015,
+          "y_rollout_rmse": 0.049392804836003196,
+          "n": 91
+        },
+        "train_12": {
+          "derivative_rmse": 6.172501964848567,
+          "residual_mean": -5.567743086402045,
+          "y_rollout_rmse": 0.008842861194413786,
+          "n": 91
+        },
+        "train_13": {
+          "derivative_rmse": 15.863318743490568,
+          "residual_mean": -4.016684868027925,
+          "y_rollout_rmse": 0.20810112879320236,
+          "n": 91
+        },
+        "val_1": {
+          "derivative_rmse": 19.630989850189536,
+          "residual_mean": 3.2111998809321207,
+          "y_rollout_rmse": 0.2295163484224374,
+          "n": 450
+        },
+        "val_2": {
+          "derivative_rmse": 26.17497171210175,
+          "residual_mean": 4.846948180575641,
+          "y_rollout_rmse": 0.3842558455150121,
+          "n": 300
+        },
+        "val_3": {
+          "derivative_rmse": 12.278470299868085,
+          "residual_mean": -5.620708773132064,
+          "y_rollout_rmse": 0.13566395825918617,
+          "n": 442
+        }
+      },
+      "train_y_rollout_rmse": 0.19831498740410483,
+      "val_derivative_rmse": 19.334440106989362,
+      "val_y_rollout_rmse": 0.2526843312749809
+    },
+    {
+      "family": "sin_coul",
+      "eps": 0.3,
+      "dz": 0.1,
+      "coefficients": {
+        "offset": 1.6846909465431368,
+        "input": 26.375103454103446,
+        "velocity": -1.8137031782250872,
+        "sin_y": -105.44233132749498,
+        "sign_v": -17.070805727182112
+      },
+      "train_derivative_rmse": 9.485470736252307,
+      "per_trajectory": {
+        "train_1": {
+          "derivative_rmse": 11.149529111248473,
+          "residual_mean": 5.711096872409018,
+          "y_rollout_rmse": 0.04152876715110322,
+          "n": 450
+        },
+        "train_2": {
+          "derivative_rmse": 11.765601590050457,
+          "residual_mean": -3.1089987831830888,
+          "y_rollout_rmse": 0.10011890294702018,
+          "n": 450
+        },
+        "train_3": {
+          "derivative_rmse": 11.87398182515976,
+          "residual_mean": -3.9009220910816227,
+          "y_rollout_rmse": 0.07876448818765236,
+          "n": 300
+        },
+        "train_4": {
+          "derivative_rmse": 11.005795389447337,
+          "residual_mean": -1.9514529594157073,
+          "y_rollout_rmse": 0.07452593416462612,
+          "n": 300
+        },
+        "train_5": {
+          "derivative_rmse": 5.194991211324479,
+          "residual_mean": -2.345345261626942,
+          "y_rollout_rmse": 0.03725395591391981,
+          "n": 442
+        },
+        "train_6": {
+          "derivative_rmse": 4.906628079306362,
+          "residual_mean": -0.6576774824940027,
+          "y_rollout_rmse": 0.0498737741760018,
+          "n": 442
+        },
+        "train_7": {
+          "derivative_rmse": 8.19037485921778,
+          "residual_mean": 4.069426769336925,
+          "y_rollout_rmse": 0.10920563364759797,
+          "n": 442
+        },
+        "train_8": {
+          "derivative_rmse": 8.947434291765093,
+          "residual_mean": 2.0944932061315016,
+          "y_rollout_rmse": 0.08280980520133346,
+          "n": 141
+        },
+        "train_9": {
+          "derivative_rmse": 12.785718141824905,
+          "residual_mean": 10.183817269863349,
+          "y_rollout_rmse": 0.04888702570468021,
+          "n": 141
+        },
+        "train_10": {
+          "derivative_rmse": 9.894848428860213,
+          "residual_mean": -7.815934895823117,
+          "y_rollout_rmse": 0.04335979452668327,
+          "n": 141
+        },
+        "train_11": {
+          "derivative_rmse": 9.608620557874676,
+          "residual_mean": 4.688984016770753,
+          "y_rollout_rmse": 0.020175087571339533,
+          "n": 91
+        },
+        "train_12": {
+          "derivative_rmse": 7.596390296637737,
+          "residual_mean": -6.988694792055728,
+          "y_rollout_rmse": 0.011448486976177438,
+          "n": 91
+        },
+        "train_13": {
+          "derivative_rmse": 8.122530342038857,
+          "residual_mean": -3.368170114299361,
+          "y_rollout_rmse": 0.05797106798863511,
+          "n": 91
+        },
+        "val_1": {
+          "derivative_rmse": 18.10695283996681,
+          "residual_mean": 6.416224264694962,
+          "y_rollout_rmse": 0.1276864902359776,
+          "n": 450
+        },
+        "val_2": {
+          "derivative_rmse": 22.623753835465507,
+          "residual_mean": 1.0823495207453575,
+          "y_rollout_rmse": 0.09853896140844283,
+          "n": 300
+        },
+        "val_3": {
+          "derivative_rmse": 6.1385282463073,
+          "residual_mean": -4.926509981576782,
+          "y_rollout_rmse": 0.0894522068485326,
+          "n": 442
+        }
+      },
+      "train_y_rollout_rmse": 0.07095751247061337,
+      "val_derivative_rmse": 16.326762179958205,
+      "val_y_rollout_rmse": 0.10754716424486553
+    },
+    {
+      "family": "cubic_coul",
+      "eps": 0.3,
+      "dz": 0.1,
+      "coefficients": {
+        "offset": 1.6551803268807352,
+        "input": 26.457555683789902,
+        "velocity": -1.8729537546006747,
+        "y": -102.00470621139746,
+        "y_cubed": 13.031006385562645,
+        "sign_v": -16.735364350262692
+      },
+      "train_derivative_rmse": 9.360029105674828,
+      "per_trajectory": {
+        "train_1": {
+          "derivative_rmse": 10.9383227853655,
+          "residual_mean": 5.424314860226671,
+          "y_rollout_rmse": 0.040534735825694,
+          "n": 450
+        },
+        "train_2": {
+          "derivative_rmse": 11.675887176423268,
+          "residual_mean": -2.7595869505954913,
+          "y_rollout_rmse": 0.10376316129528751,
+          "n": 450
+        },
+        "train_3": {
+          "derivative_rmse": 11.838787782099494,
+          "residual_mean": -3.822296220328996,
+          "y_rollout_rmse": 0.07544158618092461,
+          "n": 300
+        },
+        "train_4": {
+          "derivative_rmse": 10.827776090918348,
+          "residual_mean": -2.0189284614066434,
+          "y_rollout_rmse": 0.11306670814500597,
+          "n": 300
+        },
+        "train_5": {
+          "derivative_rmse": 5.192409162245867,
+          "residual_mean": -2.232640882357866,
+          "y_rollout_rmse": 0.037314979675359836,
+          "n": 442
+        },
+        "train_6": {
+          "derivative_rmse": 5.056219080497869,
+          "residual_mean": -0.7192049246378569,
+          "y_rollout_rmse": 0.05710982686048502,
+          "n": 442
+        },
+        "train_7": {
+          "derivative_rmse": 7.855537300165792,
+          "residual_mean": 3.981974797982304,
+          "y_rollout_rmse": 0.09319309535365444,
+          "n": 442
+        },
+        "train_8": {
+          "derivative_rmse": 8.814093023115289,
+          "residual_mean": 2.0304976441095497,
+          "y_rollout_rmse": 0.08265557285114002,
+          "n": 141
+        },
+        "train_9": {
+          "derivative_rmse": 12.40903830244973,
+          "residual_mean": 9.865867991362057,
+          "y_rollout_rmse": 0.03978182773371613,
+          "n": 141
+        },
+        "train_10": {
+          "derivative_rmse": 9.644613435348278,
+          "residual_mean": -7.467363873831569,
+          "y_rollout_rmse": 0.04414632968356231,
+          "n": 141
+        },
+        "train_11": {
+          "derivative_rmse": 9.361615317686546,
+          "residual_mean": 4.53311791325301,
+          "y_rollout_rmse": 0.01224535585342326,
+          "n": 91
+        },
+        "train_12": {
+          "derivative_rmse": 7.392334046534362,
+          "residual_mean": -6.790238889605376,
+          "y_rollout_rmse": 0.01461337224476385,
+          "n": 91
+        },
+        "train_13": {
+          "derivative_rmse": 8.729069817730577,
+          "residual_mean": -3.529323168930108,
+          "y_rollout_rmse": 0.06260319205527697,
+          "n": 91
+        },
+        "val_1": {
+          "derivative_rmse": 17.945620624890793,
+          "residual_mean": 6.576769244166623,
+          "y_rollout_rmse": 0.1228301372276938,
+          "n": 450
+        },
+        "val_2": {
+          "derivative_rmse": 22.65223454786597,
+          "residual_mean": 1.1316056378925785,
+          "y_rollout_rmse": 0.10403631795597276,
+          "n": 300
+        },
+        "val_3": {
+          "derivative_rmse": 6.267866439418132,
+          "residual_mean": -4.899603818234871,
+          "y_rollout_rmse": 0.0920912911396444,
+          "n": 442
+        }
+      },
+      "train_y_rollout_rmse": 0.0732251320282421,
+      "val_derivative_rmse": 16.287630203591434,
+      "val_y_rollout_rmse": 0.10753938162900206
+    },
+    {
+      "family": "sin_tanh",
+      "eps": 0.4,
+      "dz": 0.1,
+      "coefficients": {
+        "offset": 1.7505421381949207,
+        "input": 26.41107341437697,
+        "velocity": -1.4861419700943044,
+        "sin_y": -105.56620288764621,
+        "tanh_v": -19.7458130317267
+      },
+      "train_derivative_rmse": 9.307113035224287,
+      "per_trajectory": {
+        "train_1": {
+          "derivative_rmse": 10.955103085290204,
+          "residual_mean": 6.024465263034266,
+          "y_rollout_rmse": 0.05571237409816786,
+          "n": 450
+        },
+        "train_2": {
+          "derivative_rmse": 11.556729552944297,
+          "residual_mean": -3.2411639559077354,
+          "y_rollout_rmse": 0.10416657744938065,
+          "n": 450
+        },
+        "train_3": {
+          "derivative_rmse": 11.756784683854125,
+          "residual_mean": -3.8011400092520415,
+          "y_rollout_rmse": 0.06738450855986938,
+          "n": 300
+        },
+        "train_4": {
+          "derivative_rmse": 10.898146447830825,
+          "residual_mean": -1.8267370895972894,
+          "y_rollout_rmse": 0.07763258583375553,
+          "n": 300
+        },
+        "train_5": {
+          "derivative_rmse": 5.061565166359403,
+          "residual_mean": -2.3711057352588436,
+          "y_rollout_rmse": 0.04043032856371494,
+          "n": 442
+        },
+        "train_6": {
+          "derivative_rmse": 4.827734674165841,
+          "residual_mean": -0.7051973002059055,
+          "y_rollout_rmse": 0.04547112077002712,
+          "n": 442
+        },
+        "train_7": {
+          "derivative_rmse": 7.95431991543598,
+          "residual_mean": 4.093595582838395,
+          "y_rollout_rmse": 0.11388171779608892,
+          "n": 442
+        },
+        "train_8": {
+          "derivative_rmse": 7.007433031453411,
+          "residual_mean": -0.039292700222125186,
+          "y_rollout_rmse": 0.06403502244169185,
+          "n": 141
+        },
+        "train_9": {
+          "derivative_rmse": 12.817075170845804,
+          "residual_mean": 10.812599119230232,
+          "y_rollout_rmse": 0.08312057960412322,
+          "n": 141
+        },
+        "train_10": {
+          "derivative_rmse": 10.008347638168136,
+          "residual_mean": -8.318041262275848,
+          "y_rollout_rmse": 0.06301400529032979,
+          "n": 141
+        },
+        "train_11": {
+          "derivative_rmse": 9.653527966494462,
+          "residual_mean": 6.778338404873104,
+          "y_rollout_rmse": 0.04131561490436259,
+          "n": 91
+        },
+        "train_12": {
+          "derivative_rmse": 7.80179726935063,
+          "residual_mean": -7.254258487978029,
+          "y_rollout_rmse": 0.04123621560918744,
+          "n": 91
+        },
+        "train_13": {
+          "derivative_rmse": 8.159046322700664,
+          "residual_mean": -3.4796640003073414,
+          "y_rollout_rmse": 0.0652192529598608,
+          "n": 91
+        },
+        "val_1": {
+          "derivative_rmse": 17.578428721668367,
+          "residual_mean": 5.787366574272636,
+          "y_rollout_rmse": 0.1137846930686476,
+          "n": 450
+        },
+        "val_2": {
+          "derivative_rmse": 22.48529244190757,
+          "residual_mean": 1.457462943476781,
+          "y_rollout_rmse": 0.08719169390883004,
+          "n": 300
+        },
+        "val_3": {
+          "derivative_rmse": 6.042161243245276,
+          "residual_mean": -4.973053474066401,
+          "y_rollout_rmse": 0.07576359150225419,
+          "n": 442
+        }
+      },
+      "train_y_rollout_rmse": 0.07466850802571522,
+      "val_derivative_rmse": 16.04480519030336,
+      "val_y_rollout_rmse": 0.09449833093915037
+    },
+    {
+      "family": "cubic_tanh",
+      "eps": 0.4,
+      "dz": 0.1,
+      "coefficients": {
+        "offset": 1.7228666171728102,
+        "input": 26.49055288141972,
+        "velocity": -1.5523380596548426,
+        "y": -102.00467056179203,
+        "y_cubed": 12.983267507691973,
+        "tanh_v": -19.359971743117764
+      },
+      "train_derivative_rmse": 9.183978364148594,
+      "per_trajectory": {
+        "train_1": {
+          "derivative_rmse": 10.734251178086737,
+          "residual_mean": 5.718369432485306,
+          "y_rollout_rmse": 0.05691762686193673,
+          "n": 450
+        },
+        "train_2": {
+          "derivative_rmse": 11.452110456666805,
+          "residual_mean": -2.8748956860281107,
+          "y_rollout_rmse": 0.10644001683813326,
+          "n": 450
+        },
+        "train_3": {
+          "derivative_rmse": 11.729661074963158,
+          "residual_mean": -3.7147887798516117,
+          "y_rollout_rmse": 0.0718695399081113,
+          "n": 300
+        },
+        "train_4": {
+          "derivative_rmse": 10.704575329390645,
+          "residual_mean": -1.88013566761952,
+          "y_rollout_rmse": 0.10791452911002523,
+          "n": 300
+        },
+        "train_5": {
+          "derivative_rmse": 5.067490547159923,
+          "residual_mean": -2.253307262264266,
+          "y_rollout_rmse": 0.04149316547090842,
+          "n": 442
+        },
+        "train_6": {
+          "derivative_rmse": 5.002014331421841,
+          "residual_mean": -0.7557833822154952,
+          "y_rollout_rmse": 0.05421065140717761,
+          "n": 442
+        },
+        "train_7": {
+          "derivative_rmse": 7.676392598931233,
+          "residual_mean": 3.9774375140791944,
+          "y_rollout_rmse": 0.10123030285385477,
+          "n": 442
+        },
+        "train_8": {
+          "derivative_rmse": 6.917686460253429,
+          "residual_mean": -0.06877561574694771,
+          "y_rollout_rmse": 0.062031570646208685,
+          "n": 141
+        },
+        "train_9": {
+          "derivative_rmse": 12.413899214751224,
+          "residual_mean": 10.467504813526839,
+          "y_rollout_rmse": 0.0828607758402882,
+          "n": 141
+        },
+        "train_10": {
+          "derivative_rmse": 9.740217259030082,
+          "residual_mean": -7.949020579755619,
+          "y_rollout_rmse": 0.061961274882396465,
+          "n": 141
+        },
+        "train_11": {
+          "derivative_rmse": 9.378297594157214,
+          "residual_mean": 6.572930372772199,
+          "y_rollout_rmse": 0.042115782986492045,
+          "n": 91
+        },
+        "train_12": {
+          "derivative_rmse": 7.594691186607515,
+          "residual_mean": -7.046465690806198,
+          "y_rollout_rmse": 0.041060733817211925,
+          "n": 91
+        },
+        "train_13": {
+          "derivative_rmse": 8.760209655221415,
+          "residual_mean": -3.6418941673377265,
+          "y_rollout_rmse": 0.07053965662348469,
+          "n": 91
+        },
+        "val_1": {
+          "derivative_rmse": 17.428538419244045,
+          "residual_mean": 5.953939148029036,
+          "y_rollout_rmse": 0.10980176971161053,
+          "n": 450
+        },
+        "val_2": {
+          "derivative_rmse": 22.50680440924575,
+          "residual_mean": 1.5078090448978734,
+          "y_rollout_rmse": 0.09340956219241761,
+          "n": 300
+        },
+        "val_3": {
+          "derivative_rmse": 6.1963862200891295,
+          "residual_mean": -4.951541086145956,
+          "y_rollout_rmse": 0.07907158265794416,
+          "n": 442
+        }
+      },
+      "train_y_rollout_rmse": 0.07724786644487629,
+      "val_derivative_rmse": 16.012443539084778,
+      "val_y_rollout_rmse": 0.09521559793972408
+    },
+    {
+      "family": "dead_tanh",
+      "eps": 0.4,
+      "dz": 0.0,
+      "coefficients": {
+        "offset": 2.269755290199106,
+        "input": 25.563798318632948,
+        "velocity": -1.7431938973205672,
+        "dead_y": -68.62171233756835,
+        "tanh_v": -17.390408622267724
+      },
+      "train_derivative_rmse": 15.404862802560427,
+      "per_trajectory": {
+        "train_1": {
+          "derivative_rmse": 11.794913083654553,
+          "residual_mean": 2.3416182687015437,
+          "y_rollout_rmse": 0.14873341021894165,
+          "n": 450
+        },
+        "train_2": {
+          "derivative_rmse": 18.710717884979758,
+          "residual_mean": 0.15059011353771337,
+          "y_rollout_rmse": 0.2938539383529723,
+          "n": 450
+        },
+        "train_3": {
+          "derivative_rmse": 14.036109365155646,
+          "residual_mean": 0.3460138520509399,
+          "y_rollout_rmse": 0.1552326737190852,
+          "n": 300
+        },
+        "train_4": {
+          "derivative_rmse": 21.571878520486226,
+          "residual_mean": 0.8337673968900444,
+          "y_rollout_rmse": 0.23557328265251157,
+          "n": 300
+        },
+        "train_5": {
+          "derivative_rmse": 11.278061834783573,
+          "residual_mean": -1.3737389410913394,
+          "y_rollout_rmse": 0.12251340991143543,
+          "n": 442
+        },
+        "train_6": {
+          "derivative_rmse": 15.555125893546272,
+          "residual_mean": 0.9307814376233059,
+          "y_rollout_rmse": 0.17731672443843552,
+          "n": 442
+        },
+        "train_7": {
+          "derivative_rmse": 20.716833532061866,
+          "residual_mean": -1.6937655140701129,
+          "y_rollout_rmse": 0.3045577315129309,
+          "n": 442
+        },
+        "train_8": {
+          "derivative_rmse": 7.492452753155157,
+          "residual_mean": -1.6152043009507224,
+          "y_rollout_rmse": 0.03739496959964416,
+          "n": 141
+        },
+        "train_9": {
+          "derivative_rmse": 10.05463448453969,
+          "residual_mean": 6.625877285556002,
+          "y_rollout_rmse": 0.11983279288160754,
+          "n": 141
+        },
+        "train_10": {
+          "derivative_rmse": 8.3155447199396,
+          "residual_mean": -5.0205077973590955,
+          "y_rollout_rmse": 0.05478606286397583,
+          "n": 141
+        },
+        "train_11": {
+          "derivative_rmse": 7.779006366687244,
+          "residual_mean": 4.073923682825731,
+          "y_rollout_rmse": 0.07832574078662112,
+          "n": 91
+        },
+        "train_12": {
+          "derivative_rmse": 6.394848903216689,
+          "residual_mean": -5.794230215917163,
+          "y_rollout_rmse": 0.04175053634048872,
+          "n": 91
+        },
+        "train_13": {
+          "derivative_rmse": 15.876236595550116,
+          "residual_mean": -4.099582086027373,
+          "y_rollout_rmse": 0.21529150863828253,
+          "n": 91
+        },
+        "val_1": {
+          "derivative_rmse": 19.265739391270134,
+          "residual_mean": 2.661182057327081,
+          "y_rollout_rmse": 0.22909194734546398,
+          "n": 450
+        },
+        "val_2": {
+          "derivative_rmse": 25.91098033501843,
+          "residual_mean": 5.162987965965911,
+          "y_rollout_rmse": 0.384321797267083,
+          "n": 300
+        },
+        "val_3": {
+          "derivative_rmse": 12.182354184880303,
+          "residual_mean": -5.673576333494313,
+          "y_rollout_rmse": 0.14302061626318166,
+          "n": 442
+        }
+      },
+      "train_y_rollout_rmse": 0.20073864007230643,
+      "val_derivative_rmse": 19.082053109659945,
+      "val_y_rollout_rmse": 0.2540650175038678
+    },
+    {
+      "family": "sin_tanh_quadratic",
+      "eps": 0.4,
+      "dz": 0.1,
+      "coefficients": {
+        "offset": 1.7561982321734637,
+        "input": 26.44932825399012,
+        "velocity": -1.9056491507208242,
+        "sin_y": -105.50230612559477,
+        "tanh_v": -18.928438095853622,
+        "v_abs_v": 0.03009531501754026
+      },
+      "train_derivative_rmse": 9.299268681738845,
+      "per_trajectory": {
+        "train_1": {
+          "derivative_rmse": 10.969144705003613,
+          "residual_mean": 6.015020567992841,
+          "y_rollout_rmse": 0.05754707702443987,
+          "n": 450
+        },
+        "train_2": {
+          "derivative_rmse": 11.478392462062038,
+          "residual_mean": -3.233493187108873,
+          "y_rollout_rmse": 0.10322546945589568,
+          "n": 450
+        },
+        "train_3": {
+          "derivative_rmse": 11.800074129440079,
+          "residual_mean": -3.8422462985789556,
+          "y_rollout_rmse": 0.0665324629921494,
+          "n": 300
+        },
+        "train_4": {
+          "derivative_rmse": 10.914934168666326,
+          "residual_mean": -1.7856609887491008,
+          "y_rollout_rmse": 0.08262036381258639,
+          "n": 300
+        },
+        "train_5": {
+          "derivative_rmse": 5.033896220627141,
+          "residual_mean": -2.3334014041398716,
+          "y_rollout_rmse": 0.04088600926782938,
+          "n": 442
+        },
+        "train_6": {
+          "derivative_rmse": 4.835352997890252,
+          "residual_mean": -0.6678083607657708,
+          "y_rollout_rmse": 0.04700655983238178,
+          "n": 442
+        },
+        "train_7": {
+          "derivative_rmse": 7.920694396512262,
+          "residual_mean": 4.0598129758510355,
+          "y_rollout_rmse": 0.11287010619436537,
+          "n": 442
+        },
+        "train_8": {
+          "derivative_rmse": 6.969747224510524,
+          "residual_mean": -0.11463001056138154,
+          "y_rollout_rmse": 0.06118426321878346,
+          "n": 141
+        },
+        "train_9": {
+          "derivative_rmse": 12.840225823300965,
+          "residual_mean": 10.917915473416135,
+          "y_rollout_rmse": 0.08569296295250768,
+          "n": 141
+        },
+        "train_10": {
+          "derivative_rmse": 10.031337568049704,
+          "residual_mean": -8.41123746663055,
+          "y_rollout_rmse": 0.06539377939011244,
+          "n": 141
+        },
+        "train_11": {
+          "derivative_rmse": 9.668534239905574,
+          "residual_mean": 6.828885304477598,
+          "y_rollout_rmse": 0.04291035505223323,
+          "n": 91
+        },
+        "train_12": {
+          "derivative_rmse": 7.812986012320944,
+          "residual_mean": -7.298717656767435,
+          "y_rollout_rmse": 0.04242133329723554,
+          "n": 91
+        },
+        "train_13": {
+          "derivative_rmse": 8.127871556445035,
+          "residual_mean": -3.5795799763346707,
+          "y_rollout_rmse": 0.06420175995318655,
+          "n": 91
+        },
+        "val_1": {
+          "derivative_rmse": 17.58382158664677,
+          "residual_mean": 5.823994894659914,
+          "y_rollout_rmse": 0.11229748364809454,
+          "n": 450
+        },
+        "val_2": {
+          "derivative_rmse": 22.50531101641231,
+          "residual_mean": 1.4966124266899605,
+          "y_rollout_rmse": 0.08538252903569196,
+          "n": 300
+        },
+        "val_3": {
+          "derivative_rmse": 6.075563509000986,
+          "residual_mean": -5.0039672702902065,
+          "y_rollout_rmse": 0.0760211014852926,
+          "n": 442
+        }
+      },
+      "train_y_rollout_rmse": 0.07514616513040975,
+      "val_derivative_rmse": 16.05877082431489,
+      "val_y_rollout_rmse": 0.09348233901534693
+    }
+  ],
+  "heterogeneity": {
+    "train_1": {
+      "coefficients": {
+        "offset": 4.723806219113073,
+        "input": 25.9665050582937,
+        "velocity": -1.4024417406808385,
+        "sin_y": -104.59682717582277,
+        "sign_v": -17.191739173364954
+      },
+      "active_n": 300,
+      "active_derivative_rmse": 8.198338187058843,
+      "rest_n": 115,
+      "y_final": 0.163362817986669
+    },
+    "train_2": {
+      "coefficients": {
+        "offset": 0.48560437927388034,
+        "input": 25.49594391153382,
+        "velocity": -1.351521954168136,
+        "sin_y": -112.47021519522801,
+        "sign_v": -19.209233767934922
+      },
+      "active_n": 330,
+      "active_derivative_rmse": 11.124855508036163,
+      "rest_n": 104,
+      "y_final": -0.087964594300514
+    },
+    "train_3": {
+      "coefficients": {
+        "offset": -0.19031181002400224,
+        "input": 26.025721943414673,
+        "velocity": -1.3506543825619353,
+        "sin_y": -104.22437280082107,
+        "sign_v": -18.753262209976207
+      },
+      "active_n": 211,
+      "active_derivative_rmse": 12.546722679667937,
+      "rest_n": 82,
+      "y_final": -0.056548667764616
+    },
+    "train_4": {
+      "coefficients": {
+        "offset": -0.03729223993446635,
+        "input": 26.284320249626344,
+        "velocity": -1.6827958913592949,
+        "sin_y": -110.3946268881836,
+        "sign_v": -16.737629847654297
+      },
+      "active_n": 296,
+      "active_derivative_rmse": 10.013524787497781,
+      "rest_n": 3,
+      "y_final": -0.043982297150257
+    },
+    "train_5": {
+      "coefficients": {
+        "offset": 0.9118370620248961,
+        "velocity": -1.9669600804942684,
+        "sin_y": -113.03448578732993,
+        "sign_v": -20.382384124142312
+      },
+      "active_n": 94,
+      "active_derivative_rmse": 7.850723753309955,
+      "rest_n": 347,
+      "y_final": -0.012566370614359
+    },
+    "train_6": {
+      "coefficients": {
+        "offset": 2.5529583864631022,
+        "velocity": -1.8228021967467232,
+        "sin_y": -115.41352345902328,
+        "sign_v": -21.734079168715237
+      },
+      "active_n": 98,
+      "active_derivative_rmse": 8.232832733184125,
+      "rest_n": 344,
+      "y_final": 0.00314159265359
+    },
+    "train_7": {
+      "coefficients": {
+        "offset": -0.8405020210173387,
+        "velocity": -1.7150310824032935,
+        "sin_y": -101.76719811185286,
+        "sign_v": -18.867055759642984
+      },
+      "active_n": 105,
+      "active_derivative_rmse": 10.572507814890622,
+      "rest_n": 332,
+      "y_final": 0.078539816339745
+    },
+    "train_8": {
+      "coefficients": {
+        "offset": 32.443285964275454,
+        "velocity": -2.128200962847698,
+        "sin_y": -119.76064397400195
+      },
+      "active_n": 27,
+      "active_derivative_rmse": 5.513414734262587,
+      "rest_n": 88,
+      "y_final": -0.012566370614359
+    },
+    "train_9": {
+      "coefficients": {
+        "offset": 4.809626137707225,
+        "velocity": -2.1597022165568784,
+        "sin_y": -100.37150653783297,
+        "sign_v": -16.423744893335247
+      },
+      "active_n": 54,
+      "active_derivative_rmse": 5.036513628159538,
+      "rest_n": 82,
+      "y_final": 0.163362817986669
+    },
+    "train_10": {
+      "coefficients": {
+        "offset": 5.69528932533371,
+        "velocity": -1.5265722933945334,
+        "sin_y": -90.29672142649864,
+        "sign_v": -20.222832895617188
+      },
+      "active_n": 34,
+      "active_derivative_rmse": 5.376392807766328,
+      "rest_n": 100,
+      "y_final": -0.087964594300514
+    },
+    "train_11": {
+      "coefficients": {
+        "offset": -1.889579634066967,
+        "velocity": -1.1423894127378418,
+        "sin_y": -98.23121653323216,
+        "sign_v": -15.065995295827209
+      },
+      "active_n": 27,
+      "active_derivative_rmse": 5.0183128927226175,
+      "rest_n": 47,
+      "y_final": 0.122522113490002
+    },
+    "train_12": {
+      "coefficients": {
+        "offset": -26.545652602726484,
+        "velocity": -24.202626524062367,
+        "sin_y": -424.8213387016267
+      },
+      "active_n": 8,
+      "active_derivative_rmse": 5.189296530333558,
+      "rest_n": 82,
+      "y_final": -0.056548667764616
+    },
+    "train_13": {
+      "coefficients": {
+        "offset": -1.7259609484190566,
+        "velocity": -1.9947679738851347,
+        "sin_y": -103.94767801634431,
+        "sign_v": -15.98567876574394
+      },
+      "active_n": 89,
+      "active_derivative_rmse": 7.17011976449847,
+      "rest_n": 2,
+      "y_final": -0.043982297150257
+    },
+    "val_1": {
+      "coefficients": {
+        "offset": 14.360161248228069,
+        "input": 25.127114956100606,
+        "velocity": -1.3225976290456876,
+        "sin_y": -115.63091013082841,
+        "sign_v": -18.153349162493768
+      },
+      "active_n": 300,
+      "active_derivative_rmse": 18.19021966556757,
+      "rest_n": 109,
+      "y_final": -0.012566370614359
+    },
+    "val_2": {
+      "coefficients": {
+        "offset": -0.175145279007218,
+        "input": 24.656443029924592,
+        "velocity": -0.9797300459944545,
+        "sin_y": -104.40695070949195,
+        "sign_v": -20.61378288937481
+      },
+      "active_n": 206,
+      "active_derivative_rmse": 26.16976862671824,
+      "rest_n": 71,
+      "y_final": 0.122522113490002
+    },
+    "val_3": {
+      "coefficients": {
+        "offset": -5.944633492706829,
+        "velocity": -1.8418921157889079,
+        "sin_y": -106.10935687140966,
+        "sign_v": -17.81870435920754
+      },
+      "active_n": 95,
+      "active_derivative_rmse": 6.292654905234891,
+      "rest_n": 343,
+      "y_final": -0.021991148575129
+    }
+  },
+  "quantization": {
+    "train": {
+      "interior_dx1_central_difference_rmse": 1.5028007260576104e-13,
+      "interior_dy_minus_x1_rmse": 1.8247979828999406e-14,
+      "y_grid_pi_over_1000_max_error": 2.2737367544323206e-13,
+      "x1_grid_pi_over_20_max_error": 1.4637180356658064e-12,
+      "dx1_grid_2p5pi_max_error": 1.5774048733874224e-12
+    },
+    "val": {
+      "interior_dx1_central_difference_rmse": 1.481475802993621e-13,
+      "interior_dy_minus_x1_rmse": 1.8534921035175275e-14,
+      "y_grid_pi_over_1000_max_error": 2.2737367544323206e-13,
+      "x1_grid_pi_over_20_max_error": 1.0231815394945443e-12,
+      "dx1_grid_2p5pi_max_error": 1.0800249583553523e-12
+    }
+  },
+  "smooth": [
+    {
+      "window_samples": 7,
+      "n": 3431,
+      "coefficients": {
+        "offset": 1.6792315716964934,
+        "input": 26.690744876654062,
+        "velocity": -1.8264231959844088,
+        "sin_y": -106.03693940725725,
+        "sign_v": -17.19335514585263
+      },
+      "smoothed_derivative_rmse": 8.975096061168385
+    },
+    {
+      "window_samples": 11,
+      "n": 3379,
+      "coefficients": {
+        "offset": 1.6359063519442225,
+        "input": 26.154420361607738,
+        "velocity": -1.8733409141513,
+        "sin_y": -105.85491618623678,
+        "sign_v": -16.33694024737168
+      },
+      "smoothed_derivative_rmse": 8.980234350597819
+    },
+    {
+      "window_samples": 21,
+      "n": 3249,
+      "coefficients": {
+        "offset": 1.4232055043810852,
+        "input": 23.33514261946209,
+        "velocity": -1.912152697570995,
+        "sin_y": -104.23069699043748,
+        "sign_v": -13.52895067150483
+      },
+      "smoothed_derivative_rmse": 11.033992734391068
+    }
+  ],
+  "residual_bins": {
+    "train": {
+      "x1": [
+        {
+          "lo": -30,
+          "hi": -8,
+          "n": 135,
+          "mean_residual": -0.020410299840956884,
+          "residual_rmse": 13.6798310578486
+        },
+        {
+          "lo": -8,
+          "hi": -3,
+          "n": 289,
+          "mean_residual": -1.0732921441498162,
+          "residual_rmse": 11.077039521143684
+        },
+        {
+          "lo": -3,
+          "hi": -1,
+          "n": 196,
+          "mean_residual": -0.3089667805097764,
+          "residual_rmse": 10.016320511707738
+        },
+        {
+          "lo": -1,
+          "hi": -0.15,
+          "n": 191,
+          "mean_residual": 1.8214024154321498,
+          "residual_rmse": 11.422967038951004
+        },
+        {
+          "lo": -0.15,
+          "hi": 0.15,
+          "n": 1728,
+          "mean_residual": 0.1062461024381169,
+          "residual_rmse": 7.913105138206385
+        },
+        {
+          "lo": 0.15,
+          "hi": 1,
+          "n": 291,
+          "mean_residual": 0.6487746676557269,
+          "residual_rmse": 9.303309998712704
+        },
+        {
+          "lo": 1,
+          "hi": 3,
+          "n": 269,
+          "mean_residual": 1.1088353177644268,
+          "residual_rmse": 8.521822035744528
+        },
+        {
+          "lo": 3,
+          "hi": 8,
+          "n": 278,
+          "mean_residual": -2.235602427998955,
+          "residual_rmse": 10.456469750592898
+        },
+        {
+          "lo": 8,
+          "hi": 30,
+          "n": 145,
+          "mean_residual": -0.16247911052122704,
+          "residual_rmse": 10.652224591788023
+        }
+      ],
+      "y": [
+        {
+          "lo": -3,
+          "hi": -1,
+          "n": 122,
+          "mean_residual": -1.8316472690914913,
+          "residual_rmse": 15.79911461581852
+        },
+        {
+          "lo": -1,
+          "hi": -0.3,
+          "n": 363,
+          "mean_residual": 0.764698319401786,
+          "residual_rmse": 10.888352313318329
+        },
+        {
+          "lo": -0.3,
+          "hi": -0.1,
+          "n": 290,
+          "mean_residual": -0.43212074320430827,
+          "residual_rmse": 8.574649857336938
+        },
+        {
+          "lo": -0.1,
+          "hi": 0.1,
+          "n": 1803,
+          "mean_residual": -1.482346637112683,
+          "residual_rmse": 6.812889397743728
+        },
+        {
+          "lo": 0.1,
+          "hi": 0.3,
+          "n": 553,
+          "mean_residual": 7.760688080040154,
+          "residual_rmse": 11.798658331533272
+        },
+        {
+          "lo": 0.3,
+          "hi": 1,
+          "n": 281,
+          "mean_residual": -3.057460485696606,
+          "residual_rmse": 11.286677950027327
+        },
+        {
+          "lo": 1,
+          "hi": 3,
+          "n": 110,
+          "mean_residual": -6.260478478651862,
+          "residual_rmse": 11.203728473812943
+        }
+      ]
+    },
+    "val": {
+      "x1": [
+        {
+          "lo": -30,
+          "hi": -8,
+          "n": 21,
+          "mean_residual": 2.726182759779003,
+          "residual_rmse": 16.26362643256236
+        },
+        {
+          "lo": -8,
+          "hi": -3,
+          "n": 133,
+          "mean_residual": 2.9303084741180014,
+          "residual_rmse": 20.73767868961411
+        },
+        {
+          "lo": -3,
+          "hi": -1,
+          "n": 91,
+          "mean_residual": 6.042954271474594,
+          "residual_rmse": 23.09784008688263
+        },
+        {
+          "lo": -1,
+          "hi": -0.15,
+          "n": 63,
+          "mean_residual": 2.74928368028955,
+          "residual_rmse": 11.439009613859492
+        },
+        {
+          "lo": -0.15,
+          "hi": 0.15,
+          "n": 523,
+          "mean_residual": -2.097809088114721,
+          "residual_rmse": 5.92918050861505
+        },
+        {
+          "lo": 0.15,
+          "hi": 1,
+          "n": 80,
+          "mean_residual": 5.56337250131398,
+          "residual_rmse": 13.159713466633642
+        },
+        {
+          "lo": 1,
+          "hi": 3,
+          "n": 110,
+          "mean_residual": 0.7136783793392926,
+          "residual_rmse": 26.085788442293033
+        },
+        {
+          "lo": 3,
+          "hi": 8,
+          "n": 127,
+          "mean_residual": 2.14283536059598,
+          "residual_rmse": 24.0077144860419
+        },
+        {
+          "lo": 8,
+          "hi": 30,
+          "n": 44,
+          "mean_residual": -0.5725165725282463,
+          "residual_rmse": 12.63832765815029
+        }
+      ],
+      "y": [
+        {
+          "lo": -3,
+          "hi": -1,
+          "n": 66,
+          "mean_residual": -3.1084706342193495,
+          "residual_rmse": 12.891278365757582
+        },
+        {
+          "lo": -1,
+          "hi": -0.3,
+          "n": 149,
+          "mean_residual": 1.863191843678624,
+          "residual_rmse": 18.729322146434402
+        },
+        {
+          "lo": -0.3,
+          "hi": -0.1,
+          "n": 42,
+          "mean_residual": -1.0261233375628231,
+          "residual_rmse": 20.11380096022739
+        },
+        {
+          "lo": -0.1,
+          "hi": 0.1,
+          "n": 587,
+          "mean_residual": -0.7153253413494047,
+          "residual_rmse": 12.852704778309327
+        },
+        {
+          "lo": 0.1,
+          "hi": 0.3,
+          "n": 144,
+          "mean_residual": 7.00793668560973,
+          "residual_rmse": 26.652821700564516
+        },
+        {
+          "lo": 0.3,
+          "hi": 1,
+          "n": 152,
+          "mean_residual": 2.6372601504282858,
+          "residual_rmse": 12.486950640703638
+        },
+        {
+          "lo": 1,
+          "hi": 3,
+          "n": 52,
+          "mean_residual": -3.384722826239003,
+          "residual_rmse": 8.4059361700579
+        }
+      ]
+    }
+  }
+}

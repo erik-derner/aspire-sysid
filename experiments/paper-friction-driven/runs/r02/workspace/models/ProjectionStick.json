@@ -1,0 +1,69 @@
+{
+  "expressions": {
+    "dtheta": "omega",
+    "domega": "a*u-g*sin(theta)*(1+h*cos(theta))-b*omega-Min(Max(a*u-g*sin(theta)*(1+h*cos(theta))-b*omega+omega/tau,-c-d),c-d)"
+  },
+  "parameters": [
+    {
+      "name": "a",
+      "value": 28.111361101311832,
+      "unit": "rad/(s^2 V)",
+      "type": "fitted",
+      "description": "Motor-voltage to acceleration gain `a`; only gain divided by inertia is identified."
+    },
+    {
+      "name": "g",
+      "value": 107.81300946041094,
+      "unit": "rad/s^2",
+      "type": "fitted",
+      "description": "Positive restoring-acceleration scale `g`."
+    },
+    {
+      "name": "b",
+      "value": 1.7862573483889819,
+      "unit": "1/s",
+      "type": "fitted",
+      "description": "Positive viscous acceleration coefficient `b`; includes motor back-emf damping and bearing friction without separating them."
+    },
+    {
+      "name": "c",
+      "value": 20.6939112622441,
+      "unit": "rad/s^2",
+      "type": "fitted",
+      "description": "Dry-friction acceleration scale `c`."
+    },
+    {
+      "name": "tau",
+      "value": 0.005000153769365239,
+      "unit": "s",
+      "type": "fitted",
+      "description": "Torque-projection relaxation time `tau`; this is an effective low-speed regularization time, not an identified motor electrical time constant."
+    },
+    {
+      "name": "d",
+      "value": 1.4866456490587718,
+      "unit": "rad/s^2",
+      "type": "fitted",
+      "description": "Directional-friction half-difference `d`; the projection interval is `[-c-d,c-d]` in acceleration units."
+    },
+    {
+      "name": "h",
+      "value": 0.09096542274466989,
+      "unit": "-",
+      "type": "fitted",
+      "description": "Fitted angular-modulation coefficient `h`; its precise use is stated in the interpretation."
+    }
+  ],
+  "estimation": {
+    "criterion": "Sum of squared differences between simulated and logged `theta` across all trajectories after initialization, with equal per-sample weights. This targets the required uncorrected long-horizon angle simulation rather than a derivative proxy; no state correction is applied after the first sample.",
+    "data": "All 3522 rows of data/train.csv (trajectories 1 through 13) and all 1192 rows of data/val.csv (trajectories 1 through 3), treated as 16 separate trajectories, never concatenated into one experiment. Final fitting uses all supplied data to improve parameter precision across both driven and free-response regimes. Initial samples initialize states and have identically zero angle residual; the remaining 4698 samples contribute to the criterion. Validation was first used to assess training-only models, then intentionally included in final fitting and trajectory cross-validation; reported post-refit validation error is therefore not independent validation.",
+    "method": "All fitted parameters listed here were estimated jointly by bounded nonlinear least squares, scipy.optimize.least_squares with its trust-region reflective algorithm, minimizing the stated full-trajectory criterion. This accommodates the nonlinear simulation objective; direct derivative regression was not used for the final values because central-difference acceleration is noisy. Three deterministic starts were tried and the lowest angle sum of squares was retained. Starting values, in parameter units: `a = 28.0111700512` rad/(s^2 V), `g = 107.627141916` rad/s^2, `b = 1.76218323381` 1/s, `c = 20.9148868533` rad/s^2, `tau = 0.0105117529382` s, `d = 1.45550094392` rad/s^2, `h = 0.131325286351`; `a = 28.0111700512` rad/(s^2 V), `g = 107.627141916` rad/s^2, `b = 1.76218323381` 1/s, `c = 20.9148868533` rad/s^2, `tau = 0.02` s, `d = 1.45550094392` rad/s^2, `h = 0.131325286351`; `a = 28.0111700512` rad/(s^2 V), `g = 107.627141916` rad/s^2, `b = 1.76218323381` 1/s, `c = 20.9148868533` rad/s^2, `tau = 0.05` s, `d = 1.45550094392` rad/s^2, `h = 0.131325286351`. Bounds: `10 <= a <= 50` rad/(s^2 V); `50 <= g <= 180` rad/s^2; `0 <= b <= 8` 1/s; `8 <= c <= 45` rad/s^2; `0.005 <= tau <= 0.15` s; `-7 <= d <= 7` rad/s^2; `-0.6 <= h <= 0.6`. These broad physical/regularization bounds enforce positive dissipation, admissible restoring shape and manageable low-speed stiffness; they are assumptions, not inferred confidence intervals. Finite-difference relative step was `diff_step = 0.0001`; tolerances were `ftol = 1e-9`, `xtol = 1e-9`, `gtol = 1e-9`; limit was 300 function evaluations per start. No stochastic optimization was used, so no random seed applies. Classical fourth-order Runge-Kutta used one `0.01` s step per sample and the logged `u` was held constant between samples, exactly as specified. The first start was the training-only fit of this structure stored in projection_results.json, family 31; the other starts changed regularization values as explicitly listed above to probe local minima. The earlier fits are only starts; every delivered coefficient was re-estimated together on pooled data. Deterministic trajectory cross-validation used three folds with concatenated trajectory indices `[0,3,5,8,11]`, `[1,4,7,10,13]` and `[2,6,9,12,14,15]` (zero-based indices, training trajectories first then validation trajectories). Each fold restarted from the physical initialization recorded by the script, used 180 function evaluations and `1e-8` stopping tolerances; fold data were never used in that fold objective. Pooled three-fold trajectory cross-validation angle RMSE was 0.080005 rad. After pooled refitting, angle RMSE was 0.062839 rad across both supplied files; this is in-sample, not held-out performance.",
+    "script": "refit_pool.py"
+  },
+  "discussion": {
+    "family": "Coulomb-viscous differential-inclusion approximation by interval projection and a low-speed relaxation. Related, but not identical, to D. Karnopp, Computer Simulation of Stick-Slip Friction in Mechanical Dynamic Systems, Journal of Dynamic Systems, Measurement, and Control 107 (1985), 100-103; reference recalled from memory, not source-checked. This submitted acceleration-only projection law is our explicit regularization, not an assertion that Karnopp published this exact expression.",
+    "interpretation": "The kinematics are `dtheta = omega`. Define available acceleration `D = a*u-g*sin(theta)*(1+h*cos(theta))-b*omega`. The motor term is `a*u`, damping is `-b*omega`, and the restoring term includes a second angular harmonic through `sin(theta)*cos(theta)`. Define `Z = D+omega/tau`. The opposing acceleration is the projection `Min(Max(Z,-c-d),c-d)`, allowing different positive and negative sliding magnitudes. Inside the projection interval, `domega = -omega/tau`, so velocity decays without requiring a discontinuous velocity sign and every zero-velocity state inside the static interval is an exact equilibrium. Outside it, the limiting Coulomb countertorque applies. This is a mathematical low-speed relaxation approximation, not a measured internal friction state. Positive `g` and `Abs(h)<1` ensure that restoring torque opposes `theta` on the required domain. The interval contains zero because `c>Abs(d)`, so projection cannot reverse the sign of the residual available acceleration at rest: R2 holds. As `u` increases, projection slope is zero or one; consequently acceleration slope is zero or `a`, establishing R3 in the nondecreasing sense.",
+    "origin": "The motor, viscous, pendulum and Coulomb terms came from physical reasoning. Acceleration residuals and free-response errors motivated a modest second harmonic, first tested in fit_models.py. Direction-dependent residual means motivated asymmetric Coulomb limits. Smooth single-scale static models showed unwanted long-rest drift. The projection operator was designed as a distinct force-limited low-speed family: it cancels the available torque inside the static interval while relaxing velocity. The interval operators and `omega/tau` regularizer are an explicit phenomenological construction, not a symbolic-search result. Trial projection structures with and without an angular harmonic or motor saturation are recorded in fit_projection.py; the harmonic variant was retained for its better training angle simulation and correct persistence at rest.",
+    "limitations": "The fitted `tau` is near its imposed lower bound, so a physical relaxation time is not established. The bounds were chosen to avoid resolving a much faster low-speed decay than the specified integration step. The model is piecewise smooth and changing the simulation method or sample period may change the best effective parameters. The second harmonic is an empirical torque-shape correction; the data do not distinguish added spring torque from other errors. Hysteresis, true motor electrical dynamics and separate static-versus-kinetic friction magnitudes are omitted. Motor gain, damping and friction are divided by unidentified inertia. Large-angle and voltage extrapolation beyond the observed recordings is uncertain; cross-validation informed selection rather than furnishing an untouched test. An additional 20 s unforced simulation initialized at each of the nine logged stationary free-response endpoints in the supplied files left every angle unchanged, supporting persistence at rest; this tests those equilibria only, not every possible low-speed state."
+  }
+}

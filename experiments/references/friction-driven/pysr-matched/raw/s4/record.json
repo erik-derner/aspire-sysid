@@ -1,0 +1,48 @@
+{
+  "task": "friction-driven",
+  "setting": "matched",
+  "seed": 4,
+  "threads": false,
+  "pysr": "1.5.10",
+  "parameters_of_the_search": {
+    "batching": false,
+    "binary_operators": null,
+    "deterministic": true,
+    "elementwise_loss": null,
+    "maxdepth": null,
+    "maxsize": 30,
+    "model_selection": "best",
+    "ncycles_per_iteration": 380,
+    "niterations": 100,
+    "parallelism": "serial",
+    "parsimony": 0.0,
+    "population_size": 27,
+    "populations": 31,
+    "precision": 32,
+    "random_state": 4,
+    "unary_operators": [
+      "sin",
+      "cos",
+      "tanh",
+      "exp",
+      "log",
+      "sqrt",
+      "abs",
+      "sign"
+    ]
+  },
+  "seconds": {
+    "domega": 1570.4869093894958
+  },
+  "selected_by_package": {
+    "domega": 15
+  },
+  "selected": {
+    "domega": 27
+  },
+  "training_error": 0.0667164571195272,
+  "training_error_package_selection": 0.11457325373569327,
+  "front_sizes": {
+    "domega": 28
+  }
+}

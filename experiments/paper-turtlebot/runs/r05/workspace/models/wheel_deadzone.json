@@ -1,0 +1,56 @@
+{
+  "expressions": {
+    "x_next": "x + ts*(gv*((sign(v_f + halftrack*v_a)*Max(Abs(v_f + halftrack*v_a) - fric, 0)) + (sign(v_f - halftrack*v_a)*Max(Abs(v_f - halftrack*v_a) - fric, 0)))/2)*cos(phi + ts*(gw*((sign(v_f + halftrack*v_a)*Max(Abs(v_f + halftrack*v_a) - fric, 0)) - (sign(v_f - halftrack*v_a)*Max(Abs(v_f - halftrack*v_a) - fric, 0)))/(2*halftrack))/2)",
+    "y_next": "y + ts*(gv*((sign(v_f + halftrack*v_a)*Max(Abs(v_f + halftrack*v_a) - fric, 0)) + (sign(v_f - halftrack*v_a)*Max(Abs(v_f - halftrack*v_a) - fric, 0)))/2)*sin(phi + ts*(gw*((sign(v_f + halftrack*v_a)*Max(Abs(v_f + halftrack*v_a) - fric, 0)) - (sign(v_f - halftrack*v_a)*Max(Abs(v_f - halftrack*v_a) - fric, 0)))/(2*halftrack))/2)",
+    "phi_next": "phi + ts*(gw*((sign(v_f + halftrack*v_a)*Max(Abs(v_f + halftrack*v_a) - fric, 0)) - (sign(v_f - halftrack*v_a)*Max(Abs(v_f - halftrack*v_a) - fric, 0)))/(2*halftrack))"
+  },
+  "parameters": [
+    {
+      "name": "ts",
+      "value": 0.2,
+      "unit": "s",
+      "type": "fixed",
+      "description": "Known sampling period from TASK.md; fixed rather than fitted so that velocity gains describe the command response."
+    },
+    {
+      "name": "gv",
+      "value": 0.8968573255208084,
+      "unit": "-",
+      "type": "fitted",
+      "description": "Effective forward command gain, jointly estimated with the other fitted parameters of this candidate from the stated rollout criterion."
+    },
+    {
+      "name": "gw",
+      "value": 0.7894670080604286,
+      "unit": "-",
+      "type": "fitted",
+      "description": "Effective angular command gain, jointly estimated with the other fitted parameters of this candidate from the stated rollout criterion."
+    },
+    {
+      "name": "halftrack",
+      "value": 0.21427443845953767,
+      "unit": "m",
+      "type": "fitted",
+      "description": "Effective wheel-command mixing length in `v_f + halftrack*v_a` and `v_f - halftrack*v_a`. It is fitted as a response-shape parameter, not taken from a mechanical TurtleBot specification; radians are dimensionless in this geometric conversion."
+    },
+    {
+      "name": "fric",
+      "value": 0.012505048404767957,
+      "unit": "m/s",
+      "type": "fitted",
+      "description": "Shared subtractive wheel-speed dead-zone threshold; an effective static response parameter, not a direct measurement of friction."
+    }
+  ],
+  "estimation": {
+    "criterion": "Minimize the sum of squared uncorrected multi-step errors in both `x` and `y`, each in m, equally weighted over every sample of every training window. This uses both components of the measured path to constrain a wheel-coordinate command mixing model; the final ranking still uses held-out `x` RMSE. All four fitted parameters enter the same joint objective.",
+    "data": "Only data/train.csv: all three trajectories, 150 samples per trajectory. Heading `phi` is unwrapped separately with numpy.unwrap to avoid artificial jumps across the angle boundary. There are 125 overlapping windows per trajectory, with local initial rows 0 through 124 (zero-based), each containing 25 transitions, or 5 s at the stated sampling period. Thus 375 windows and 9375 predicted state samples enter the final criterion. Every window starts at its logged `x`, `y`, and `phi`, and then receives its 25 logged pairs `v_f`, `v_a`; no later pose resets occur inside a window. No windows cross experiment boundaries. No state measurements are smoothed, excluded as outliers, or imputed. The final-row commands have no observed successor and are not fitted.",
+    "method": "All fitted parameters are estimated simultaneously by nonlinear output-error least squares, using scipy.optimize.least_squares with the trust-region reflective algorithm, `method = 'trf'`, ordinary quadratic loss, a two-point finite-difference Jacobian, a maximum of 600 function evaluations per start, and dimensionless stopping tolerances `ftol = 1e-10`, `xtol = 1e-10`, `gtol = 1e-10`. This bounded nonlinear method is needed because heading-dependent sine and cosine terms make multi-step predictions nonlinear in the gains; ordinary least squares on one-step differences would emphasize command transients and pose differencing error. Nine deterministic initial vectors use `gv = 0.83`, `gw = 0.68`, each combination of starting `halftrack` values 0.08, 0.115 and 0.18 m and starting `fric` values 0.003, 0.012 and 0.03 m/s. The gains come from rounded settled-command training regressions; the length and threshold grids are deliberately broad heuristic starting guesses, not claimed robot specifications. Bounds are dimensionless `0.1 <= gv <= 1.5` and `0.1 <= gw <= 1.5`, `0.06 <= halftrack <= 0.22` m, and `0 <= fric <= 0.06` m/s. These exclude reversed response, a singular mixing length and implausibly dominant dead zones for the observed command magnitudes. The lowest final training criterion across the nine starts is selected. Multi-start is used because the dead-zone branch transitions yield several local minima. The same nine starts are used for each held-out-trajectory refit; no test-dependent selection occurs. The procedure is deterministic and uses no random seed. The fitter key in fit_models.py is `wheel`. SciPy least_squares API documentation, consulted during this round, describes the trust-region reflective method and linear least-squares loss.",
+    "script": "fit_models.py"
+  },
+  "discussion": {
+    "family": "Differential-drive wheel-coordinate kinematics preceded by symmetric static dead-zone nonlinearities, followed by explicit midpoint integration. The wheel mixing relation follows Frank Dellaert and Seth Hutchinson, Introduction to Robotics and Perception, section 5.2, Motion Model for the Differential Drive Robot (online text; consulted during this round). The static subtractive thresholds are an identification hypothesis, not a claim made by that reference.",
+    "interpretation": "The states `x`, `y`, `phi`, inputs `v_f`, `v_a`, fixed time `ts`, and gains `gv`, `gw` have the meanings and units listed in the parameter rows and task. The length `halftrack` converts angular commands to equivalent left/right speed commands. The right response is `sign(v_f + halftrack*v_a)*Max(Abs(v_f + halftrack*v_a) - fric, 0)`, and the left response is `sign(v_f - halftrack*v_a)*Max(Abs(v_f - halftrack*v_a) - fric, 0)`, both in m/s. Their average, multiplied by `gv`, sets forward speed; their difference, multiplied by `gw/(2*halftrack)`, sets angular speed in rad/s. The thresholds can suppress low-speed motion and couple the effective translation and turning responses. Negative wheel responses remain possible during turns even though logged forward commands are nonnegative. Midpoint heading projects the resulting speed to world coordinates.",
+    "origin": "The wheel sum/difference coordinates are physically motivated. Applying a shared subtractive threshold to each wheel was a hand-proposed static-friction alternative after the audit found nonlinear low-angular-command response and persistent block residuals. It was not discovered by a symbolic-regression package. A preliminary clipped-wheel saturation fit did not materially improve the independent settled-block regressions, so clipping/saturation is not used. The final model is retained because it improves multi-step path fit without dependence on absolute position or hidden states. For this final structure, leave-one-trajectory-out validation refits on the other two trajectories using the same window criterion and reports `x` RMSE on all windows of the held-out trajectory; pooled held-out `x` RMSE is 0.029508 m. Training-window `x` RMSE is 0.028928 m. These are training-derived validation summaries, not test scores.",
+    "limitations": "The identified response is an effective map of commands to logged odometry, not a separately identified map to true floor motion. State measurement error, command latency, and gain drift cannot be separated with these data. The required states lack velocity or previous commands, so command-change transients cannot be represented explicitly. All fits were made over 5 s training rollouts, not against inaccessible test data. Heading is propagated unwrapped; this is compatible with periodic translation and with wrapped initial headings, but there is no absolute heading correction. No claims are made outside the observed forward-only command regime or for long-distance extrapolation. The wheel speeds were not measured, so `halftrack` and `fric` need not equal mechanical track length or friction. The final mixing length is near the allowed upper bound, and held-out-trajectory fits give mixing lengths from 0.069950 to 0.220000 m; this weak identification is why this slightly better aggregate validation score is not enough to recommend it above the simpler model. No explicit wheel acceleration or saturation is represented."
+  }
+}

@@ -1,0 +1,11 @@
+{
+  "order": [
+    "GeneralizedDischarge",
+    "MixedResistance",
+    "TabulatedValve",
+    "CompressibleDischarge",
+    "RegularizedOrifice"
+  ],
+  "recommended": "GeneralizedDischarge",
+  "reason": "The compact generalized gas-balance model achieved the lowest genuinely held-out validation RMSE among the final stable candidate structures: `0.0386073098819` bar from a train-only fit. Its final parameters are jointly refitted on the training and validation trajectories; their pressure RMSE values are `0.0245809178926` bar and `0.0372737413879` bar, respectively, and are therefore in-sample rather than held-out. The tabulated valve model has a slightly lower final joint-data error but had worse train-only validation performance and greater calibration flexibility. The recommendation preserves positive inlet response, monotone valve response, near-atmospheric recovery, and exact sealed-valve accumulation above the atmospheric reference. The square-root-nearby discharge exponent is an interpretable effective restriction law; systematic time-dependent residuals remain, so no test-performance claim is made."
+}

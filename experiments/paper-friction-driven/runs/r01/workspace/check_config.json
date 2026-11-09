@@ -1,0 +1,70 @@
+{
+  "format_version": 2,
+  "task_id": "friction-driven",
+  "formulation": "continuous",
+  "columns": [
+    {
+      "name": "theta",
+      "roles": [
+        "state",
+        "output"
+      ]
+    },
+    {
+      "name": "omega",
+      "roles": [
+        "state"
+      ]
+    },
+    {
+      "name": "u",
+      "roles": [
+        "input"
+      ]
+    },
+    {
+      "name": "domega",
+      "roles": [
+        "state_derivative"
+      ]
+    }
+  ],
+  "arguments": [
+    "theta",
+    "omega",
+    "u"
+  ],
+  "expression_keys": [
+    "dtheta",
+    "domega"
+  ],
+  "delays": [],
+  "constants": [],
+  "functions": [
+    "sin",
+    "cos",
+    "tan",
+    "asin",
+    "acos",
+    "atan",
+    "atan2",
+    "sinh",
+    "cosh",
+    "tanh",
+    "exp",
+    "log",
+    "sqrt",
+    "Abs",
+    "sign",
+    "Min",
+    "Max",
+    "Piecewise"
+  ],
+  "added_functions": [],
+  "discussion_questions": [],
+  "pool_cap": 10,
+  "trajectory_column": "trajectory",
+  "train_file": "data/train.csv",
+  "pool_version": 1,
+  "previous_labels": []
+}

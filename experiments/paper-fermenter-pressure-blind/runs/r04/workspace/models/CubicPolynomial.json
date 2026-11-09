@@ -1,0 +1,187 @@
+{
+  "expressions": {
+    "dy": "c0*1 + c1*((y-yc)/ys) + c2*(x1/n1) + c3*(x2/n2) + c4*((y-yc)/ys)**2 + c5*((y-yc)/ys)*(x1/n1) + c6*((y-yc)/ys)*(x2/n2) + c7*(x1/n1)**2 + c8*(x1/n1)*(x2/n2) + c9*(x2/n2)**2 + c10*((y-yc)/ys)**3 + c11*((y-yc)/ys)**2*(x1/n1) + c12*((y-yc)/ys)**2*(x2/n2) + c13*((y-yc)/ys)*(x1/n1)**2 + c14*((y-yc)/ys)*(x1/n1)*(x2/n2) + c15*((y-yc)/ys)*(x2/n2)**2 + c16*(x1/n1)**3 + c17*(x1/n1)**2*(x2/n2) + c18*(x1/n1)*(x2/n2)**2 + c19*(x2/n2)**3"
+  },
+  "parameters": [
+    {
+      "name": "n1",
+      "value": 70.0,
+      "unit": "x1-unit",
+      "type": "fixed",
+      "description": "Convenient input normalization, selected by inspection of the training input scale, not optimized; gives dimensionless `x1/n1`."
+    },
+    {
+      "name": "n2",
+      "value": 20.0,
+      "unit": "x2-unit",
+      "type": "fixed",
+      "description": "Convenient input normalization selected by inspection of the training input scale, not optimized; gives dimensionless `x2/n2`."
+    },
+    {
+      "name": "yc",
+      "value": 1.3,
+      "unit": "state-unit",
+      "type": "fixed",
+      "description": "Convenient state center near the training mean, selected rather than optimized."
+    },
+    {
+      "name": "ys",
+      "value": 0.3,
+      "unit": "state-unit",
+      "type": "fixed",
+      "description": "Convenient state scaling of the order of the training standard deviation, selected rather than optimized; `(y-yc)/ys` is dimensionless."
+    },
+    {
+      "name": "c0",
+      "value": -0.15076441805208096,
+      "unit": "state-unit/s",
+      "type": "fitted",
+      "description": "Coefficient multiplying `1`; estimated jointly by the sequence described in estimation."
+    },
+    {
+      "name": "c1",
+      "value": -0.1441613586673756,
+      "unit": "state-unit/s",
+      "type": "fitted",
+      "description": "Coefficient multiplying `((y-yc)/ys)`; estimated jointly by the sequence described in estimation."
+    },
+    {
+      "name": "c2",
+      "value": 0.25485420781673,
+      "unit": "state-unit/s",
+      "type": "fitted",
+      "description": "Coefficient multiplying `(x1/n1)`; estimated jointly by the sequence described in estimation."
+    },
+    {
+      "name": "c3",
+      "value": 0.11862950133078382,
+      "unit": "state-unit/s",
+      "type": "fitted",
+      "description": "Coefficient multiplying `(x2/n2)`; estimated jointly by the sequence described in estimation."
+    },
+    {
+      "name": "c4",
+      "value": -0.019998648851349433,
+      "unit": "state-unit/s",
+      "type": "fitted",
+      "description": "Coefficient multiplying `((y-yc)/ys)**2`; estimated jointly by the sequence described in estimation."
+    },
+    {
+      "name": "c5",
+      "value": 0.17337893758556222,
+      "unit": "state-unit/s",
+      "type": "fitted",
+      "description": "Coefficient multiplying `((y-yc)/ys)*(x1/n1)`; estimated jointly by the sequence described in estimation."
+    },
+    {
+      "name": "c6",
+      "value": 0.08738908508665727,
+      "unit": "state-unit/s",
+      "type": "fitted",
+      "description": "Coefficient multiplying `((y-yc)/ys)*(x2/n2)`; estimated jointly by the sequence described in estimation."
+    },
+    {
+      "name": "c7",
+      "value": -0.1841638021196267,
+      "unit": "state-unit/s",
+      "type": "fitted",
+      "description": "Coefficient multiplying `(x1/n1)**2`; estimated jointly by the sequence described in estimation."
+    },
+    {
+      "name": "c8",
+      "value": -0.18150275819106454,
+      "unit": "state-unit/s",
+      "type": "fitted",
+      "description": "Coefficient multiplying `(x1/n1)*(x2/n2)`; estimated jointly by the sequence described in estimation."
+    },
+    {
+      "name": "c9",
+      "value": -0.025268301138082903,
+      "unit": "state-unit/s",
+      "type": "fitted",
+      "description": "Coefficient multiplying `(x2/n2)**2`; estimated jointly by the sequence described in estimation."
+    },
+    {
+      "name": "c10",
+      "value": -0.003632539544912912,
+      "unit": "state-unit/s",
+      "type": "fitted",
+      "description": "Coefficient multiplying `((y-yc)/ys)**3`; estimated jointly by the sequence described in estimation."
+    },
+    {
+      "name": "c11",
+      "value": 0.017273570384297103,
+      "unit": "state-unit/s",
+      "type": "fitted",
+      "description": "Coefficient multiplying `((y-yc)/ys)**2*(x1/n1)`; estimated jointly by the sequence described in estimation."
+    },
+    {
+      "name": "c12",
+      "value": 0.012252626836448312,
+      "unit": "state-unit/s",
+      "type": "fitted",
+      "description": "Coefficient multiplying `((y-yc)/ys)**2*(x2/n2)`; estimated jointly by the sequence described in estimation."
+    },
+    {
+      "name": "c13",
+      "value": -0.04668440397526591,
+      "unit": "state-unit/s",
+      "type": "fitted",
+      "description": "Coefficient multiplying `((y-yc)/ys)*(x1/n1)**2`; estimated jointly by the sequence described in estimation."
+    },
+    {
+      "name": "c14",
+      "value": -0.0736277881189639,
+      "unit": "state-unit/s",
+      "type": "fitted",
+      "description": "Coefficient multiplying `((y-yc)/ys)*(x1/n1)*(x2/n2)`; estimated jointly by the sequence described in estimation."
+    },
+    {
+      "name": "c15",
+      "value": -0.01349261778751629,
+      "unit": "state-unit/s",
+      "type": "fitted",
+      "description": "Coefficient multiplying `((y-yc)/ys)*(x2/n2)**2`; estimated jointly by the sequence described in estimation."
+    },
+    {
+      "name": "c16",
+      "value": 0.05778618002679253,
+      "unit": "state-unit/s",
+      "type": "fitted",
+      "description": "Coefficient multiplying `(x1/n1)**3`; estimated jointly by the sequence described in estimation."
+    },
+    {
+      "name": "c17",
+      "value": 0.07832902027566153,
+      "unit": "state-unit/s",
+      "type": "fitted",
+      "description": "Coefficient multiplying `(x1/n1)**2*(x2/n2)`; estimated jointly by the sequence described in estimation."
+    },
+    {
+      "name": "c18",
+      "value": 0.026287438294182813,
+      "unit": "state-unit/s",
+      "type": "fitted",
+      "description": "Coefficient multiplying `(x1/n1)*(x2/n2)**2`; estimated jointly by the sequence described in estimation."
+    },
+    {
+      "name": "c19",
+      "value": 0.003153072168417019,
+      "unit": "state-unit/s",
+      "type": "fitted",
+      "description": "Coefficient multiplying `(x2/n2)**3`; estimated jointly by the sequence described in estimation."
+    }
+  ],
+  "estimation": {
+    "criterion": "Final criterion: sum of squared free-running errors in `y` on both available trajectories, excluding only the first state of each file, to match the evaluation criterion. Initial derivative least squares and then teacher-forced one-step RK4 output least squares supplied starting values; those criteria do not define the final estimates.",
+    "data": "Both complete files data/train.csv (one stated trajectory) and data/val.csv (one stated trajectory) were used in the final fit. Training-only fits were compared on validation first. During final fitting each file was initialized only at its first observed state, with no later state resets; all subsequent observations contributed equal output-error weight. Sampling period was 5 s, with current-row inputs held constant during each classical RK4 step. Validation was subsequently used for fitting, so final validation errors are in-sample and are not unbiased generalization estimates.",
+    "method": "Derivative initialization: numpy.linalg.lstsq on all training rows, no starting values needed because this stage is linear. All coefficients then jointly minimized teacher-forced one-step RK4 error on training, followed by full training simulation error, using The optimizer is scipy.optimize.least_squares, default Trust Region Reflective algorithm, finite-difference two-point Jacobian and linear loss; its official documentation was checked online. Nonlinear least squares was used because RK4 output error is nonlinear even in coefficients of a polynomial vector field. Training stages used max_nfev 100 and 180 respectively, with convergence tolerances 1e-10 and 1e-9. Final all-data fit used max_nfev 180 and all tolerances 1e-10. Its numeric starting coefficient vector in parameter order was [-0.1380402311666695, -0.12283409583570994, 0.19948462139231352, 0.049515158684787036, -0.001836750536420535, 0.13292934453610905, 0.04026478059851581, -0.13085215661509592, -0.08794885307315396, 0.03596938209608105, -0.001125636895225037, 0.0049276072495853035, 0.00110501003859932, -0.02680379667646467, -0.047744899803438094, 0.00672130203007667, 0.045917509562552895, 0.03898354676399199, -0.0026217148453892215, -0.012814247416346493] state-unit/s. The all-data fit is reproduced by final_refit.py using those stored training-only initial values; fit_dynamic.py reproduces earlier training stages. No randomized initialization or seed was used.",
+    "script": "final_refit.py"
+  },
+  "discussion": {
+    "family": "Continuous-time cubic polynomial state-space vector field. Reference for polynomial right-hand-side libraries: Brunton, Proctor and Kutz, Discovering governing equations from data by sparse identification of nonlinear dynamical systems, arXiv:1509.03580 (2015), related journal DOI 10.1073/pnas.1517384113 (title, authors and DOI checked on the official arXiv abstract page). This run used dense ordinary least squares and manually restricted structures, not the SINDy sparse algorithm.",
+    "interpretation": "`y` is the state, `x1` and `x2` are inputs and `dy` is its time derivative. The constant is drift; state-only terms provide nonlinear restoring or amplifying effects, input-only terms provide nonlinear forcing, and mixed products alter the state dependence with the inputs. Every monomial and its coefficient are explicitly listed in parameters; no physical role is asserted.",
+    "origin": "An affine baseline was inadequate. Complete total-degree polynomial libraries of degrees one through five were screened by derivative error and free-running validation. Cubic provided a good tradeoff: higher degrees did not improve validation consistently and sometimes caused divergent simulation. All terms up to total degree three were retained as a transparent generic interaction library, rather than selecting many highly correlated individual terms.",
+    "limitations": "No system description or units are supplied, so these are empirical vector fields rather than asserted physical laws. Unit labels state-unit, x1-unit and x2-unit denote unknown logged units; only seconds are known. The fitted domain is approximately `0.99 <= y <= 2.19` state-unit, `1.63 <= x1 <= 94.45` x1-unit, and `0.08 <= x2 <= 30.80` x2-unit on the two supplied files. Polynomial derivative residuals have temporal dependence and correlate with the next change in `x2`; this suggests sampling alignment or omitted dynamics, but is not proof of a particular mechanism. Abrupt near-baseline states midway through the files are not reset in fitting or prediction. No memory, next input, or hidden state is included in the delivered expressions; the irreducible consequences of these omissions remain. Extrapolation and input regimes not represented here are unvalidated. Cubic terms can behave very differently outside the fitted box; stability is not guaranteed by the fit."
+  }
+}

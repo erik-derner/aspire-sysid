@@ -1,0 +1,91 @@
+{
+  "expressions": {
+    "dp": "ain*flow - (cf*(1+shape)*Min(1, Max(0, 1-valve/vmax))**expo/(1+shape*Min(1, Max(0, 1-valve/vmax))**expo))*(sign(((p-patm)/patm))*Max(p, patm)/patm*sqrt(Max(0, Max(rcrit, Min(p, patm)/Max(p, patm))**(2/gam)-Max(rcrit, Min(p, patm)/Max(p, patm))**((gam+1)/gam)))*sqrt(Abs(((p-patm)/patm))/(Abs(((p-patm)/patm))+delta)))"
+  },
+  "parameters": [
+    {
+      "name": "ain",
+      "value": 0.0009776354325254778,
+      "unit": "bar*min/(s*L)",
+      "type": "fitted",
+      "description": "Inlet conversion gain `ain`: pressure rate per measured `flow`; jointly fitted in all three steps in fit_final.py. It combines gas inventory/capacitance and the mass-flow reference convention, not a separately measured volume."
+    },
+    {
+      "name": "cf",
+      "value": 0.1682990224908951,
+      "unit": "bar/s",
+      "type": "fitted",
+      "description": "Full-open outlet scale `cf` in bar/s for the dimensionless pressure-driving law. Jointly fitted in all three steps in fit_final.py; normalization makes the aperture factor equal to unity at `valve = 0` percent."
+    },
+    {
+      "name": "expo",
+      "value": 1.8536288396984,
+      "unit": "-",
+      "type": "fitted",
+      "description": "Positive aperture exponent `expo`, jointly fitted in all three steps in fit_final.py. It describes the unknown actuator-to-effective-opening characteristic; it is not a measured valve geometry."
+    },
+    {
+      "name": "shape",
+      "value": 8.710083818469185,
+      "unit": "-",
+      "type": "fitted",
+      "description": "Nonnegative series-loss shape `shape`, jointly fitted in all three steps in fit_final.py. The rational aperture law saturates as the opening grows, representing an empirical approximation of fixed pipe/outlet resistance in series with the controlled restriction."
+    },
+    {
+      "name": "rate",
+      "value": 0.49999999999999994,
+      "unit": "1/s",
+      "type": "fitted",
+      "description": "Full-open atmospheric small-signal relaxation rate `rate`, jointly fitted in all three steps in fit_final.py. The upper bound of `rate = 0.5` 1/s was chosen for stable five-second RK4 relaxation, not inferred as a known physical constant; the final estimate reaches that bound."
+    },
+    {
+      "name": "patm",
+      "value": 1.0,
+      "unit": "bar",
+      "type": "fixed",
+      "description": "Atmospheric reference `patm = 1` bar, taken from the approximately one-bar equilibrium in TASK.md and deliberately not estimated; it fixes the equilibrium rather than absorbing pressure-sensor bias."
+    },
+    {
+      "name": "vmax",
+      "value": 100.0,
+      "unit": "%",
+      "type": "fixed",
+      "description": "Fully closed calibration `vmax = 100` percent, given in TASK.md; it normalizes valve closure to a dimensionless opening."
+    },
+    {
+      "name": "delta",
+      "value": 0.16185463412223328,
+      "unit": "-",
+      "type": "tied",
+      "description": "Dimensionless near-atmospheric pressure scale `delta`; computed from the outlet scale and the fitted atmospheric relaxation rate. This gives a finite near-equilibrium slope rather than a singular fractional-power slope.",
+      "equation": "(2/gam)*(cf/(patm*rate))**2"
+    },
+    {
+      "name": "gam",
+      "value": 1.4,
+      "unit": "-",
+      "type": "fixed",
+      "description": "Dry-air ideal-gas heat-capacity ratio `gam = 1.4`, assumed constant; a standard approximation, also used by the NASA Glenn isentropic-flow treatment checked during this round."
+    },
+    {
+      "name": "rcrit",
+      "value": 0.5282817877171742,
+      "unit": "-",
+      "type": "tied",
+      "description": "Critical downstream/upstream pressure ratio `rcrit` at sonic choking, from the ideal isentropic-nozzle relation.",
+      "equation": "(2/(gam+1))**(gam/(gam-1))"
+    }
+  ],
+  "estimation": {
+    "criterion": "Stage 1 minimizes the unweighted sum of squared differences between predicted `dp` and recorded `dp`, in (bar/s)**2, for initialization only. Stage 2 minimizes the unweighted sum of squared free-running `p` simulation errors on training, in bar**2. Stage 3, which determines every delivered fitted parameter, minimizes the same pressure-error sum over both available trajectories. Pressure simulation is the intended use, so derivative least squares alone was not used for final values. Each simulation uses classical RK4 with one step of 5 s and inputs held at row k from sample k to sample k+1; no measured-state replacement follows initialization.",
+    "data": "Stage 1: all 1452 rows of data/train.csv. Stage 2: the single training trajectory, initialized at its first measured `p`, scoring rows 1 through 1451 with zero-based indexing. Stage 3: data/train.csv and data/val.csv as two separately initialized trajectories, scoring respectively rows 1 through 1451 and 1 through 1453. These are 2904 pressure errors. No rows were removed and no internal resets were inserted. Validation first assessed training-only fits and guided structural choices, then was deliberately included in the final refit to improve parameter coverage; final validation RMSE is not an independent generalization estimate. No unavailable test data were used.",
+    "method": "Bound-constrained nonlinear least squares, Trust Region Reflective algorithm, scipy.optimize.least_squares with method=\"trf\" (default), loss=\"linear\", two-point finite-difference Jacobian, x_scale=\"jac\", max_nfev=600 per stage, and ftol=xtol=gtol=1e-10. Reference: SciPy least_squares official documentation, checked during this round. This algorithm permits positive gains and bounded relaxation rates; ordinary linear least squares cannot estimate the nonlinear exponents/shape. All independent fitted parameters were estimated jointly within each of the three sequential stages; `delta` and, where present, `rcrit` were always computed by the tie equations, never independently optimized. No random numbers or seeds were used. Stage-1 starting values: `ain = 0.0013` bar*min/(s*L), `cf = 0.3` bar/s, `expo = 1.45`, `shape = 3.5`, `rate = 0.4` 1/s. They were rounded approximations from the exploratory mass-balance fits, chosen to lie on physically meaningful scales and within the bounds. Stage-2 starting values (the stage-1 solution): `ain = 0.0007745529545120947` bar*min/(s*L), `cf = 0.1510119812502066` bar/s, `expo = 2.111855938616341`, `shape = 10.26843943159586`, `rate = 0.4999999999999999` 1/s. Stage-3 starting values (the stage-2 solution): `ain = 0.0009901351098643158` bar*min/(s*L), `cf = 0.1564041134418548` bar/s, `expo = 2.123429985396712`, `shape = 15.68047207131998`, `rate = 0.4999999999999999` 1/s. Bounds: `0.0001 <= ain <= 0.01` bar*min/(s*L); `0.005 <= cf <= 0.5` bar/s; `0.2 <= expo <= 6`; `0 <= shape <= 40`; `0.03 <= rate <= 0.5` 1/s. Positive lower bounds prevent nonphysical negative gains and degenerate zero conductance; aperture/exponent and series-shape bounds are broad empirical search limits, not independently measured quantities. The rate upper bound avoids singular near-atmospheric pressure relaxation with the mandated 5 s step. Simulations that exceeded 50 bar or became nonfinite during fitting were assigned a finite 50-bar continuation as a numerical penalty; this guard is not part of the delivered equation and was inactive at all retained fits.",
+    "script": "fit_final.py"
+  },
+  "discussion": {
+    "family": "Grey-box lumped isothermal gas-inventory model with a regularized isentropic compressible-orifice outlet and sonic choking. Reference checked during this round: NASA Glenn Research Center, Mass Flow Choking, last updated May 13, 2021. The nozzle relation is idealized; smoothing and actuator characteristic are additional empirical approximations.",
+    "interpretation": "`p` is absolute headspace pressure in bar, `valve` is closure in percent, and `flow` is inlet flow in L/min. The modeled derivative `dp` is in bar/s. `patm` is the atmospheric reference and `vmax` is full closure. The dimensionless opening is `Min(1, Max(0, 1-valve/vmax))` and the dimensionless pressure difference is `((p-patm)/patm)`. The source `ain*flow` is pressure accumulation from the inlet. The nonnegative aperture-dependent outlet scale is `cf*(1+shape)*Min(1, Max(0, 1-valve/vmax))**expo/(1+shape*Min(1, Max(0, 1-valve/vmax))**expo)`: `cf` sets its full-open value, `expo` sets aperture curvature, and `shape` produces a saturating conductance. Clipping opening to its physical interval is a guard against out-of-range input, not a fitted feature. The signed pressure-driving factor is `sign(((p-patm)/patm))*Max(p, patm)/patm*sqrt(Max(0, Max(rcrit, Min(p, patm)/Max(p, patm))**(2/gam)-Max(rcrit, Min(p, patm)/Max(p, patm))**((gam+1)/gam)))*sqrt(Abs(((p-patm)/patm))/(Abs(((p-patm)/patm))+delta))`. `gam` is the assumed heat-capacity ratio and `rcrit` is the sonic pressure-ratio threshold. The ratio `Max(rcrit, Min(p, patm)/Max(p, patm))` selects the subsonic or choked branch. `Max(p, patm)/patm` supplies the upstream-pressure dependence. `sign(((p-patm)/patm))` reverses the flux for sub-atmospheric pressure. The factor `sqrt(Abs(((p-patm)/patm))/(Abs(((p-patm)/patm))+delta))` regularizes the ideal square-root law at atmospheric pressure; this is a finite-resistance approximation, not an exact isentropic law. The tie `delta = (2/gam)*(cf/(patm*rate))**2` makes the full-open atmospheric limiting slope `rate`.",
+    "origin": "The initial families were listed before fitting: linear relaxation, signed pressure power laws, and compressible-orifice flow. The common inlet-minus-outlet structure, atmospheric reference, valve shutoff, and signed pressure relaxation came from gas conservation and physical constraints. I manually proposed opening-power and exponential valve curves, then compared derivative-initialized free-running fits using identify.py. I examined residuals using residuals.py and inspect_alignment.py: the rational saturating aperture law reduced derivative bias at low closure relative to simple opening powers. refined.py also tested an atmospheric offset and quadratic/saturating inlet terms. The quadratic term fitted essentially to zero, and the saturating inlet gave negligible validation improvement, so neither was retained. The atmospheric offset offered little validation improvement and could absorb sensor bias; `patm` was fixed to the brief instead. No genetic programming, symbolic-regression package, or sparse-regression search was run. The pressure-ratio powers and choking threshold came from the ideal isentropic nozzle law, checked against NASA Glenn, rather than numerical symbolic search. The near-atmospheric multiplier and rational actuator law were manually proposed approximations. Smoothing was tied to the atmospheric relaxation rate because an ideal square-root law alone can be stiff at the sample interval.",
+    "limitations": "Training-only free-running RMSE was 0.035079 bar on data/train.csv and 0.052808 bar on data/val.csv. After joint refitting, RMSE is 0.037282 bar on training and 0.045349 bar on validation; combined fit RMSE is 0.041515 bar. These final figures are not held-out scores. The final `rate` reaches its chosen upper bound of 0.5 1/s, so the smoothing scale is constrained partly by numerical conditioning rather than uniquely resolved by the experiment. Observed pressures cover approximately 0.992 to 2.187 bar on training and 0.994 to 2.144 bar on validation; fully sealed operation and exact zero inlet were not directly sampled. Headspace volume, temperature, flow-reference conditions, gas holdup, valve geometry, leakage and sensor bias are not separately identified. A single-state memoryless model cannot describe bubble transport, valve hysteresis, controller dynamics, or thermal drift. Increment residuals remain strongly correlated with the next sampled flow increment; this suggests timing/unmodeled dynamics but does not identify a particular delay. The one abrupt pressure drop inconsistent with the derivative column in each file was retained, as required by treating each file as a contiguous trajectory. Model assumptions should not be extrapolated to fermentation gas generation, large vacuum, changed liquid level, or different outlet hardware. A perfectly sealed tank with sustained inlet has no finite equilibrium; pressure can eventually exceed the evaluator safety interval for sufficiently long sealed runs, as real mass conservation predicts. The ideal nozzle law omits temperature changes and actual valve discharge-coefficient variation. The sub-atmospheric extension is only a formal bidirectional approximation; negative absolute pressures have no physical interpretation.  R1: exactly satisfied because the inlet-flow partial derivative is the positive `ain`. R2: satisfied for `p >= patm`, the intended overpressure operation, because the outlet scale decreases with closure while the pressure-driving factor is nonnegative. For `p < patm`, the signed reverse-flow extension does NOT satisfy R2 literally: closing the valve reduces atmospheric inflow. This is a disclosed limitation and the physically expected reversal for a bidirectional outlet; no unobserved vacuum-breaker mechanism is invented. R3: at `flow = 0` L/min and `p = patm = 1` bar, the derivative is exactly zero for any valve setting. R4: at zero inlet and an open outlet, the outlet term has the opposite sign to the pressure departure and thus relaxes toward atmosphere from either side. R5: at `valve = vmax = 100` percent, the outlet term vanishes exactly, leaving `ain*flow >= 0` for supplied nonnegative flow. These are continuous-time statements; bounded atmospheric relaxation was additionally chosen to improve numerical behavior of five-second RK4."
+  }
+}

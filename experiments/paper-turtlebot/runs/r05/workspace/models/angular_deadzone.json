@@ -1,0 +1,49 @@
+{
+  "expressions": {
+    "x_next": "x + ts*gv*v_f*cos(phi + ts*(gw*sign(v_a)*Max(Abs(v_a) - dead, 0))/2)",
+    "y_next": "y + ts*gv*v_f*sin(phi + ts*(gw*sign(v_a)*Max(Abs(v_a) - dead, 0))/2)",
+    "phi_next": "phi + ts*(gw*sign(v_a)*Max(Abs(v_a) - dead, 0))"
+  },
+  "parameters": [
+    {
+      "name": "ts",
+      "value": 0.2,
+      "unit": "s",
+      "type": "fixed",
+      "description": "Known sampling period from TASK.md; fixed rather than fitted so that velocity gains describe the command response."
+    },
+    {
+      "name": "gv",
+      "value": 0.850372559791983,
+      "unit": "-",
+      "type": "fitted",
+      "description": "Effective forward command gain, jointly estimated with the other fitted parameters of this candidate from the stated rollout criterion."
+    },
+    {
+      "name": "gw",
+      "value": 0.8427815252350099,
+      "unit": "-",
+      "type": "fitted",
+      "description": "Effective angular command gain, jointly estimated with the other fitted parameters of this candidate from the stated rollout criterion."
+    },
+    {
+      "name": "dead",
+      "value": 0.06976841519437697,
+      "unit": "rad/s",
+      "type": "fitted",
+      "description": "Subtractive threshold on the magnitude of the angular command, jointly fitted with both gains from weighted state-rollout output error."
+    }
+  ],
+  "estimation": {
+    "criterion": "Minimize the sum of squared multi-step residuals in `x`, `y`, and heading `phi`, with angular residuals multiplied by a fixed scale of 0.25 m/rad. Thus all residual components entering the criterion have units m. The scale is an a priori moderate path-sensitivity weight, not an estimated noise variance or a parameter in the state expressions. It lets heading data constrain the angular dead zone without dominating position error; it is also consistent with the intended short path lengths. All samples of all windows are equally weighted and all three fitted parameters are estimated jointly.",
+    "data": "Only data/train.csv: all three trajectories, 150 samples per trajectory. Heading `phi` is unwrapped separately with numpy.unwrap to avoid artificial jumps across the angle boundary. There are 125 overlapping windows per trajectory, with local initial rows 0 through 124 (zero-based), each containing 25 transitions, or 5 s at the stated sampling period. Thus 375 windows and 9375 predicted state samples enter the final criterion. Every window starts at its logged `x`, `y`, and `phi`, and then receives its 25 logged pairs `v_f`, `v_a`; no later pose resets occur inside a window. No windows cross experiment boundaries. No state measurements are smoothed, excluded as outliers, or imputed. The final-row commands have no observed successor and are not fitted.",
+    "method": "All fitted parameters are estimated simultaneously by nonlinear output-error least squares, using scipy.optimize.least_squares with the trust-region reflective algorithm, `method = 'trf'`, ordinary quadratic loss, a two-point finite-difference Jacobian, a maximum of 600 function evaluations per start, and dimensionless stopping tolerances `ftol = 1e-10`, `xtol = 1e-10`, `gtol = 1e-10`. This bounded nonlinear method is needed because heading-dependent sine and cosine terms make multi-step predictions nonlinear in the gains; ordinary least squares on one-step differences would emphasize command transients and pose differencing error. Starting values are `gv = 0.83`, `gw = 0.78`, `dead = 0.08` rad/s. These approximate the training settled-block linear forward and exploratory angular-dead-zone fits reported in audit_deeper.py; they are only initial guesses. Bounds are dimensionless `0.1 <= gv <= 1.5` and `0.1 <= gw <= 1.5`, with `0 <= dead <= 0.4` rad/s. These enforce monotone response and prevent a threshold larger than most of the angular-command range.  The procedure is deterministic and uses no random seed. The fitter key in fit_models.py is `deadzone`. SciPy least_squares API documentation, consulted during this round, describes the trust-region reflective method and linear least-squares loss.",
+    "script": "fit_models.py"
+  },
+  "discussion": {
+    "family": "Nonholonomic unicycle kinematics cascaded with a symmetric static angular dead zone and explicit midpoint integration. The kinematic part follows Frank Dellaert and Seth Hutchinson, Introduction to Robotics and Perception, section 5.2, Motion Model for the Differential Drive Robot (online text; consulted during this round). The threshold is a hand-proposed static command-response nonlinearity.",
+    "interpretation": "The state `x`, `y` is world position in m, `phi` is heading in rad, and `v_f`, `v_a` are commands in m/s and rad/s. The fixed parameter `ts` is the time increment, while `gv` and `gw` are fitted dimensionless gains. Forward speed is `gv*v_f`. The angular response `gw*sign(v_a)*Max(Abs(v_a) - dead, 0)` vanishes when command magnitude is below the fitted threshold `dead`, in rad/s, and otherwise increases linearly in magnitude with the original command sign. This is an effective low-command turning attenuation, not a measured actuator friction law. Its integrated midpoint angle determines the two world displacement projections.",
+    "origin": "In the independent audit, 90 settled command blocks supported a subtractive angular dead zone more than a through-origin linear angular map: angular-speed residual RMSE decreased from 0.077680 rad/s to 0.071723 rad/s on those same block means. This motivated a distinct low-command model, whereas wheel-coordinate dead zones allow forward/turn coupling. No symbolic search was used. In final fitting, heading error is included to keep the threshold tied to measured turning, instead of choosing a nearly zero threshold from `x` alone. The model is retained as a physically plausible low-command alternative, despite worse held-out `x` accuracy. For this final structure, leave-one-trajectory-out validation refits on the other two trajectories using the same window criterion and reports `x` RMSE on all windows of the held-out trajectory; pooled held-out `x` RMSE is 0.030819 m. Training-window `x` RMSE is 0.030343 m. These are training-derived validation summaries, not test scores.",
+    "limitations": "The identified response is an effective map of commands to logged odometry, not a separately identified map to true floor motion. State measurement error, command latency, and gain drift cannot be separated with these data. The required states lack velocity or previous commands, so command-change transients cannot be represented explicitly. All fits were made over 5 s training rollouts, not against inaccessible test data. Heading is propagated unwrapped; this is compatible with periodic translation and with wrapped initial headings, but there is no absolute heading correction. No claims are made outside the observed forward-only command regime or for long-distance extrapolation. No low-command static threshold can reconstruct the pronounced angular lag when commands change. The threshold changes across held-out-trajectory fits, and it should not be treated as a precise hardware specification. Its higher held-out `x` RMSE is a reason not to recommend it for the scored application."
+  }
+}

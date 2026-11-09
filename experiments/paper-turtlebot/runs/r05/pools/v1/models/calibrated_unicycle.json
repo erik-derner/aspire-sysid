@@ -1,0 +1,42 @@
+{
+  "expressions": {
+    "x_next": "x + ts*gv*v_f*cos(phi + ts*gw*v_a/2)",
+    "y_next": "y + ts*gv*v_f*sin(phi + ts*gw*v_a/2)",
+    "phi_next": "phi + ts*gw*v_a"
+  },
+  "parameters": [
+    {
+      "name": "ts",
+      "value": 0.2,
+      "unit": "s",
+      "type": "fixed",
+      "description": "Known sampling period from TASK.md; fixed rather than fitted so that velocity gains describe the command response."
+    },
+    {
+      "name": "gv",
+      "value": 0.8324413022190719,
+      "unit": "-",
+      "type": "fitted",
+      "description": "Effective forward command gain, jointly estimated with the other fitted parameters of this candidate from the stated rollout criterion."
+    },
+    {
+      "name": "gw",
+      "value": 0.7414717792795524,
+      "unit": "-",
+      "type": "fitted",
+      "description": "Effective angular command gain, jointly estimated with the other fitted parameters of this candidate from the stated rollout criterion."
+    }
+  ],
+  "estimation": {
+    "criterion": "Minimize the sum of squared uncorrected multi-step errors in `x`, in m, at every predicted sample of the training windows. All horizons from one through 25 steps receive equal weight. The criterion matches the scored output and intended 5 s simulation rather than noisy one-step velocity estimates. Both gains are fitted in this one objective.",
+    "data": "Only data/train.csv: all three trajectories, 150 samples per trajectory. Heading `phi` is unwrapped separately with numpy.unwrap to avoid artificial jumps across the angle boundary. There are 125 overlapping windows per trajectory, with local initial rows 0 through 124 (zero-based), each containing 25 transitions, or 5 s at the stated sampling period. Thus 375 windows and 9375 predicted state samples enter the final criterion. Every window starts at its logged `x`, `y`, and `phi`, and then receives its 25 logged pairs `v_f`, `v_a`; no later pose resets occur inside a window. No windows cross experiment boundaries. No state measurements are smoothed, excluded as outliers, or imputed. The final-row commands have no observed successor and are not fitted.",
+    "method": "All fitted parameters are estimated simultaneously by nonlinear output-error least squares, using scipy.optimize.least_squares with the trust-region reflective algorithm, `method = 'trf'`, ordinary quadratic loss, a two-point finite-difference Jacobian, a maximum of 600 function evaluations per start, and dimensionless stopping tolerances `ftol = 1e-10`, `xtol = 1e-10`, `gtol = 1e-10`. This bounded nonlinear method is needed because heading-dependent sine and cosine terms make multi-step predictions nonlinear in the gains; ordinary least squares on one-step differences would emphasize command transients and pose differencing error. Starting values are `gv = 0.83` and `gw = 0.68`, rounded from the independent settled-command audit of the training data; they are initial guesses only, not values held fixed. Bounds are `0.1 <= gv <= 1.5` and `0.1 <= gw <= 1.5`; these dimensionless bounds allow attenuation and moderate amplification while excluding reversed command response.  The procedure is deterministic and uses no random seed. The fitter key in fit_models.py is `linear`. SciPy least_squares API documentation, consulted during this round, describes the trust-region reflective method and linear least-squares loss.",
+    "script": "fit_models.py"
+  },
+  "discussion": {
+    "family": "Calibrated nonholonomic unicycle / differential-drive kinematic model with explicit midpoint translation integration. Frank Dellaert and Seth Hutchinson, Introduction to Robotics and Perception, section 5.2, Motion Model for the Differential Drive Robot (online text; consulted during this round).",
+    "interpretation": "The state columns `x` and `y` are world position in m, and `phi` is heading in rad. The inputs `v_f` and `v_a` are forward and angular velocity commands in m/s and rad/s. The known parameter `ts` is the sampling period in s. The fitted gains `gv` and `gw` are dimensionless. Forward body speed is `gv*v_f`; angular speed is `gw*v_a`. The angle `phi + ts*gw*v_a/2` approximates the mean orientation during a sample. Position increments are its cosine and sine projections; `phi + ts*gw*v_a` integrates the angular speed.",
+    "origin": "The translation-invariant trigonometric form and no-lateral-motion constraint came from differential-drive physics, not symbolic search. Midpoint quadrature was selected after the measured transverse displacement RMS decreased from 0.000910 m with initial heading to 0.000176 m with measured midpoint heading over the 447 training transitions. The two calibrated gains allow logged motion to differ from commanded motion. I tried affine offsets, command powers, turn-speed coupling, response asymmetry, angular dead zones and wheel dead zones as separate exploratory families. Their small or unstable validation gains did not justify adding those terms to this baseline. Final windows include every available initial pose rather than only command-change rows to avoid conditioning calibration on one command phase. For this final structure, leave-one-trajectory-out validation refits on the other two trajectories using the same window criterion and reports `x` RMSE on all windows of the held-out trajectory; pooled held-out `x` RMSE is 0.029706 m. Training-window `x` RMSE is 0.029467 m. These are training-derived validation summaries, not test scores.",
+    "limitations": "The identified response is an effective map of commands to logged odometry, not a separately identified map to true floor motion. State measurement error, command latency, and gain drift cannot be separated with these data. The required states lack velocity or previous commands, so command-change transients cannot be represented explicitly. All fits were made over 5 s training rollouts, not against inaccessible test data. Heading is propagated unwrapped; this is compatible with periodic translation and with wrapped initial headings, but there is no absolute heading correction. No claims are made outside the observed forward-only command regime or for long-distance extrapolation. Within-trajectory command-change residuals remain: for this final model the angular-speed residual RMS at command-change rows is 0.420696 rad/s, versus 0.081139 to 0.094116 rad/s at the other four block phases, computed on the 447 training transitions. The model deliberately averages over this missing memory."
+  }
+}

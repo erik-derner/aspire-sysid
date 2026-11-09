@@ -1,0 +1,84 @@
+{
+  "expressions": {
+    "dtheta": "omega",
+    "domega": "Piecewise(((a*u-b*omega-c*sin(theta)*(1+j*cos(theta))+biasAmp)-f*sign(omega), (Abs(omega) > v)), (Max((a*u-b*omega-c*sin(theta)*(1+j*cos(theta))+biasAmp)-f,0)+Min((a*u-b*omega-c*sin(theta)*(1+j*cos(theta))+biasAmp)+f,0)-k*omega, True))"
+  },
+  "parameters": [
+    {
+      "name": "a",
+      "value": 28.320076855218673,
+      "unit": "rad/(s^2 V)",
+      "type": "fitted",
+      "description": "Effective motor acceleration gain multiplying `u`; motor torque constant and inertia are not separately identified."
+    },
+    {
+      "name": "b",
+      "value": 1.7952675174067732,
+      "unit": "1/s",
+      "type": "fitted",
+      "description": "Viscous acceleration coefficient multiplying `omega`."
+    },
+    {
+      "name": "c",
+      "value": 108.24393001294477,
+      "unit": "rad/s^2",
+      "type": "fitted",
+      "description": "Fundamental sinusoidal restoring acceleration coefficient multiplying `sin(theta)`."
+    },
+    {
+      "name": "f",
+      "value": 20.93928776173258,
+      "unit": "rad/s^2",
+      "type": "fitted",
+      "description": "Mean sliding-friction acceleration scale."
+    },
+    {
+      "name": "v",
+      "value": 0.16,
+      "unit": "rad/s",
+      "type": "fitted",
+      "description": "Velocity band selected by finite-grid validation comparison; later held essentially fixed during final local refinement."
+    },
+    {
+      "name": "k",
+      "value": 24.882142562407143,
+      "unit": "1/s",
+      "type": "fitted",
+      "description": "Low-speed damping rate; a numerical regularization parameter, not an independently measured material property."
+    },
+    {
+      "name": "r",
+      "value": 0.07293468546220025,
+      "unit": "-",
+      "type": "fitted",
+      "description": "Dimensionless signed bias fraction; its bounds keep the bias inside the static-friction capacity."
+    },
+    {
+      "name": "j",
+      "value": 0.09806162855864983,
+      "unit": "-",
+      "type": "fitted",
+      "description": "Dimensionless restoring harmonic coefficient in `sin(theta)*(1+j*cos(theta))`."
+    },
+    {
+      "name": "biasAmp",
+      "value": 1.5272003667044647,
+      "unit": "rad/s^2",
+      "type": "tied",
+      "equation": "f*r",
+      "description": "Bounded bias acceleration computed from the fitted friction scale and signed fraction; the tie protects restoring behavior at rest."
+    }
+  ],
+  "estimation": {
+    "criterion": "Sum of squared open-loop angle errors on `theta`, excluding the first sample of each trajectory. Simulations use `dtheta = omega`, classical fourth-order Runge-Kutta, the recorded first `theta` and `omega`, step `T_s = 0.01` s as specified in TASK.md, and zero-order-held `u`. Every scored sample receives equal weight; there are no later state resets. Angle simulation is the intended use and avoids treating differentiated encoder accelerations as noise-free observations.",
+    "data": "Final parameter fit: all rows of `data/train.csv` (13 trajectories, 3522 samples) and `data/val.csv` (3 trajectories, 1192 samples), giving 4698 after-initial angle residuals. Validation was first used in structural comparisons and was then reused for calibration; final validation errors are not untouched holdout estimates. A later independent-selection audit, `independent_selection.py`, excludes training trajectories 8 and 11 because they duplicate tails of validation trajectories 1 and 2. Other exact free-response tails are training trajectories 9, 10, 12 and 13, within training trajectories 1, 2, 3 and 4 respectively. They remain separate initial-value simulations because both regimes are requested, but they are not independent experiments.",
+    "method": "Karnopp band selection used the finite grid `v = 0.16`, `v = 0.24`, `v = 0.32`, `v = 0.4`, `v = 0.6` and `v = 0.8` rad/s, followed by bounded nonlinear least squares for the other fitted parameters at each band. The grid avoids an uninformative local derivative of the discontinuous band edge. Each trial started at `a = 28.3` rad/(s^2 V); `b = 1.8` 1/s; `c = 108.5` rad/s^2; `f = 21` rad/s^2; `v = 0.16` rad/s; `k = 25` 1/s; `r = 0.075`; `j = 0.1`, except for the trial band value. These trial values were rounded from the physical baseline/harmonic comparisons. The band with smallest validation angle RMSE was `v = 0.16` rad/s; the later duplicate-free audit selected the same value. Then all remaining parameters were jointly refitted on all supplied training and validation trajectories, starting at `a = 28.319774118145524` rad/(s^2 V); `b = 1.796282522772513` 1/s; `c = 108.34624994878462` rad/s^2; `f = 20.95140980613598` rad/s^2; `v = 0.16` rad/s; `k = 24.898563544871795` 1/s; `r = 0.07355313269746777`; `j = 0.09883744089082362`. All these fits used trust-region reflective nonlinear least squares, `scipy.optimize.least_squares`, linear loss, two-point finite differences, `diff_step = 0.0001`, `x_scale = \"jac\"`, `max_nfev = 300`, `ftol = 1e-8`, `xtol = 1e-8`, and `gtol = 1e-8`. The band was kept within `1e-10` rad/s of the grid value during the local fits; it is a grid-fitted parameter, not a physical constant. Bounds require positive motor/restoring/friction coefficients, nonnegative viscous damping and `-0.8 <= r <= 0.8`, `-0.8 <= j <= 0.8`; exact bounds are in `fit_karnopp.py`. This nonsmooth objective has local minima; no global optimality is claimed. No random numbers or seed are used. `biasAmp` is computed by its tie.",
+    "script": "fit_karnopp.py"
+  },
+  "discussion": {
+    "family": "Karnopp velocity-band approximation to static and Coulomb friction, with positive sinusoidal/harmonic restoring torque and constant bounded bias. References cited from memory, not verified against a retrieved source: D. Karnopp, Computer Simulation of Stick-Slip Friction in Mechanical Dynamic Systems, Journal of Dynamic Systems, Measurement, and Control (1985); B. Armstrong-Helouvry, P. Dupont and C. Canudas de Wit, A survey of models, analysis tools and compensation methods for the control of machines with friction, Automatica (1994).",
+    "interpretation": "Net applied acceleration is `a*u-b*omega-c*sin(theta)*(1+j*cos(theta))+biasAmp`. For `Abs(omega) > v`, `f*sign(omega)` opposes sliding. Inside the band, `Max(a*u-b*omega-c*sin(theta)*(1+j*cos(theta))+biasAmp-f,0)+Min(a*u-b*omega-c*sin(theta)*(1+j*cos(theta))+biasAmp+f,0)` is the force dead zone, and `-k*omega` damps low-speed motion. This does not reset either state. Because `Abs(biasAmp) < f` and `1+j*cos(theta) > 0`, at rest positive angles can only have zero or negative acceleration and negative angles zero or positive acceleration, proving R2 on the stated domain. For fixed states both branches are nondecreasing in `u`, proving R3. `dtheta = omega` proves R1.",
+    "origin": "The Karnopp branch was in the pre-fit physical plan, `plan.md`, as a direct approximation to dry-friction sticking. Compared with the projected and blended families, this model keeps a velocity-defined mode switch instead of force-plus-velocity saturation or a smooth transition. Residual direction bias justified the bounded constant bias, and angle-dependent errors justified the small positive-factor harmonic restoring correction; these were guessed low-order residual extensions, not unrestricted symbolic search. A band grid was used because local optimization cannot reliably choose the velocity switch. Independent-selection validation RMSE after removing training tails duplicated from validation was `0.08520078800870168` rad. Final all-data refit RMSE was `0.05572961859764368` rad on training and `0.08475032527475611` rad on validation, which is reused calibration data.",
+    "limitations": "Only effective acceleration coefficients are identified: inertia, motor torque constant, gravity torque and physical friction torques cannot be separated. Encoder quantization and differentiation noise limit derivative interpretation. The fitted laws omit electrical and friction-memory states. Trajectories contain repeated experimental tails, and the final fit reuses validation; quoted refit errors are calibration diagnostics, not test predictions. Static endpoints differ between recordings and some terminal errors remain, especially the positive-angle small free release and validation driven trajectory 1. Applicability is limited to this rig and the observed voltages (approximately `-5 <= u <= 4` V on the supplied files), not established over the entire allowed input domain or beyond the observed velocities. No uncertainty interval or extrapolation guarantee is claimed. Switching at `Abs(omega) = v` is discontinuous and can cause RK4 mode-switch artifacts; the fitted coefficients and selected band are local, integrator-specific approximations. This candidate is retained as a materially different sticking construction, not because its final calibration error is the lowest."
+  }
+}

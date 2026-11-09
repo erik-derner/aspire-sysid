@@ -1,0 +1,98 @@
+{
+  "expressions": {
+    "x_next": "ca1 + ca2*v_f*cos(ca3*sign(v_a*x) + phi)/(ca4 - cos(sign(y))) + ca5*x",
+    "y_next": "cb1*phi + y",
+    "phi_next": "cc1*Abs(y) + cc2 + cc3*phi*tanh(x - sin(x*(cc5 + phi + x))) + cc4*v_a + phi"
+  },
+  "parameters": [
+    {
+      "name": "ca1",
+      "value": -0.0013125862,
+      "unit": "not assigned",
+      "type": "fitted",
+      "description": "Constant of the equation found by the search, optimized by the package together with the structure; its unit follows from its position in the expression and was not derived."
+    },
+    {
+      "name": "ca2",
+      "value": -0.0564670911742656,
+      "unit": "not assigned",
+      "type": "fitted",
+      "description": "Constant of the equation found by the search, optimized by the package together with the structure; its unit follows from its position in the expression and was not derived."
+    },
+    {
+      "name": "ca3",
+      "value": 0.020095045,
+      "unit": "not assigned",
+      "type": "fitted",
+      "description": "Constant of the equation found by the search, optimized by the package together with the structure; its unit follows from its position in the expression and was not derived."
+    },
+    {
+      "name": "ca4",
+      "value": 0.18799801,
+      "unit": "not assigned",
+      "type": "fitted",
+      "description": "Constant of the equation found by the search, optimized by the package together with the structure; its unit follows from its position in the expression and was not derived."
+    },
+    {
+      "name": "ca5",
+      "value": 1.0017858,
+      "unit": "not assigned",
+      "type": "fitted",
+      "description": "Constant of the equation found by the search, optimized by the package together with the structure; its unit follows from its position in the expression and was not derived."
+    },
+    {
+      "name": "cb1",
+      "value": 0.008288491,
+      "unit": "not assigned",
+      "type": "fitted",
+      "description": "Constant of the equation found by the search, optimized by the package together with the structure; its unit follows from its position in the expression and was not derived."
+    },
+    {
+      "name": "cc1",
+      "value": -0.015137245,
+      "unit": "not assigned",
+      "type": "fitted",
+      "description": "Constant of the equation found by the search, optimized by the package together with the structure; its unit follows from its position in the expression and was not derived."
+    },
+    {
+      "name": "cc2",
+      "value": 0.004315773,
+      "unit": "not assigned",
+      "type": "fitted",
+      "description": "Constant of the equation found by the search, optimized by the package together with the structure; its unit follows from its position in the expression and was not derived."
+    },
+    {
+      "name": "cc3",
+      "value": 0.015137245,
+      "unit": "not assigned",
+      "type": "fitted",
+      "description": "Constant of the equation found by the search, optimized by the package together with the structure; its unit follows from its position in the expression and was not derived."
+    },
+    {
+      "name": "cc4",
+      "value": 0.108613044,
+      "unit": "not assigned",
+      "type": "fitted",
+      "description": "Constant of the equation found by the search, optimized by the package together with the structure; its unit follows from its position in the expression and was not derived."
+    },
+    {
+      "name": "cc5",
+      "value": 1.6970817,
+      "unit": "not assigned",
+      "type": "fitted",
+      "description": "Constant of the equation found by the search, optimized by the package together with the structure; its unit follows from its position in the expression and was not derived."
+    }
+  ],
+  "estimation": {
+    "criterion": "Mean squared error between the equation and its target, the default loss of the package, for each target separately (`x_next`, `y_next`, `phi_next`); the target is the next state. This is not the simulation error that the task scores. The simulation error on the training data was used only to select among the equations that the search returned.",
+    "data": "data/train.csv, `442` one-step transitions of all trajectories. `5` transitions in which the logged heading `phi` wraps at pi were left out, because the wrapped next heading is not a continuous function of the present state.",
+    "method": "Symbolic regression by regularized evolution with PySR 1.5.10 (Cranmer, 2023, arXiv:2305.01582), pysr.PySRRegressor, one search per target, with binary operators `+`, `-`, `*`, `/` and unary operators `sin`, `cos`, `tanh`, `exp`, `log`, `sqrt`, `abs`, `sign`, `niterations=100`, `populations=31`, `population_size=27`, `maxsize=30` and the other settings of the package at their defaults. Of the equations on the Pareto front of accuracy and complexity that the search returns for a target, the one with the smallest root mean squared error of the simulated `x` on the training data was selected, with the simulation of the evaluation of the task; with several targets the choice was made target by target, starting from the equations that the package selects, until no choice changed (3 sweeps). With the equations that the package selects the training error is `0.04602` m. The unary operators were added because the task permits these functions; `Piecewise`, `Min`, `Max` and the remaining permitted functions were not offered to the search. The search needs no starting values from the user: it starts from random expressions and optimizes the constants of an equation inside the search. Seed `random_state=5`, `deterministic=True`, `parallelism=\"serial\"`, so that the seed determines the result. Search time: x_next 577 s, y_next 270 s, phi_next 180 s.",
+    "script": "experiments/references/fit_pysr.py"
+  },
+  "discussion": {
+    "family": "Closed-form expression found by symbolic regression (genetic search over expression trees). Reference model; it is not a candidate of the agent.",
+    "interpretation": "The terms have no assigned physical meaning; each expression is the equation that the search returned for its target, written with its constants as named parameters.",
+    "origin": "The structure was found by the search of the package from the operators listed in the estimation record; no physical reasoning entered; the selection among the returned equations used the simulation error on the training data.",
+    "limitations": "The search minimizes the error of one step or of the derivative, not the simulation error, so that a small loss does not bound the error of a long simulation. The result depends on the seed. Outside the range of the training data the expression is not expected to hold."
+  }
+}

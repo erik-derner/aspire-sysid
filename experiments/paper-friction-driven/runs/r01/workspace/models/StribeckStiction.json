@@ -1,0 +1,69 @@
+{
+  "expressions": {
+    "dtheta": "omega",
+    "domega": "(a*u - g*sin(theta)) - b*omega - (c + s*exp(-(omega/ws)**2))*tanh(omega/v) - (1 - tanh(omega/v)**2)*Min(Max((a*u - g*sin(theta)), -(c + s)), (c + s))"
+  },
+  "parameters": [
+    {
+      "name": "a",
+      "value": 28.45015419536158,
+      "unit": "rad/(s^2 V)",
+      "type": "fitted",
+      "description": "`a` is the positive motor acceleration gain, estimated jointly by the final open-loop angle least-squares fit."
+    },
+    {
+      "name": "g",
+      "value": 112.39570040766695,
+      "unit": "rad/s^2",
+      "type": "fitted",
+      "description": "`g` is the positive nominal restoring acceleration amplitude, estimated jointly by the final open-loop angle least-squares fit."
+    },
+    {
+      "name": "b",
+      "value": 3.2191426353544625,
+      "unit": "1/s",
+      "type": "fitted",
+      "description": "`b` is the positive viscous acceleration coefficient (or its unmodulated value in AngleDamping), estimated jointly by the final open-loop angle least-squares fit."
+    },
+    {
+      "name": "c",
+      "value": 2.001262299885637,
+      "unit": "rad/s^2",
+      "type": "fitted",
+      "description": "`c` is the positive moving-friction acceleration magnitude (reference value when modulated, high-speed limit in StribeckStiction), estimated jointly by the final open-loop angle least-squares fit."
+    },
+    {
+      "name": "v",
+      "value": 0.12000000000000001,
+      "unit": "rad/s",
+      "type": "fitted",
+      "description": "`v` is the positive speed regularization scale, estimated jointly by the final open-loop angle least-squares fit; the lower bound prevents excessively stiff numerical dynamics."
+    },
+    {
+      "name": "s",
+      "value": 16.753889440616952,
+      "unit": "rad/s^2",
+      "type": "fitted",
+      "description": "`s` is the nonnegative low-speed friction excess and additional static threshold, estimated jointly by the final open-loop angle least-squares fit."
+    },
+    {
+      "name": "ws",
+      "value": 7.9999999999265095,
+      "unit": "rad/s",
+      "type": "fitted",
+      "description": "`ws` is the positive Gaussian friction-decay speed, estimated jointly by the final open-loop angle least-squares fit."
+    }
+  ],
+  "estimation": {
+    "criterion": "Minimize the sum of squared open-loop angle residuals `theta_simulated - theta_measured`, in rad, over every sample after the first within each supplied trajectory. Every predicted sample receives equal weight; there is no per-trajectory normalization and no acceleration penalty. This matches the evaluation metric and lets free responses constrain stopping rather than letting their numerous zero derivatives dominate a derivative regression.",
+    "data": "Final estimation uses `data/train.csv`, all 13 trajectories and 3522 rows, and `data/val.csv`, all 3 trajectories and 1192 rows. There are 4714 rows in total and 4698 scored residuals after excluding each trajectory initial sample. No moving or resting rows are discarded in the final simulation fit. Each trajectory starts from its own first logged `theta` and `omega`; recorded `u` is held constant over each `TS = 0.01` s interval. The former validation file was deliberately reused for the final fit after initial train-only model comparisons, to use the limited available transient information; its refit scores are not held-out validation.",
+    "method": "Bound-constrained nonlinear least squares, using `scipy.optimize.least_squares` with the trust-region reflective algorithm (`method = 'trf'`), linear residual loss, Jacobian scaling (`x_scale = 'jac'`), forward two-point finite differences and `diff_step = 0.0001`. The maximum number of residual evaluations was `max_nfev = 400`; the three stopping tolerances were `ftol = 1e-8`, `xtol = 1e-8` and `gtol = 1e-8`. All parameters in this file were fitted together in this final step. The initial guesses were `a = 28.1088605141183` rad/(s^2 V); `g = 110.437005838596` rad/s^2; `b = 2.5856245437379` 1/s; `c = 10.5349117076291` rad/s^2; `v = 0.120000000384825` rad/s; `s = 7.73343231574102` rad/s^2; `ws = 7.99993753161051` rad/s. They came from the earlier train-only simulation fit of this same family, selected by lowest training sum of squares; that stage was initialized by the physical moving-regime regression, not by random search. The bounds were `5 <= a <= 60` rad/(s^2 V); `30 <= g <= 180` rad/s^2; `0.05 <= b <= 8` 1/s; `2 <= c <= 45` rad/s^2; `0.12 <= v <= 2` rad/s; `0 <= s <= 25` rad/s^2; `0.2 <= ws <= 8` rad/s. Positive coefficients enforce the torque and dissipation signs; the finite bounds on modulation and speed parameters avoid extreme extrapolation and excessive RK4 stiffness. No seed applies: the procedure is deterministic. The final estimate shown is the lower-cost result of two recorded starting points for this family; `candidate_config.json` records the winning starting point and `joint_results.json` records both fits. Model simulation uses our `simulate` function compiled with Numba, classical RK4 at `TS = 0.01` s and zero-order-held logged `u`. No measured states are substituted after initialization. The angle-only objective matches the scored variable and avoids treating centrally differentiated encoder noise as exact force measurements. The algorithm is a local optimizer; global optimality is not claimed. The optimization method is documented in the SciPy `least_squares` API; the record here specifies the actual settings, rather than relying on defaults alone.",
+    "script": "fit_candidates.py"
+  },
+  "discussion": {
+    "family": "Stribeck-plus-viscous friction with a Gaussian speed-decay term and analytic static-friction cancellation. These are physically motivated grey-box ordinary differential equations, not an exact implementation of a named hysteretic friction model. General context, cited from memory without a successfully fetched source: B. Armstrong-Helouvry, P. Dupont and C. Canudas de Wit, 'A survey of models, analysis tools and compensation methods for the control of machines with friction', Automatica 30(7), 1083-1138 (1994). The particular cancellation or clipping expression here was constructed for this task and is not attributed to that survey.",
+    "interpretation": "The states are `theta` in rad and `omega` in rad/s; the exogenous input is `u` in V. The equation `dtheta = omega` enforces kinematics. For discussion only, define `drive = a*u - g*sin(theta)` in rad/s^2; it is expanded directly in the delivered expression, not an extra state. The term `a*u` represents voltage-proportional motor acceleration except where explicitly saturated. The term `-g*sin(theta)` represents pendulum-like restoring torque per inertia. The term `-b*omega` represents viscous damping except where explicitly modulated. Only normalized acceleration coefficients are identifiable: inertia and physical torques are not separately estimated. The moving friction term is `-(c + s*exp(-(omega/ws)**2))*tanh(omega/v)` in rad/s^2. Define `gate = 1-tanh(omega/v)**2`, a dimensionless near-rest weight. The term `-gate*Min(Max(drive, -(c + s)), (c + s))` cancels subthreshold applied acceleration exactly at rest, and fades away during motion. At `omega = 0` rad/s it reduces to `drive - Min(Max(drive, -(c + s)), (c + s))`; therefore a continuum of exact resting equilibria exists when `Abs(drive) <= c + s` in rad/s^2. This is a memoryless analytic sticking approximation, not a separately identified elastic friction state. The positive term `s*exp(-(omega/ws)**2)` raises low-speed moving friction above the high-speed level `c`; the static cancellation limit is `c+s`. The data estimate a broad decay, so the dynamic curve can also behave as nonlinear damping over the observed speeds. All coefficients controlling motor gain, damping and friction magnitude are positive. At `omega = 0` rad/s and `u = 0` V, the unbalanced restoring drive has sign opposite `theta` on `-pi <= theta <= pi` rad; clipping can only reduce its magnitude. Thus `domega*theta <= 0`. For fixed `theta` and `omega`, clipping is nondecreasing with slope between zero and one, and the gate is between zero and one; hence the complete input map is nondecreasing. Exact stiction necessarily creates flat input intervals. ",
+    "origin": "The shared pendulum, linear motor and viscous terms were chosen from physical torque balance. Moving-row bounded linear least squares on `Abs(omega) > 0.5` rad/s in `data/train.csv` supplied initial coefficients; `exploratory_derivatives.py` records that screening. Initial simulation fits used the 13 training trajectories; independent initial comparisons used all 3 validation trajectories. Smooth Coulomb, analytic stiction, Stribeck, angle-modulated damping/friction, restoring harmonics, motor saturation and asymmetric moving friction were screened; multistart fits checked stopping-event local minima. No genetic symbolic regression was run. The proposed structures, rather than black-box predictors, were compared directly by open-loop simulation. The Gaussian speed-decay term is the physically motivated Stribeck family listed before fitting. It was retained because grouped trajectory holdout slightly improved over the smooth-friction baseline and because it preserves sticking, not because a static-vs-dynamic friction difference was independently measured. ",
+    "limitations": "The supplied records are short, mostly at rest in free response, and do not identify motor current, inertia, presliding displacement, temperature or trajectory-to-trajectory changes. The first logged velocity is imposed even when numerical differentiation makes it an uncertain initial condition. A memoryless law cannot describe full friction hysteresis. Parameter values are effective coefficients for these experiments, not independently measured material constants. The actual training voltage range was approximately `-4.945 <= u <= 3.953` V, so motor behavior near the required extremes is extrapolation. Model selection used the supplied data, including grouped holdout diagnostics, and is not an untouched external test. In the final fit the former validation file was reused, so its final RMSE must not be called independent validation performance. The estimates reach the lower bound for `c` and the upper bound for `ws`; the separation of high-speed friction, decay speed and viscous damping is weakly identified. This candidate is a defensible empirical friction curve, but not a precise identification of a Stribeck mechanism. The all-data refit angle RMSE is `0.072141` rad over 4698 predicted samples; the training-file RMSE is `0.066463` rad and the reused-validation-file RMSE is `0.086758` rad. Conditional leave-one-trajectory-out RMSE is `0.077589` rad over the same sample count: each of the 16 supplied trajectories was omitted in turn and simulated from its first logged state, with fit parameters reestimated on the other 15. These fits were warm-started from the full-data estimate and are diagnostic rather than nested model-selection validation."
+  }
+}

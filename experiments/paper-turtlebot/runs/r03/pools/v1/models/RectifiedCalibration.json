@@ -1,0 +1,70 @@
+{
+  "expressions": {
+    "x_next": "x+(Ts*Max(gf*v_f+vbias,0))*cos(phi+offset+phase*v_a)",
+    "y_next": "y+(Ts*Max(gf*v_f+vbias,0))*sin(phi+offset+phase*v_a)",
+    "phi_next": "phi+Ts*(ga*v_a+wbias)"
+  },
+  "parameters": [
+    {
+      "name": "Ts",
+      "value": 0.2,
+      "unit": "s",
+      "type": "fixed",
+      "description": "Sampling period `Ts = 0.2` s supplied in TASK.md; used to convert velocity to a one-sample increment."
+    },
+    {
+      "name": "gf",
+      "value": 0.9009341974695703,
+      "unit": "-",
+      "type": "fitted",
+      "description": "Forward command gain; coefficient of `v_f` in effective forward velocity. Estimated jointly with the other fitted parameters of this candidate by the stated multi-step criterion."
+    },
+    {
+      "name": "ga",
+      "value": 0.7632481512968715,
+      "unit": "-",
+      "type": "fitted",
+      "description": "Angular command gain; coefficient of `v_a` in effective angular velocity. Estimated jointly with the other fitted parameters of this candidate by the stated multi-step criterion."
+    },
+    {
+      "name": "offset",
+      "value": 0.013278643081469714,
+      "unit": "rad",
+      "type": "fitted",
+      "description": "Constant rotation of the displacement direction; an empirical alignment correction, not independently established sensor misalignment. Estimated jointly with the other fitted parameters of this candidate by the stated multi-step criterion."
+    },
+    {
+      "name": "phase",
+      "value": 2.3615690548635557e-05,
+      "unit": "s",
+      "type": "fitted",
+      "description": "Coefficient of `v_a` in the displacement-direction correction `phase*v_a`; a local approximation to integration/alignment and unrepresented command transients. Estimated jointly with the other fitted parameters of this candidate by the stated multi-step criterion."
+    },
+    {
+      "name": "vbias",
+      "value": -0.0072280017871970545,
+      "unit": "m/s",
+      "type": "fitted",
+      "description": "Additive forward-velocity offset before nonnegative rectification. Estimated jointly with the other fitted parameters of this candidate by the stated multi-step criterion."
+    },
+    {
+      "name": "wbias",
+      "value": 0.0051732540768082095,
+      "unit": "rad/s",
+      "type": "fitted",
+      "description": "Additive angular-velocity offset; its cause is not identified. Estimated jointly with the other fitted parameters of this candidate by the stated multi-step criterion."
+    }
+  ],
+  "estimation": {
+    "criterion": "Sum of squared multi-step errors `dx**2 + dy**2 + (L*dphi)**2`, where `dx`, `dy` and `dphi` are simulated-minus-logged position and unwrapped-heading errors at each horizon step and `L = 0.2` m/rad is a chosen fixed heading-to-distance weight. It gives position priority while retaining heading supervision for downstream displacement. Each window contains `25` transitions, or `5` s, and simulation is not corrected within a window. This output-error criterion avoids treating noisy pose differences as exact velocities.",
+    "data": "`data/train.csv`, all three trajectories and all `450` logged rows. Within each trajectory, zero-based window starts `0, 2, ..., 124` give `63` windows of `25` transitions; thus `189` overlapping windows contribute to fitting. Each window starts from its logged pose; heading is unwrapped separately per trajectory. No transition crosses trajectories. No outliers or trajectories were excluded. Stride `2` samples was chosen to reduce redundant computational work while retaining starts in every command-block phase. All reported validation uses only these training trajectories.",
+    "method": "All fitted parameters were estimated jointly in one bounded nonlinear least-squares step using `scipy.optimize.least_squares`, Trust Region Reflective algorithm (`method = trf`), linear loss and a two-point finite-difference Jacobian. This handles nonlinear rollout dependence directly, unlike ordinary least squares on noisy one-step differences. Starting values: `gf = 0.83`, `ga = 0.7`, `offset = 0` rad, `phase = -0.05` s, `vbias = 0` m/s, `wbias = 0` rad/s. Positive gains near the exploratory observed response were chosen; offsets and extra corrections start at zero or small values so the starting rollout is near kinematics. Constraints: `0 <= gf <= 2`, `0.1 <= ga <= 1.5`, `-0.3 <= offset <= 0.3` rad, `-0.5 <= phase <= 0.5` s, `-0.05 <= vbias <= 0.05` m/s, `-0.1 <= wbias <= 0.1` rad/s. Broad gain and correction bounds guard against sign reversals and extreme extrapolation; they are modeling assumptions, not confidence intervals. Settings: `max_nfev = 400`; `ftol = 1e-10`, `xtol = 1e-10`, `gtol = 1e-10`. No random numbers or seed were used. The coefficient-selection criterion remained fixed after checking sensitivity to other heading weights. Reference: SciPy documentation, least_squares, Trust Region Reflective method (consulted online); installed SciPy version recorded by the environment is `1.18.1`.",
+    "script": "build_submission.py"
+  },
+  "discussion": {
+    "family": "Piecewise-affine static command calibration followed by a unicycle kinematic update. Kinematic reference: Steven M. LaValle, Planning Algorithms (2006), section 13.1.2.3, A simple unicycle, and section 13.1.2.2, A differential drive; author-hosted chapter 13 consulted online. Static nonlinear calibration extensions are empirical hypotheses, not claims that this reference specifies the fitted maps.",
+    "interpretation": "The states `x` and `y` are planar positions in m and `phi` is heading in rad; `v_f` and `v_a` are forward and angular commands in m/s and rad/s. The update expressions are `x+(Ts*Max(gf*v_f+vbias,0))*cos(phi+offset+phase*v_a)`, `y+(Ts*Max(gf*v_f+vbias,0))*sin(phi+offset+phase*v_a)` and `phi+Ts*(ga*v_a+wbias)`. They retain the old pose and add a command-driven displacement projected along the indicated heading; the angular expression adds an effective command-driven heading increment. Parameter rows define each coefficient and correction. `phi` is intentionally not wrapped: sine and cosine make position propagation periodic, and continuous heading avoids wrap discontinuities.",
+    "origin": "After Euler, a static affine command map was tried to represent observed command-scale and low-speed residuals. Its negative forward predictions near zero motivated the guessed nonnegative rectifier `Max(gf*v_f+vbias,0)`. Physical reasoning supplied translation invariance and trigonometric projection. The guessed corrections `offset+phase*v_a` permit alignment and local timing effects; they cannot implement actual delay. All choices were manual, not symbolic regression.",
+    "limitations": "Only nonnegative forward commands were observed: `0.000034312445203 <= v_f <= 0.298155603426382` m/s; angular commands cover `-0.948147536344217 <= v_a <= 0.941160626754347` rad/s, computed on all training rows. Reverse motion and larger commands are not identified. Logged odometry is not independent ground truth, so actuator response cannot be separated uniquely from odometry calibration. The required state has no velocity or command-history memory. Euler residuals at command changes strongly correlate with the missing previous angular command; none of these structures can exactly represent that transient. Three trajectories give limited independent validation; overlapping windows are dependent. The angular offset predicts rotation at zero angular command; near-zero angular-command experiments do not determine whether this extrapolation is real. The rectifier avoids reverse motion from the fitted forward offset, but its threshold is weakly resolved. On training-data leave-one-trajectory-out 25-step validation, pooled `x` RMSE is `0.03089507` m; all-data fitted window `x` RMSE is `0.02940906` m; full 149-transition training-rollout `x` RMSE is `0.10389049` m. These are development diagnostics, not test scores."
+  }
+}

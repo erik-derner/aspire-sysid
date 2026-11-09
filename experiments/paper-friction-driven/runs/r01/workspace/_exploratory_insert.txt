@@ -1,0 +1,29 @@
+emit('\nRESIDUAL SERIAL STRUCTURE AND SUBGROUPS (basic train-fitted model):')
+p=RESULT['base']
+for key,d in D.items():
+    X,*_=features(d);r=d.domega.to_numpy()-X@p;m=mask(d,X)
+    for lag in [1,2,3,5,10]:
+        prev=pd.Series(r).groupby(d.trajectory).shift(lag).to_numpy()
+        prevm=pd.Series(m).groupby(d.trajectory).shift(lag).fillna(False).to_numpy().astype(bool)
+        mm=m&prevm&np.isfinite(prev)
+        emit(f'{key} moving-pair lag={lag} samples ({lag*TS:.3g} s), n={mm.sum()} pairs, residual autocorrelation={np.corrcoef(r[mm],prev[mm])[0,1]:.6g} (dimensionless).')
+    for name,mm in [('driven',m&(d.u.to_numpy()!=0)),('free',m&(d.u.to_numpy()==0)),('low speed',m&(np.abs(d.omega.to_numpy())<2)),('higher speed',m&(np.abs(d.omega.to_numpy())>=2))]:
+        emit(f'{key} {name}, n={mm.sum()} samples, residual mean={r[mm].mean():.6g} rad/s^2, residual RMSE={rmse(r[mm]):.6g} rad/s^2.')
+    localtime=d.groupby('trajectory').cumcount().to_numpy()*TS
+    for threshold in [0.05,0.1,0.2]:
+        mm=m&(localtime>=threshold)
+        emit(f'{key} excluding first {threshold:.3g} s per trajectory, n={mm.sum()} moving samples, RMSE={rmse(r[mm]):.6g} rad/s^2.')
+    delta_u=d.u.to_numpy()-d.groupby('trajectory').u.shift(1).to_numpy()
+    mm=m&np.isfinite(delta_u)
+    emit(f'{key} residual Pearson correlation with `u - previous_u`={np.corrcoef(r[mm],delta_u[mm])[0,1]:.6g} (dimensionless), moving valid n={mm.sum()} samples.')
+    emit(f'{key} separate trajectory fit diagnostic, not recommended for final shared physics:')
+    for tr,g in d.groupby('trajectory'):
+        xx,*_=features(g); mm=mask(g,xx)
+        if mm.sum()<20:continue
+        # np.column_stack works with contiguous g arrays, not original index.
+        xb=np.column_stack([xx[mm],np.ones(mm.sum())]); yy=g.domega.to_numpy()[mm]
+        pp=lsq_linear(xb,yy,bounds=([0,0,0,0,-np.inf],[np.inf]*5)).x
+        emit(f'  {key} trajectory {tr}, n={mm.sum()} moving samples: '+describe_parameters(['motor','gravity','viscous','coulomb','bias'],['rad/(s^2 V)','rad/s^2','1/s','rad/s^2','rad/s^2'],pp)+f'; local fit RMSE={rmse(yy-xb@pp):.6g} rad/s^2. Motor unidentifiable in free-response trajectories.')
+
+emit('\nDATA-BASED SUMMARY: Basic residuals have weak marginal linear correlations with theta, omega, and u. Small moving-fit improvements for angle friction/damping do not explain the large validation error. Per-trajectory means differ in sign and size: a shared non-restoring constant bias is not defensible, and large trajectory-specific offsets can indicate experiment variation or measurement effects. Subgroup and serial diagnostics above distinguish systematic error from independent derivative noise. The basic plus angle-dependent friction family deserves a simulation check; nonlinear motor, second gravity harmonic, and quadratic drag receive little derivative evidence here.')
+

@@ -1,0 +1,89 @@
+{
+  "expressions": {
+    "dy": "p0 + p1*(x2/vscale) + p2*(x2/vscale)**2 - (p3 + p4/(1+exp(p5*(x1/uscale-p6))))*(y-p7)"
+  },
+  "parameters": [
+    {
+      "name": "p0",
+      "value": 0.003022377175257732,
+      "unit": "unknown",
+      "type": "fitted",
+      "description": "Constant drift in `dy`. Estimated jointly in the final simulation-error fit; not fixed from another candidate."
+    },
+    {
+      "name": "p1",
+      "value": 0.0008788836635129689,
+      "unit": "unknown",
+      "type": "fitted",
+      "description": "Linear input forcing coefficient of `(x2/vscale)`. Estimated jointly in the final simulation-error fit; not fixed from another candidate."
+    },
+    {
+      "name": "p2",
+      "value": 0.010354692916775739,
+      "unit": "unknown",
+      "type": "fitted",
+      "description": "Quadratic input forcing coefficient of `(x2/vscale)**2`. Estimated jointly in the final simulation-error fit; not fixed from another candidate."
+    },
+    {
+      "name": "p3",
+      "value": 0.0010000000000000002,
+      "unit": "1/s",
+      "type": "fitted",
+      "description": "Positive lower asymptote of the relaxation rate. Estimated jointly in the final simulation-error fit; not fixed from another candidate."
+    },
+    {
+      "name": "p4",
+      "value": 0.10580455078503558,
+      "unit": "1/s",
+      "type": "fitted",
+      "description": "Positive amplitude of the sigmoid relaxation-rate variation. Estimated jointly in the final simulation-error fit; not fixed from another candidate."
+    },
+    {
+      "name": "p5",
+      "value": 6.740775327031662,
+      "unit": "-",
+      "type": "fitted",
+      "description": "Dimensionless sigmoid steepness in normalized input. Estimated jointly in the final simulation-error fit; not fixed from another candidate."
+    },
+    {
+      "name": "p6",
+      "value": 1.1605904782381697,
+      "unit": "-",
+      "type": "fitted",
+      "description": "Dimensionless sigmoid transition location in normalized input. Estimated jointly in the final simulation-error fit; not fixed from another candidate."
+    },
+    {
+      "name": "p7",
+      "value": 0.9448811100026399,
+      "unit": "unknown",
+      "type": "fitted",
+      "description": "Reference state for relaxation, estimated jointly with forcing. Estimated jointly in the final simulation-error fit; not fixed from another candidate."
+    },
+    {
+      "name": "vscale",
+      "value": 18.0,
+      "unit": "unknown",
+      "type": "fixed",
+      "description": "Input scale fixed from the convenient training-data scale used in exploratory fits; not response-fitted."
+    },
+    {
+      "name": "uscale",
+      "value": 60.0,
+      "unit": "unknown",
+      "type": "fixed",
+      "description": "Input scale fixed from the convenient training-data scale used in exploratory fits; not response-fitted."
+    }
+  ],
+  "estimation": {
+    "criterion": "Minimize the sum of squared free-running simulated-minus-observed `y` errors on both supplied trajectories, excluding each initial sample. Classical RK4 uses a step of 5 s and constant logged inputs per step, with no replacement of simulated states by later observations. This matches the scored variable and integration convention; equal row weights are used because no measurement variances are supplied. The derivative training fit supplies initialization, not the final criterion.",
+    "data": "Initialization: all 1452 rows in data/train.csv, one trajectory, using `dy` as target. Structural checks use all 1454 rows of the separate data/val.csv trajectory. Final coefficient fit uses both files, retaining their separate initial conditions: 1451 and 1453 post-initial `y` residuals, respectively. No rows are arbitrarily discarded; the first state of each file is an initial condition, and the last input does not drive a scored subsequent sample. Validation is therefore used for selection and final estimation, not claimed as an independent final test.",
+    "method": "All eight fitted parameters were first estimated together on all derivative rows of data/train.csv by scipy.optimize.least_squares with method trf, linear loss, two-point numerical derivative Jacobian, x_scale=jac, max_nfev=500 and ftol=xtol=gtol=1e-9. Initial vector [0,0.006,0.008,0.01,0.3,3,1,1] represents a small positive relaxation rate and moderate input forcing, not prior physical knowledge. Bounds are the same as the final numerical vectors below; positivity of damping is required and other broad bounds avoid degenerate iterates. fit_nonlinear.py reproduces the derivative fit; nonlinear_results.json sigmoid_rate.derivative supplies the numerical starting vector below. Final step: all fitted parameters, including shape parameters, were estimated together by bounded nonlinear least squares (scipy.optimize.least_squares, default method trf, loss linear). Analytical state and parameter partial derivatives were generated with sympy.lambdify; RK4 sensitivity recurrences supply the trajectory Jacobian. This is used rather than derivative-only fitting because the evaluation is a free-running state simulation. Starting values, in parameter-table order, are `[0.006906497314667024, -0.0002784325533365499, 0.007511643693214463, 0.0010000000000000002, 0.06184475974598969, 7.142561609403914, 1.234131149065114, 0.8527397809100143]`, with the heterogeneous units given in the parameter table. Lower and upper bound vectors are `[-0.1, -0.3, -0.3, 0.001, 0.001, 0.01, 0, 0.5]` and `[0.1, 0.3, 0.3, 1, 1, 20, 3, 1.1]` in those same units. The broad coefficient bounds prevent explosive iterates; shape bounds preserve the chosen family. Settings: `max_nfev = 150`, `ftol = 1e-10`, `xtol = 1e-10`, `gtol = 1e-10`, `x_scale = \"jac\"`. The method is deterministic and uses no random seed. scipy.optimize.least_squares API documentation, SciPy v1.18.0 manual, was checked online for the trust-region reflective method; actual installed SciPy is 1.18.1. A local optimum, not a global guarantee, is obtained. fit_final.py writes all final values; make_submission.py formats the candidate.",
+    "script": "fit_final.py"
+  },
+  "discussion": {
+    "family": "Input-scheduled first-order relaxation model with a logistic rate (a scalar quasi-linear-parameter-varying state equation). The logistic function is used as a mathematical saturation, not as a system-specific physical law. Prediction-error identification reference: L. Ljung, System Identification: Theory for the User, second edition, 1999; cited from memory, bibliographic source not checked.",
+    "interpretation": "The state `y`, inputs `x1` and `x2`, and derivative `dy` have unspecified physical units; time is in s. No physical interpretation is assumed. The fixed scales `uscale` and `vscale` normalize inputs. The coefficients `p0`, `p1` and `p2` provide constant, linear and quadratic forcing. The positive parameters `p3` and `p4` bound the damping rate, while dimensionless `p5` and `p6` set its steepness and transition location. The reference state `p7` sets the relaxation origin. For any real `x1`, the exact relaxation term has negative state slope because both rate coefficients are positive.",
+    "origin": "The bilinear fit indicated damping varying strongly with `x1`. Exponential, polynomial, positive quadratic, and sigmoid rate schedules were explicitly compared. The sigmoid schedule was hand-chosen to preserve positive damping rather than allowing a linear-rate zero crossing. It is less accurate locally than the cubic but offers a deliberately conservative structural alternative.",
+    "limitations": "Only an input-dependent linear state relaxation is available, so complex state curvature and hidden dynamics cannot be represented. The lower rate `p3` reaches its lower bound. The model is less accurate on the supplied trajectories but keeps a negative state slope; this does not guarantee RK4 stability for arbitrary step sizes or inputs. Residuals remain temporally structured: in the final fit the validation derivative-residual lag-one correlation is `0.549` and its correlation with the next `x2` increment is `0.574` (both dimensionless, computed on data/val.csv). That increment is diagnostic only, never a model argument. This may reflect omitted dynamics or timing; causation cannot be determined. Final refit RMSE on data/train.csv is `0.038009` and on data/val.csv is `0.041943`, in the unspecified units of `y`; these are in-sample after refitting. No test performance is known. The observed combined envelope is approximately `0.992 <= y <= 2.187`, `1.628 <= x1 <= 94.449`, and `0.083 <= x2 <= 30.797`, all in their respective unspecified units; independently combining those extrema is not necessarily supported by either trajectory."
+  }
+}

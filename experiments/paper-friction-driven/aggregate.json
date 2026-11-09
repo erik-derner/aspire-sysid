@@ -1,0 +1,1213 @@
+{
+  "counts_definitions": {
+    "attempted": "runs with a run record (finished, whatever the outcome)",
+    "delivered": "runs whose final check report passed: a valid pool file with at least one candidate within the pool limit that passed the file and expression checks",
+    "eligible": "runs with at least one candidate eligible for ranking",
+    "evaluated_without_valid_pool_file": "runs that ended without a valid pool file whose checked candidates were evaluated in file-name order (harness order); they can be eligible without being delivered",
+    "interrupted_attempts": "attempts ended by an interruption of the harness and repeated from the beginning; not attempted runs"
+  },
+  "counts_labels": {
+    "attempted": "attempted",
+    "delivered": "delivered",
+    "eligible": "eligible",
+    "evaluated_without_valid_pool_file": "evaluated without a valid pool file",
+    "interrupted_attempts": "interrupted attempts"
+  },
+  "delivered": 5,
+  "eligible": 5,
+  "evaluated_without_valid_pool_file": 0,
+  "experiment": {
+    "agent_python": null,
+    "budget_override": null,
+    "concurrency": 3,
+    "config_sha256": "d2a2b5becd9712a7316d586230c4b6d314136a24269184283dcb8765e9bac2f0",
+    "exports": {
+      "matlab": true,
+      "octave": "auto",
+      "python": true
+    },
+    "folder": "experiments/paper-friction-driven",
+    "id": "paper-friction-driven",
+    "keep_workspaces": true,
+    "model": "gpt-6.1-sol",
+    "notes": "One of the six experiments of the manuscript (three systems, each as a described and as a blind task). Largest possible cost: 5 runs × 10 USD = 50 USD.",
+    "plots": true,
+    "runs": 5,
+    "seeds": "The language-model requests set no seed, so the responses are not reproducible; the runs of an experiment differ only in these responses. Requirement sampling and the reference comparison use the seeds declared by the task and the harness, recorded in every run record.",
+    "task": "friction-driven",
+    "tasks_root": "tasks",
+    "vendor": "openai",
+    "workspace_root": "<tmp>\\aspire-runs"
+  },
+  "format_version": 2,
+  "identity": {
+    "changes_sha256": null,
+    "commits": [],
+    "dirty": false,
+    "dry_run": false,
+    "harness_version": "0.1.0.dev0",
+    "model": "gpt-6.1-sol",
+    "task": "friction-driven",
+    "trees": {
+      "aspire": "ab0b54e9d28cf976119e8d833e724481881ee88d",
+      "tasks": "8f6af52361642c6c1e4aeaff9ca1376b6320963e"
+    }
+  },
+  "interrupted_attempts": 0,
+  "kind": "aspire_aggregate",
+  "leak_findings": 5,
+  "missing_runs": [],
+  "outcomes": {
+    "completed": 5
+  },
+  "output": {
+    "name": "theta",
+    "unit": "rad"
+  },
+  "per_trajectory_rmse": {
+    "oracle_best": {
+      "test-1": {
+        "max": 0.03854888910321594,
+        "mean": 0.024690399277445218,
+        "mean_note": "all 5 runs",
+        "min": 0.017751154720730956,
+        "n_finite": 5,
+        "n_runs": 5,
+        "no_finite_result": [],
+        "sd": 0.008060399619142107,
+        "sd_note": null,
+        "single_result": false,
+        "values": [
+          {
+            "run_id": "r01",
+            "value": 0.017751154720730956
+          },
+          {
+            "run_id": "r02",
+            "value": 0.02186304907909404
+          },
+          {
+            "run_id": "r03",
+            "value": 0.023929675659010993
+          },
+          {
+            "run_id": "r04",
+            "value": 0.02135922782517416
+          },
+          {
+            "run_id": "r05",
+            "value": 0.03854888910321594
+          }
+        ]
+      },
+      "test-2": {
+        "max": 0.04865106349300628,
+        "mean": 0.03498222538360207,
+        "mean_note": "all 5 runs",
+        "min": 0.022426471441823418,
+        "n_finite": 5,
+        "n_runs": 5,
+        "no_finite_result": [],
+        "sd": 0.010915005972270466,
+        "sd_note": null,
+        "single_result": false,
+        "values": [
+          {
+            "run_id": "r01",
+            "value": 0.03675965903518284
+          },
+          {
+            "run_id": "r02",
+            "value": 0.025639862189077055
+          },
+          {
+            "run_id": "r03",
+            "value": 0.04143407075892077
+          },
+          {
+            "run_id": "r04",
+            "value": 0.022426471441823418
+          },
+          {
+            "run_id": "r05",
+            "value": 0.04865106349300628
+          }
+        ]
+      },
+      "test-3": {
+        "max": 0.023073210059924812,
+        "mean": 0.017249466174051112,
+        "mean_note": "all 5 runs",
+        "min": 0.010894397147524427,
+        "n_finite": 5,
+        "n_runs": 5,
+        "no_finite_result": [],
+        "sd": 0.004660088156593196,
+        "sd_note": null,
+        "single_result": false,
+        "values": [
+          {
+            "run_id": "r01",
+            "value": 0.019385283997440408
+          },
+          {
+            "run_id": "r02",
+            "value": 0.014615025087367117
+          },
+          {
+            "run_id": "r03",
+            "value": 0.023073210059924812
+          },
+          {
+            "run_id": "r04",
+            "value": 0.010894397147524427
+          },
+          {
+            "run_id": "r05",
+            "value": 0.0182794145779988
+          }
+        ]
+      },
+      "test-4": {
+        "max": 0.036433920287407676,
+        "mean": 0.027380173948056863,
+        "mean_note": "all 5 runs",
+        "min": 0.02257449260573072,
+        "n_finite": 5,
+        "n_runs": 5,
+        "no_finite_result": [],
+        "sd": 0.0054281122287090375,
+        "sd_note": null,
+        "single_result": false,
+        "values": [
+          {
+            "run_id": "r01",
+            "value": 0.02687305453943212
+          },
+          {
+            "run_id": "r02",
+            "value": 0.027173763425267464
+          },
+          {
+            "run_id": "r03",
+            "value": 0.02257449260573072
+          },
+          {
+            "run_id": "r04",
+            "value": 0.023845638882446334
+          },
+          {
+            "run_id": "r05",
+            "value": 0.036433920287407676
+          }
+        ]
+      }
+    },
+    "recommended": {
+      "test-1": {
+        "max": 0.03977107610039411,
+        "mean": 0.03579358993254276,
+        "mean_note": "all 5 runs",
+        "min": 0.03141647592878333,
+        "n_finite": 5,
+        "n_runs": 5,
+        "no_finite_result": [],
+        "sd": 0.0035876599810276784,
+        "sd_note": null,
+        "single_result": false,
+        "values": [
+          {
+            "run_id": "r01",
+            "value": 0.03867799371755716
+          },
+          {
+            "run_id": "r02",
+            "value": 0.03614789422434531
+          },
+          {
+            "run_id": "r03",
+            "value": 0.03295450969163388
+          },
+          {
+            "run_id": "r04",
+            "value": 0.03141647592878333
+          },
+          {
+            "run_id": "r05",
+            "value": 0.03977107610039411
+          }
+        ]
+      },
+      "test-2": {
+        "max": 0.07101853088174419,
+        "mean": 0.05798198216242643,
+        "mean_note": "all 5 runs",
+        "min": 0.03469918096180019,
+        "n_finite": 5,
+        "n_runs": 5,
+        "no_finite_result": [],
+        "sd": 0.013938583196944727,
+        "sd_note": null,
+        "single_result": false,
+        "values": [
+          {
+            "run_id": "r01",
+            "value": 0.06537880813620771
+          },
+          {
+            "run_id": "r02",
+            "value": 0.061184801388322566
+          },
+          {
+            "run_id": "r03",
+            "value": 0.07101853088174419
+          },
+          {
+            "run_id": "r04",
+            "value": 0.03469918096180019
+          },
+          {
+            "run_id": "r05",
+            "value": 0.05762858944405749
+          }
+        ]
+      },
+      "test-3": {
+        "max": 0.025499186457513878,
+        "mean": 0.01184041607992644,
+        "mean_note": "all 5 runs",
+        "min": 0.0042070354984441736,
+        "n_finite": 5,
+        "n_runs": 5,
+        "no_finite_result": [],
+        "sd": 0.008161329486907846,
+        "sd_note": null,
+        "single_result": false,
+        "values": [
+          {
+            "run_id": "r01",
+            "value": 0.008525871458038473
+          },
+          {
+            "run_id": "r02",
+            "value": 0.025499186457513878
+          },
+          {
+            "run_id": "r03",
+            "value": 0.0042070354984441736
+          },
+          {
+            "run_id": "r04",
+            "value": 0.008622449289812104
+          },
+          {
+            "run_id": "r05",
+            "value": 0.012347537695823573
+          }
+        ]
+      },
+      "test-4": {
+        "max": 0.04001512971080004,
+        "mean": 0.02825912563760018,
+        "mean_note": "all 5 runs",
+        "min": 0.015806765881354063,
+        "n_finite": 5,
+        "n_runs": 5,
+        "no_finite_result": [],
+        "sd": 0.009612054179651941,
+        "sd_note": null,
+        "single_result": false,
+        "values": [
+          {
+            "run_id": "r01",
+            "value": 0.023067748756750526
+          },
+          {
+            "run_id": "r02",
+            "value": 0.03520413898327795
+          },
+          {
+            "run_id": "r03",
+            "value": 0.027201844855818332
+          },
+          {
+            "run_id": "r04",
+            "value": 0.015806765881354063
+          },
+          {
+            "run_id": "r05",
+            "value": 0.04001512971080004
+          }
+        ]
+      }
+    }
+  },
+  "pool_cap": 10,
+  "pool_sizes": [
+    3,
+    4,
+    6
+  ],
+  "quantities": {
+    "cost_usd": {
+      "max": 2.6063099999999997,
+      "mean": 2.1993696,
+      "mean_note": "all 5 runs",
+      "min": 1.3718880000000002,
+      "n_finite": 5,
+      "n_runs": 5,
+      "no_finite_result": [],
+      "sd": 0.5000910379448924,
+      "sd_note": null,
+      "single_result": false,
+      "values": [
+        {
+          "run_id": "r01",
+          "value": 2.6063099999999997
+        },
+        {
+          "run_id": "r02",
+          "value": 2.545982
+        },
+        {
+          "run_id": "r03",
+          "value": 1.3718880000000002
+        },
+        {
+          "run_id": "r04",
+          "value": 2.3528779999999996
+        },
+        {
+          "run_id": "r05",
+          "value": 2.11979
+        }
+      ]
+    },
+    "distinct_structures": {
+      "max": 6.0,
+      "mean": 4.4,
+      "mean_note": "all 5 runs",
+      "min": 3.0,
+      "n_finite": 5,
+      "n_runs": 5,
+      "no_finite_result": [],
+      "sd": 1.51657508881031,
+      "sd_note": null,
+      "single_result": false,
+      "values": [
+        {
+          "run_id": "r01",
+          "value": 6
+        },
+        {
+          "run_id": "r02",
+          "value": 3
+        },
+        {
+          "run_id": "r03",
+          "value": 6
+        },
+        {
+          "run_id": "r04",
+          "value": 4
+        },
+        {
+          "run_id": "r05",
+          "value": 3
+        }
+      ]
+    },
+    "elapsed_s": {
+      "max": 764.7030000002123,
+      "mean": 665.3064000000246,
+      "mean_note": "all 5 runs",
+      "min": 491.6720000000205,
+      "n_finite": 5,
+      "n_runs": 5,
+      "no_finite_result": [],
+      "sd": 119.32866922205076,
+      "sd_note": null,
+      "single_result": false,
+      "values": [
+        {
+          "run_id": "r01",
+          "value": 764.7030000002123
+        },
+        {
+          "run_id": "r02",
+          "value": 749.594000000041
+        },
+        {
+          "run_id": "r03",
+          "value": 491.6720000000205
+        },
+        {
+          "run_id": "r04",
+          "value": 730.1879999998491
+        },
+        {
+          "run_id": "r05",
+          "value": 590.375
+        }
+      ]
+    },
+    "evaluated_candidates": {
+      "max": 6.0,
+      "mean": 4.4,
+      "mean_note": "all 5 runs",
+      "min": 3.0,
+      "n_finite": 5,
+      "n_runs": 5,
+      "no_finite_result": [],
+      "sd": 1.51657508881031,
+      "sd_note": null,
+      "single_result": false,
+      "values": [
+        {
+          "run_id": "r01",
+          "value": 6
+        },
+        {
+          "run_id": "r02",
+          "value": 3
+        },
+        {
+          "run_id": "r03",
+          "value": 6
+        },
+        {
+          "run_id": "r04",
+          "value": 4
+        },
+        {
+          "run_id": "r05",
+          "value": 3
+        }
+      ]
+    },
+    "input_tokens": {
+      "max": 1166415.0,
+      "mean": 981615.8,
+      "mean_note": "all 5 runs",
+      "min": 597424.0,
+      "n_finite": 5,
+      "n_runs": 5,
+      "no_finite_result": [],
+      "sd": 231029.20788549658,
+      "sd_note": null,
+      "single_result": false,
+      "values": [
+        {
+          "run_id": "r01",
+          "value": 1166415
+        },
+        {
+          "run_id": "r02",
+          "value": 1143576
+        },
+        {
+          "run_id": "r03",
+          "value": 597424
+        },
+        {
+          "run_id": "r04",
+          "value": 1049384
+        },
+        {
+          "run_id": "r05",
+          "value": 951280
+        }
+      ]
+    },
+    "oracle_best_S": {
+      "max": 0.0396969651444319,
+      "mean": 0.027898924400069407,
+      "mean_note": "all 5 runs",
+      "min": 0.020797344983219487,
+      "n_finite": 5,
+      "n_runs": 5,
+      "no_finite_result": [],
+      "sd": 0.007491447571107434,
+      "sd_note": null,
+      "single_result": false,
+      "values": [
+        {
+          "run_id": "r01",
+          "value": 0.026039079965503746
+        },
+        {
+          "run_id": "r02",
+          "value": 0.02278070161650102
+        },
+        {
+          "run_id": "r03",
+          "value": 0.03018053029069088
+        },
+        {
+          "run_id": "r04",
+          "value": 0.020797344983219487
+        },
+        {
+          "run_id": "r05",
+          "value": 0.0396969651444319
+        }
+      ]
+    },
+    "output_tokens": {
+      "max": 24883.0,
+      "mean": 21613.8,
+      "mean_note": "all 5 runs",
+      "min": 15704.0,
+      "n_finite": 5,
+      "n_runs": 5,
+      "no_finite_result": [],
+      "sd": 3869.5706092536934,
+      "sd_note": null,
+      "single_result": false,
+      "values": [
+        {
+          "run_id": "r01",
+          "value": 24348
+        },
+        {
+          "run_id": "r02",
+          "value": 24883
+        },
+        {
+          "run_id": "r03",
+          "value": 15704
+        },
+        {
+          "run_id": "r04",
+          "value": 23411
+        },
+        {
+          "run_id": "r05",
+          "value": 19723
+        }
+      ]
+    },
+    "pool_size": {
+      "max": 6.0,
+      "mean": 4.4,
+      "mean_note": "all 5 runs",
+      "min": 3.0,
+      "n_finite": 5,
+      "n_runs": 5,
+      "no_finite_result": [],
+      "sd": 1.51657508881031,
+      "sd_note": null,
+      "single_result": false,
+      "values": [
+        {
+          "run_id": "r01",
+          "value": 6
+        },
+        {
+          "run_id": "r02",
+          "value": 3
+        },
+        {
+          "run_id": "r03",
+          "value": 6
+        },
+        {
+          "run_id": "r04",
+          "value": 4
+        },
+        {
+          "run_id": "r05",
+          "value": 3
+        }
+      ]
+    },
+    "recommended_fitted_parameters": {
+      "max": 10.0,
+      "mean": 7.6,
+      "mean_note": "all 5 runs",
+      "min": 6.0,
+      "n_finite": 5,
+      "n_runs": 5,
+      "no_finite_result": [],
+      "sd": 1.6733200530681511,
+      "sd_note": null,
+      "single_result": false,
+      "values": [
+        {
+          "run_id": "r01",
+          "value": 6
+        },
+        {
+          "run_id": "r02",
+          "value": 6
+        },
+        {
+          "run_id": "r03",
+          "value": 8
+        },
+        {
+          "run_id": "r04",
+          "value": 8
+        },
+        {
+          "run_id": "r05",
+          "value": 10
+        }
+      ]
+    },
+    "recommended_node_count": {
+      "max": 118.0,
+      "mean": 72.4,
+      "mean_note": "all 5 runs",
+      "min": 49.0,
+      "n_finite": 5,
+      "n_runs": 5,
+      "no_finite_result": [],
+      "sd": 26.482069405543065,
+      "sd_note": null,
+      "single_result": false,
+      "values": [
+        {
+          "run_id": "r01",
+          "value": 64
+        },
+        {
+          "run_id": "r02",
+          "value": 49
+        },
+        {
+          "run_id": "r03",
+          "value": 68
+        },
+        {
+          "run_id": "r04",
+          "value": 63
+        },
+        {
+          "run_id": "r05",
+          "value": 118
+        }
+      ]
+    },
+    "recommended_test_S": {
+      "max": 0.04594755912745798,
+      "mean": 0.0416765865816104,
+      "mean_note": "all 5 runs",
+      "min": 0.02923814541978786,
+      "n_finite": 5,
+      "n_runs": 5,
+      "no_finite_result": [],
+      "sd": 0.007009704820231927,
+      "sd_note": null,
+      "single_result": false,
+      "values": [
+        {
+          "run_id": "r01",
+          "value": 0.04530974955766711
+        },
+        {
+          "run_id": "r02",
+          "value": 0.044176101850062634
+        },
+        {
+          "run_id": "r03",
+          "value": 0.04594755912745798
+        },
+        {
+          "run_id": "r04",
+          "value": 0.02923814541978786
+        },
+        {
+          "run_id": "r05",
+          "value": 0.0437113769530764
+        }
+      ]
+    },
+    "recommended_train_rmse": {
+      "max": 0.0615559027622248,
+      "mean": 0.05114859535088166,
+      "mean_note": "all 5 runs",
+      "min": 0.04008954074954278,
+      "n_finite": 5,
+      "n_runs": 5,
+      "no_finite_result": [],
+      "sd": 0.008547344776278797,
+      "sd_note": null,
+      "single_result": false,
+      "values": [
+        {
+          "run_id": "r01",
+          "value": 0.05654987989419646
+        },
+        {
+          "run_id": "r02",
+          "value": 0.0615559027622248
+        },
+        {
+          "run_id": "r03",
+          "value": 0.05202657531311138
+        },
+        {
+          "run_id": "r04",
+          "value": 0.04008954074954278
+        },
+        {
+          "run_id": "r05",
+          "value": 0.0455210780353329
+        }
+      ]
+    },
+    "sensitivity_deficient": {
+      "max": 1.0,
+      "mean": 0.2,
+      "mean_note": "all 5 runs",
+      "min": 0.0,
+      "n_finite": 5,
+      "n_runs": 5,
+      "no_finite_result": [],
+      "sd": 0.447213595499958,
+      "sd_note": null,
+      "single_result": false,
+      "values": [
+        {
+          "run_id": "r01",
+          "value": 0
+        },
+        {
+          "run_id": "r02",
+          "value": 0
+        },
+        {
+          "run_id": "r03",
+          "value": 0
+        },
+        {
+          "run_id": "r04",
+          "value": 0
+        },
+        {
+          "run_id": "r05",
+          "value": 1
+        }
+      ]
+    },
+    "turns": {
+      "max": 42.0,
+      "mean": 36.2,
+      "mean_note": "all 5 runs",
+      "min": 28.0,
+      "n_finite": 5,
+      "n_runs": 5,
+      "no_finite_result": [],
+      "sd": 5.495452665613635,
+      "sd_note": null,
+      "single_result": false,
+      "values": [
+        {
+          "run_id": "r01",
+          "value": 42
+        },
+        {
+          "run_id": "r02",
+          "value": 40
+        },
+        {
+          "run_id": "r03",
+          "value": 28
+        },
+        {
+          "run_id": "r04",
+          "value": 34
+        },
+        {
+          "run_id": "r05",
+          "value": 37
+        }
+      ]
+    }
+  },
+  "quantity_definitions": {
+    "cost_usd": {
+      "definition": "cost from the dated price schedule (aspire/configs/prices.yaml)",
+      "label": "cost",
+      "unit": "USD"
+    },
+    "distinct_structures": {
+      "definition": "distinct expression structures among the evaluated candidates",
+      "label": "distinct structures",
+      "unit": "-"
+    },
+    "elapsed_s": {
+      "definition": "elapsed execution time of the round, without the final checks and the evaluation",
+      "label": "elapsed execution time",
+      "unit": "s"
+    },
+    "evaluated_candidates": {
+      "definition": "candidates within the pool limit that passed the checks and were evaluated",
+      "label": "evaluated candidates",
+      "unit": "-"
+    },
+    "input_tokens": {
+      "definition": "input tokens of all requests of the run",
+      "label": "input tokens",
+      "unit": "tokens"
+    },
+    "oracle_best_S": {
+      "definition": "smallest S among the eligible candidates of the run; selects on the test data and measures whether the pool contains an accurate model",
+      "label": "best eligible test score S in the pool (oracle-based selection on test data)",
+      "unit": "output"
+    },
+    "output_tokens": {
+      "definition": "output tokens (including reasoning tokens) of all responses",
+      "label": "output tokens",
+      "unit": "tokens"
+    },
+    "pool_size": {
+      "definition": "candidates proposed in the final pool",
+      "label": "pool size",
+      "unit": "-"
+    },
+    "recommended_fitted_parameters": {
+      "definition": "count of fitted parameters",
+      "label": "fitted parameters of the recommended candidate",
+      "unit": "-"
+    },
+    "recommended_node_count": {
+      "definition": "node count under the convention of aspire_sysid/evaluate/complexity.py",
+      "label": "expression-tree nodes of the recommended candidate",
+      "unit": "-"
+    },
+    "recommended_test_S": {
+      "definition": "pooled test RMSE S of the candidate the agent recommended from training and validation evidence",
+      "label": "test score S of the recommended candidate (practical selection)",
+      "unit": "output"
+    },
+    "recommended_train_rmse": {
+      "definition": "pooled RMSE of the recommended candidate on the training data, computed by the harness in the evaluation mode of the task",
+      "label": "training error of the recommended candidate",
+      "unit": "output"
+    },
+    "sensitivity_deficient": {
+      "definition": "evaluated candidates whose sensitivity rank test found dependent fitted parameters",
+      "label": "candidates with a sensitivity rank deficiency",
+      "unit": "-"
+    },
+    "turns": {
+      "definition": "language-model responses of the round",
+      "label": "turns",
+      "unit": "-"
+    }
+  },
+  "ranking_label": "oracle-based selection on test data",
+  "requirements": {
+    "all_evaluated": {
+      "R1": {
+        "proof": 22
+      },
+      "R2": {
+        "inconclusive": 17,
+        "proof": 5
+      },
+      "R3": {
+        "inconclusive": 19,
+        "proof": 3
+      }
+    },
+    "recommended": {
+      "R1": {
+        "proof": 5
+      },
+      "R2": {
+        "inconclusive": 5
+      },
+      "R3": {
+        "inconclusive": 5
+      }
+    }
+  },
+  "runs": [
+    {
+      "cost_usd": 2.6063099999999997,
+      "delivered": true,
+      "distinct_structures": 6,
+      "elapsed_s": 764.7030000002123,
+      "eligible": true,
+      "eligible_candidates": 6,
+      "evaluated_candidates": 6,
+      "input_tokens": 1166415,
+      "leak_findings": 0,
+      "oracle_best_S": 0.026039079965503746,
+      "oracle_best_label": "AngleDamping",
+      "oracle_best_trajectory_rmse": {
+        "test-1": 0.017751154720730956,
+        "test-2": 0.03675965903518284,
+        "test-3": 0.019385283997440408,
+        "test-4": 0.02687305453943212
+      },
+      "oracle_candidates_considered": 6,
+      "oracle_pool_size": 6,
+      "order_assigned_by_harness": false,
+      "outcome": "completed",
+      "output": {
+        "name": "theta",
+        "unit": "rad"
+      },
+      "output_tokens": 24348,
+      "pool_cap": 10,
+      "pool_size": 6,
+      "reasons": {},
+      "recommended_fitted_parameters": 6,
+      "recommended_label": "HarmonicStiction",
+      "recommended_node_count": 64,
+      "recommended_test_S": 0.04530974955766711,
+      "recommended_train_rmse": 0.05654987989419646,
+      "recommended_trajectory_rmse": {
+        "test-1": 0.03867799371755716,
+        "test-2": 0.06537880813620771,
+        "test-3": 0.008525871458038473,
+        "test-4": 0.023067748756750526
+      },
+      "requirements_recommended": {
+        "R1": "proof",
+        "R2": "inconclusive",
+        "R3": "inconclusive"
+      },
+      "run_id": "r01",
+      "sensitivity_deficient": 0,
+      "sensitivity_unavailable": 0,
+      "task": "friction-driven",
+      "termination_reason": "the agent sent the completion message DONE and at least one candidate within the pool limit passed the file and expression checks",
+      "turns": 42
+    },
+    {
+      "cost_usd": 2.545982,
+      "delivered": true,
+      "distinct_structures": 3,
+      "elapsed_s": 749.594000000041,
+      "eligible": true,
+      "eligible_candidates": 3,
+      "evaluated_candidates": 3,
+      "input_tokens": 1143576,
+      "leak_findings": 0,
+      "oracle_best_S": 0.02278070161650102,
+      "oracle_best_label": "PeriodicContact",
+      "oracle_best_trajectory_rmse": {
+        "test-1": 0.02186304907909404,
+        "test-2": 0.025639862189077055,
+        "test-3": 0.014615025087367117,
+        "test-4": 0.027173763425267464
+      },
+      "oracle_candidates_considered": 3,
+      "oracle_pool_size": 3,
+      "order_assigned_by_harness": false,
+      "outcome": "completed",
+      "output": {
+        "name": "theta",
+        "unit": "rad"
+      },
+      "output_tokens": 24883,
+      "pool_cap": 10,
+      "pool_size": 3,
+      "reasons": {},
+      "recommended_fitted_parameters": 6,
+      "recommended_label": "TwoScaleStick",
+      "recommended_node_count": 49,
+      "recommended_test_S": 0.044176101850062634,
+      "recommended_train_rmse": 0.0615559027622248,
+      "recommended_trajectory_rmse": {
+        "test-1": 0.03614789422434531,
+        "test-2": 0.061184801388322566,
+        "test-3": 0.025499186457513878,
+        "test-4": 0.03520413898327795
+      },
+      "requirements_recommended": {
+        "R1": "proof",
+        "R2": "inconclusive",
+        "R3": "inconclusive"
+      },
+      "run_id": "r02",
+      "sensitivity_deficient": 0,
+      "sensitivity_unavailable": 0,
+      "task": "friction-driven",
+      "termination_reason": "the agent sent the completion message DONE and at least one candidate within the pool limit passed the file and expression checks",
+      "turns": 40
+    },
+    {
+      "cost_usd": 1.3718880000000002,
+      "delivered": true,
+      "distinct_structures": 6,
+      "elapsed_s": 491.6720000000205,
+      "eligible": true,
+      "eligible_candidates": 6,
+      "evaluated_candidates": 6,
+      "input_tokens": 597424,
+      "leak_findings": 0,
+      "oracle_best_S": 0.03018053029069088,
+      "oracle_best_label": "AngleFriction",
+      "oracle_best_trajectory_rmse": {
+        "test-1": 0.023929675659010993,
+        "test-2": 0.04143407075892077,
+        "test-3": 0.023073210059924812,
+        "test-4": 0.02257449260573072
+      },
+      "oracle_candidates_considered": 6,
+      "oracle_pool_size": 6,
+      "order_assigned_by_harness": false,
+      "outcome": "completed",
+      "output": {
+        "name": "theta",
+        "unit": "rad"
+      },
+      "output_tokens": 15704,
+      "pool_cap": 10,
+      "pool_size": 6,
+      "reasons": {},
+      "recommended_fitted_parameters": 8,
+      "recommended_label": "HarmonicMotorAsymmetric",
+      "recommended_node_count": 68,
+      "recommended_test_S": 0.04594755912745798,
+      "recommended_train_rmse": 0.05202657531311138,
+      "recommended_trajectory_rmse": {
+        "test-1": 0.03295450969163388,
+        "test-2": 0.07101853088174419,
+        "test-3": 0.0042070354984441736,
+        "test-4": 0.027201844855818332
+      },
+      "requirements_recommended": {
+        "R1": "proof",
+        "R2": "inconclusive",
+        "R3": "inconclusive"
+      },
+      "run_id": "r03",
+      "sensitivity_deficient": 0,
+      "sensitivity_unavailable": 0,
+      "task": "friction-driven",
+      "termination_reason": "the agent sent the completion message DONE and at least one candidate within the pool limit passed the file and expression checks",
+      "turns": 28
+    },
+    {
+      "cost_usd": 2.3528779999999996,
+      "delivered": true,
+      "distinct_structures": 4,
+      "elapsed_s": 730.1879999998491,
+      "eligible": true,
+      "eligible_candidates": 4,
+      "evaluated_candidates": 4,
+      "input_tokens": 1049384,
+      "leak_findings": 1,
+      "oracle_best_S": 0.020797344983219487,
+      "oracle_best_label": "SmoothAngle",
+      "oracle_best_trajectory_rmse": {
+        "test-1": 0.02135922782517416,
+        "test-2": 0.022426471441823418,
+        "test-3": 0.010894397147524427,
+        "test-4": 0.023845638882446334
+      },
+      "oracle_candidates_considered": 4,
+      "oracle_pool_size": 4,
+      "order_assigned_by_harness": false,
+      "outcome": "completed",
+      "output": {
+        "name": "theta",
+        "unit": "rad"
+      },
+      "output_tokens": 23411,
+      "pool_cap": 10,
+      "pool_size": 4,
+      "reasons": {},
+      "recommended_fitted_parameters": 8,
+      "recommended_label": "AngleClip",
+      "recommended_node_count": 63,
+      "recommended_test_S": 0.02923814541978786,
+      "recommended_train_rmse": 0.04008954074954278,
+      "recommended_trajectory_rmse": {
+        "test-1": 0.03141647592878333,
+        "test-2": 0.03469918096180019,
+        "test-3": 0.008622449289812104,
+        "test-4": 0.015806765881354063
+      },
+      "requirements_recommended": {
+        "R1": "proof",
+        "R2": "inconclusive",
+        "R3": "inconclusive"
+      },
+      "run_id": "r04",
+      "sensitivity_deficient": 0,
+      "sensitivity_unavailable": 0,
+      "task": "friction-driven",
+      "termination_reason": "the agent sent the completion message DONE and at least one candidate within the pool limit passed the file and expression checks",
+      "turns": 34
+    },
+    {
+      "cost_usd": 2.11979,
+      "delivered": true,
+      "distinct_structures": 3,
+      "elapsed_s": 590.375,
+      "eligible": true,
+      "eligible_candidates": 3,
+      "evaluated_candidates": 3,
+      "input_tokens": 951280,
+      "leak_findings": 4,
+      "oracle_best_S": 0.0396969651444319,
+      "oracle_best_label": "ProjectedFriction",
+      "oracle_best_trajectory_rmse": {
+        "test-1": 0.03854888910321594,
+        "test-2": 0.04865106349300628,
+        "test-3": 0.0182794145779988,
+        "test-4": 0.036433920287407676
+      },
+      "oracle_candidates_considered": 3,
+      "oracle_pool_size": 3,
+      "order_assigned_by_harness": false,
+      "outcome": "completed",
+      "output": {
+        "name": "theta",
+        "unit": "rad"
+      },
+      "output_tokens": 19723,
+      "pool_cap": 10,
+      "pool_size": 3,
+      "reasons": {},
+      "recommended_fitted_parameters": 10,
+      "recommended_label": "BlendedStiction",
+      "recommended_node_count": 118,
+      "recommended_test_S": 0.0437113769530764,
+      "recommended_train_rmse": 0.0455210780353329,
+      "recommended_trajectory_rmse": {
+        "test-1": 0.03977107610039411,
+        "test-2": 0.05762858944405749,
+        "test-3": 0.012347537695823573,
+        "test-4": 0.04001512971080004
+      },
+      "requirements_recommended": {
+        "R1": "proof",
+        "R2": "inconclusive",
+        "R3": "inconclusive"
+      },
+      "run_id": "r05",
+      "sensitivity_deficient": 1,
+      "sensitivity_unavailable": 0,
+      "task": "friction-driven",
+      "termination_reason": "the agent sent the completion message DONE and at least one candidate within the pool limit passed the file and expression checks",
+      "turns": 37
+    }
+  ],
+  "runs_attempted": 5,
+  "runs_not_executed": 0,
+  "runs_planned": 5,
+  "single_run": false,
+  "statistics": {
+    "mean": "xbar = (1/k) sum_i x_i over the k runs with a finite result",
+    "note": "the sample standard deviation divides by k - 1; the output errors use the population convention",
+    "sample_standard_deviation": "s = sqrt( sum_i (x_i - xbar)^2 / (k - 1) ), xbar = (1/k) sum_i x_i, over the k runs with a finite result (divisor k - 1); undefined for k < 2"
+  },
+  "task": "friction-driven",
+  "unfinished_spend": {
+    "attempts": 0,
+    "cost_usd": 0,
+    "input_tokens": 0,
+    "items": [],
+    "output_tokens": 0
+  },
+  "what_varies": "the runs differ only in the responses of the language model; the requests set no seed"
+}

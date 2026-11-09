@@ -1,0 +1,42 @@
+schema_version: 1
+id: task-jdhj
+title: Identification task jdhj
+formulation: continuous
+columns:
+- name: y
+  roles: [state, output]
+  unit: not supplied
+- name: x1
+  roles: [state]
+  unit: not supplied
+- name: x2
+  roles: [input]
+  unit: not supplied
+- name: dx1
+  roles: [state_derivative]
+  derivative_of: x1
+  unit: not supplied
+dynamics:
+  sampling_period: 0.01
+  states: [y, x1]
+  inputs: [x2]
+evaluation:
+  mode: simulation
+  initialization: 1
+  failure_limits:
+  - {variable: y, lower: -1000.0, upper: 1000.0, unit: not supplied, justification: 'numerical divergence
+      bound, about 394 times the largest training magnitude of y'}
+  - {variable: x1, lower: -1000.0, upper: 1000.0, unit: not supplied, justification: 'numerical divergence
+      bound, about 50 times the largest training magnitude of x1'}
+  time_limit_s: 60.0
+data: {train: data/train.csv, val: data/val.csv, trajectory_column: trajectory}
+pool_cap: 10
+budget:
+  round: {turns: 60, seconds: 3600, usd: 10.0}
+  session: {turns: 180, seconds: 10800, usd: 30.0}
+  analysis_exchange: {turns: 15, seconds: 900, usd: 1.0}
+test:
+- {file: test/held_out_1.csv, trajectory: test-1}
+- {file: test/held_out_2.csv, trajectory: test-2}
+- {file: test/held_out_3.csv, trajectory: test-3}
+- {file: test/held_out_4.csv, trajectory: test-4}

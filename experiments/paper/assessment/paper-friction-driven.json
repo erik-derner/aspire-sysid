@@ -1,0 +1,61 @@
+{
+  "experiment": "paper-friction-driven",
+  "task": "friction-driven",
+  "runs": {
+    "r01": {
+      "label": "HarmonicStiction",
+      "a": "yes",
+      "b": "partly",
+      "c": "yes",
+      "d": "yes",
+      "e": "yes",
+      "estimation_data": "train+val",
+      "checked_conditions": "yes",
+      "sticking": "drive acceleration clipped to [-c, c] and weighted by 1 - tanh(omega/v)**2, next to Coulomb friction c*tanh(omega/v), v fitted (next to its lower bound); continuous in omega at 0"
+    },
+    "r02": {
+      "label": "TwoScaleStick",
+      "a": "yes",
+      "b": "yes",
+      "c": "yes",
+      "d": "yes",
+      "e": "yes",
+      "estimation_data": "train+val",
+      "checked_conditions": "yes",
+      "sticking": "drive acceleration clipped to [-c, c] and weighted by exp(-(omega/vs)**2), next to Coulomb friction c*tanh(omega/v), v and vs fitted; continuous in omega at 0"
+    },
+    "r03": {
+      "label": "HarmonicMotorAsymmetric",
+      "a": "yes",
+      "b": "yes",
+      "c": "yes",
+      "d": "yes",
+      "e": "yes",
+      "estimation_data": "train+val",
+      "checked_conditions": "yes",
+      "sticking": "projection branch domega = -omega/tau while the unprojected acceleration plus omega/tau lies within [-cn, cp], tau fitted; continuous in omega at 0"
+    },
+    "r04": {
+      "label": "AngleClip",
+      "a": "yes",
+      "b": "yes",
+      "c": "yes",
+      "d": "yes",
+      "e": "yes",
+      "estimation_data": "train+val",
+      "checked_conditions": "yes",
+      "sticking": "projection branch domega = -(b+k)*omega while the drive acceleration plus k*omega lies within the angle-dependent, direction-dependent friction limits, k fitted; continuous in omega at 0"
+    },
+    "r05": {
+      "label": "BlendedStiction",
+      "a": "partly",
+      "b": "yes",
+      "c": "yes",
+      "d": "yes",
+      "e": "yes",
+      "estimation_data": "train+val",
+      "checked_conditions": "yes",
+      "sticking": "blend with weight exp(-(omega/v)**2) of the net acceleration clipped to the capacity f*(1+h*cos(theta)) and sliding friction with tanh(omega/e), plus low-speed damping, v fitted (at its lower bound) and e fitted; continuous in omega at 0"
+    }
+  }
+}

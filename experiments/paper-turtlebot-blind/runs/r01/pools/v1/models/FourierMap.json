@@ -1,0 +1,140 @@
+{
+  "expressions": {
+    "y_next": "y + a0 + a1*(x3*cos(x2)) + a2*(x3*sin(x2)) + a3*(cos(x2)) + a4*(sin(x2)) + a5*(x3*x4*cos(x2)) + a6*(x3*x4*sin(x2))",
+    "x1_next": "x1 + b0 + b1*(x3*cos(x2)) + b2*(x3*sin(x2)) + b3*(cos(x2)) + b4*(sin(x2)) + b5*(x3*x4*cos(x2)) + b6*(x3*x4*sin(x2))",
+    "x2_next": "atan2(sin(x2 + (hb + hg*sign(x4)*Max(Abs(x4)-hd, 0))), cos(x2 + (hb + hg*sign(x4)*Max(Abs(x4)-hd, 0))))"
+  },
+  "parameters": [
+    {
+      "name": "a0",
+      "value": -0.00014333098826434715,
+      "unit": "P",
+      "type": "fitted",
+      "description": "Coefficient of `1` in the increment of `y`; P, U and W are the unknown recorded units defined in the interpretation."
+    },
+    {
+      "name": "b0",
+      "value": 0.000771710052807891,
+      "unit": "P",
+      "type": "fitted",
+      "description": "Coefficient of `1` in the increment of `x1`; P, U and W are the unknown recorded units defined in the interpretation."
+    },
+    {
+      "name": "a1",
+      "value": 0.16560575920727993,
+      "unit": "P/U",
+      "type": "fitted",
+      "description": "Coefficient of `x3*cos(x2)` in the increment of `y`; P, U and W are the unknown recorded units defined in the interpretation."
+    },
+    {
+      "name": "b1",
+      "value": 0.0003227648049862419,
+      "unit": "P/U",
+      "type": "fitted",
+      "description": "Coefficient of `x3*cos(x2)` in the increment of `x1`; P, U and W are the unknown recorded units defined in the interpretation."
+    },
+    {
+      "name": "a2",
+      "value": -0.001084251842622354,
+      "unit": "P/U",
+      "type": "fitted",
+      "description": "Coefficient of `x3*sin(x2)` in the increment of `y`; P, U and W are the unknown recorded units defined in the interpretation."
+    },
+    {
+      "name": "b2",
+      "value": 0.16826664534290656,
+      "unit": "P/U",
+      "type": "fitted",
+      "description": "Coefficient of `x3*sin(x2)` in the increment of `x1`; P, U and W are the unknown recorded units defined in the interpretation."
+    },
+    {
+      "name": "a3",
+      "value": -0.0006070717702136152,
+      "unit": "P",
+      "type": "fitted",
+      "description": "Coefficient of `cos(x2)` in the increment of `y`; P, U and W are the unknown recorded units defined in the interpretation."
+    },
+    {
+      "name": "b3",
+      "value": -7.139101938091077e-05,
+      "unit": "P",
+      "type": "fitted",
+      "description": "Coefficient of `cos(x2)` in the increment of `x1`; P, U and W are the unknown recorded units defined in the interpretation."
+    },
+    {
+      "name": "a4",
+      "value": 4.116647842481704e-05,
+      "unit": "P",
+      "type": "fitted",
+      "description": "Coefficient of `sin(x2)` in the increment of `y`; P, U and W are the unknown recorded units defined in the interpretation."
+    },
+    {
+      "name": "b4",
+      "value": -0.0005176443364215451,
+      "unit": "P",
+      "type": "fitted",
+      "description": "Coefficient of `sin(x2)` in the increment of `x1`; P, U and W are the unknown recorded units defined in the interpretation."
+    },
+    {
+      "name": "a5",
+      "value": -0.0031984576451168484,
+      "unit": "P/(U*W)",
+      "type": "fitted",
+      "description": "Coefficient of `x3*x4*cos(x2)` in the increment of `y`; P, U and W are the unknown recorded units defined in the interpretation."
+    },
+    {
+      "name": "b5",
+      "value": 0.006525593817164788,
+      "unit": "P/(U*W)",
+      "type": "fitted",
+      "description": "Coefficient of `x3*x4*cos(x2)` in the increment of `x1`; P, U and W are the unknown recorded units defined in the interpretation."
+    },
+    {
+      "name": "a6",
+      "value": -0.01021019197638878,
+      "unit": "P/(U*W)",
+      "type": "fitted",
+      "description": "Coefficient of `x3*x4*sin(x2)` in the increment of `y`; P, U and W are the unknown recorded units defined in the interpretation."
+    },
+    {
+      "name": "b6",
+      "value": 0.0009791978089453935,
+      "unit": "P/(U*W)",
+      "type": "fitted",
+      "description": "Coefficient of `x3*x4*sin(x2)` in the increment of `x1`; P, U and W are the unknown recorded units defined in the interpretation."
+    },
+    {
+      "name": "hb",
+      "value": 0.0013306643652127336,
+      "unit": "rad",
+      "type": "fitted",
+      "description": "Input-independent angle increment."
+    },
+    {
+      "name": "hg",
+      "value": 0.17457402984558903,
+      "unit": "rad/W",
+      "type": "fitted",
+      "description": "Gain of the odd dead-zone response to `x4`."
+    },
+    {
+      "name": "hd",
+      "value": 0.09774457097554377,
+      "unit": "W",
+      "type": "fitted",
+      "description": "Empirical dead-zone threshold of recorded input `x4`."
+    }
+  ],
+  "estimation": {
+    "criterion": "Nonlinear least squares on the concatenation of two residual vectors: free-running coordinate errors in `y` and `x1` and wrapped angle errors multiplied by `0.25` P/rad; and local increment errors multiplied by `100`, a dimensionless regularization weight. Thus the local sum of squares has relative weight `10000`. The local coordinate errors have units P and local angle errors are multiplied by `0.25` P/rad. Free-running residuals include all samples after the initial state. Local residuals use block-interior transitions only. The coordinate criterion addresses accumulated trajectory errors; the local penalty discourages spurious nonlinear response curves introduced to explain persistent disturbances and unavailable input history. The angle weighting is a chosen geometric scale, not a known physical length. The regularization weight was selected using leave-one-trajectory-out `y` prediction errors among `5`, `20`, `100`, and local-only fits for rigid maps, and `20`, `100`, and `300` for the Fourier map; it is not an estimated model constant.",
+    "data": "`data/train.csv`, all three trajectories, each with 150 samples at `T_s = 0.2` s. The final fit uses all 447 within-trajectory transitions for the free-running residual and 267 transitions with zero-based within-trajectory index modulo five in {2, 3, 4} for the local regularizer. The latter excludes switch and immediate post-switch samples because diagnostics show actuator-memory effects; no cross-trajectory transition is used. ",
+    "method": "All 17 parameters were estimated jointly by trust-region reflective nonlinear least squares using `scipy.optimize.least_squares` in `fit_fourier.fit` with multiplier `100`; this is appropriate for the nonlinear accumulated-angle residual and parameter bounds. Initialization first computes the 14 coordinate-increment coefficients by ordinary least squares using `numpy.linalg.lstsq` on all 447 within-trajectory measured transitions (no starting values needed for this linear subproblem), then appends angle starts `hb = 0` rad, `hg = 0.1667` rad/W, and `hd = 0.09` W, motivated by interior scalar regressions. These initial coordinate coefficients are not held fixed: the joint fit estimates all coefficients again under the stated criterion. The complete joint starting vector in parameter order `a0, b0, a1, b1, a2, b2, a3, b3, a4, b4, a5, b5, a6, b6, hb, hg, hd` is `[-0.0006807267087730887, 2.292924146972703e-05, 0.1596551073675894, 0.0008785478091271441, -0.001431645701694528, 0.1593334963009806, 0.0009846357073011597, 5.474441815970718e-05, 0.0009027068846644976, 0.001754308007533404, -0.002624989666742943, 0.006446215356866481, -0.007431246072123255, -0.0004774297037933275, 0, 0.1667, 0.09]`, with each entry carrying its parameter unit. Coordinate coefficients are each bounded between `-0.5` and `0.5` in their listed units, `-0.05 <= hb <= 0.05` rad, `0 <= hg <= 0.5` rad/W, and `0 <= hd <= 0.3` W. These broad bounds are chosen to prevent extreme empirical gains, not known physical limits. The maximum function evaluations are `3000`, with `ftol = xtol = gtol = 1e-10`, dimensionless convergence tolerances. No random seed applies: the computation is deterministic. `fit_fourier.py` contains the objective and initialization; `reproduce_submission.py` reruns the fit and writes this candidate. No coefficient is copied or held over from a submitted rigid map. Reference: SciPy API documentation, least_squares, checked directly; NumPy API documentation, numpy.linalg.lstsq, checked directly. SciPy documents the trust-region reflective bounded least-squares method; NumPy documents its direct least-squares solve. Defaults used were linear loss and a two-point finite-difference Jacobian for the nonlinear solve.",
+    "script": "reproduce_submission.py"
+  },
+  "discussion": {
+    "family": "Additive first-harmonic Fourier state map with bilinear input features, integrator state updates, and a separate static dead-zone angle-response map. Unlike the rigid kinematic map, its two coordinate increments have independent fitted coefficients and are not constrained to a shared forward step or midpoint angle. This candidate is defined by its explicit regression library rather than attributed to a particular published system equation.",
+    "interpretation": "Physical units were not supplied. Here P denotes the assumed shared logged coordinate unit of `y` and `x1`, U denotes the unknown recorded unit of `x3`, and W denotes the unknown recorded unit of `x4`. `x2` is treated as an angle in radians, inferred from its wrapping, not given by the task. For each coordinate, the feature `1` supplies a constant increment; `x3*cos(x2)` and `x3*sin(x2)` give first-harmonic input-direction coupling; `cos(x2)` and `sin(x2)` allow direction-dependent offsets; `x3*x4*cos(x2)` and `x3*x4*sin(x2)` allow first-order turning-input corrections. Their coefficients are independent in the two coordinates, so small cross-axis effects, anisotropy, and lateral increments are permitted mathematically, without claiming a physical cause. The angle step `hb + hg*sign(x4)*Max(Abs(x4)-hd, 0)` supplies offset drift and an odd dead-zone response, and `atan2(sin(x2 + (hb + hg*sign(x4)*Max(Abs(x4)-hd, 0))), cos(x2 + (hb + hg*sign(x4)*Max(Abs(x4)-hd, 0))))` wraps the next angle. The current positions `y` and `x1` enter with identity coefficients, preserving translation invariance.",
+    "origin": "Before fitting I listed affine, polynomial, and bounded/periodic model families. Ordinary least squares affine and polynomial maps of degrees one through three were explored on within-trajectory increments; their poor trajectory-held-out increment behavior, and angle wrapping, motivated periodic coordinates. A bicycle-like `x3*x4` angle response was rejected after comparison with an independent `x4` response. Body-frame projection showed that midpoint-angle integration greatly reduced lateral residuals. I then fitted Euler and midpoint linear maps, midpoint cubic, signed-power and dead-zone maps, and a cubic exact-arc map by free-running nonlinear least squares. Residuals showed strong switch transients and serial dependence rather than evidence for coordinate-dependent forces; adding coordinate and heading predictors to scalar input regressions did not reliably improve held-out local errors. This motivated the interior-increment regularizer rather than extra state-dependent terms. No symbolic-regression package or random search was used. The Fourier feature library was hand-constructed from the observed directional alignment and a first-order expansion of midpoint direction: its turning corrections use `x3*x4*cos(x2)` and `x3*x4*sin(x2)`. An unrestricted first-harmonic map was tested to check whether tying both coordinate increments to one scalar forward step was too restrictive. Features were not selected by genetic programming or sparse thresholding. The dead-zone angle form came from the earlier empirical input-response comparison; all its values were refitted in this candidate. I retained this family because it improves scored-output trajectory holdout while allowing a modest independent cross-axis response.",
+    "limitations": "The interpretation is inferred, not a known description of this system. Recorded units, hardware, actuator state, noise model, and input behavior outside the observed range are unknown. No previous inputs may enter the required expressions, so switch transients cannot be represented exactly. Residual autocorrelation and persistent block disturbances remain. Long-horizon heading bias accumulates into coordinate error, and validation contains only three trajectories; model choice is consequently uncertain. Prefix-to-tail validation is materially worse than whole-trajectory holdout. The map is intended only near the observed input and state coverage, not arbitrary large inputs. On all training trajectories the free-running `y` RMSE is `0.0632209526094111` P. Leave-one-trajectory-out `y` RMSE values for held-out trajectories one, two, and three are `0.034379076209898975`, `0.1407725221542698`, and `0.03310533720459535` P, respectively; their equal-size aggregate is `0.08581916496554522` P. Refitting on the first 100 samples of every trajectory and continuing free runs from the original initial states gives final-50-sample `y` RMSE `0.1982659017905261` P. All validation uses only the training file, not hidden test data. On all 447 transitions the one-step `y` RMSE is `0.002655790917274414` P; on the 90 switch-step transitions it is `0.005119113101520121` P, versus `0.001481556253404246` P on the 267 interior transitions. Adjacent one-step `y` residual correlation is `0.4359036010540481`, dimensionless, computed only within trajectories. The block phase is used only to choose fitting rows, never as an expression argument. "
+  }
+}

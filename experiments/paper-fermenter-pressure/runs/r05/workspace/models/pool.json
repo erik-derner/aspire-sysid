@@ -1,0 +1,9 @@
+{
+  "order": [
+    "power_balance",
+    "mixed_resistance",
+    "compressible_nozzle"
+  ],
+  "recommended": "power_balance",
+  "reason": "The regularized power-law gas balance had the best validation free-running error among these numerically conditioned families before the final refit (0.038653 bar), and has the lowest combined pressure RMSE after fitting both available trajectories (0.031752 bar). Its positive inlet gain, shutoff aperture law, finite atmospheric relaxation and overpressure valve monotonicity are physically interpretable. The residual timing correlation and sub-atmospheric R2 exception are disclosed; no unseen-test performance is claimed."
+}

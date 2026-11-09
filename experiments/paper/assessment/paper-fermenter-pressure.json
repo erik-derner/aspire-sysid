@@ -1,0 +1,86 @@
+{
+ "experiment": "paper-fermenter-pressure",
+ "task": "fermenter-pressure",
+ "runs": {
+  "r01": {
+   "label": "SeriesPipe",
+   "a": "yes",
+   "b": "yes",
+   "c": "yes",
+   "d": "yes",
+   "e": "yes",
+   "estimation_data": "train+val",
+   "requirements": {
+    "R1": {"addressed": "yes", "satisfied": "yes"},
+    "R2": {"addressed": "yes", "satisfied": "yes"},
+    "R3": {"addressed": "yes", "satisfied": "yes"},
+    "R4": {"addressed": "yes", "satisfied": "yes"},
+    "R5": {"addressed": "yes", "satisfied": "yes"}
+   }
+  },
+  "r02": {
+   "label": "mixed",
+   "a": "yes",
+   "b": "yes",
+   "c": "yes",
+   "d": "yes",
+   "e": "yes",
+   "estimation_data": "train+val",
+   "requirements": {
+    "R1": {"addressed": "yes", "satisfied": "yes"},
+    "R2": {"addressed": "yes", "satisfied": "yes"},
+    "R3": {"addressed": "yes", "satisfied": "yes"},
+    "R4": {"addressed": "yes", "satisfied": "yes"},
+    "R5": {"addressed": "yes", "satisfied": "yes"}
+   }
+  },
+  "r03": {
+   "label": "PowerOutlet",
+   "a": "yes",
+   "b": "partly",
+   "c": "yes",
+   "d": "yes",
+   "e": "yes",
+   "estimation_data": "train+val",
+   "requirements": {
+    "R1": {"addressed": "yes", "satisfied": "yes"},
+    "R2": {"addressed": "yes", "satisfied": "yes"},
+    "R3": {"addressed": "yes", "satisfied": "yes"},
+    "R4": {"addressed": "yes", "satisfied": "yes"},
+    "R5": {"addressed": "yes", "satisfied": "yes"}
+   }
+  },
+  "r04": {
+   "label": "GeneralizedDischarge",
+   "a": "yes",
+   "b": "partly",
+   "c": "yes",
+   "d": "yes",
+   "e": "yes",
+   "estimation_data": "train+val",
+   "requirements": {
+    "R1": {"addressed": "yes", "satisfied": "yes"},
+    "R2": {"addressed": "yes", "satisfied": "yes"},
+    "R3": {"addressed": "yes", "satisfied": "yes"},
+    "R4": {"addressed": "yes", "satisfied": "yes"},
+    "R5": {"addressed": "yes", "satisfied": "yes"}
+   }
+  },
+  "r05": {
+   "label": "power_balance",
+   "a": "yes",
+   "b": "partly",
+   "c": "yes",
+   "d": "yes",
+   "e": "yes",
+   "estimation_data": "train+val",
+   "requirements": {
+    "R1": {"addressed": "yes", "satisfied": "yes"},
+    "R2": {"addressed": "yes", "satisfied": "yes"},
+    "R3": {"addressed": "yes", "satisfied": "yes"},
+    "R4": {"addressed": "yes", "satisfied": "yes"},
+    "R5": {"addressed": "yes", "satisfied": "yes"}
+   }
+  }
+ }
+}

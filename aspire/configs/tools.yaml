@@ -1,0 +1,67 @@
+# The tool configuration of the agent. Read by aspire_sysid.agent.config.load_tool_config.
+#
+# There is one tool configuration. The agent always has every tool: reading, writing and listing
+# files in the working directory, executing commands there, web access (fetch, search), package
+# installation and helper agents (one level; helpers cannot start further helpers). The list of
+# tools below is not a setting: the loader requires every tool, so that no tool can be switched off
+# here. A restriction of the use of a tool belongs in the task description. web_search is the web
+# search tool of the model's vendor where the adapter offers it (OpenAI); the vendor executes it,
+# and the harness records the searches and charges the fee per call (configs/prices.yaml). With
+# another provider web_search reports that it is unavailable. The sealing filter of
+# run_shell always applies (the task store and the repository are denied); its limit is stated in
+# aspire/README.md ("Tool policy and its limits").
+
+schema_version: 2
+
+# Tools offered to the agent, in the order of their descriptions in every request.
+tools: [read_file, write_file, list_files, run_shell, web_fetch, web_search, install_package, start_helper]
+
+shell:
+  # Limit of one shell command in seconds; the harness applies min(limit_s, remaining round
+  # time).
+  limit_s: 600
+  # Absolute path prefixes that commands may name besides the working directory, for example
+  # system programs. The interpreter's installation folders are always permitted; the task
+  # store and the repository are always denied.
+  allowed_path_prefixes: [/usr, /bin, /sbin, /lib, /lib64, /dev/null, /dev/stdout, /dev/stderr]
+
+output:
+  # Characters of a tool result sent to the agent; a longer result is shortened to its first
+  # and last parts with a note of the omitted length.
+  agent_cap_chars: 20000
+  # Characters of a tool result kept in the record; a longer result is
+  # shortened in the same way and the record states the omission.
+  record_cap_chars: 10000000
+
+requests:
+  # max_output_tokens of every language-model request.
+  max_output_tokens: 16384
+  # Estimate of the input tokens of a response whose usage the vendor did not report:
+  # characters of the request divided by this number (conservative for English text and code,
+  # which average about 3 to 4 characters per token); output tokens are then estimated as
+  # max_output_tokens.
+  unreported_usage_chars_per_token: 2.0
+  # Reasoning effort of every request: medium is the documented default of
+  # gpt-5.5 and of gpt-6.1-sol; stated explicitly so that the record names it.
+  reasoning_effort: medium
+  # Readable reasoning summary returned by the vendor with every response (not the raw chain of
+  # thought, which neither vendor returns); recorded in the transcript. null requests none.
+  reasoning_summary: auto
+
+helpers:
+  # Maximum number of helper agents per round; each helper receives limits within the main
+  # agent's remaining allowance.
+  max_helpers: 5
+  # Default turn allowance of a helper when the agent does not request one; always capped by
+  # the remaining turns of the round.
+  default_turns: 20
+
+web:
+  # Characters of a fetched page or a search result list sent to the agent before the output
+  # cap applies.
+  max_fetch_chars: 200000
+  # URL substrings that web_fetch refuses: this repository holds the test data
+  # (no access to sealed data).
+  # Addresses of this computer are refused as well: a service that runs here for the user, such
+  # as the web app of the harness, shows results on the test data.
+  denied_url_substrings: [aspire-sysid, "://127.", "://localhost", "://[::1]", "://0.0.0.0"]

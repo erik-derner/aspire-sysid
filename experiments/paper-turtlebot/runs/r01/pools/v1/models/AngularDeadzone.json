@@ -1,0 +1,56 @@
+{
+  "expressions": {
+    "x_next": "x + Ts*(gf*v_f)*cos(phi + 0.5*Ts*(ga*sign(v_a)*Max(Abs(v_a)-da, 0) + ba))",
+    "y_next": "y + Ts*(gf*v_f)*sin(phi + 0.5*Ts*(ga*sign(v_a)*Max(Abs(v_a)-da, 0) + ba))",
+    "phi_next": "atan2(sin(phi + Ts*(ga*sign(v_a)*Max(Abs(v_a)-da, 0) + ba)), cos(phi + Ts*(ga*sign(v_a)*Max(Abs(v_a)-da, 0) + ba)))"
+  },
+  "parameters": [
+    {
+      "name": "Ts",
+      "value": 0.2,
+      "unit": "s",
+      "type": "fixed",
+      "description": "Sampling period `Ts = 0.2` s specified in TASK.md; fixed because the samples have a known time spacing."
+    },
+    {
+      "name": "gf",
+      "value": 0.8458575824889046,
+      "unit": "-",
+      "type": "fitted",
+      "description": "Linear forward command gain."
+    },
+    {
+      "name": "ga",
+      "value": 0.8017116359066326,
+      "unit": "-",
+      "type": "fitted",
+      "description": "Angular gain outside the angular dead zone."
+    },
+    {
+      "name": "da",
+      "value": 0.0674438739566203,
+      "unit": "rad/s",
+      "type": "fitted",
+      "description": "Nonnegative angular dead-zone threshold."
+    },
+    {
+      "name": "ba",
+      "value": 0.009162728435244617,
+      "unit": "rad/s",
+      "type": "fitted",
+      "description": "Additive effective angular calibration bias."
+    }
+  ],
+  "estimation": {
+    "criterion": "Minimize the sum of squared open-loop rollout residuals in `x` (m), `y` (m), and heading (rad), over 25 transitions (5 s) per fitting window. The heading residual is the principal circular difference multiplied by a fixed conversion of 0.25 m/rad before squaring. This joint criterion constrains turning as well as translation, avoiding the weak angular identifiability of an `x`-only objective in some orientations. The conversion is an analyst-chosen balance, comparable to the distance traveled over a few seconds, not an estimated sensor-noise variance. No later logged pose corrects a rollout.",
+    "data": "`data/train.csv`, all three trajectories (`trajectory = 1`, `trajectory = 2`, and `trajectory = 3`), treated as separate experiments. Fit windows start at within-trajectory zero-based rows `0, 5, ..., 120`; each uses the logged initial pose and the next 25 transitions (5 s), without later state correction. Thus 75 windows use inputs through row 144 and target states through row 145. The last four samples are not direct fitting targets because no complete 25-transition window starting on their command-block grid ends there. They are included in the sliding-window validation (starts at every available row through row 124) and in full-trajectory diagnostics. Block-aligned fitting starts reflect the one-second command schedule and reduce near-duplicate starts. No transition crosses trajectory boundaries.",
+    "method": "Bounded nonlinear least squares using `scipy.optimize.least_squares`, its default trust-region reflective method, two-point finite-difference Jacobian, linear loss, `ftol = 1e-10`, `xtol = 1e-10`, `gtol = 1e-10`, and `max_nfev = 400`. This directly optimizes the required multi-step simulation rather than differentiating noisy logged poses or minimizing only one-step increments. All final fitted parameters are estimated together in this one rollout-fitting step. The calculation is deterministic and uses no random seed. Starting values were `gf = 0.83`, `ga = 0.8`, `da = 0.08` rad/s, and `ba = 0` rad/s, rounded from preliminary steady-command linear/dead-zone fits. Bounds were `0.2 <= gf <= 1.5`, `0.1 <= ga <= 1.5`, `0 <= da <= 0.35` rad/s, and `-0.15 <= ba <= 0.15` rad/s. The nonnegative threshold and positive gains preserve the intended command signs apart from the separately fitted small bias.",
+    "script": "fit_models.py"
+  },
+  "discussion": {
+    "family": "Discrete-time unicycle/differential-drive kinematics with calibrated command response. A general reference for unicycle kinematics is Siciliano, Sciavicco, Villani and Oriolo, Robotics: Modelling, Planning and Control (Springer, 2009), cited from memory without consulting the book during this round. The supplied task, rather than that reference, defines the robot and sampling period. Dead-zone angular input-response model.",
+    "interpretation": "`x`, `y`, and `phi` are the current planar pose, `v_f` and `v_a` are the current forward and angular commands, and `Ts` is the fixed sampling period. `gf` converts commanded forward speed to effective logged forward speed, and `ga` calibrates angular command response. Translation adds a body-forward increment projected onto the world axes. The heading update uses `atan2(sin(phi + Ts*(ga*sign(v_a)*Max(Abs(v_a)-da, 0) + ba)), cos(phi + Ts*(ga*sign(v_a)*Max(Abs(v_a)-da, 0) + ba)))` to wrap the angle; wrapping does not alter either translation projection. `da` removes turning commanded below a threshold before the angular bias is added. `ga*sign(v_a)*Max(Abs(v_a)-da, 0)` is the calibrated signed excess angular command. `ba` mathematically shifts angular response equally for positive and negative commands. The complete state-update expressions are `x + Ts*(gf*v_f)*cos(phi + 0.5*Ts*(ga*sign(v_a)*Max(Abs(v_a)-da, 0) + ba))`, `y + Ts*(gf*v_f)*sin(phi + 0.5*Ts*(ga*sign(v_a)*Max(Abs(v_a)-da, 0) + ba))`, and `atan2(sin(phi + Ts*(ga*sign(v_a)*Max(Abs(v_a)-da, 0) + ba)), cos(phi + Ts*(ga*sign(v_a)*Max(Abs(v_a)-da, 0) + ba)))`.",
+    "origin": "Physical reasoning supplied the unicycle pose update. Preliminary steady-command residuals showed disproportionately small turns for small `Abs(v_a)`, and signed-linear, cubic and dead-zone maps were examined. The dead-zone operator `sign(v_a)*Max(Abs(v_a)-da, 0)` was chosen as a physically interpretable way to represent low-command inactivity. It was fitted directly, not returned by symbolic regression. A constant `ba` allows effective angular offset because the simple affine calibration improved aggregate fit.",
+    "limitations": "The dead zone helps steady angular response, but does not explain command-change lag; its held-out position error does not beat the simpler midpoint model. Its shape near zero and the interpretation of the angular bias are weakly determined. On all training sliding windows, `x` rollout RMSE is 0.030185 m; equal-trajectory pooled leave-one-trajectory-out `x` RMSE is 0.031122 m, computed on 25-transition (5 s) windows with one-sample start spacing. These results are diagnostics, not test scores. Only positive forward commands were observed: `0.000034 <= v_f <= 0.298156` m/s, and angular commands satisfy `-0.948148 <= v_a <= 0.941161` rad/s (rounded extrema of `data/train.csv`). Reverse motion and larger commands are not validated. The logs cannot separate true actuator response from odometry distortion. Command-change residuals show lag and within-block correlation, but the allowed state has neither actuator velocity nor previous commands, so this memoryless model cannot reproduce that lag exactly. Long rollouts accumulate error; 30-second training diagnostics are not evidence of 5-second test accuracy. Validation uses only three held-out training trajectories, with overlapping windows; it is not an independent test set and gives no reliable confidence interval."
+  }
+}

@@ -1,0 +1,83 @@
+{
+  "expressions": {
+    "dtheta": "omega",
+    "domega": "a*u-g*sin(theta)-b*omega-c*(1+h*sin(theta)+j*cos(theta))*tanh(omega/v)-exp(-(omega/vs)**2)*Min(Max(a*u-g*sin(theta),-(c+delta)),c+delta)"
+  },
+  "parameters": [
+    {
+      "name": "a",
+      "value": 28.99723061002721,
+      "unit": "rad/(s^2 V)",
+      "type": "fitted",
+      "description": "Motor-voltage to acceleration gain `a`; only gain divided by inertia is identified."
+    },
+    {
+      "name": "g",
+      "value": 114.88273641233747,
+      "unit": "rad/s^2",
+      "type": "fitted",
+      "description": "Positive restoring-acceleration scale `g`."
+    },
+    {
+      "name": "b",
+      "value": 1.732880433774343,
+      "unit": "1/s",
+      "type": "fitted",
+      "description": "Positive viscous acceleration coefficient `b`; includes motor back-emf damping and bearing friction without separating them."
+    },
+    {
+      "name": "c",
+      "value": 26.990435494972406,
+      "unit": "rad/s^2",
+      "type": "fitted",
+      "description": "Dry-friction acceleration scale `c`."
+    },
+    {
+      "name": "v",
+      "value": 0.5516735054248504,
+      "unit": "rad/s",
+      "type": "fitted",
+      "description": "Sliding-friction regularization speed `v` in `tanh(omega/v)`."
+    },
+    {
+      "name": "delta",
+      "value": 2.995113464131958e-05,
+      "unit": "rad/s^2",
+      "type": "fitted",
+      "description": "Nonnegative excess static threshold `delta`; the independent static bound is `c+delta`."
+    },
+    {
+      "name": "vs",
+      "value": 0.13949755795763255,
+      "unit": "rad/s",
+      "type": "fitted",
+      "description": "Independent static-friction localization speed `vs` in `exp(-(omega/vs)**2)`."
+    },
+    {
+      "name": "h",
+      "value": -0.19731629567245088,
+      "unit": "-",
+      "type": "fitted",
+      "description": "Fitted angular-modulation coefficient `h`; its precise use is stated in the interpretation."
+    },
+    {
+      "name": "j",
+      "value": -0.23147151169921648,
+      "unit": "-",
+      "type": "fitted",
+      "description": "Fitted cosine modulation coefficient `j` of sliding-friction magnitude."
+    }
+  ],
+  "estimation": {
+    "criterion": "Sum of squared differences between simulated and logged `theta` across all trajectories after initialization, with equal per-sample weights. This targets the required uncorrected long-horizon angle simulation rather than a derivative proxy; no state correction is applied after the first sample.",
+    "data": "All 3522 rows of data/train.csv (trajectories 1 through 13) and all 1192 rows of data/val.csv (trajectories 1 through 3), treated as 16 separate trajectories, never concatenated into one experiment. Final fitting uses all supplied data to improve parameter precision across both driven and free-response regimes. Initial samples initialize states and have identically zero angle residual; the remaining 4698 samples contribute to the criterion. Validation was first used to assess training-only models, then intentionally included in final fitting and trajectory cross-validation; reported post-refit validation error is therefore not independent validation.",
+    "method": "All fitted parameters listed here were estimated jointly by bounded nonlinear least squares, scipy.optimize.least_squares with its trust-region reflective algorithm, minimizing the stated full-trajectory criterion. This accommodates the nonlinear simulation objective; direct derivative regression was not used for the final values because central-difference acceleration is noisy. Three deterministic starts were tried and the lowest angle sum of squares was retained. Starting values, in parameter units: `a = 28.7588005777` rad/(s^2 V), `g = 113.973281369` rad/s^2, `b = 1.78164053445` 1/s, `c = 26.7076706113` rad/s^2, `v = 0.434159230371` rad/s, `delta = 0.000142514339831` rad/s^2, `vs = 0.124821684371` rad/s, `h = -0.239128274425`, `j = -0.259957659149`; `a = 28.7588005777` rad/(s^2 V), `g = 113.973281369` rad/s^2, `b = 1.78164053445` 1/s, `c = 26.7076706113` rad/s^2, `v = 0.25` rad/s, `delta = 2` rad/s^2, `vs = 0.124821684371` rad/s, `h = -0.239128274425`, `j = -0.259957659149`; `a = 28.7588005777` rad/(s^2 V), `g = 113.973281369` rad/s^2, `b = 1.78164053445` 1/s, `c = 26.7076706113` rad/s^2, `v = 1.5` rad/s, `delta = 2` rad/s^2, `vs = 0.124821684371` rad/s, `h = -0.239128274425`, `j = -0.259957659149`. Bounds: `10 <= a <= 50` rad/(s^2 V); `50 <= g <= 180` rad/s^2; `0 <= b <= 8` 1/s; `8 <= c <= 45` rad/s^2; `0.15 <= v <= 2` rad/s; `0 <= delta <= 20` rad/s^2; `0.1 <= vs <= 3` rad/s; `-0.4 <= h <= 0.4`; `-0.4 <= j <= 0.4`. These broad physical/regularization bounds enforce positive dissipation, admissible restoring shape and manageable low-speed stiffness; they are assumptions, not inferred confidence intervals. Finite-difference relative step was `diff_step = 0.0001`; tolerances were `ftol = 1e-9`, `xtol = 1e-9`, `gtol = 1e-9`; limit was 300 function evaluations per start. No stochastic optimization was used, so no random seed applies. Classical fourth-order Runge-Kutta used one `0.01` s step per sample and the logged `u` was held constant between samples, exactly as specified. The first start was the training-only fit of this structure stored in stiction_results.json, family 23; the other starts changed regularization values as explicitly listed above to probe local minima. The earlier fits are only starts; every delivered coefficient was re-estimated together on pooled data. Deterministic trajectory cross-validation used three folds with concatenated trajectory indices `[0,3,5,8,11]`, `[1,4,7,10,13]` and `[2,6,9,12,14,15]` (zero-based indices, training trajectories first then validation trajectories). Each fold restarted from the physical initialization recorded by the script, used 180 function evaluations and `1e-8` stopping tolerances; fold data were never used in that fold objective. Pooled three-fold trajectory cross-validation angle RMSE was 0.080707 rad. After pooled refitting, angle RMSE was 0.059405 rad across both supplied files; this is in-sample, not held-out performance.",
+    "script": "refit_pool.py"
+  },
+  "discussion": {
+    "family": "Nonlinear pendulum state-space model with angle-modulated regularized Coulomb-viscous friction and a static dead zone. Related friction-model background: B. Armstrong-Helouvry, P. Dupont and C. Canudas de Wit, A survey of models, analysis tools and compensation methods for the control of machines with friction, Automatica 30 (1994), 1083-1138; bibliographic reference recalled from memory, not source-checked. These expressions are phenomenological reductions, not the LuGre model.",
+    "interpretation": "The kinematics are `dtheta = omega`. The terms `a*u`, `-g*sin(theta)` and `-b*omega` are respectively motor gain, restoring acceleration and viscous/back-emf damping. The sliding-friction term is `-c*(1+h*sin(theta)+j*cos(theta))*tanh(omega/v)`. Its angular factors change the magnitude, not the direction, of the resisting force; no experimentally established cause is assigned to this modulation. Its magnitude stays positive because `Abs(h)+Abs(j)<1`. Define `D = a*u-g*sin(theta)` and `H = exp(-(omega/vs)**2)`. Static cancellation is `-H*Min(Max(D,-(c+delta)),c+delta)`; the static threshold is independent of the angular sliding modulation. At rest the cancellation leaves the sign of `D` unchanged or zero, ensuring R2. The acceleration slope with respect to `u` is between `a*(1-H)` and `a`, ensuring R3 in the nondecreasing sense. The static and sliding speed scales have independent roles.",
+    "origin": "Linear motor gain, sine restoring torque, viscous damping and dry friction were physically motivated. Training moving-state residuals were largest at negative angles beyond approximately `theta = -2` rad; this motivated both altered restoring torque and angle-dependent sliding friction. Low-order `sin(theta)` and `cos(theta)` modulation was a physically constrained hypothesis for nonuniform contact, not evidence that disc runout or pad geometry was measured. It reduced these residuals and training/free-validation simulation errors without changing the direction of sliding friction. Independent Gaussian static localization and tanh sliding smoothing were retained to sustain the observed rest band. Higher-order polynomial input, quadratic drag, Stribeck weakening, and single-scale directional models were also tried; their fits did not justify retaining them in this pool. No symbolic-regression search was used.",
+    "limitations": "Angular modulation is phenomenological and may absorb trajectory-dependent errors rather than fixed contact geometry. Static threshold is constant although sliding magnitude varies with angle; it is not constrained to exceed every local sliding magnitude. The fitted static excess is near zero and not separately established. This relatively flexible structure had substantially different errors among driven trajectories, indicating possible overfitting. Low-speed relaxation, encoder quantization and any hysteresis are only approximated. Motor and friction coefficients are normalized by unknown inertia; electrical memory and temperature are absent. Do not extrapolate the angular modulation as verified torque measurements or treat cross-validation used for selection as an independent test. An additional 20 s unforced simulation initialized at each of the nine logged stationary free-response endpoints in the supplied files left every angle unchanged, supporting persistence at rest; this tests those equilibria only, not every possible low-speed state."
+  }
+}

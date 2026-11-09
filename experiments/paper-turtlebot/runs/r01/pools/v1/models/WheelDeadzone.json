@@ -1,0 +1,56 @@
+{
+  "expressions": {
+    "x_next": "x + Ts*(gf*((sign(v_f + b*v_a)*Max(Abs(v_f + b*v_a)-dw, 0)) + (sign(v_f - b*v_a)*Max(Abs(v_f - b*v_a)-dw, 0)))/2)*cos(phi + 0.5*Ts*(ga*((sign(v_f + b*v_a)*Max(Abs(v_f + b*v_a)-dw, 0)) - (sign(v_f - b*v_a)*Max(Abs(v_f - b*v_a)-dw, 0)))/(2*b)))",
+    "y_next": "y + Ts*(gf*((sign(v_f + b*v_a)*Max(Abs(v_f + b*v_a)-dw, 0)) + (sign(v_f - b*v_a)*Max(Abs(v_f - b*v_a)-dw, 0)))/2)*sin(phi + 0.5*Ts*(ga*((sign(v_f + b*v_a)*Max(Abs(v_f + b*v_a)-dw, 0)) - (sign(v_f - b*v_a)*Max(Abs(v_f - b*v_a)-dw, 0)))/(2*b)))",
+    "phi_next": "atan2(sin(phi + Ts*(ga*((sign(v_f + b*v_a)*Max(Abs(v_f + b*v_a)-dw, 0)) - (sign(v_f - b*v_a)*Max(Abs(v_f - b*v_a)-dw, 0)))/(2*b))), cos(phi + Ts*(ga*((sign(v_f + b*v_a)*Max(Abs(v_f + b*v_a)-dw, 0)) - (sign(v_f - b*v_a)*Max(Abs(v_f - b*v_a)-dw, 0)))/(2*b))))"
+  },
+  "parameters": [
+    {
+      "name": "Ts",
+      "value": 0.2,
+      "unit": "s",
+      "type": "fixed",
+      "description": "Sampling period `Ts = 0.2` s specified in TASK.md; fixed because the samples have a known time spacing."
+    },
+    {
+      "name": "gf",
+      "value": 0.9014505703561462,
+      "unit": "-",
+      "type": "fitted",
+      "description": "Gain on the mean dead-zone-corrected wheel speed command."
+    },
+    {
+      "name": "ga",
+      "value": 0.7526445489862132,
+      "unit": "-",
+      "type": "fitted",
+      "description": "Gain on the dead-zone-corrected differential wheel speed command."
+    },
+    {
+      "name": "b",
+      "value": 0.21072107634817622,
+      "unit": "m",
+      "type": "fitted",
+      "description": "Effective half-track conversion between body angular command and wheel linear command; radians treated as dimensionless. Not independently measured geometry."
+    },
+    {
+      "name": "dw",
+      "value": 0.014638268595336608,
+      "unit": "m/s",
+      "type": "fitted",
+      "description": "Common linear wheel-command dead-zone threshold."
+    }
+  ],
+  "estimation": {
+    "criterion": "Minimize the sum of squared open-loop rollout residuals in `x` (m), `y` (m), and heading (rad), over 25 transitions (5 s) per fitting window. The heading residual is the principal circular difference multiplied by a fixed conversion of 0.25 m/rad before squaring. This joint criterion constrains turning as well as translation, avoiding the weak angular identifiability of an `x`-only objective in some orientations. The conversion is an analyst-chosen balance, comparable to the distance traveled over a few seconds, not an estimated sensor-noise variance. No later logged pose corrects a rollout.",
+    "data": "`data/train.csv`, all three trajectories (`trajectory = 1`, `trajectory = 2`, and `trajectory = 3`), treated as separate experiments. Fit windows start at within-trajectory zero-based rows `0, 5, ..., 120`; each uses the logged initial pose and the next 25 transitions (5 s), without later state correction. Thus 75 windows use inputs through row 144 and target states through row 145. The last four samples are not direct fitting targets because no complete 25-transition window starting on their command-block grid ends there. They are included in the sliding-window validation (starts at every available row through row 124) and in full-trajectory diagnostics. Block-aligned fitting starts reflect the one-second command schedule and reduce near-duplicate starts. No transition crosses trajectory boundaries.",
+    "method": "Deterministic bounded multistart derivative-free minimization with `scipy.optimize.minimize(method=\"Powell\")`, followed by bounded nonlinear least-squares polishing with `scipy.optimize.least_squares`. Powell was chosen because the signed dead-zone maps produce threshold kinks where a single finite-difference least-squares start can stop prematurely. All four fitted parameters were estimated jointly in every attempt; the attempt with lowest rollout sum of squares supplies the final values. Nine starts used `gf = 0.83`, `ga = 0.8`, every combination of `b = 0.06`, `b = 0.115`, or `b = 0.2` m and `dw = 0.003`, `dw = 0.015`, or `dw = 0.03` m/s. These bracket small-to-large effective mixing scales and low thresholds; `b = 0.115` m is an analyst-selected middle start, not a measured dimension. Bounds were `0.2 <= gf <= 1.5`, `0.1 <= ga <= 1.5`, `0.04 <= b <= 0.3` m, and `0 <= dw <= 0.04` m/s. Powell settings were `xtol = 1e-9`, `ftol = 1e-10`, `maxiter = 300`; least-squares polishing used `ftol = 1e-11`, `xtol = 1e-11`, `gtol = 1e-11`, `max_nfev = 400`, linear loss and the default trust-region reflective method with numerical Jacobian. No random numbers or seed are used. The complete attempts and validation fits are saved in wheel_results.json.",
+    "script": "refine_wheels.py"
+  },
+  "discussion": {
+    "family": "Discrete-time unicycle/differential-drive kinematics with calibrated command response. A general reference for unicycle kinematics is Siciliano, Sciavicco, Villani and Oriolo, Robotics: Modelling, Planning and Control (Springer, 2009), cited from memory without consulting the book during this round. The supplied task, rather than that reference, defines the robot and sampling period. Symmetric differential-drive wheel dead zones with separate effective forward and angular odometry calibration.",
+    "interpretation": "`x`, `y`, and `phi` are the current planar pose, `v_f` and `v_a` are the current forward and angular commands, and `Ts` is the fixed sampling period. `gf` converts commanded forward speed to effective logged forward speed, and `ga` calibrates angular command response. Translation adds a body-forward increment projected onto the world axes. The heading update uses `atan2(sin(phi + Ts*(ga*((sign(v_f + b*v_a)*Max(Abs(v_f + b*v_a)-dw, 0)) - (sign(v_f - b*v_a)*Max(Abs(v_f - b*v_a)-dw, 0)))/(2*b))), cos(phi + Ts*(ga*((sign(v_f + b*v_a)*Max(Abs(v_f + b*v_a)-dw, 0)) - (sign(v_f - b*v_a)*Max(Abs(v_f - b*v_a)-dw, 0)))/(2*b))))` to wrap the angle; wrapping does not alter either translation projection. `b` sets wheel-command mixing; `dw` removes the magnitude below threshold separately in each wheel command. The right corrected command is `sign(v_f + b*v_a)*Max(Abs(v_f + b*v_a)-dw, 0)` and the left corrected command is `sign(v_f - b*v_a)*Max(Abs(v_f - b*v_a)-dw, 0)`. Their scaled mean gives effective forward speed `gf*((sign(v_f + b*v_a)*Max(Abs(v_f + b*v_a)-dw, 0)) + (sign(v_f - b*v_a)*Max(Abs(v_f - b*v_a)-dw, 0)))/2`; their scaled difference gives effective angular speed `ga*((sign(v_f + b*v_a)*Max(Abs(v_f + b*v_a)-dw, 0)) - (sign(v_f - b*v_a)*Max(Abs(v_f - b*v_a)-dw, 0)))/(2*b)`. This couples forward and turning response even though the two wheel dead zones are identical. The complete state-update expressions are `x + Ts*(gf*((sign(v_f + b*v_a)*Max(Abs(v_f + b*v_a)-dw, 0)) + (sign(v_f - b*v_a)*Max(Abs(v_f - b*v_a)-dw, 0)))/2)*cos(phi + 0.5*Ts*(ga*((sign(v_f + b*v_a)*Max(Abs(v_f + b*v_a)-dw, 0)) - (sign(v_f - b*v_a)*Max(Abs(v_f - b*v_a)-dw, 0)))/(2*b)))`, `y + Ts*(gf*((sign(v_f + b*v_a)*Max(Abs(v_f + b*v_a)-dw, 0)) + (sign(v_f - b*v_a)*Max(Abs(v_f - b*v_a)-dw, 0)))/2)*sin(phi + 0.5*Ts*(ga*((sign(v_f + b*v_a)*Max(Abs(v_f + b*v_a)-dw, 0)) - (sign(v_f - b*v_a)*Max(Abs(v_f - b*v_a)-dw, 0)))/(2*b)))`, and `atan2(sin(phi + Ts*(ga*((sign(v_f + b*v_a)*Max(Abs(v_f + b*v_a)-dw, 0)) - (sign(v_f - b*v_a)*Max(Abs(v_f - b*v_a)-dw, 0)))/(2*b))), cos(phi + Ts*(ga*((sign(v_f + b*v_a)*Max(Abs(v_f + b*v_a)-dw, 0)) - (sign(v_f - b*v_a)*Max(Abs(v_f - b*v_a)-dw, 0)))/(2*b))))`.",
+    "origin": "I first tested body-level nonlinear command maps. Small angular-command inactivity and the forward affine offset motivated a distinct wheel-level hypothesis: transform body commands into `v_f + b*v_a` and `v_f - b*v_a`, apply identical signed dead zones to both, then reconstruct translation and turning. The wheel mixing comes from differential-drive geometry, while the shared threshold is an unverified stiction-like hypothesis. Separate forward and angular gains allow different effective odometry calibrations. The initial single-start least-squares fit stalled near a threshold kink, so deterministic multistart refinement was used.",
+    "limitations": "The fitted `b` is an effective mixing parameter, not a defensible estimate of the physical TurtleBot wheel separation; its held-out-fold values vary substantially. The common threshold, separate odometry gains, and switching locations are partly confounded. Wheel dynamics, asymmetry, battery effects and transient velocity are not determined. The marginal validation advantage over midpoint is too small to justify recommending its extra parameters. On all training sliding windows, `x` rollout RMSE is 0.028669 m; equal-trajectory pooled leave-one-trajectory-out `x` RMSE is 0.029800 m, computed on 25-transition (5 s) windows with one-sample start spacing. These results are diagnostics, not test scores. Only positive forward commands were observed: `0.000034 <= v_f <= 0.298156` m/s, and angular commands satisfy `-0.948148 <= v_a <= 0.941161` rad/s (rounded extrema of `data/train.csv`). Reverse motion and larger commands are not validated. The logs cannot separate true actuator response from odometry distortion. Command-change residuals show lag and within-block correlation, but the allowed state has neither actuator velocity nor previous commands, so this memoryless model cannot reproduce that lag exactly. Long rollouts accumulate error; 30-second training diagnostics are not evidence of 5-second test accuracy. Validation uses only three held-out training trajectories, with overlapping windows; it is not an independent test set and gives no reliable confidence interval."
+  }
+}

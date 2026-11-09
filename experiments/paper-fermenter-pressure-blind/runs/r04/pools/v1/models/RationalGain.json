@@ -1,0 +1,124 @@
+{
+  "expressions": {
+    "dy": "(c0*1 + c1*((y-yc)/ys) + c2*(x1/n1) + c3*(x2/n2) + c4*((y-yc)/ys)**2 + c5*((y-yc)/ys)*(x1/n1) + c6*((y-yc)/ys)*(x2/n2) + c7*(x1/n1)**2 + c8*(x1/n1)*(x2/n2) + c9*(x2/n2)**2)/(1+d*((y-yc)/ys)**2)"
+  },
+  "parameters": [
+    {
+      "name": "n1",
+      "value": 70.0,
+      "unit": "x1-unit",
+      "type": "fixed",
+      "description": "Convenient input normalization, selected by inspection of the training input scale, not optimized; gives dimensionless `x1/n1`."
+    },
+    {
+      "name": "n2",
+      "value": 20.0,
+      "unit": "x2-unit",
+      "type": "fixed",
+      "description": "Convenient input normalization selected by inspection of the training input scale, not optimized; gives dimensionless `x2/n2`."
+    },
+    {
+      "name": "yc",
+      "value": 1.3,
+      "unit": "state-unit",
+      "type": "fixed",
+      "description": "Convenient state center near the training mean, selected rather than optimized."
+    },
+    {
+      "name": "ys",
+      "value": 0.3,
+      "unit": "state-unit",
+      "type": "fixed",
+      "description": "Convenient state scaling of the order of the training standard deviation, selected rather than optimized; `(y-yc)/ys` is dimensionless."
+    },
+    {
+      "name": "c0",
+      "value": -0.08098630301054688,
+      "unit": "state-unit/s",
+      "type": "fitted",
+      "description": "Coefficient multiplying `1` in the numerator; fitted jointly."
+    },
+    {
+      "name": "c1",
+      "value": -0.07933277975406876,
+      "unit": "state-unit/s",
+      "type": "fitted",
+      "description": "Coefficient multiplying `((y-yc)/ys)` in the numerator; fitted jointly."
+    },
+    {
+      "name": "c2",
+      "value": 0.04175349193454295,
+      "unit": "state-unit/s",
+      "type": "fitted",
+      "description": "Coefficient multiplying `(x1/n1)` in the numerator; fitted jointly."
+    },
+    {
+      "name": "c3",
+      "value": 0.02595012244644158,
+      "unit": "state-unit/s",
+      "type": "fitted",
+      "description": "Coefficient multiplying `(x2/n2)` in the numerator; fitted jointly."
+    },
+    {
+      "name": "c4",
+      "value": -0.0002448493853420906,
+      "unit": "state-unit/s",
+      "type": "fitted",
+      "description": "Coefficient multiplying `((y-yc)/ys)**2` in the numerator; fitted jointly."
+    },
+    {
+      "name": "c5",
+      "value": 0.05603989814075337,
+      "unit": "state-unit/s",
+      "type": "fitted",
+      "description": "Coefficient multiplying `((y-yc)/ys)*(x1/n1)` in the numerator; fitted jointly."
+    },
+    {
+      "name": "c6",
+      "value": 0.006462828749626327,
+      "unit": "state-unit/s",
+      "type": "fitted",
+      "description": "Coefficient multiplying `((y-yc)/ys)*(x2/n2)` in the numerator; fitted jointly."
+    },
+    {
+      "name": "c7",
+      "value": 0.013866267374667798,
+      "unit": "state-unit/s",
+      "type": "fitted",
+      "description": "Coefficient multiplying `(x1/n1)**2` in the numerator; fitted jointly."
+    },
+    {
+      "name": "c8",
+      "value": -0.005894846648314344,
+      "unit": "state-unit/s",
+      "type": "fitted",
+      "description": "Coefficient multiplying `(x1/n1)*(x2/n2)` in the numerator; fitted jointly."
+    },
+    {
+      "name": "c9",
+      "value": 0.003287267653369787,
+      "unit": "state-unit/s",
+      "type": "fitted",
+      "description": "Coefficient multiplying `(x2/n2)**2` in the numerator; fitted jointly."
+    },
+    {
+      "name": "d",
+      "value": 0.21177350949532764,
+      "unit": "-",
+      "type": "fitted",
+      "description": "Nonnegative state-dependent denominator coefficient; reduces vector-field magnitude away from the state center."
+    }
+  ],
+  "estimation": {
+    "criterion": "Final criterion: sum of squared free-running errors in `y` on both available trajectories, excluding only the first state of each file, to match the evaluation criterion. Initial derivative least squares and then teacher-forced one-step RK4 output least squares supplied starting values; those criteria do not define the final estimates.",
+    "data": "Both complete files data/train.csv (one stated trajectory) and data/val.csv (one stated trajectory) were used in the final fit. Training-only fits were compared on validation first. During final fitting each file was initialized only at its first observed state, with no later state resets; all subsequent observations contributed equal output-error weight. Sampling period was 5 s, with current-row inputs held constant during each classical RK4 step. Validation was subsequently used for fitting, so final validation errors are in-sample and are not unbiased generalization estimates.",
+    "method": "All parameters were estimated jointly at every stage. Initial derivative fit on all training rows used The optimizer is scipy.optimize.least_squares, default Trust Region Reflective algorithm, finite-difference two-point Jacobian and linear loss; its official documentation was checked online. Nonlinear least squares was used because RK4 output error is nonlinear even in coefficients of a polynomial vector field. Numeric initialization in the expression parameter order was [-0.04503588818729872, -0.04887501702429064, 0.007852815502762543, 0.00980568087977346, 0.0006935285585282121, 0.03262516081052409, 0.0030336894961114046, 0.019244050652148258, 0.0028685591245625162, 0.0038224409603234907, 0.1]; units are those of the corresponding parameter rows. This seed came from the previously fitted helper model or polynomial model, except exponential and sigmoid seeds, which were moderate hand-chosen coefficients and scale parameters. Numeric derivative-stage output was [-0.05493024461290589, -0.05704383818435389, 0.019708256360133253, 0.014388401799165373, 0.00021826093837737847, 0.03909033570228784, 0.004303844141804768, 0.01612362687838267, -0.00038244615096589673, 0.003516688156691717, 0.04470014588215461] and numeric one-step-stage output was [-0.060630302216419005, -0.06284510305511261, 0.02154029589471787, 0.015497571334930663, 0.0003304888208860159, 0.043410012352433434, 0.004185974176415896, 0.017950502711278852, -0.00021538842963941132, 0.004010391631537828, 0.061010807962467654]. These numbers are in the corresponding parameter units. They document actual starts, not extra constants in the model. Bounds in the same order were [-2, -2, -2, -2, -2, -2, -2, -2, -2, -2, 0] to [2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 10], in the corresponding parameter units; these prevent extreme coefficients and invalid powers while permitting broad empirical nonlinear shapes. Max_nfev was 300 for derivative initialization, 180 for one-step training fit, and 200 for free-running fit; default convergence tolerances were 1e-8. The final fit on both files started directly from the documented one-step values, not from the training-only output-error fit. A separate training-only free-running fit was used for validation comparison. No random numbers or seed were used. nonlinear_dynamic.py reproduces the sequence and retains the exact original initialization vectors in its referenced working-directory result files.",
+    "script": "nonlinear_dynamic.py"
+  },
+  "discussion": {
+    "family": "Rational nonlinear state-space vector field with a polynomial numerator and a positive quadratic denominator. The polynomial-library context is Reference for polynomial right-hand-side libraries: Brunton, Proctor and Kutz, Discovering governing equations from data by sparse identification of nonlinear dynamical systems, arXiv:1509.03580 (2015), related journal DOI 10.1073/pnas.1517384113 (title, authors and DOI checked on the official arXiv abstract page). This run used dense ordinary least squares and manually restricted structures, not the SINDy sparse algorithm.",
+    "interpretation": "Numerator monomials represent drift, nonlinear state feedback, nonlinear input forcing and mixed interactions. The positive term `d*((y-yc)/ys)**2` attenuates all these terms as the state departs from the center; `d` is dimensionless and constrained nonnegative. This is an empirical state-dependent time scale, not an identified storage law.",
+    "origin": "Added a state-dependent denominator after quadratic polynomial fits left state-dependent residual patterns. A denominator of `1+d*((y-yc)/ys)**2` was selected to avoid singularities while allowing state-dependent gain. Its numerator is the complete quadratic library, not an inferred physical equation.",
+    "limitations": "No system description or units are supplied, so these are empirical vector fields rather than asserted physical laws. Unit labels state-unit, x1-unit and x2-unit denote unknown logged units; only seconds are known. The fitted domain is approximately `0.99 <= y <= 2.19` state-unit, `1.63 <= x1 <= 94.45` x1-unit, and `0.08 <= x2 <= 30.80` x2-unit on the two supplied files. Polynomial derivative residuals have temporal dependence and correlate with the next change in `x2`; this suggests sampling alignment or omitted dynamics, but is not proof of a particular mechanism. Abrupt near-baseline states midway through the files are not reset in fitting or prediction. No memory, next input, or hidden state is included in the delivered expressions; the irreducible consequences of these omissions remain. Extrapolation and input regimes not represented here are unvalidated. Denominator positivity prevents poles but does not enforce dissipativity or extrapolation accuracy."
+  }
+}

@@ -1,0 +1,13 @@
+{"at": "2026-10-07T23:27:54.278386+00:00", "dry_run": false, "event": "grid_start", "experiment": "paper-turtlebot-blind", "pid": 106856, "resume": false, "runs": 5, "task": "task-kt5o"}
+{"at": "2026-10-07T23:27:54.282433+00:00", "attempt": 1, "event": "run_start", "mode": "worker process", "run": "r01"}
+{"at": "2026-10-07T23:27:54.284452+00:00", "attempt": 1, "event": "run_start", "mode": "worker process", "run": "r02"}
+{"at": "2026-10-07T23:27:54.288490+00:00", "attempt": 1, "event": "run_start", "mode": "worker process", "run": "r03"}
+{"at": "2026-10-07T23:35:38.325444+00:00", "attempt": 1, "cost_usd": 1.1558000000000002, "event": "run_end", "exit_status": 0, "leak_findings": 0, "outcome": "completed", "run": "r02"}
+{"at": "2026-10-07T23:35:38.331487+00:00", "attempt": 1, "event": "run_start", "mode": "worker process", "run": "r04"}
+{"at": "2026-10-07T23:36:49.782818+00:00", "attempt": 1, "cost_usd": 1.9698839999999997, "event": "run_end", "exit_status": 0, "leak_findings": 0, "outcome": "completed", "run": "r01"}
+{"at": "2026-10-07T23:36:49.789902+00:00", "attempt": 1, "event": "run_start", "mode": "worker process", "run": "r05"}
+{"at": "2026-10-07T23:39:01.008931+00:00", "attempt": 1, "cost_usd": 2.359706, "event": "run_end", "exit_status": 0, "leak_findings": 0, "outcome": "completed", "run": "r03"}
+{"at": "2026-10-07T23:53:57.897226+00:00", "attempt": 1, "cost_usd": 1.8275660000000002, "event": "run_end", "exit_status": 0, "leak_findings": 2, "outcome": "completed", "run": "r04"}
+{"at": "2026-10-07T23:59:33.084746+00:00", "attempt": 1, "cost_usd": 2.24073, "event": "run_end", "exit_status": 0, "leak_findings": 2, "outcome": "completed", "run": "r05"}
+{"added": ["r01", "r02", "r03", "r04", "r05"], "at": "2026-10-07T23:59:37.590477+00:00", "event": "experiment_export", "folder": "experiments/paper-turtlebot-blind/export/matlab", "status": "written", "verified": true}
+{"at": "2026-10-07T23:59:37.596527+00:00", "event": "grid_end", "executed": 5, "failed": 0, "leak_findings": 4, "skipped_finished": 0}

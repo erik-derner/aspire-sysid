@@ -1,0 +1,56 @@
+schema_version: 1
+id: task-kt5o
+title: Identification task kt5o
+formulation: discrete
+columns:
+- name: y
+  roles: [state, output]
+  unit: not supplied
+- name: x1
+  roles: [state]
+  unit: not supplied
+- name: x2
+  roles: [state]
+  unit: not supplied
+- name: x3
+  roles: [input]
+  unit: not supplied
+- name: x4
+  roles: [input]
+  unit: not supplied
+dynamics:
+  sampling_period: 0.2
+  states: [y, x1, x2]
+  inputs: [x3, x4]
+evaluation:
+  mode: simulation
+  initialization: 1
+  scoring: after_initialization
+  failure_limits:
+  - {variable: y, lower: -100.0, upper: 100.0, unit: not supplied, justification: 'numerical divergence
+      bound, about 39 times the largest training magnitude of y'}
+  - {variable: x1, lower: -100.0, upper: 100.0, unit: not supplied, justification: 'numerical divergence
+      bound, about 62 times the largest training magnitude of x1'}
+  - {variable: x2, lower: -1000.0, upper: 1000.0, unit: not supplied, justification: 'numerical divergence
+      bound, about 318 times the largest training magnitude of x2'}
+  time_limit_s: 60.0
+  horizon: 25
+data: {train: data/train.csv, trajectory_column: trajectory}
+pool_cap: 10
+budget:
+  round: {turns: 60, seconds: 3600, usd: 10.0}
+  session: {turns: 180, seconds: 10800, usd: 30.0}
+  analysis_exchange: {turns: 15, seconds: 900, usd: 1.0}
+test:
+- {file: test/held_out_1.csv, trajectory: test-1}
+- {file: test/held_out_2.csv, trajectory: test-2}
+- {file: test/held_out_3.csv, trajectory: test-3}
+- {file: test/held_out_4.csv, trajectory: test-4}
+- {file: test/held_out_5.csv, trajectory: test-5}
+- {file: test/held_out_6.csv, trajectory: test-6}
+- {file: test/held_out_7.csv, trajectory: test-7}
+- {file: test/held_out_8.csv, trajectory: test-8}
+- {file: test/held_out_9.csv, trajectory: test-9}
+- {file: test/held_out_10.csv, trajectory: test-10}
+- {file: test/held_out_11.csv, trajectory: test-11}
+- {file: test/held_out_12.csv, trajectory: test-12}

@@ -1,0 +1,196 @@
+{
+ "written_by": "experiments/paper/assessment/checks/fermenter_requirements.py",
+ "experiment": "paper-fermenter-pressure",
+ "runs": {
+  "r01": {
+   "label": "SeriesPipe",
+   "finite": true,
+   "R1": {
+    "mark": "yes",
+    "decreasing_steps": 0,
+    "steps": 34317,
+    "decreasing_steps_inside_training_ranges": 0,
+    "largest_decrease_bar_per_s": 0.0
+   },
+   "R2": {
+    "mark": "yes",
+    "decreasing_steps": 0,
+    "steps": 34560,
+    "decreasing_steps_inside_training_ranges": 0,
+    "largest_decrease_bar_per_s": 0.0
+   },
+   "R3": {
+    "mark": "yes",
+    "open_positions": 37,
+    "positions_with_root_within_0.05_bar_of_1": 37,
+    "positions_without_root": 0,
+    "root_min_bar": 0.991823434865451,
+    "root_max_bar": 0.991823434865451
+   },
+   "R4": {
+    "mark": "yes",
+    "open_positions": 37,
+    "positions_relaxing_toward_1_bar": 37
+   },
+   "R5": {
+    "mark": "yes",
+    "points": 837,
+    "points_with_decreasing_pressure": 0,
+    "lowest_dp_bar_per_s": 0.00127245153488386,
+    "highest_pressure_without_decrease_at_flow_1": 2.300000000000001
+   }
+  },
+  "r02": {
+   "label": "mixed",
+   "finite": true,
+   "R1": {
+    "mark": "yes",
+    "decreasing_steps": 0,
+    "steps": 34317,
+    "decreasing_steps_inside_training_ranges": 0,
+    "largest_decrease_bar_per_s": 0.0
+   },
+   "R2": {
+    "mark": "yes",
+    "decreasing_steps": 0,
+    "steps": 34560,
+    "decreasing_steps_inside_training_ranges": 0,
+    "largest_decrease_bar_per_s": 0.0
+   },
+   "R3": {
+    "mark": "yes",
+    "open_positions": 37,
+    "positions_with_root_within_0.05_bar_of_1": 37,
+    "positions_without_root": 0,
+    "root_min_bar": 1.0,
+    "root_max_bar": 1.0
+   },
+   "R4": {
+    "mark": "yes",
+    "open_positions": 37,
+    "positions_relaxing_toward_1_bar": 37
+   },
+   "R5": {
+    "mark": "yes",
+    "points": 837,
+    "points_with_decreasing_pressure": 0,
+    "lowest_dp_bar_per_s": 0.00126697375396439,
+    "highest_pressure_without_decrease_at_flow_1": 2.300000000000001
+   }
+  },
+  "r03": {
+   "label": "PowerOutlet",
+   "finite": true,
+   "R1": {
+    "mark": "yes",
+    "decreasing_steps": 0,
+    "steps": 34317,
+    "decreasing_steps_inside_training_ranges": 0,
+    "largest_decrease_bar_per_s": 0.0
+   },
+   "R2": {
+    "mark": "yes",
+    "decreasing_steps": 0,
+    "steps": 34560,
+    "decreasing_steps_inside_training_ranges": 0,
+    "largest_decrease_bar_per_s": 0.0
+   },
+   "R3": {
+    "mark": "yes",
+    "open_positions": 37,
+    "positions_with_root_within_0.05_bar_of_1": 37,
+    "positions_without_root": 0,
+    "root_min_bar": 1.0,
+    "root_max_bar": 1.0
+   },
+   "R4": {
+    "mark": "yes",
+    "open_positions": 37,
+    "positions_relaxing_toward_1_bar": 37
+   },
+   "R5": {
+    "mark": "yes",
+    "points": 837,
+    "points_with_decreasing_pressure": 0,
+    "lowest_dp_bar_per_s": 0.00122608425239992,
+    "highest_pressure_without_decrease_at_flow_1": 2.300000000000001
+   }
+  },
+  "r04": {
+   "label": "GeneralizedDischarge",
+   "finite": true,
+   "R1": {
+    "mark": "yes",
+    "decreasing_steps": 0,
+    "steps": 34317,
+    "decreasing_steps_inside_training_ranges": 0,
+    "largest_decrease_bar_per_s": 0.0
+   },
+   "R2": {
+    "mark": "yes",
+    "decreasing_steps": 0,
+    "steps": 34560,
+    "decreasing_steps_inside_training_ranges": 0,
+    "largest_decrease_bar_per_s": 0.0
+   },
+   "R3": {
+    "mark": "yes",
+    "open_positions": 37,
+    "positions_with_root_within_0.05_bar_of_1": 37,
+    "positions_without_root": 0,
+    "root_min_bar": 0.985647737177935,
+    "root_max_bar": 0.985647737177935
+   },
+   "R4": {
+    "mark": "yes",
+    "open_positions": 37,
+    "positions_relaxing_toward_1_bar": 37
+   },
+   "R5": {
+    "mark": "yes",
+    "points": 837,
+    "points_with_decreasing_pressure": 0,
+    "lowest_dp_bar_per_s": 0.00123784563673344,
+    "highest_pressure_without_decrease_at_flow_1": 2.300000000000001
+   }
+  },
+  "r05": {
+   "label": "power_balance",
+   "finite": true,
+   "R1": {
+    "mark": "yes",
+    "decreasing_steps": 0,
+    "steps": 34317,
+    "decreasing_steps_inside_training_ranges": 0,
+    "largest_decrease_bar_per_s": 0.0
+   },
+   "R2": {
+    "mark": "yes",
+    "decreasing_steps": 0,
+    "steps": 34560,
+    "decreasing_steps_inside_training_ranges": 0,
+    "largest_decrease_bar_per_s": 0.0
+   },
+   "R3": {
+    "mark": "yes",
+    "open_positions": 37,
+    "positions_with_root_within_0.05_bar_of_1": 37,
+    "positions_without_root": 0,
+    "root_min_bar": 1.0,
+    "root_max_bar": 1.0
+   },
+   "R4": {
+    "mark": "yes",
+    "open_positions": 37,
+    "positions_relaxing_toward_1_bar": 37
+   },
+   "R5": {
+    "mark": "yes",
+    "points": 837,
+    "points_with_decreasing_pressure": 0,
+    "lowest_dp_bar_per_s": 0.00123017178014454,
+    "highest_pressure_without_decrease_at_flow_1": 2.300000000000001
+   }
+  }
+ }
+}

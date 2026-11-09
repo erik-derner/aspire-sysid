@@ -1,0 +1,55 @@
+{
+  "expressions": {
+    "dtheta": "omega",
+    "domega": "-a*sin(theta) - b*omega - c*tanh(s*omega) + k*u"
+  },
+  "parameters": [
+    {
+      "name": "a",
+      "value": 110.39291072793625,
+      "unit": "rad/s^2",
+      "type": "fitted",
+      "description": "Gain of the gravity torque divided by the moment of inertia; for a pendulum it equals the mass times the gravitational acceleration times the distance of the centre of mass from the axis, divided by the moment of inertia."
+    },
+    {
+      "name": "b",
+      "value": 1.7588078093329937,
+      "unit": "1/s",
+      "type": "fitted",
+      "description": "Coefficient of viscous friction divided by the moment of inertia."
+    },
+    {
+      "name": "c",
+      "value": 20.214209167988752,
+      "unit": "rad/s^2",
+      "type": "fitted",
+      "description": "Coulomb (dry) friction torque divided by the moment of inertia."
+    },
+    {
+      "name": "s",
+      "value": 10.0,
+      "unit": "s/rad",
+      "type": "fixed",
+      "description": "Steepness of `tanh(s*omega)`, the smooth replacement of the sign of the angular velocity; chosen as `10` s/rad, the value of the model recorded in tasks/friction-driven/provenance.md, and not estimated, so that the reference model is not tuned."
+    },
+    {
+      "name": "k",
+      "value": 28.119833426953274,
+      "unit": "rad/(s^2 V)",
+      "type": "fitted",
+      "description": "Gain of the motor voltage `u`: the motor torque per volt divided by the moment of inertia."
+    }
+  ],
+  "estimation": {
+    "criterion": "Root mean squared error of the simulated angle `theta` in rad over all scored samples of the training trajectories, because the task scores the simulated `theta` and the intended use is simulation. The simulated `omega` does not enter the criterion.",
+    "data": "data/train.csv, all `13` trajectories, each simulated as a whole from its first sample (3509 scored samples). The validation data were not used.",
+    "method": "Nelder-Mead simplex method, scipy.optimize.minimize with method='Nelder-Mead' (SciPy 1.18.1), xatol `1e-6`, fatol `1e-9`. The method needs no derivative of the simulation error with respect to the parameters, and four parameters are few enough for a simplex search. Starting values `a = 105.4946`, `b = 1.8119`, `c = 17.0120`, `k = 26.2717`: the ordinary least-squares fit (numpy.linalg.lstsq) of the column `domega` by the four terms, which is linear in the four gains and needs no starting values itself. The simulation uses one step of the classical fourth-order Runge-Kutta method per sampling period with the voltage held constant, as the evaluation of the task does. The four gains were estimated together in the second step. The method uses no random numbers.",
+    "script": "experiments/references/friction-driven/fit_references.py"
+  },
+  "discussion": {
+    "family": "Pendulum with viscous and Coulomb friction and a voltage-proportional drive; the sign function of the Coulomb term is replaced by a hyperbolic tangent, a smooth approximation. Friction models of this kind are surveyed in European Journal of Control 4(3), 176-195 (reference listed in tasks/friction-driven/provenance.md; the smooth approximation is not taken from it). Reference model written by hand; it is not a candidate of the agent.",
+    "interpretation": "`-a*sin(theta)` is the gravity torque that restores the hanging equilibrium `theta = 0`; `-b*omega` is viscous friction; `-c*tanh(s*omega)` is dry friction of constant magnitude `c` that opposes the motion and passes through zero continuously; `k*u` is the motor torque. All terms are divided by the moment of inertia.",
+    "origin": "The structure is taken from tasks/friction-driven/provenance.md, where it is recorded with the values of an earlier estimation; the four gains were estimated again on the present training data. No other structure was tried for this reference model.",
+    "limitations": "The smoothed sign function gives no sticking: at rest the model creeps towards `theta = 0` instead of staying inside a stick band. The model has no Stribeck effect, no offset and no dynamics of the motor current. The steepness `s` was not estimated."
+  }
+}

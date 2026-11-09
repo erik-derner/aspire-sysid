@@ -1,0 +1,9 @@
+{
+  "order": [
+    "angle_friction",
+    "polynomial_friction",
+    "force_deadzone"
+  ],
+  "recommended": "angle_friction",
+  "reason": "Recommended for the lowest prior training-only validation rollout error: `RMSE = 0.07491741` in the unspecified unit of `y`, over data/val.csv after each initial sample. Position-dependent regularized friction also improved training rollout fit. The transition width `w = 0.3` in the unspecified unit of `x1` avoids the numerically stiff narrow-width optimum. All final models were refitted on combined training and validation data; their final validation errors are calibration results, not independent tests. The polynomial and static-force-deadzone candidates provide alternatives to the assumed periodic restoring and friction structure."
+}

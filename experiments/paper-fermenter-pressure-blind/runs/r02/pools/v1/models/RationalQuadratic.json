@@ -1,0 +1,124 @@
+{
+  "expressions": {
+    "dy": "(c1 + c2*((y-yref)/ys) + c3*(x1/uone) + c4*(x2/utwo) + c5*((y-yref)/ys)**2 + c6*((y-yref)/ys)*(x1/uone) + c7*((y-yref)/ys)*(x2/utwo) + c8*(x1/uone)**2 + c9*(x1/uone)*(x2/utwo) + c10*(x2/utwo)**2)/(1+d*Max(((y-yref)/ys),0))"
+  },
+  "parameters": [
+    {
+      "name": "uone",
+      "value": 60.0,
+      "unit": "U_1",
+      "type": "fixed",
+      "description": "`uone = 60` U_1 is a round input scale chosen before fitting, comparable to the training input magnitude, solely for conditioning; it is not a fitted threshold."
+    },
+    {
+      "name": "utwo",
+      "value": 20.0,
+      "unit": "U_2",
+      "type": "fixed",
+      "description": "`utwo = 20` U_2 is a round input scale chosen before fitting, comparable to the training input magnitude, solely for conditioning; it is not a fitted threshold."
+    },
+    {
+      "name": "yref",
+      "value": 1.0,
+      "unit": "U_y",
+      "type": "fixed",
+      "description": "`yref = 1` U_y is a convenient fixed expansion origin near the lower observed training state, chosen rather than estimated; it is not an asserted equilibrium."
+    },
+    {
+      "name": "ys",
+      "value": 1.0,
+      "unit": "U_y",
+      "type": "fixed",
+      "description": "`ys = 1` U_y is a chosen numerical state scale, making the centered state dimensionless without changing its numeric value."
+    },
+    {
+      "name": "c1",
+      "value": -0.001113402501493985,
+      "unit": "U_y/s",
+      "type": "fitted",
+      "description": "Coefficient of `1`; estimated jointly with the other coefficients using the candidate-specific criterion below."
+    },
+    {
+      "name": "c2",
+      "value": -0.2559514626757292,
+      "unit": "U_y/s",
+      "type": "fitted",
+      "description": "Coefficient of `((y-yref)/ys)`; estimated jointly with the other coefficients using the candidate-specific criterion below."
+    },
+    {
+      "name": "c3",
+      "value": -0.009852157442469785,
+      "unit": "U_y/s",
+      "type": "fitted",
+      "description": "Coefficient of `(x1/uone)`; estimated jointly with the other coefficients using the candidate-specific criterion below."
+    },
+    {
+      "name": "c4",
+      "value": 0.015151366283834643,
+      "unit": "U_y/s",
+      "type": "fitted",
+      "description": "Coefficient of `(x2/utwo)`; estimated jointly with the other coefficients using the candidate-specific criterion below."
+    },
+    {
+      "name": "c5",
+      "value": -0.0055680857274548875,
+      "unit": "U_y/s",
+      "type": "fitted",
+      "description": "Coefficient of `((y-yref)/ys)**2`; estimated jointly with the other coefficients using the candidate-specific criterion below."
+    },
+    {
+      "name": "c6",
+      "value": 0.15833638287186222,
+      "unit": "U_y/s",
+      "type": "fitted",
+      "description": "Coefficient of `((y-yref)/ys)*(x1/uone)`; estimated jointly with the other coefficients using the candidate-specific criterion below."
+    },
+    {
+      "name": "c7",
+      "value": 0.02078541011894213,
+      "unit": "U_y/s",
+      "type": "fitted",
+      "description": "Coefficient of `((y-yref)/ys)*(x2/utwo)`; estimated jointly with the other coefficients using the candidate-specific criterion below."
+    },
+    {
+      "name": "c8",
+      "value": 0.008443984423760834,
+      "unit": "U_y/s",
+      "type": "fitted",
+      "description": "Coefficient of `(x1/uone)**2`; estimated jointly with the other coefficients using the candidate-specific criterion below."
+    },
+    {
+      "name": "c9",
+      "value": -0.0042782347632478665,
+      "unit": "U_y/s",
+      "type": "fitted",
+      "description": "Coefficient of `(x1/uone)*(x2/utwo)`; estimated jointly with the other coefficients using the candidate-specific criterion below."
+    },
+    {
+      "name": "c10",
+      "value": 0.00474263122380748,
+      "unit": "U_y/s",
+      "type": "fitted",
+      "description": "Coefficient of `(x2/utwo)**2`; estimated jointly with the other coefficients using the candidate-specific criterion below."
+    },
+    {
+      "name": "d",
+      "value": 0.6014178095366959,
+      "unit": "-",
+      "type": "fitted",
+      "description": "Dimensionless nonnegative denominator coefficient; estimated jointly with the ten numerator coefficients."
+    }
+  ],
+  "estimation": {
+    "criterion": "Minimize the sum of squared free-running `y` residuals plus the sum of squared predicted-minus-logged `dy` residuals multiplied by 1000 s**2. Equivalently derivative residuals are scaled by `10*sqrt(10)` s. The chosen dimensionless weight `w = 10` balances simulation bias against derivative fidelity and was selected by the internal suffix simulation comparison. ",
+    "data": "Final parameter estimation uses every derivative row of data/train.csv and data/val.csv as two separate trajectories. Where rollout residuals enter, it also uses all states after the first of each trajectory. Initial structural searches fitted data/train.csv only and compared free-running simulation on data/val.csv. A subsequent criterion comparison fitted the full training file plus zero-based validation rows 0 through 727 and evaluated rows 728 through 1453, with an independent measured initialization at row 728. The suffix was then included in the final refit to use all supplied identification information. No test data were accessed. No rows were discarded in the final fit.",
+    "method": "A ten-term ordinary least-squares quadratic fit on training derivative rows initialized the numerator; the denominator started at `d = 0`. Both were then jointly fitted by bounded trust-region reflective nonlinear least squares with scipy.optimize.least_squares on training derivative SSE; derivative-stage starts were `c1 = 0.0045326573955201781`, `c2 = -0.16754024713782315`, `c3 = -0.021233438835224216`, `c4 = 0.0067719913836621001`, `c5 = 0.0077058728725355741`, `c6 = 0.093214745172925828`, `c7 = 0.01011229832037135`, `c8 = 0.014138486193415123`, `c9 = 0.0024587649639107312`, `c10 = 0.003822440960323463`, `d = 0`. The final joint-criterion refit used the same solver, with each numerator coefficient bounded to `-10 <= c <= 10` U_y/s and `0 <= d <= 20`; here `c` denotes each numerator coefficient. These broad numerical bounds prevent extreme trial values, not known physical limits; none is active at the result. The final solver starts were `c1 = -0.0009462679257420686`, `c2 = -0.29716505046408137`, `c3 = -0.010522028126415658`, `c4 = 0.017300283651429795`, `c5 = -0.010990003136664284`, `c6 = 0.18478347425089836`, `c7 = 0.02783234129828837`, `c8 = 0.0094421229625498912`, `c9 = -0.0063197649252792129`, `c10 = 0.0051897208450577279`, `d = 0.94750263706698512`, taken from mode 0 derivative in rational_results.json because the prior derivative fit was already in a reasonable local basin. Final and criterion-comparison fits use scipy.optimize.least_squares with trust-region reflective, `x_scale = \"jac\"`, maximum 800 function evaluations, and dimensionless tolerances `ftol = 1e-10`, `xtol = 1e-10`, `gtol = 1e-10`. Nonlinear least squares supports the free-running residual criterion, for which a linear coefficient solve is not available. No random numbers enter this final step. Criterion selection compared derivative-only least squares, rollout-only least squares, and joint least squares with derivative residuals multiplied by `10*sqrt(w)` s for dimensionless trial weights `w = 1` and `w = 10`. The 10 s residual scale is a chosen conditioning/tradeoff scale, not an identified time constant. The criterion with smallest suffix rollout RMSE was selected. Every rollout uses classical RK4 with 5 s steps, logged inputs held constant, and a single first-state initialization, never later measured-state resets. All fitted parameters are jointly reestimated at each fitting stage; intermediate estimates are not frozen. ",
+    "script": "final_fit.py"
+  },
+  "discussion": {
+    "family": "Rational continuous-time state-space response-surface model: quadratic numerator and positive piecewise-linear state denominator. General nonlinear-model reference: O. Nelles, Nonlinear System Identification, Springer, 2001 (bibliographic reference recalled from memory, not externally checked). ",
+    "interpretation": "The state `y`, inputs `x1` and `x2`, and target `dy` are the logged columns. Their physical units are unknown. `U_y`, `U_1` and `U_2` below denote unspecified native units of `y`, `x1` and `x2`; `dy` has units `U_y/s`. The full expression is `c1 + c2*((y-yref)/ys) + c3*(x1/uone) + c4*(x2/utwo) + c5*((y-yref)/ys)**2 + c6*((y-yref)/ys)*(x1/uone) + c7*((y-yref)/ys)*(x2/utwo) + c8*(x1/uone)**2 + c9*(x1/uone)*(x2/utwo) + c10*(x2/utwo)**2`. Input-only monomials give additive input response; monomials involving the centered state change local restoring or amplifying feedback; products with an input make that feedback input-dependent. These are mathematical effects, not identified physical mechanisms. Each coefficient and its exact multiplier are specified in the parameter rows. The submitted expression is `(c1 + c2*((y-yref)/ys) + c3*(x1/uone) + c4*(x2/utwo) + c5*((y-yref)/ys)**2 + c6*((y-yref)/ys)*(x1/uone) + c7*((y-yref)/ys)*(x2/utwo) + c8*(x1/uone)**2 + c9*(x1/uone)*(x2/utwo) + c10*(x2/utwo)**2)/(1+d*Max(((y-yref)/ys),0))`. The denominator `1+d*Max(((y-yref)/ys),0)` reduces the vector-field magnitude as the state rises above the reference. Below the reference it is unity. Nonnegative `d` makes this denominator at least unity everywhere, eliminating state poles; this is a mathematical safeguard, not a physical capacity law. ",
+    "origin": "Quadratic polynomial fits already captured the main input-state interaction. Temporally correlated residuals and remaining state-dependent errors motivated a guessed positive state denominator as a compact alternative to cubic numerator terms. State, first-input, second-input and squared-state denominators were explored; the positive state denominator retained competitive validation rollout performance. The denominator structure and use of `Max` were assumptions; numerator coefficients were searched by least squares, not given by physics. In the internal criterion comparison, the best suffix rollout RMSE was 0.050387404 U_y on rows 728 through 1453 of data/val.csv, initialized only at row 728 (zero-based rows). This suffix was excluded from that fitting stage but had already been inspected in exploratory validation, so this is not a pristine independent estimate. After refitting on both complete files, the training and validation rollout RMSE values are 0.028233069 and 0.037994708 U_y; these final values are in-sample, not unseen-data scores. Final predicted-minus-logged derivative residual lag-one correlations are 0.449105 and 0.424928 (dimensionless) on training and validation, respectively. ",
+    "limitations": "There is no supplied physical description or intended use; no term is assigned a physical mechanism. This is a scalar autonomous-in-state, memoryless-in-input approximation, not evidence that omitted dynamics are absent. It cannot represent input histories, disturbances or time-dependent hidden states. Observed derivative residual correlation motivated nonlinear feedback and input-rate interactions, but remained after these extensions. Sampled derivatives need not be exact continuous-time derivatives, and integration-method effects are absorbed into fitted values. Extrapolation beyond the sampled state/input ranges is unverified; uncertainty intervals were not estimated. The denominator avoids poles but does not guarantee negative feedback in the numerator or safe input extrapolation. "
+  }
+}

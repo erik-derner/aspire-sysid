@@ -1,0 +1,173 @@
+{
+  "expressions": {
+    "dy": "p0*1 + p1*((y-yc)/ys) + p2*((x1-uc)/us) + p3*((x2-vc)/vs) + p4*((y-yc)/ys)*((x1-uc)/us) + p5*((x1-uc)/us)**2 + p6*((x2-vc)/vs)**2 + p7*Max(y-kL,0) + p8*Max(y-kM,0) + p9*Max(y-kH,0) + p10*((x1-uc)/us)*Max(y-kL,0) + p11*((x1-uc)/us)*Max(y-kM,0) + p12*((x1-uc)/us)*Max(y-kH,0)"
+  },
+  "parameters": [
+    {
+      "name": "p0",
+      "value": -0.02724364272233271,
+      "unit": "unknown",
+      "type": "fitted",
+      "description": "Coefficient of `1`; controls this basis contribution to `dy`. Estimated jointly in the final simulation-error fit; not fixed from another candidate."
+    },
+    {
+      "name": "p1",
+      "value": -0.04442256832120161,
+      "unit": "unknown",
+      "type": "fitted",
+      "description": "Coefficient of `((y-yc)/ys)`; controls this basis contribution to `dy`. Estimated jointly in the final simulation-error fit; not fixed from another candidate."
+    },
+    {
+      "name": "p2",
+      "value": 0.015377944461434818,
+      "unit": "unknown",
+      "type": "fitted",
+      "description": "Coefficient of `((x1-uc)/us)`; controls this basis contribution to `dy`. Estimated jointly in the final simulation-error fit; not fixed from another candidate."
+    },
+    {
+      "name": "p3",
+      "value": 0.008683024707526637,
+      "unit": "unknown",
+      "type": "fitted",
+      "description": "Coefficient of `((x2-vc)/vs)`; controls this basis contribution to `dy`. Estimated jointly in the final simulation-error fit; not fixed from another candidate."
+    },
+    {
+      "name": "p4",
+      "value": 0.010484848069788897,
+      "unit": "unknown",
+      "type": "fitted",
+      "description": "Coefficient of `((y-yc)/ys)*((x1-uc)/us)`; controls this basis contribution to `dy`. Estimated jointly in the final simulation-error fit; not fixed from another candidate."
+    },
+    {
+      "name": "p5",
+      "value": 0.0021943072984095847,
+      "unit": "unknown",
+      "type": "fitted",
+      "description": "Coefficient of `((x1-uc)/us)**2`; controls this basis contribution to `dy`. Estimated jointly in the final simulation-error fit; not fixed from another candidate."
+    },
+    {
+      "name": "p6",
+      "value": 6.464301116492647e-05,
+      "unit": "unknown",
+      "type": "fitted",
+      "description": "Coefficient of `((x2-vc)/vs)**2`; controls this basis contribution to `dy`. Estimated jointly in the final simulation-error fit; not fixed from another candidate."
+    },
+    {
+      "name": "p7",
+      "value": 0.07686030550591849,
+      "unit": "unknown",
+      "type": "fitted",
+      "description": "Coefficient of `Max(y-kL,0)`; controls this basis contribution to `dy`. Estimated jointly in the final simulation-error fit; not fixed from another candidate."
+    },
+    {
+      "name": "p8",
+      "value": 0.01166686058663775,
+      "unit": "unknown",
+      "type": "fitted",
+      "description": "Coefficient of `Max(y-kM,0)`; controls this basis contribution to `dy`. Estimated jointly in the final simulation-error fit; not fixed from another candidate."
+    },
+    {
+      "name": "p9",
+      "value": 0.06325701810796933,
+      "unit": "unknown",
+      "type": "fitted",
+      "description": "Coefficient of `Max(y-kH,0)`; controls this basis contribution to `dy`. Estimated jointly in the final simulation-error fit; not fixed from another candidate."
+    },
+    {
+      "name": "p10",
+      "value": -0.004920417810629598,
+      "unit": "unknown",
+      "type": "fitted",
+      "description": "Coefficient of `((x1-uc)/us)*Max(y-kL,0)`; controls this basis contribution to `dy`. Estimated jointly in the final simulation-error fit; not fixed from another candidate."
+    },
+    {
+      "name": "p11",
+      "value": 0.008980671672375078,
+      "unit": "unknown",
+      "type": "fitted",
+      "description": "Coefficient of `((x1-uc)/us)*Max(y-kM,0)`; controls this basis contribution to `dy`. Estimated jointly in the final simulation-error fit; not fixed from another candidate."
+    },
+    {
+      "name": "p12",
+      "value": -0.06080242559625774,
+      "unit": "unknown",
+      "type": "fitted",
+      "description": "Coefficient of `((x1-uc)/us)*Max(y-kH,0)`; controls this basis contribution to `dy`. Estimated jointly in the final simulation-error fit; not fixed from another candidate."
+    },
+    {
+      "name": "yc",
+      "value": 1.3,
+      "unit": "unknown",
+      "type": "fixed",
+      "description": "Center for `y`, chosen as a convenient round value near the training mean, not response-fitted."
+    },
+    {
+      "name": "ys",
+      "value": 0.3,
+      "unit": "unknown",
+      "type": "fixed",
+      "description": "Scale for `y`, chosen as a convenient round spread from inspection of data/train.csv, not response-fitted."
+    },
+    {
+      "name": "uc",
+      "value": 60.0,
+      "unit": "unknown",
+      "type": "fixed",
+      "description": "Center for `x1`, chosen as a convenient round value near the training mean, not response-fitted."
+    },
+    {
+      "name": "us",
+      "value": 20.0,
+      "unit": "unknown",
+      "type": "fixed",
+      "description": "Scale for `x1`, chosen as a convenient round spread from inspection of data/train.csv, not response-fitted."
+    },
+    {
+      "name": "vc",
+      "value": 18.0,
+      "unit": "unknown",
+      "type": "fixed",
+      "description": "Center for `x2`, chosen as a convenient round value near the training mean, not response-fitted."
+    },
+    {
+      "name": "vs",
+      "value": 7.0,
+      "unit": "unknown",
+      "type": "fixed",
+      "description": "Scale for `x2`, chosen as a convenient round spread from inspection of data/train.csv, not response-fitted."
+    },
+    {
+      "name": "kL",
+      "value": 1.1,
+      "unit": "unknown",
+      "type": "fixed",
+      "description": "Lower state knot, fixed by inspecting the training state range, not optimized."
+    },
+    {
+      "name": "kM",
+      "value": 1.4,
+      "unit": "unknown",
+      "type": "fixed",
+      "description": "Middle state knot, fixed by inspecting the training state range, not optimized."
+    },
+    {
+      "name": "kH",
+      "value": 1.7,
+      "unit": "unknown",
+      "type": "fixed",
+      "description": "Upper state knot, fixed by inspecting the training state range, not optimized."
+    }
+  ],
+  "estimation": {
+    "criterion": "Minimize the sum of squared free-running simulated-minus-observed `y` errors on both supplied trajectories, excluding each initial sample. Classical RK4 uses a step of 5 s and constant logged inputs per step, with no replacement of simulated states by later observations. This matches the scored variable and integration convention; equal row weights are used because no measurement variances are supplied. The derivative training fit supplies initialization, not the final criterion.",
+    "data": "Initialization: all 1452 rows in data/train.csv, one trajectory, using `dy` as target. Structural checks use all 1454 rows of the separate data/val.csv trajectory. Final coefficient fit uses both files, retaining their separate initial conditions: 1451 and 1453 post-initial `y` residuals, respectively. No rows are arbitrarily discarded; the first state of each file is an initial condition, and the last input does not drive a scored subsequent sample. Validation is therefore used for selection and final estimation, not claimed as an independent final test.",
+    "method": "Ordinary least squares on every derivative row in data/train.csv using numpy.linalg.lstsq estimated all thirteen basis coefficients together. No starting values are needed for this linear solve. Those estimates, stored in hinge_results.json under hinge_state.ols and reproduced by fit_hinges.py, form the numerical starting vector below. Final step: all fitted parameters, including shape parameters, were estimated together by bounded nonlinear least squares (scipy.optimize.least_squares, default method trf, loss linear). Analytical state and parameter partial derivatives were generated with sympy.lambdify; RK4 sensitivity recurrences supply the trajectory Jacobian. This is used rather than derivative-only fitting because the evaluation is a free-running state simulation. Starting values, in parameter-table order, are `[-0.023716908045236844, -0.038404700801019334, 0.013430351102202092, 0.007422556611071981, 0.009478269373724927, 0.0016383707227703645, 0.000320464428606837, 0.0649077233215547, 0.01699011422987478, 0.0011186106618815048, -0.0008276376994384846, -0.003922822622249111, -0.003468738432283574]`, with the heterogeneous units given in the parameter table. Lower and upper bound vectors are `[-1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1]` and `[1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1]` in those same units. The broad coefficient bounds prevent explosive iterates; shape bounds preserve the chosen family. Settings: `max_nfev = 150`, `ftol = 1e-10`, `xtol = 1e-10`, `gtol = 1e-10`, `x_scale = \"jac\"`. The method is deterministic and uses no random seed. scipy.optimize.least_squares API documentation, SciPy v1.18.0 manual, was checked online for the trust-region reflective method; actual installed SciPy is 1.18.1. A local optimum, not a global guarantee, is obtained. fit_final.py writes all final values; make_submission.py formats the candidate.",
+    "script": "fit_final.py"
+  },
+  "discussion": {
+    "family": "Continuous piecewise-linear regression spline in the state with input interactions and quadratic input forcing. Related hinge-basis reference: J. H. Friedman, Multivariate Adaptive Regression Splines, Annals of Statistics, 1991; cited from memory, bibliographic source not checked. This fit does not use the adaptive MARS algorithm: its knots are fixed.",
+    "interpretation": "The state `y`, inputs `x1` and `x2`, and derivative `dy` have unspecified physical units; time is in s. No physical interpretation is assumed. The fixed parameters `yc` and `ys` center and scale `y`; `uc` and `us` center and scale `x1`; `vc` and `vs` center and scale `x2`. Their ratios are dimensionless. The fixed knots `kL`, `kM` and `kH` switch on `Max(y-kL,0)`, `Max(y-kM,0)` and `Max(y-kH,0)`. These continuous hinges alter feedback slopes in different state regions. Multiplication by the normalized input `((x1-uc)/us)` lets these slope changes depend on `x1`. Quadratic input terms allow curved forcing. Each fitted coefficient multiplies the basis term given in its description.",
+    "origin": "After smooth polynomial fits, state-range residuals motivated an alternative local slope representation. The hinge operators and knots were a hand-chosen hypothesis, based on the observed training range; the derivative fitting and simulation comparisons evaluated it. Input-only hinges were also tested and were weaker. No automated knot search was used. This piecewise family supplies an alternative to global polynomial curvature.",
+    "limitations": "The knots are not identified physical thresholds. Feedback slopes can be noncontracting at some observed points, and the far-state linear extensions need not be valid. The derivative is continuous but its state slope is discontinuous at the knots. Residuals remain temporally structured: in the final fit the validation derivative-residual lag-one correlation is `0.498` and its correlation with the next `x2` increment is `0.624` (both dimensionless, computed on data/val.csv). That increment is diagnostic only, never a model argument. This may reflect omitted dynamics or timing; causation cannot be determined. Final refit RMSE on data/train.csv is `0.024597` and on data/val.csv is `0.035035`, in the unspecified units of `y`; these are in-sample after refitting. No test performance is known. The observed combined envelope is approximately `0.992 <= y <= 2.187`, `1.628 <= x1 <= 94.449`, and `0.083 <= x2 <= 30.797`, all in their respective unspecified units; independently combining those extrema is not necessarily supported by either trajectory."
+  }
+}

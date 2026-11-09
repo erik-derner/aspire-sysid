@@ -1,0 +1,10 @@
+from pathlib import Path
+p=Path('export_models.py');s=p.read_text()
+s=s.replace("'script':'reproduce_submission.py'","'script':'reproduce_submission.py'")
+s=s.replace("'method':method,", "'method':method+' Reference: SciPy API documentation, least_squares, checked directly; NumPy API documentation, numpy.linalg.lstsq, checked directly. SciPy documents the trust-region reflective bounded least-squares method; NumPy documents its direct least-squares solve. Defaults used were linear loss and a two-point finite-difference Jacobian for the nonlinear solve.',")
+s=s.replace("The terminology describes mathematical structure only; no specific vehicle is claimed. No checked bibliographic source is asserted.","The terminology describes mathematical structure only; no specific vehicle is claimed. A related reference is R. M. Murray, Z. X. Li, and S. S. Sastry, A Mathematical Introduction to Robotic Manipulation, CRC Press, 1994. Book authorship and publication were verified on the author-hosted MLS archive; the nonholonomic-kinematics association is recalled from memory and its chapter text was not checked. The empirical input-response function and discrete midpoint map are choices made here, not equations attributed to that book.")
+s=s.replace("No checked bibliographic source is asserted.'", "This candidate is defined by its explicit regression library rather than attributed to a particular published system equation.'")
+old="All validation uses only the training file, not hidden test data. '"
+new="All validation uses only the training file, not hidden test data. On all 447 transitions the one-step `y` RMSE is `'+fmt(d['one_step_rmse'][0])+'` P; on the 90 switch-step transitions it is `'+fmt(d['phase0_one_step_rmse'][0])+'` P, versus `'+fmt(d['interior_one_step_rmse'][0])+'` P on the 267 interior transitions. Adjacent one-step `y` residual correlation is `'+fmt(d['lag1_one_step_correlation'][0])+'`, dimensionless, computed only within trajectories. The block phase is used only to choose fitting rows, never as an expression argument. '"
+s=s.replace(old,new)
+p.write_text(s)

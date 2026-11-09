@@ -1,0 +1,36 @@
+{
+  "matlab": {
+    "files": [
+      "fermenter-pressure/fermenter-pressure_train.mat",
+      "fermenter-pressure/fermenter-pressure_val.mat",
+      "fermenter-pressure/fermenter-pressure_test-1.mat",
+      "fermenter-pressure/splitData.m",
+      "fermenter-pressure/evaluationSets.m",
+      "fermenter-pressure/startup.m",
+      "fermenter-pressure/HP/run=1-pool=1/fermenter-pressure_train/model01.m",
+      "fermenter-pressure/HP/run=1-pool=1/fermenter-pressure_train/model02.m",
+      "fermenter-pressure/HP/run=1-pool=1/fermenter-pressure_train/model03.m",
+      "fermenter-pressure/HP/run=1-pool=1/fermenter-pressure_train/model04.m",
+      "fermenter-pressure/README.md",
+      "fermenter-pressure/aspire_export.json"
+    ],
+    "models": 4,
+    "models_in_framework": 4,
+    "octave": null,
+    "skipped": [],
+    "status": "written",
+    "verified": true
+  },
+  "python": {
+    "file": "export/python/fermenter_pressure_pool_v1.py",
+    "labels": [
+      "SeriesPipe",
+      "Compressible",
+      "MixedOutlet",
+      "ValvePower"
+    ],
+    "status": "written",
+    "verified": true
+  },
+  "written_at": "2026-10-08T13:54:50.670172+00:00"
+}

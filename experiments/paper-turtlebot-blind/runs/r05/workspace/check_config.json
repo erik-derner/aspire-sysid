@@ -1,0 +1,79 @@
+{
+  "format_version": 2,
+  "task_id": "task-kt5o",
+  "formulation": "discrete",
+  "columns": [
+    {
+      "name": "y",
+      "roles": [
+        "state",
+        "output"
+      ]
+    },
+    {
+      "name": "x1",
+      "roles": [
+        "state"
+      ]
+    },
+    {
+      "name": "x2",
+      "roles": [
+        "state"
+      ]
+    },
+    {
+      "name": "x3",
+      "roles": [
+        "input"
+      ]
+    },
+    {
+      "name": "x4",
+      "roles": [
+        "input"
+      ]
+    }
+  ],
+  "arguments": [
+    "y",
+    "x1",
+    "x2",
+    "x3",
+    "x4"
+  ],
+  "expression_keys": [
+    "y_next",
+    "x1_next",
+    "x2_next"
+  ],
+  "delays": [],
+  "constants": [],
+  "functions": [
+    "sin",
+    "cos",
+    "tan",
+    "asin",
+    "acos",
+    "atan",
+    "atan2",
+    "sinh",
+    "cosh",
+    "tanh",
+    "exp",
+    "log",
+    "sqrt",
+    "Abs",
+    "sign",
+    "Min",
+    "Max",
+    "Piecewise"
+  ],
+  "added_functions": [],
+  "discussion_questions": [],
+  "pool_cap": 10,
+  "trajectory_column": "trajectory",
+  "train_file": "data/train.csv",
+  "pool_version": 1,
+  "previous_labels": []
+}

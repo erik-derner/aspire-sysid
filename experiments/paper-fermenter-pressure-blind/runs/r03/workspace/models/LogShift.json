@@ -1,0 +1,117 @@
+{
+  "expressions": {
+    "dy": "p0*1 + p1*log(Max(y-p7,logfloor)/yref) + p2*((x1-uc)/us) + p3*((x2-vc)/vs) + p4*log(Max(y-p7,logfloor)/yref)*((x1-uc)/us) + p5*((x1-uc)/us)**2 + p6*((x2-vc)/vs)**2"
+  },
+  "parameters": [
+    {
+      "name": "p0",
+      "value": -0.03463890819284124,
+      "unit": "unknown",
+      "type": "fitted",
+      "description": "Coefficient of `1`. Estimated jointly in the final simulation-error fit; not fixed from another candidate."
+    },
+    {
+      "name": "p1",
+      "value": -0.034330121719943124,
+      "unit": "unknown",
+      "type": "fitted",
+      "description": "Coefficient of `log(Max(y-p7,logfloor)/yref)`. Estimated jointly in the final simulation-error fit; not fixed from another candidate."
+    },
+    {
+      "name": "p2",
+      "value": 0.025299412070768718,
+      "unit": "unknown",
+      "type": "fitted",
+      "description": "Coefficient of `((x1-uc)/us)`. Estimated jointly in the final simulation-error fit; not fixed from another candidate."
+    },
+    {
+      "name": "p3",
+      "value": 0.008788307953119516,
+      "unit": "unknown",
+      "type": "fitted",
+      "description": "Coefficient of `((x2-vc)/vs)`. Estimated jointly in the final simulation-error fit; not fixed from another candidate."
+    },
+    {
+      "name": "p4",
+      "value": 0.015178779047710474,
+      "unit": "unknown",
+      "type": "fitted",
+      "description": "Coefficient of `log(Max(y-p7,logfloor)/yref)*((x1-uc)/us)`. Estimated jointly in the final simulation-error fit; not fixed from another candidate."
+    },
+    {
+      "name": "p5",
+      "value": 0.0019657764991955254,
+      "unit": "unknown",
+      "type": "fitted",
+      "description": "Coefficient of `((x1-uc)/us)**2`. Estimated jointly in the final simulation-error fit; not fixed from another candidate."
+    },
+    {
+      "name": "p6",
+      "value": 2.407534894636136e-05,
+      "unit": "unknown",
+      "type": "fitted",
+      "description": "Coefficient of `((x2-vc)/vs)**2`. Estimated jointly in the final simulation-error fit; not fixed from another candidate."
+    },
+    {
+      "name": "p7",
+      "value": 0.7721818397842249,
+      "unit": "unknown",
+      "type": "fitted",
+      "description": "Fitted state offset inside `log(Max(y-p7,logfloor)/yref)`, controls state-feedback curvature. Estimated jointly in the final simulation-error fit; not fixed from another candidate."
+    },
+    {
+      "name": "uc",
+      "value": 60.0,
+      "unit": "unknown",
+      "type": "fixed",
+      "description": "Center for `x1`, chosen as a convenient round value near the training mean, not response-fitted."
+    },
+    {
+      "name": "us",
+      "value": 20.0,
+      "unit": "unknown",
+      "type": "fixed",
+      "description": "Scale for `x1`, chosen as a convenient round spread from inspection of data/train.csv, not response-fitted."
+    },
+    {
+      "name": "vc",
+      "value": 18.0,
+      "unit": "unknown",
+      "type": "fixed",
+      "description": "Center for `x2`, chosen as a convenient round value near the training mean, not response-fitted."
+    },
+    {
+      "name": "vs",
+      "value": 7.0,
+      "unit": "unknown",
+      "type": "fixed",
+      "description": "Scale for `x2`, chosen as a convenient round spread from inspection of data/train.csv, not response-fitted."
+    },
+    {
+      "name": "logfloor",
+      "value": 0.02,
+      "unit": "unknown",
+      "type": "fixed",
+      "description": "State-gap floor fixed below the observed fitted state gap to make the logarithm defined; not response-fitted."
+    },
+    {
+      "name": "yref",
+      "value": 1.0,
+      "unit": "unknown",
+      "type": "fixed",
+      "description": "Reference state scale fixed to one raw state unit to make the logarithm argument dimensionless; not response-fitted."
+    }
+  ],
+  "estimation": {
+    "criterion": "Minimize the sum of squared free-running simulated-minus-observed `y` errors on both supplied trajectories, excluding each initial sample. Classical RK4 uses a step of 5 s and constant logged inputs per step, with no replacement of simulated states by later observations. This matches the scored variable and integration convention; equal row weights are used because no measurement variances are supplied. The derivative training fit supplies initialization, not the final criterion.",
+    "data": "Initialization: all 1452 rows in data/train.csv, one trajectory, using `dy` as target. Structural checks use all 1454 rows of the separate data/val.csv trajectory. Final coefficient fit uses both files, retaining their separate initial conditions: 1451 and 1453 post-initial `y` residuals, respectively. No rows are arbitrarily discarded; the first state of each file is an initial condition, and the last input does not drive a scored subsequent sample. Validation is therefore used for selection and final estimation, not claimed as an independent final test.",
+    "method": "All eight parameters were first estimated together on all derivative rows in data/train.csv by scipy.optimize.least_squares, method trf, linear loss, two-point numerical derivative Jacobian, x_scale=jac, max_nfev=500 and ftol=xtol=gtol=1e-9. The derivative fit started at [0,-0.05,0,0.007,0.025,0,0.001,0.5]. Coefficients were bounded in [-5,5] and the offset in [-5,0.97], below the smallest observed state, to avoid a logarithmic pole. fit_more.py reproduces this fit; the more_results.json shift_log.derivative values are the numerical starting vector below. The final floored expression is fitted by fit_final.py. Final step: all fitted parameters, including shape parameters, were estimated together by bounded nonlinear least squares (scipy.optimize.least_squares, default method trf, loss linear). Analytical state and parameter partial derivatives were generated with sympy.lambdify; RK4 sensitivity recurrences supply the trajectory Jacobian. This is used rather than derivative-only fitting because the evaluation is a free-running state simulation. Starting values, in parameter-table order, are `[-0.025412691739531635, -0.04628901161329144, 0.021313093632479484, 0.007518635572580101, 0.023242277611194823, 0.0013783171022108316, 0.0006090391006168314, 0.5588155602843187]`, with the heterogeneous units given in the parameter table. Lower and upper bound vectors are `[-5, -5, -5, -5, -5, -5, -5, -5]` and `[5, 5, 5, 5, 5, 5, 5, 0.97]` in those same units. The broad coefficient bounds prevent explosive iterates; shape bounds preserve the chosen family. Settings: `max_nfev = 150`, `ftol = 1e-10`, `xtol = 1e-10`, `gtol = 1e-10`, `x_scale = \"jac\"`. The method is deterministic and uses no random seed. scipy.optimize.least_squares API documentation, SciPy v1.18.0 manual, was checked online for the trust-region reflective method; actual installed SciPy is 1.18.1. A local optimum, not a global guarantee, is obtained. fit_final.py writes all final values; make_submission.py formats the candidate.",
+    "script": "fit_final.py"
+  },
+  "discussion": {
+    "family": "Shifted-logarithmic nonlinear state-feedback regression with quadratic input response. This is an empirical transformed-state family, not a claimed physical law. Prediction-error identification reference: L. Ljung, System Identification: Theory for the User, second edition, 1999; cited from memory, bibliographic source not checked.",
+    "interpretation": "The state `y`, inputs `x1` and `x2`, and derivative `dy` have unspecified physical units; time is in s. No physical interpretation is assumed. The fixed parameters `uc`, `us`, `vc` and `vs` normalize the inputs. The fitted parameter `p7` shifts the state before the logarithm; the fixed `logfloor` bounds the state gap and `yref` supplies its reference scale. The term `p1*log(Max(y-p7,logfloor)/yref)` gives nonlinear feedback that changes most rapidly near the offset. Its interaction with `((x1-uc)/us)` changes feedback with `x1`. The remaining coefficients control drift and linear or quadratic input forcing.",
+    "origin": "Inverse and logarithmic state transforms improved the restricted polynomial baseline. A free logarithmic offset was a hand-chosen curvature hypothesis, tested against shifted inverse and square-root transforms. The shifted-log model was retained as a compact alternative. The state-gap floor was added to avoid an undefined logarithm below the fitted domain; it is not evidence of saturation.",
+    "limitations": "The offset is a shape parameter, not a physical zero. The floor defines a mathematical continuation only. Below that floor feedback curvature is lost; outside the observed input region feedback can change sign. Unknown units prevent assigning a physical meaning to the logarithm. Residuals remain temporally structured: in the final fit the validation derivative-residual lag-one correlation is `0.524` and its correlation with the next `x2` increment is `0.619` (both dimensionless, computed on data/val.csv). That increment is diagnostic only, never a model argument. This may reflect omitted dynamics or timing; causation cannot be determined. Final refit RMSE on data/train.csv is `0.024507` and on data/val.csv is `0.037152`, in the unspecified units of `y`; these are in-sample after refitting. No test performance is known. The observed combined envelope is approximately `0.992 <= y <= 2.187`, `1.628 <= x1 <= 94.449`, and `0.083 <= x2 <= 30.797`, all in their respective unspecified units; independently combining those extrema is not necessarily supported by either trajectory."
+  }
+}

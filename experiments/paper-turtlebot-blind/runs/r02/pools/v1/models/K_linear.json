@@ -1,0 +1,49 @@
+{
+  "expressions": {
+    "y_next": "y+(speedoffset+speedgain*x3)*cos(x2+(turngain*x4+turnbias)/2)",
+    "x1_next": "x1+(speedoffset+speedgain*x3)*sin(x2+(turngain*x4+turnbias)/2)",
+    "x2_next": "atan2(sin(x2+(turngain*x4+turnbias)), cos(x2+(turngain*x4+turnbias)))"
+  },
+  "parameters": [
+    {
+      "name": "speedoffset",
+      "value": 0.0015685163236684734,
+      "unit": "unknown position unit per sample",
+      "type": "fitted",
+      "description": "Offset of per-sample displacement length, estimated jointly with all other fitted parameters from full training rollouts."
+    },
+    {
+      "name": "speedgain",
+      "value": 0.1534410999743029,
+      "unit": "unknown position unit per x3 unit per sample",
+      "type": "fitted",
+      "description": "Multiplier of the current `x3` input in displacement length, estimated jointly with all other fitted parameters from full training rollouts."
+    },
+    {
+      "name": "turngain",
+      "value": 0.16013374958535623,
+      "unit": "inferred radian per x4 unit per sample",
+      "type": "fitted",
+      "description": "Multiplier of the model-specific `x4` input response in angular increment, estimated jointly with all other fitted parameters from full training rollouts."
+    },
+    {
+      "name": "turnbias",
+      "value": 0.0015592141841458366,
+      "unit": "inferred radian per sample",
+      "type": "fitted",
+      "description": "Constant per-sample angular increment, estimated jointly with all other fitted parameters from full training rollouts; its mechanism is unknown."
+    }
+  ],
+  "estimation": {
+    "criterion": "Weighted output-error nonlinear least squares over complete free-running training trajectories: sum of squared errors in `y` and `x1` plus `1` times squared errors in unwrapped `x2`. No measured states are reinserted after the first sample. Position units are unreported; `x2` is computationally interpreted in radians. The dimensionless angular residual weight is `1`. Equal numerical weights were retained for the simple reference model to keep all three trajectories and states represented without additional tuning.",
+    "data": "data/train.csv, all three trajectories and all 150 samples per trajectory. There are 149 within-trajectory transitions per experiment, 447 transitions in total. No transitions cross trajectory boundaries. Initial states are the first logged states. Only the angular observations were unwrapped using numpy.unwrap to avoid artificial branch-cut residuals; position observations and inputs were not filtered. All rows were used in the final fit because no quality labels justify deleting them.",
+    "method": "All fitted parameters were estimated together in one step by nonlinear least squares, scipy.optimize.least_squares with `method = trf`, two-point finite-difference Jacobian and ordinary quadratic loss. This method permits the nonlinear trigonometric rollout criterion and bounds; linear least squares cannot fit that criterion. Starting values were `speedoffset = 0` (same implied units as the coefficient), `speedgain = 0.1667` (same implied units as the coefficient), `turngain = 0.15` (same implied units as the coefficient), `turnbias = 0` (same implied units as the coefficient). They approximate the exploratory linear input gains with a small or zero bias; attenuation was initialized moderately within the input range rather than at a singular zero scale.  Termination tolerances were `ftol = 1e-11`, `xtol = 1e-11`, and `gtol = 1e-11`; maximum function evaluations were `1000` (dimensionless algorithm settings). No random numbers or seeds were used. Fits were also repeated on each pair of trajectories for validation and on the first `90` samples per trajectory for temporal forecasts, but submitted coefficients use all samples. Method reference checked: SciPy least_squares documentation, Trust Region Reflective method; SciPy source optimize/_lsq/trf.py. The installed SciPy version was 1.18.1.",
+    "script": "fit_candidates.py"
+  },
+  "discussion": {
+    "family": "Discrete-time planar unicycle kinematics with affine input maps and midpoint heading integration. The planar geometric part is the unicycle/differential-drive kinematic model discretized with midpoint heading; reference checked: Frank Dellaert and Seth Hutchinson, Introduction to Robotics and Perception, section 5.2, Motion Model for the Differential Drive Robot (roboticsbook.org). This is an analogy for the data, not an assertion of the unknown system identity.",
+    "interpretation": "`y` and `x1` are accumulated coordinates in the model, `x2` is their direction, and `x3` and `x4` are current inputs. `speedoffset` shifts distance per sample, `speedgain` scales `x3`, `turngain` scales `x4`, and `turnbias` shifts angular increment. `cos` and `sin` resolve displacement at midpoint heading. `atan2(sin(...), cos(...))` wraps the direction after adding the turn. The mathematical roles do not establish physical units or mechanisms.",
+    "origin": "Generic affine and degree-two/three polynomial transitions were examined first. Angle wrapping and a measured midpoint cross-track RMS of about `0.000176` in unreported position units over all within-trajectory transitions suggested planar trigonometric geometry. The simplest retained structure is affine input distance `speedoffset+speedgain*x3` and affine turn `turngain*x4+turnbias`. Midpoint heading `x2+(turngain*x4+turnbias)/2` was chosen from the observed increment direction, not known physical constants. This candidate is the low-complexity reference for testing whether nonlinear input attenuation transfers. No genetic symbolic regression or sparse-thresholding package was used.",
+    "limitations": "The physical system, column units and intended use are unknown. Interpreting `x2` as an angle in radians is inferred from wrapping near `-pi` and `pi`, not supplied metadata. Coefficients map one sample to the next; the supplied sampling period `T_s = 0.2` s is already absorbed in them. The models assume translation invariance: absolute `y` and `x1` do not change the increments. This is supported by the observed direction of motion but not established globally. Only three experiments are available; leave-one-trajectory-out validation is noisy, and hyperparameter selection used these same experiments, so its results are not an unbiased test score. No test data were accessed. Input-change residuals and their positive lag-one correlations indicate missing transient dynamics, disturbances, or both. The prescribed three-state model has no actuator or previous-input state, so that behavior is not fully represented. Long-horizon accuracy outside the observed input/state support is unknown; no global state bound is guaranteed for accumulated positions. The distance offset allows slight movement at zero input and can imply reverse displacement for negative inputs; negative commands were not observed. The affine input maps do not describe the small-command attenuation captured by the other candidates."
+  }
+}

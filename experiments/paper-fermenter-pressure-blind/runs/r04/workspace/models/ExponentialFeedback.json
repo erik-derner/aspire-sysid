@@ -1,0 +1,89 @@
+{
+  "expressions": {
+    "dy": "c0 + c1*sqrt(Max(y-h,epsy)) + c2*exp(a*(x1/n1-1)) + c3*(x2/n2) + c4*exp(a*(x1/n1-1))*sqrt(Max(y-h,epsy))"
+  },
+  "parameters": [
+    {
+      "name": "n1",
+      "value": 70.0,
+      "unit": "x1-unit",
+      "type": "fixed",
+      "description": "Convenient input normalization, selected by inspection of the training input scale, not optimized; gives dimensionless `x1/n1`."
+    },
+    {
+      "name": "n2",
+      "value": 20.0,
+      "unit": "x2-unit",
+      "type": "fixed",
+      "description": "Convenient input normalization selected by inspection of the training input scale, not optimized; gives dimensionless `x2/n2`."
+    },
+    {
+      "name": "c0",
+      "value": 0.002558538846708453,
+      "unit": "state-unit/s",
+      "type": "fitted",
+      "description": "Coefficient of the corresponding ordered drift, state feedback, exponential forcing, second-input forcing or mixed term; jointly estimated."
+    },
+    {
+      "name": "c1",
+      "value": -0.11824716101339196,
+      "unit": "state-unit**0.5/s",
+      "type": "fitted",
+      "description": "Coefficient of the corresponding ordered drift, state feedback, exponential forcing, second-input forcing or mixed term; jointly estimated."
+    },
+    {
+      "name": "c2",
+      "value": 0.0002814300082181883,
+      "unit": "state-unit/s",
+      "type": "fitted",
+      "description": "Coefficient of the corresponding ordered drift, state feedback, exponential forcing, second-input forcing or mixed term; jointly estimated."
+    },
+    {
+      "name": "c3",
+      "value": 0.024218461159154547,
+      "unit": "state-unit/s",
+      "type": "fitted",
+      "description": "Coefficient of the corresponding ordered drift, state feedback, exponential forcing, second-input forcing or mixed term; jointly estimated."
+    },
+    {
+      "name": "c4",
+      "value": 0.06611847155113233,
+      "unit": "state-unit**0.5/s",
+      "type": "fitted",
+      "description": "Coefficient of the corresponding ordered drift, state feedback, exponential forcing, second-input forcing or mixed term; jointly estimated."
+    },
+    {
+      "name": "h",
+      "value": 0.9939999999698543,
+      "unit": "state-unit",
+      "type": "fitted",
+      "description": "State shift before square root."
+    },
+    {
+      "name": "a",
+      "value": 1.4817570005155936,
+      "unit": "-",
+      "type": "fitted",
+      "description": "Exponential sensitivity to the normalized first input."
+    },
+    {
+      "name": "epsy",
+      "value": 1e-06,
+      "unit": "state-unit",
+      "type": "fixed",
+      "description": "Small positive floor selected for the shifted state before fractional powers or square roots; ensures real finite evaluation near and below the offset, not inferred as a physical threshold."
+    }
+  ],
+  "estimation": {
+    "criterion": "Final criterion: sum of squared free-running errors in `y` on both available trajectories, excluding only the first state of each file, to match the evaluation criterion. Initial derivative least squares and then teacher-forced one-step RK4 output least squares supplied starting values; those criteria do not define the final estimates.",
+    "data": "Both complete files data/train.csv (one stated trajectory) and data/val.csv (one stated trajectory) were used in the final fit. Training-only fits were compared on validation first. During final fitting each file was initialized only at its first observed state, with no later state resets; all subsequent observations contributed equal output-error weight. Sampling period was 5 s, with current-row inputs held constant during each classical RK4 step. Validation was subsequently used for fitting, so final validation errors are in-sample and are not unbiased generalization estimates.",
+    "method": "All parameters were estimated jointly at every stage. Initial derivative fit on all training rows used The optimizer is scipy.optimize.least_squares, default Trust Region Reflective algorithm, finite-difference two-point Jacobian and linear loss; its official documentation was checked online. Nonlinear least squares was used because RK4 output error is nonlinear even in coefficients of a polynomial vector field. Numeric initialization in the expression parameter order was [0.001, -0.09, 0.004, 0.02, 0.025, 0.99, 2.0]; units are those of the corresponding parameter rows. This seed came from the previously fitted helper model or polynomial model, except exponential and sigmoid seeds, which were moderate hand-chosen coefficients and scale parameters. Numeric derivative-stage output was [0.0017848625340711806, -0.09246679285173606, 0.0018856655776358672, 0.021709735533618484, 0.043313068610871426, 0.9916549264200772, 1.9553920757928465] and numeric one-step-stage output was [0.0026897195674911102, -0.1080782638545392, 0.0014462422283676923, 0.023862603257563935, 0.05400155634596872, 0.9913142584970798, 1.7636546602812173]. These numbers are in the corresponding parameter units. They document actual starts, not extra constants in the model. Bounds in the same order were [-1, -1, -1, -1, -1, 0.8, 0] to [1, 1, 1, 1, 1, 0.994, 8], in the corresponding parameter units; these prevent extreme coefficients and invalid powers while permitting broad empirical nonlinear shapes. Max_nfev was 300 for derivative initialization, 180 for one-step training fit, and 200 for free-running fit; default convergence tolerances were 1e-8. The final fit on both files started directly from the documented one-step values, not from the training-only output-error fit. A separate training-only free-running fit was used for validation comparison. No random numbers or seed were used. nonlinear_dynamic.py reproduces the sequence and retains the exact original initialization vectors in its referenced working-directory result files.",
+    "script": "nonlinear_dynamic.py"
+  },
+  "discussion": {
+    "family": "Exponential-input, square-root-state nonlinear state-space vector field.",
+    "interpretation": "`c0` is drift, `c1*sqrt(Max(y-h,epsy))` is shifted square-root state feedback, `c2*exp(a*(x1/n1-1))` is exponential first-input forcing, `c3*(x2/n2)` is linear second-input forcing and `c4*exp(a*(x1/n1-1))*sqrt(Max(y-h,epsy))` is an input-dependent state-feedback gain. The square root is a mathematical concave response; no tank interpretation is claimed.",
+    "origin": "An exponential input map was tested as a smooth alternative to a high fitted power of the first input. State-input residual dependence motivated an exponential-by-square-root interaction. Linear second-input forcing was selected as a parsimonious starting structure, since richer fits gave an exponent near one.",
+    "limitations": "No system description or units are supplied, so these are empirical vector fields rather than asserted physical laws. Unit labels state-unit, x1-unit and x2-unit denote unknown logged units; only seconds are known. The fitted domain is approximately `0.99 <= y <= 2.19` state-unit, `1.63 <= x1 <= 94.45` x1-unit, and `0.08 <= x2 <= 30.80` x2-unit on the two supplied files. Polynomial derivative residuals have temporal dependence and correlate with the next change in `x2`; this suggests sampling alignment or omitted dynamics, but is not proof of a particular mechanism. Abrupt near-baseline states midway through the files are not reset in fitting or prediction. No memory, next input, or hidden state is included in the delivered expressions; the irreducible consequences of these omissions remain. Extrapolation and input regimes not represented here are unvalidated. Exponential input growth makes large first-input extrapolation particularly unsafe. The state offset reaches its upper bound and is not a physically established threshold."
+  }
+}

@@ -1,0 +1,30 @@
+# Experiment of the manuscript: the described task of the rotational
+# motion under dry friction: the state equation R1 and two formal
+# conditions, R2 and R3, that contain no number other than 0 and the bounds of the domain; five
+# runs with identical settings.
+# The runs differ only in the responses of the language model. gpt-6.1-sol (OpenAI) has no dated
+# snapshot; the results are reported with the dates of the runs. Reasoning effort medium
+# (aspire/configs/tools.yaml). Three runs execute concurrently.
+#
+#   aspire experiment run experiments/paper-friction-driven --dry-run --agent-python <exe>
+#   aspire experiment run experiments/paper-friction-driven --yes --agent-python <exe>
+#   aspire experiment aggregate experiments/paper-friction-driven
+#   aspire experiment report experiments/paper-friction-driven
+
+schema_version: 2
+id: paper-friction-driven
+model: gpt-6.1-sol
+task: friction-driven
+runs: 5
+concurrency: 3
+# null: the round budget of the task (60 turns, 3600 s, 10 USD).
+budget: null
+exports: {python: true, matlab: true, octave: auto}
+plots: true
+# Pass the agent's interpreter with --agent-python; never commit a path of one computer.
+agent_python: null
+workspace_root: null
+keep_workspaces: true
+notes: >-
+  One of the six experiments of the manuscript (three systems, each as a described and as a
+  blind task). Largest possible cost: 5 runs × 10 USD = 50 USD.

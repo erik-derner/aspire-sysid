@@ -1,0 +1,89 @@
+{
+  "expressions": {
+    "dp": "c_p_1 + c_p_2*p + c_p_3*valve + c_p_4*flow + c_p_5*p**2 + c_p_6*p*valve + c_p_7*p*flow + c_p_8*valve**2 + c_p_9*valve*flow + c_p_10*flow**2"
+  },
+  "parameters": [
+    {
+      "name": "c_p_1",
+      "value": 0.17977877740622922,
+      "unit": "bar/s",
+      "type": "fitted",
+      "description": "Coefficient of the library term `1` in the expression `dp`."
+    },
+    {
+      "name": "c_p_2",
+      "value": -0.18295199288297495,
+      "unit": "bar/s / ((bar))",
+      "type": "fitted",
+      "description": "Coefficient of the library term `p` in the expression `dp`."
+    },
+    {
+      "name": "c_p_3",
+      "value": -0.0019074697334705046,
+      "unit": "bar/s / ((% closed))",
+      "type": "fitted",
+      "description": "Coefficient of the library term `valve` in the expression `dp`."
+    },
+    {
+      "name": "c_p_4",
+      "value": -0.0001670153468338138,
+      "unit": "bar/s / ((l/min))",
+      "type": "fitted",
+      "description": "Coefficient of the library term `flow` in the expression `dp`."
+    },
+    {
+      "name": "c_p_5",
+      "value": 0.007705872872479393,
+      "unit": "bar/s / ((bar)^2)",
+      "type": "fitted",
+      "description": "Coefficient of the library term `p**2` in the expression `dp`."
+    },
+    {
+      "name": "c_p_6",
+      "value": 0.0015535790862193132,
+      "unit": "bar/s / ((bar) (% closed))",
+      "type": "fitted",
+      "description": "Coefficient of the library term `p*valve` in the expression `dp`."
+    },
+    {
+      "name": "c_p_7",
+      "value": 0.0005056149160169747,
+      "unit": "bar/s / ((bar) (l/min))",
+      "type": "fitted",
+      "description": "Coefficient of the library term `p*flow` in the expression `dp`."
+    },
+    {
+      "name": "c_p_8",
+      "value": 3.927357275945731e-06,
+      "unit": "bar/s / ((% closed)^2)",
+      "type": "fitted",
+      "description": "Coefficient of the library term `valve**2` in the expression `dp`."
+    },
+    {
+      "name": "c_p_9",
+      "value": 2.048970803275596e-06,
+      "unit": "bar/s / ((% closed) (l/min))",
+      "type": "fitted",
+      "description": "Coefficient of the library term `valve*flow` in the expression `dp`."
+    },
+    {
+      "name": "c_p_10",
+      "value": 9.556102400803956e-06,
+      "unit": "bar/s / ((l/min)^2)",
+      "type": "fitted",
+      "description": "Coefficient of the library term `flow**2` in the expression `dp`."
+    }
+  ],
+  "estimation": {
+    "criterion": "Sum of squared differences between the library expansion and the supplied derivative column (`dp` for `dp`), with a ridge penalty; this is the criterion of the default optimizer of the package and is not the simulation error that the task scores. It was kept because the reference model is the result of the tool as it is delivered.",
+    "data": "data/train.csv, all `1452` rows of all `1` trajectories. The validation data were not used.",
+    "method": "Sparse identification of nonlinear dynamics (SINDy; Brunton, Proctor and Kutz, 2016), pysindy.SINDy (PySINDy 2.1.0) with its default settings except the threshold of the optimizer, which was selected from the grid `10, 5, 2, ..., 2e-07` (the values 1, 0.5 and 0.2 times the powers of ten) as the largest value with the smallest root mean squared error of the simulated `p` on the training data; the selected threshold is `2e-06`: the library of all polynomial terms up to degree `2` in `p`, `valve`, `flow` with a constant term, and sequentially thresholded least squares (STLSQ) with threshold `2e-06`, ridge parameter `0.05` and at most `20` iterations. The derivative was not computed by the package; the derivative column of the task was passed to it. The threshold was selected because the default `0.1` is an absolute bound on the coefficients and does not depend on the units of the variables. The selection uses the training data only. The method needs no starting values and uses no random numbers. All coefficients of one expression were estimated together.",
+    "script": "experiments/references/fermenter-pressure/fit_references.py"
+  },
+  "discussion": {
+    "family": "Polynomial continuous-time state-space model found by sparse regression (SINDy). Reference model; it is not a candidate of the agent.",
+    "interpretation": "The expression `dp` is a linear combination of the polynomial library terms that the thresholding kept. The terms have no assigned physical meaning.",
+    "origin": "The structure was selected by the sparse-regression algorithm from the polynomial library; no physical reasoning entered, and no other library was tried.",
+    "limitations": "The polynomial library of degree 2 contains no other function of the variables. The criterion is the error of the derivative, not the simulation error, so that a small error of the derivative does not bound the error of a long simulation. Outside the range of the training data a polynomial is not expected to hold."
+  }
+}

@@ -1,0 +1,43 @@
+{
+  "matlab": {
+    "files": [
+      "friction-driven/friction-driven_train.mat",
+      "friction-driven/friction-driven_val.mat",
+      "friction-driven/friction-driven_test-1.mat",
+      "friction-driven/friction-driven_test-2.mat",
+      "friction-driven/friction-driven_test-3.mat",
+      "friction-driven/friction-driven_test-4.mat",
+      "friction-driven/splitData.m",
+      "friction-driven/evaluationSets.m",
+      "friction-driven/startup.m",
+      "friction-driven/HP/run=3-pool=1/friction-driven_train/model01.m",
+      "friction-driven/HP/run=3-pool=1/friction-driven_train/model02.m",
+      "friction-driven/HP/run=3-pool=1/friction-driven_train/model03.m",
+      "friction-driven/HP/run=3-pool=1/friction-driven_train/model04.m",
+      "friction-driven/HP/run=3-pool=1/friction-driven_train/model05.m",
+      "friction-driven/HP/run=3-pool=1/friction-driven_train/model06.m",
+      "friction-driven/README.md",
+      "friction-driven/aspire_export.json"
+    ],
+    "models": 6,
+    "models_in_framework": 6,
+    "octave": null,
+    "skipped": [],
+    "status": "written",
+    "verified": true
+  },
+  "python": {
+    "file": "export/python/friction_driven_pool_v1.py",
+    "labels": [
+      "HarmonicMotorAsymmetric",
+      "HarmonicAsymmetric",
+      "AngleFriction",
+      "SaturatingDamping",
+      "Projected",
+      "Compensated"
+    ],
+    "status": "written",
+    "verified": true
+  },
+  "written_at": "2026-10-09T13:56:34.450919+00:00"
+}

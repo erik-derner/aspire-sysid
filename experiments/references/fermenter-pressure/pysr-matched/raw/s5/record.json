@@ -1,0 +1,48 @@
+{
+  "task": "fermenter-pressure",
+  "setting": "matched",
+  "seed": 5,
+  "threads": false,
+  "pysr": "1.5.10",
+  "parameters_of_the_search": {
+    "batching": false,
+    "binary_operators": null,
+    "deterministic": true,
+    "elementwise_loss": null,
+    "maxdepth": null,
+    "maxsize": 30,
+    "model_selection": "best",
+    "ncycles_per_iteration": 380,
+    "niterations": 100,
+    "parallelism": "serial",
+    "parsimony": 0.0,
+    "population_size": 27,
+    "populations": 31,
+    "precision": 32,
+    "random_state": 5,
+    "unary_operators": [
+      "sin",
+      "cos",
+      "tanh",
+      "exp",
+      "log",
+      "sqrt",
+      "abs",
+      "sign"
+    ]
+  },
+  "seconds": {
+    "dp": 862.5044453144073
+  },
+  "selected_by_package": {
+    "dp": 9
+  },
+  "selected": {
+    "dp": 18
+  },
+  "training_error": 0.06572578526087033,
+  "training_error_package_selection": 4.712621538185712,
+  "front_sizes": {
+    "dp": 21
+  }
+}

@@ -1,0 +1,117 @@
+schema_version: 1
+id: friction-driven
+title: Rotational motion under dry friction, driven by a DC motor (lab rig)
+formulation: continuous
+description: >
+  Data from a real lab rig: a rotational motion system with adjustable dry friction, driven by a
+  voltage-controlled DC motor. A leaf spring presses a felt pad against a
+  rotating disc. The dry-friction level is approximately constant across
+  all recordings; bearing friction (viscous and dry) is present too.
+  Zero angle is the hanging equilibrium. Each row is one sample of the angle theta
+  (rad), the angular velocity omega (rad/s), the motor voltage u (V, an exogenous
+  input) and the angular acceleration domega (rad/s^2),
+  sampled with period T_s = 0.01 s (100 Hz). The state-space model consists of an unknown (sought)
+  closed-form nonlinear expression: domega, the
+  time derivative of omega, as functions of theta, omega and u; and the kinematic
+  identity dtheta = omega as a formal requirement (R1). The training and
+  validation files each contain several separate trajectories of two kinds,
+  marked by the column `trajectory`; a file is not one contiguous trajectory.
+  Driven trajectories start at rest at theta = 0 with a random binary voltage
+  signal applied throughout. Free-response trajectories start from an initial
+  angle with u = 0 throughout; most of their samples are at rest inside the stick
+  band. One model must cover both regimes. The signals come from a digital 
+  encoder and numerical differentiation.
+intended_use: >
+  Simulation of the angle. The model is integrated from the first
+  (theta, omega) sample of a held-out trajectory, with the recorded voltage u
+  applied and no further corrections, and the simulated angle is compared with
+  the measured one. The held-out trajectories are of both kinds, driven and free
+  response. The model should give stable, accurate long-horizon simulation,
+  including realistic sticking at rest.
+columns:
+  - name: theta
+    symbol: θ
+    roles: [state, output]
+    unit: rad
+    description: angle, state and measured output
+    range: [-3.1416, 3.1416]
+  - name: omega
+    symbol: ω
+    roles: [state]
+    unit: rad/s
+    description: angular velocity
+  - name: u
+    symbol: u
+    roles: [input]
+    unit: V
+    description: motor voltage, exogenous input
+    range: [-10, 10]
+  - name: domega
+    symbol: dω/dt
+    roles: [state_derivative]
+    derivative_of: omega
+    unit: rad/s^2
+    description: angular acceleration, the time derivative of omega; a possible fitting target
+dynamics:
+  sampling_period: 0.01
+  states: [theta, omega]
+  inputs: [u]
+evaluation:
+  mode: simulation
+  initialization: 1
+  failure_limits:
+    - variable: theta
+      lower: -1000.0
+      upper: 1000.0
+      unit: rad
+      justification: >-
+        numerical divergence bound, about 318 times the bound pi of the declared
+        range; a physically plausible simulation stays within a few revolutions
+    - variable: omega
+      lower: -1000.0
+      upper: 1000.0
+      unit: rad/s
+      justification: >-
+        numerical divergence bound, about 50 times the largest training
+        magnitude 20.1 rad/s
+  time_limit_s: 60.0
+data:
+  train: data/train.csv
+  val: data/val.csv
+  trajectory_column: trajectory
+requirements:
+  - id: R1
+    type: equation
+    target: dtheta
+    equals: omega
+    domain: {box: {theta: [-3.1416, 3.1416], omega: [-23.0, 23.0], u: [-10, 10]}}
+    tolerance: {value: 0.0, unit: rad/s}
+    verification: symbolic
+    source: {stated_by: "task author", date: "2026-09-25"}
+  - id: R2
+    type: inequality
+    target: domega
+    relation: domega*theta <= 0
+    domain: {box: {theta: [-pi, pi], omega: [0.0, 0.0], u: [0.0, 0.0]}}
+    tolerance: {value: 0.0, unit: rad^2/s^2}
+    sampling: {samples: 10000, seed: 20261009}
+    source: {stated_by: "task author", date: "2026-10-09"}
+  - id: R3
+    type: monotonicity
+    target: domega
+    variable: u
+    direction: increasing
+    domain: {box: {theta: [-3.1416, 3.1416], omega: [-23.0, 23.0], u: [-10, 10]}}
+    tolerance: {value: 0.0, unit: rad/(s^2 V)}
+    sampling: {samples: 10000, seed: 20261009}
+    source: {stated_by: "task author", date: "2026-10-09"}
+pool_cap: 10
+budget:
+  round: {turns: 60, seconds: 3600, usd: 10.0}
+  session: {turns: 180, seconds: 10800, usd: 30.0}
+  analysis_exchange: {turns: 15, seconds: 900, usd: 1.0}
+test:
+  - {file: test/test_trajectory_1.csv, trajectory: test-1}
+  - {file: test/test_trajectory_2.csv, trajectory: test-2}
+  - {file: test/test_trajectory_3.csv, trajectory: test-3}
+  - {file: test/test_trajectory_4.csv, trajectory: test-4}

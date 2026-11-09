@@ -1,0 +1,152 @@
+{
+  "expressions": {
+    "dy": "c1 + c2*((y-yref)/ys) + c3*(x1/uone) + c4*((y-yref)/ys)**2 + c5*((y-yref)/ys)*(x1/uone) + c6*((y-yref)/ys)*(x2/utwo) + c7*(x1/uone)**2 + c8*(x1/uone)*(x2/utwo) + c9*(x2/utwo)**2 + c10*((y-yref)/ys)**3 + c11*((y-yref)/ys)*(x1/uone)*(x2/utwo) + c12*(x1/uone)**3 + c13*(x1/uone)**2*(x2/utwo) + c14*(x1/uone)*(x2/utwo)**2 + c15*(x2/utwo)**3"
+  },
+  "parameters": [
+    {
+      "name": "uone",
+      "value": 60.0,
+      "unit": "U_1",
+      "type": "fixed",
+      "description": "`uone = 60` U_1 is a round input scale chosen before fitting, comparable to the training input magnitude, solely for conditioning; it is not a fitted threshold."
+    },
+    {
+      "name": "utwo",
+      "value": 20.0,
+      "unit": "U_2",
+      "type": "fixed",
+      "description": "`utwo = 20` U_2 is a round input scale chosen before fitting, comparable to the training input magnitude, solely for conditioning; it is not a fitted threshold."
+    },
+    {
+      "name": "yref",
+      "value": 1.0,
+      "unit": "U_y",
+      "type": "fixed",
+      "description": "`yref = 1` U_y is a convenient fixed expansion origin near the lower observed training state, chosen rather than estimated; it is not an asserted equilibrium."
+    },
+    {
+      "name": "ys",
+      "value": 1.0,
+      "unit": "U_y",
+      "type": "fixed",
+      "description": "`ys = 1` U_y is a chosen numerical state scale, making the centered state dimensionless without changing its numeric value."
+    },
+    {
+      "name": "c1",
+      "value": -0.003994604143000078,
+      "unit": "U_y/s",
+      "type": "fitted",
+      "description": "Coefficient of `1`; estimated jointly with the other coefficients using the candidate-specific criterion below."
+    },
+    {
+      "name": "c2",
+      "value": -0.20387835306681018,
+      "unit": "U_y/s",
+      "type": "fitted",
+      "description": "Coefficient of `((y-yref)/ys)`; estimated jointly with the other coefficients using the candidate-specific criterion below."
+    },
+    {
+      "name": "c3",
+      "value": 0.021134676998416053,
+      "unit": "U_y/s",
+      "type": "fitted",
+      "description": "Coefficient of `(x1/uone)`; estimated jointly with the other coefficients using the candidate-specific criterion below."
+    },
+    {
+      "name": "c4",
+      "value": 0.05174383408544938,
+      "unit": "U_y/s",
+      "type": "fitted",
+      "description": "Coefficient of `((y-yref)/ys)**2`; estimated jointly with the other coefficients using the candidate-specific criterion below."
+    },
+    {
+      "name": "c5",
+      "value": 0.1102550075737521,
+      "unit": "U_y/s",
+      "type": "fitted",
+      "description": "Coefficient of `((y-yref)/ys)*(x1/uone)`; estimated jointly with the other coefficients using the candidate-specific criterion below."
+    },
+    {
+      "name": "c6",
+      "value": 0.04870753442467702,
+      "unit": "U_y/s",
+      "type": "fitted",
+      "description": "Coefficient of `((y-yref)/ys)*(x2/utwo)`; estimated jointly with the other coefficients using the candidate-specific criterion below."
+    },
+    {
+      "name": "c7",
+      "value": -0.03206015782337894,
+      "unit": "U_y/s",
+      "type": "fitted",
+      "description": "Coefficient of `(x1/uone)**2`; estimated jointly with the other coefficients using the candidate-specific criterion below."
+    },
+    {
+      "name": "c8",
+      "value": -0.01380010977840066,
+      "unit": "U_y/s",
+      "type": "fitted",
+      "description": "Coefficient of `(x1/uone)*(x2/utwo)`; estimated jointly with the other coefficients using the candidate-specific criterion below."
+    },
+    {
+      "name": "c9",
+      "value": 0.02242866711671907,
+      "unit": "U_y/s",
+      "type": "fitted",
+      "description": "Coefficient of `(x2/utwo)**2`; estimated jointly with the other coefficients using the candidate-specific criterion below."
+    },
+    {
+      "name": "c10",
+      "value": -0.023523852422922154,
+      "unit": "U_y/s",
+      "type": "fitted",
+      "description": "Coefficient of `((y-yref)/ys)**3`; estimated jointly with the other coefficients using the candidate-specific criterion below."
+    },
+    {
+      "name": "c11",
+      "value": -0.03654853340614178,
+      "unit": "U_y/s",
+      "type": "fitted",
+      "description": "Coefficient of `((y-yref)/ys)*(x1/uone)*(x2/utwo)`; estimated jointly with the other coefficients using the candidate-specific criterion below."
+    },
+    {
+      "name": "c12",
+      "value": 0.014619513167303977,
+      "unit": "U_y/s",
+      "type": "fitted",
+      "description": "Coefficient of `(x1/uone)**3`; estimated jointly with the other coefficients using the candidate-specific criterion below."
+    },
+    {
+      "name": "c13",
+      "value": 0.01246192438357673,
+      "unit": "U_y/s",
+      "type": "fitted",
+      "description": "Coefficient of `(x1/uone)**2*(x2/utwo)`; estimated jointly with the other coefficients using the candidate-specific criterion below."
+    },
+    {
+      "name": "c14",
+      "value": 0.00030106736408077266,
+      "unit": "U_y/s",
+      "type": "fitted",
+      "description": "Coefficient of `(x1/uone)*(x2/utwo)**2`; estimated jointly with the other coefficients using the candidate-specific criterion below."
+    },
+    {
+      "name": "c15",
+      "value": -0.008762430135089587,
+      "unit": "U_y/s",
+      "type": "fitted",
+      "description": "Coefficient of `(x2/utwo)**3`; estimated jointly with the other coefficients using the candidate-specific criterion below."
+    }
+  ],
+  "estimation": {
+    "criterion": "Minimize the unweighted sum of squared predicted-minus-logged `dy` residuals over both files. This directly uses the supplied derivative target and was selected over rollout-only and joint criteria by the internal suffix simulation comparison. ",
+    "data": "Final parameter estimation uses every derivative row of data/train.csv and data/val.csv as two separate trajectories. Where rollout residuals enter, it also uses all states after the first of each trajectory. Initial structural searches fitted data/train.csv only and compared free-running simulation on data/val.csv. A subsequent criterion comparison fitted the full training file plus zero-based validation rows 0 through 727 and evaluated rows 728 through 1453, with an independent measured initialization at row 728. The suffix was then included in the final refit to use all supplied identification information. No test data were accessed. No rows were discarded in the final fit.",
+    "method": "Initial coefficients were obtained by ordinary least squares with scipy.linalg.lstsq; linear solves need no starts and no random seed. Backward elimination refitted all remaining coefficients jointly after each removal. The final derivative least-squares refit used scipy.optimize.least_squares, trust-region reflective, the common driver for the criterion comparison, although a direct linear solve would suffice for this particular selected criterion. The final solver starts were `c1 = -0.0057869682959327358`, `c2 = -0.21355235356997174`, `c3 = 0.024992036937928327`, `c4 = 0.061804727696907064`, `c5 = 0.11067803304780539`, `c6 = 0.052625975523513308`, `c7 = -0.037121160742016032`, `c8 = -0.008903297043405832`, `c9 = 0.021948807916305074`, `c10 = -0.029392842240924276`, `c11 = -0.036896273772270047`, `c12 = 0.017188220037639881`, `c13 = 0.010604356017695313`, `c14 = -0.0019773388814907575`, `c15 = -0.007958237586344924`, taken from sparse3_15_der in fit_polys_results.json because the prior derivative fit was already in a reasonable local basin. Final and criterion-comparison fits use scipy.optimize.least_squares with trust-region reflective, `x_scale = \"jac\"`, maximum 800 function evaluations, and dimensionless tolerances `ftol = 1e-10`, `xtol = 1e-10`, `gtol = 1e-10`. Nonlinear least squares supports the free-running residual criterion, for which a linear coefficient solve is not available. No random numbers enter this final step. Criterion selection compared derivative-only least squares, rollout-only least squares, and joint least squares with derivative residuals multiplied by `10*sqrt(w)` s for dimensionless trial weights `w = 1` and `w = 10`. The 10 s residual scale is a chosen conditioning/tradeoff scale, not an identified time constant. The criterion with smallest suffix rollout RMSE was selected. Every rollout uses classical RK4 with 5 s steps, logged inputs held constant, and a single first-state initialization, never later measured-state resets. All fitted parameters are jointly reestimated at each fitting stage; intermediate estimates are not frozen. ",
+    "script": "final_fit.py"
+  },
+  "discussion": {
+    "family": "Sparse polynomial continuous-time state-space vector field, estimated by backward subset selection rather than genetic programming or SINDy. General identification reference: L. Ljung, System Identification: Theory for the User, second edition, Prentice Hall, 1999 (bibliographic reference recalled from memory, not externally checked). ",
+    "interpretation": "The state `y`, inputs `x1` and `x2`, and target `dy` are the logged columns. Their physical units are unknown. `U_y`, `U_1` and `U_2` below denote unspecified native units of `y`, `x1` and `x2`; `dy` has units `U_y/s`. The full expression is `c1 + c2*((y-yref)/ys) + c3*(x1/uone) + c4*((y-yref)/ys)**2 + c5*((y-yref)/ys)*(x1/uone) + c6*((y-yref)/ys)*(x2/utwo) + c7*(x1/uone)**2 + c8*(x1/uone)*(x2/utwo) + c9*(x2/utwo)**2 + c10*((y-yref)/ys)**3 + c11*((y-yref)/ys)*(x1/uone)*(x2/utwo) + c12*(x1/uone)**3 + c13*(x1/uone)**2*(x2/utwo) + c14*(x1/uone)*(x2/utwo)**2 + c15*(x2/utwo)**3`. Input-only monomials give additive input response; monomials involving the centered state change local restoring or amplifying feedback; products with an input make that feedback input-dependent. These are mathematical effects, not identified physical mechanisms. Each coefficient and its exact multiplier are specified in the parameter rows. ",
+    "origin": "The initial affine model was inadequate. Complete polynomial libraries through total degree five were explored, using the normalized inputs and centered state. Cubic terms improved derivative and rollout validation errors, whereas degree four and five gave poorer validation or an unstable training rollout. Starting from the complete cubic library, greedy backward elimination repeatedly removed the term giving the least increase in refitted training derivative SSE; the retained fifteen-term structure preserved essentially the full cubic validation performance. No physical law supplied any monomial. The structure came from this deterministic library search; centering and scales were numerical choices. In the internal criterion comparison, the best suffix rollout RMSE was 0.049425261 U_y on rows 728 through 1453 of data/val.csv, initialized only at row 728 (zero-based rows). This suffix was excluded from that fitting stage but had already been inspected in exploratory validation, so this is not a pristine independent estimate. After refitting on both complete files, the training and validation rollout RMSE values are 0.028287847 and 0.036584843 U_y; these final values are in-sample, not unseen-data scores. Final predicted-minus-logged derivative residual lag-one correlations are 0.45406 and 0.381647 (dimensionless) on training and validation, respectively. ",
+    "limitations": "There is no supplied physical description or intended use; no term is assigned a physical mechanism. This is a scalar autonomous-in-state, memoryless-in-input approximation, not evidence that omitted dynamics are absent. It cannot represent input histories, disturbances or time-dependent hidden states. Observed derivative residual correlation motivated nonlinear feedback and input-rate interactions, but remained after these extensions. Sampled derivatives need not be exact continuous-time derivatives, and integration-method effects are absorbed into fitted values. Extrapolation beyond the sampled state/input ranges is unverified; uncertainty intervals were not estimated. The cubic state terms and unconstrained interactions do not guarantee global attraction or RK4 stability outside the identification range. "
+  }
+}

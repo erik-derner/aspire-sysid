@@ -1,0 +1,139 @@
+{
+  "authorized_part": {
+    "noise": null,
+    "preprocessing": null,
+    "sampling_period_s": 5.0,
+    "train": {
+      "file": "data/train.csv",
+      "samples": 1452,
+      "trajectories": 1,
+      "trajectory_lengths": [
+        1452
+      ]
+    },
+    "trajectory_column": null,
+    "val": {
+      "file": "data/val.csv",
+      "samples": 1454,
+      "trajectories": 1,
+      "trajectory_lengths": [
+        1454
+      ]
+    }
+  },
+  "build_script": {
+    "file": "build.py",
+    "sha256": "0508b0ad221f4ba48760d5331f18e15de2105853cc4a87f5688984c75e97d465"
+  },
+  "datasets": [
+    {
+      "agent_visible": true,
+      "assignment": "training",
+      "dataset": "train",
+      "noise": "not stated",
+      "operating_conditions": {
+        "source": "task.yaml, field description",
+        "statement": "not stated per dataset; the task description states the conditions of the recordings as a whole",
+        "task_description": "A small-scale 40-liter fermentation tank filled with approximately 25 liters of water, data recorded on the real rig. At the bottom of the tank, air is fed into the water at a flow rate controlled by a local mass-flow controller. The air collects in the headspace above the water level and leaves through an outlet valve at the top of the tank; the air pressure above the water level depends on the valve position. The valve position is the first input (`valve`), the air flow rate is the second input (`flow`), and the headspace air pressure `p` is the state and the measured output; `dp` is the sampled time derivative of `p`, a possible fitting target of dp = f(p, valve, flow). Sampling period T_s = 5 s. Each data file is one contiguous trajectory. The derivative column is a filtered numerical difference of p. Physical units: pressure in bar (10^5 Pa), valve in % closed (100% = fully closed), air flow rate in liters/min."
+      },
+      "preprocessing": "not stated",
+      "samples": 1452,
+      "sampling_period_s": 5.0,
+      "source": {
+        "provenance_document": "provenance.md of the task folder",
+        "recording_names": "not stated",
+        "task_file": "data/train.csv",
+        "working_directory_file": "data/train.csv"
+      },
+      "trajectories": [
+        {
+          "id": "train",
+          "samples": 1452
+        }
+      ],
+      "trajectory_column": null,
+      "version": {
+        "bytes": 105530,
+        "sha256": "8248ddfa031f31f42f54222030dcda488b48bd68befeb1eb46d5581336e968ad"
+      }
+    },
+    {
+      "agent_visible": true,
+      "assignment": "validation",
+      "dataset": "val",
+      "noise": "not stated",
+      "operating_conditions": {
+        "source": "task.yaml, field description",
+        "statement": "not stated per dataset; the task description states the conditions of the recordings as a whole",
+        "task_description": "A small-scale 40-liter fermentation tank filled with approximately 25 liters of water, data recorded on the real rig. At the bottom of the tank, air is fed into the water at a flow rate controlled by a local mass-flow controller. The air collects in the headspace above the water level and leaves through an outlet valve at the top of the tank; the air pressure above the water level depends on the valve position. The valve position is the first input (`valve`), the air flow rate is the second input (`flow`), and the headspace air pressure `p` is the state and the measured output; `dp` is the sampled time derivative of `p`, a possible fitting target of dp = f(p, valve, flow). Sampling period T_s = 5 s. Each data file is one contiguous trajectory. The derivative column is a filtered numerical difference of p. Physical units: pressure in bar (10^5 Pa), valve in % closed (100% = fully closed), air flow rate in liters/min."
+      },
+      "preprocessing": "not stated",
+      "samples": 1454,
+      "sampling_period_s": 5.0,
+      "source": {
+        "provenance_document": "provenance.md of the task folder",
+        "recording_names": "not stated",
+        "task_file": "data/val.csv",
+        "working_directory_file": "data/val.csv"
+      },
+      "trajectories": [
+        {
+          "id": "val",
+          "samples": 1454
+        }
+      ],
+      "trajectory_column": null,
+      "version": {
+        "bytes": 105665,
+        "sha256": "5363fc876cf3499a7aa39e7dca3ba3eae00304f720cc13432003148f57dd4084"
+      }
+    },
+    {
+      "agent_visible": false,
+      "assignment": "test",
+      "dataset": "test-1",
+      "noise": "not stated",
+      "operating_conditions": {
+        "source": "task.yaml, field description",
+        "statement": "not stated per dataset; the task description states the conditions of the recordings as a whole",
+        "task_description": "A small-scale 40-liter fermentation tank filled with approximately 25 liters of water, data recorded on the real rig. At the bottom of the tank, air is fed into the water at a flow rate controlled by a local mass-flow controller. The air collects in the headspace above the water level and leaves through an outlet valve at the top of the tank; the air pressure above the water level depends on the valve position. The valve position is the first input (`valve`), the air flow rate is the second input (`flow`), and the headspace air pressure `p` is the state and the measured output; `dp` is the sampled time derivative of `p`, a possible fitting target of dp = f(p, valve, flow). Sampling period T_s = 5 s. Each data file is one contiguous trajectory. The derivative column is a filtered numerical difference of p. Physical units: pressure in bar (10^5 Pa), valve in % closed (100% = fully closed), air flow rate in liters/min."
+      },
+      "preprocessing": "not stated",
+      "samples": 1210,
+      "sampling_period_s": 5.0,
+      "source": {
+        "provenance_document": "provenance.md of the task folder",
+        "recording_names": "not stated",
+        "task_file": "test/test_trajectory_1.csv",
+        "working_directory_file": null
+      },
+      "trajectories": [
+        {
+          "id": "test-1",
+          "samples": 1210
+        }
+      ],
+      "trajectory_column": null,
+      "version": {
+        "sha256": "21d9ac3993dff06d1c66cca4b04041cdd2fe2880d9314bfbeb2bbf60e8d5804d"
+      }
+    }
+  ],
+  "format_version": 1,
+  "provenance_document": {
+    "file": "provenance.md",
+    "sha256": "c143f47b94297098780a14da4ebd355aa4d3d0d16f3e743d07b70b5ec839a68d"
+  },
+  "sampling_period_note": null,
+  "sampling_period_s": 5.0,
+  "separation": {
+    "delayed_variables": "not applicable: the task declares no delayed variables",
+    "filtering": "the harness applies no filtering or other preprocessing; the preprocessing of the task authors is stated per dataset, and any filtering by the agent is applied by its own scripts to the data in its working directory, which contain no test data",
+    "per_trajectory_evaluation": "every trajectory and static dataset is evaluated on its own; a simulation starts once per trajectory and the end of one trajectory is never joined to the beginning of another",
+    "sealing": "the 1 sealed test trajectory file(s) are held in the task store and opened only by the evaluation module of the harness; they are never copied into the working directory, and the brief, the execution messages and the results permitted to the agent contain no test value, test trajectory, test-derived plot or failure location on test data; the leak scanner searches the working directory and the transcript for them",
+    "selection": "the agent fits and recommends from the training and validation data only; its recommendation is recorded in the pool file before any test result exists; the ranking on test data is computed afterwards by the harness and is labeled oracle-based selection on test data",
+    "use_of_test_data": "the authors used the test data during the development of the framework and of the tasks; a result of a round after the user has seen test results is labeled test-informed"
+  },
+  "task_id": "fermenter-pressure",
+  "user_facing": "contains recording names and digests of sealed files; never shown to the agent"
+}

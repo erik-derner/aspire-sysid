@@ -1,0 +1,35 @@
+{
+  "expressions": {
+    "x_next": "x + p_v*v_f*cos(phi)",
+    "y_next": "y + p_v*v_f*sin(phi)",
+    "phi_next": "phi + p_w*v_a"
+  },
+  "parameters": [
+    {
+      "name": "p_v",
+      "value": 0.1657263510671925,
+      "unit": "s",
+      "type": "fitted",
+      "description": "Gain of the forward velocity command `v_f`: the commanded velocity times `p_v` is the displacement along the heading in one sample. It would equal the sampling period `0.2` s if the robot executed the command exactly and the pose were logged without error."
+    },
+    {
+      "name": "p_w",
+      "value": 0.1584492666078135,
+      "unit": "s",
+      "type": "fitted",
+      "description": "Gain of the angular velocity command `v_a`: the commanded angular velocity times `p_w` is the change of the heading in one sample. It would equal the sampling period `0.2` s under the same conditions."
+    }
+  ],
+  "estimation": {
+    "criterion": "Root mean squared error of the simulated position `x` in m, because the task scores the simulated `x` and the intended use is simulation over about 5 s. The simulated `y` and `phi` do not enter the criterion.",
+    "data": "data/train.csv, all three trajectories. Each trajectory is cut into consecutive segments of at most `25` simulated samples; a segment starts from the logged pose of its first row, and every row after the first of a trajectory is scored once (447 scored samples). No row is left out.",
+    "method": "Nelder-Mead simplex method, scipy.optimize.minimize with method='Nelder-Mead' (SciPy 1.18.1), xatol `1e-9`, fatol `1e-12`. The method needs no derivative of the simulation error, and the model has two parameters, for which a simplex search is sufficient. Starting values `p_v = 0.2` s and `p_w = 0.2` s, the sampling period, which is the value of both gains for an ideal robot. Both parameters were estimated together. The method uses no random numbers.",
+    "script": "experiments/references/turtlebot/fit_references.py"
+  },
+  "discussion": {
+    "family": "Kinematic model of a unicycle (differential-drive robot without slip), discretized with the forward Euler method, with one gain per command. Reference model written by hand; it is not a candidate of the agent.",
+    "interpretation": "`p_v*v_f*cos(phi)` and `p_v*v_f*sin(phi)` are the components of the displacement of one sample along the heading `phi`; `p_w*v_a` is the change of the heading in one sample.",
+    "origin": "The structure is the textbook kinematics of a differential-drive robot. The two gains replace the sampling period, because the logged motion per sample is smaller than the commanded velocity times the sampling period. No other structure was tried for this reference model.",
+    "limitations": "The model has no delay between a command and the motion, no dependence of the gains on time or speed, and no model of the odometry error. The heading enters the criterion only through its effect on `x`, so that `p_w` is not an estimate of the heading gain."
+  }
+}

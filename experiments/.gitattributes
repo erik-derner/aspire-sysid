@@ -1,0 +1,6 @@
+# Run folders, logs, exports and aggregations are committed byte for byte: the run records hold
+# SHA-256 digests of these files, and `aspire record verify` recomputes them. Git
+# must therefore never convert line endings here (core.autocrlf would change the bytes of files
+# written on Windows, including files that the agent wrote in its working directory). The
+# harness itself writes LF on every platform.
+* -text

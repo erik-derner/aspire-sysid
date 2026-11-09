@@ -1,0 +1,3370 @@
+{
+  "budget": {
+    "analysis_exchange": {
+      "seconds": 900.0,
+      "turns": 15,
+      "usd": 1.0
+    },
+    "round": {
+      "seconds": 3600.0,
+      "turns": 60,
+      "usd": 10.0
+    },
+    "session": {
+      "seconds": 10800.0,
+      "turns": 180,
+      "usd": 30.0
+    }
+  },
+  "configuration": {
+    "name": "open",
+    "settings": {
+      "helpers": {
+        "default_turns": 20,
+        "max_helpers": 5
+      },
+      "name": "open",
+      "origin": "aspire/configs/tools.yaml",
+      "output": {
+        "agent_cap_chars": 20000,
+        "record_cap_chars": 10000000
+      },
+      "requests": {
+        "max_output_tokens": 16384,
+        "reasoning_effort": "medium",
+        "reasoning_summary": "auto",
+        "unreported_usage_chars_per_token": 2.0
+      },
+      "shell": {
+        "allowed_path_prefixes": [
+          "/usr",
+          "/bin",
+          "/sbin",
+          "/lib",
+          "/lib64",
+          "/dev/null",
+          "/dev/stdout",
+          "/dev/stderr"
+        ],
+        "limit_s": 600.0
+      },
+      "tools": [
+        "read_file",
+        "write_file",
+        "list_files",
+        "run_shell",
+        "web_fetch",
+        "web_search",
+        "install_package",
+        "start_helper"
+      ],
+      "web": {
+        "denied_url_substrings": [
+          "aspire-sysid",
+          "://127.",
+          "://localhost",
+          "://[::1]",
+          "://0.0.0.0"
+        ],
+        "max_fetch_chars": 200000
+      }
+    }
+  },
+  "consumption": {
+    "checks_s": 0.0,
+    "cost_usd": 1.7590620000000003,
+    "elapsed_s": 652.7029999999795,
+    "estimated_usage_turns": 0,
+    "evaluation_s": 13.125,
+    "excess_by_round_sum": {
+      "seconds": 0.0,
+      "turns": 0.0,
+      "usd": 0.0
+    },
+    "input_tokens": 780176,
+    "output_tokens": 17871,
+    "turns": 28,
+    "waiting_s": 0.0,
+    "web_search_calls": 2
+  },
+  "created_at": "2026-10-08T01:07:25.086023+00:00",
+  "environment": {
+    "error": null,
+    "packages": {
+      "cloudpickle": "3.1.2",
+      "contourpy": "1.4.0",
+      "cycler": "0.12.1",
+      "derivative": "0.6.3",
+      "fonttools": "4.66.1",
+      "gplearn": "0.4.3",
+      "importlib-metadata": "9.0.1",
+      "joblib": "1.6.0",
+      "kiwisolver": "1.5.1",
+      "matplotlib": "3.11.2",
+      "mpmath": "1.3.0",
+      "narwhals": "2.26.0",
+      "numpy": "2.5.3",
+      "packaging": "26.3",
+      "pandas": "3.0.6",
+      "pillow": "12.3.0",
+      "pip": "25.0.1",
+      "pyparsing": "3.3.3",
+      "pysindy": "2.1.0",
+      "python-dateutil": "2.9.0.post0",
+      "scikit-learn": "1.9.1",
+      "scipy": "1.18.1",
+      "six": "1.17.0",
+      "sympy": "1.14.0",
+      "threadpoolctl": "3.7.0",
+      "typing-extensions": "4.16.0",
+      "tzdata": "2026.5",
+      "zipp": "4.1.1"
+    },
+    "python_executable": "%USERPROFILE%\\AppData\\Local\\aspire\\agent-env\\Scripts\\python.exe",
+    "python_version": "3.12.10",
+    "sr_packages": {
+      "PySINDy": "2.1.0",
+      "gplearn": "0.4.3"
+    }
+  },
+  "extra": {
+    "experiment_run": {
+      "agent_interpreter": {
+        "error": null,
+        "executable": "%USERPROFILE%\\AppData\\Local\\aspire\\agent-env\\Scripts\\python.exe",
+        "harness_importable": false,
+        "is_harness_interpreter": false,
+        "note": "the harness package cannot be imported from the agent's interpreter",
+        "python_version": "3.12.10",
+        "runs": true
+      },
+      "attempt": 1,
+      "dry_run": false,
+      "experiment": {
+        "agent_python": "%USERPROFILE%\\AppData\\Local\\aspire\\agent-env\\Scripts\\python.exe",
+        "budget_override": null,
+        "concurrency": 3,
+        "config_sha256": "ff274e3b8eaaff442a5450efaf27810ccf4d4e8eb2a2c92da49cde191b411db2",
+        "exports": {
+          "matlab": true,
+          "octave": "auto",
+          "python": true
+        },
+        "folder": "experiments/paper-friction-driven-blind",
+        "id": "paper-friction-driven-blind",
+        "keep_workspaces": true,
+        "model": "gpt-6.1-sol",
+        "notes": "One of the six experiments of the manuscript (three systems, each as a described and as a blind task). Largest possible cost: 5 runs × 10 USD = 50 USD.",
+        "plots": true,
+        "runs": 5,
+        "seeds": "The language-model requests set no seed, so the responses are not reproducible; the runs of an experiment differ only in these responses. Requirement sampling and the reference comparison use the seeds declared by the task and the harness, recorded in every run record.",
+        "task": "task-jdhj",
+        "tasks_root": "tasks",
+        "vendor": "openai",
+        "workspace_root": "<tmp>\\aspire-runs-blind"
+      },
+      "experiment_id": "paper-friction-driven-blind",
+      "output": {
+        "name": "y",
+        "unit": "not supplied"
+      },
+      "pool_cap": 10,
+      "provider": {
+        "model": "gpt-6.1-sol",
+        "vendor": "openai"
+      },
+      "round_budget": {
+        "seconds": 3600.0,
+        "source": "task",
+        "turns": 60,
+        "usd": 10.0
+      },
+      "run_id": "r04",
+      "run_index": 4,
+      "runs": 5,
+      "shell_environment": {
+        "package_target": "<tmp>\\aspire-runs-blind\\26247b36d05f9626\\packages",
+        "package_target_note": "packages installed by the agent go into this folder of the run's attempt (PIP_TARGET, PYTHONPATH)",
+        "removed_variables": []
+      },
+      "task_id": "task-jdhj",
+      "token": "4dd38d7ad85e4a2e8cb55796c2bcd039",
+      "web_backends": {
+        "web_fetch": "available (Python urllib, text of the resource)",
+        "web_search": "provided by the vendor: the built-in web search tool of the OpenAI Responses API, executed by the vendor inside a response; the harness records each search action with its query and sources"
+      },
+      "workspace": {
+        "copy": {
+          "bytes_copied": 476403,
+          "destination": "experiments/paper-friction-driven-blind/runs/r04/workspace",
+          "excluded": [],
+          "files_copied": 27,
+          "rules": {
+            "environment_markers": [
+              "pyvenv.cfg",
+              "conda-meta"
+            ],
+            "excluded_names": [
+              "__pycache__",
+              "*.pyc",
+              "*.pyo",
+              ".ipynb_checkpoints",
+              ".git",
+              ".cache",
+              ".mypy_cache",
+              ".pytest_cache",
+              "node_modules",
+              ".julia",
+              "*.egg-info"
+            ],
+            "links": "symbolic links are listed, never followed",
+            "max_file_bytes": 20000000,
+            "max_total_bytes": 200000000
+          },
+          "source": "<tmp>\\aspire-runs-blind\\26247b36d05f9626\\workspace"
+        },
+        "kept": true,
+        "outside_repository": true,
+        "path": "<tmp>\\aspire-runs-blind\\26247b36d05f9626\\workspace",
+        "root": "<tmp>\\aspire-runs-blind"
+      }
+    },
+    "leak_scan": {
+      "clean": true,
+      "findings": [],
+      "method": "aspire_sysid.evaluate.leaks.scan_for_sealed_leaks: sealed paths and file names, recording names and their stems, digests of sealed files, test rows, test values with at least 6 significant digits, the reference expression",
+      "not_scanned": [],
+      "scanned": [
+        "transcript.jsonl",
+        "workspace/check_kinematics.py",
+        "workspace/explore.py",
+        "workspace/extra_results.json",
+        "workspace/final_results.json",
+        "workspace/fit_extra.py",
+        "workspace/fit_final.py",
+        "workspace/fit_friction.py",
+        "workspace/fit_rollout.py",
+        "workspace/friction_results.json",
+        "workspace/inspect_data.py",
+        "workspace/make_submission.py",
+        "workspace/models/Duffing.json",
+        "workspace/models/HarmonicLinear.json",
+        "workspace/models/Hybrid.json",
+        "workspace/models/pool.json",
+        "workspace/models/ShiftedSine.json",
+        "workspace/moving.py",
+        "workspace/residuals.py",
+        "workspace/rollout_results.json",
+        "workspace/selected_diagnostics.json",
+        "workspace/selected_diagnostics.py"
+      ]
+    }
+  },
+  "format_version": 1,
+  "harness": {
+    "code_revision": {
+      "commit": null,
+      "dirty": true,
+      "identity": {
+        "changed": [],
+        "changes_sha256": null,
+        "dirty": false,
+        "paths": [
+          "aspire",
+          "tasks"
+        ],
+        "trees": {
+          "aspire": "5b0a61ed97131cdddcf5ba717497fb844f469682",
+          "tasks": "4d94d2dee0f4aac04d38abe073376d5de763b261"
+        }
+      },
+      "note": null,
+      "source": "git"
+    },
+    "version": "0.1.0.dev0"
+  },
+  "kind": "aspire_run_record",
+  "model": {
+    "id": "gpt-6.1-sol",
+    "vendor": "openai"
+  },
+  "outcome": "completed",
+  "price": {
+    "input_usd_per_mtok": 2.0,
+    "model": "gpt-6.1-sol",
+    "output_usd_per_mtok": 10.0,
+    "source": "official OpenAI model page (developers.openai.com/api/docs/models/gpt-6.1-sol)",
+    "table": "aspire/configs/prices.yaml",
+    "table_verified": "2026-08-02",
+    "verified": "2026-10-05"
+  },
+  "provenance": {
+    "authorized_part": {
+      "noise": null,
+      "preprocessing": null,
+      "sampling_period_s": 0.01,
+      "train": {
+        "file": "data/train.csv",
+        "samples": 3522,
+        "trajectories": 13,
+        "trajectory_lengths": [
+          450,
+          450,
+          300,
+          300,
+          442,
+          442,
+          442,
+          141,
+          141,
+          141,
+          91,
+          91,
+          91
+        ]
+      },
+      "trajectory_column": "trajectory",
+      "val": {
+        "file": "data/val.csv",
+        "samples": 1192,
+        "trajectories": 3,
+        "trajectory_lengths": [
+          450,
+          300,
+          442
+        ]
+      }
+    },
+    "build_script": "not stated",
+    "datasets": [
+      {
+        "agent_visible": true,
+        "assignment": "training",
+        "dataset": "train",
+        "noise": "not stated",
+        "operating_conditions": {
+          "source": "task.yaml, field description",
+          "statement": "not stated per dataset; the task description states the conditions of the recordings as a whole",
+          "task_description": null
+        },
+        "preprocessing": "not stated",
+        "samples": 3522,
+        "sampling_period_s": 0.01,
+        "source": {
+          "provenance_document": "provenance.md of the task folder",
+          "recording_names": "not stated",
+          "task_file": "data/train.csv",
+          "working_directory_file": "data/train.csv"
+        },
+        "trajectories": [
+          {
+            "id": "1",
+            "samples": 450
+          },
+          {
+            "id": "2",
+            "samples": 450
+          },
+          {
+            "id": "3",
+            "samples": 300
+          },
+          {
+            "id": "4",
+            "samples": 300
+          },
+          {
+            "id": "5",
+            "samples": 442
+          },
+          {
+            "id": "6",
+            "samples": 442
+          },
+          {
+            "id": "7",
+            "samples": 442
+          },
+          {
+            "id": "8",
+            "samples": 141
+          },
+          {
+            "id": "9",
+            "samples": 141
+          },
+          {
+            "id": "10",
+            "samples": 141
+          },
+          {
+            "id": "11",
+            "samples": 91
+          },
+          {
+            "id": "12",
+            "samples": 91
+          },
+          {
+            "id": "13",
+            "samples": 91
+          }
+        ],
+        "trajectory_column": "trajectory",
+        "version": {
+          "bytes": 179789,
+          "sha256": "98a8000e2d4dc97e2f31a279eee1da183ffe347a8702f8fca3fc632df37ffc72"
+        }
+      },
+      {
+        "agent_visible": true,
+        "assignment": "validation",
+        "dataset": "val",
+        "noise": "not stated",
+        "operating_conditions": {
+          "source": "task.yaml, field description",
+          "statement": "not stated per dataset; the task description states the conditions of the recordings as a whole",
+          "task_description": null
+        },
+        "preprocessing": "not stated",
+        "samples": 1192,
+        "sampling_period_s": 0.01,
+        "source": {
+          "provenance_document": "provenance.md of the task folder",
+          "recording_names": "not stated",
+          "task_file": "data/val.csv",
+          "working_directory_file": "data/val.csv"
+        },
+        "trajectories": [
+          {
+            "id": "1",
+            "samples": 450
+          },
+          {
+            "id": "2",
+            "samples": 300
+          },
+          {
+            "id": "3",
+            "samples": 442
+          }
+        ],
+        "trajectory_column": "trajectory",
+        "version": {
+          "bytes": 65398,
+          "sha256": "f254b00381ef1019b50e820c5a239728b97c43d99a5a1444df27551af0354ae9"
+        }
+      },
+      {
+        "agent_visible": false,
+        "assignment": "test",
+        "dataset": "test-1",
+        "noise": "not stated",
+        "operating_conditions": {
+          "source": "task.yaml, field description",
+          "statement": "not stated per dataset; the task description states the conditions of the recordings as a whole",
+          "task_description": null
+        },
+        "preprocessing": "not stated",
+        "samples": 450,
+        "sampling_period_s": 0.01,
+        "source": {
+          "provenance_document": "provenance.md of the task folder",
+          "recording_names": "not stated",
+          "task_file": "test/held_out_1.csv",
+          "working_directory_file": null
+        },
+        "trajectories": [
+          {
+            "id": "test-1",
+            "samples": 450
+          }
+        ],
+        "trajectory_column": null,
+        "version": {
+          "sha256": "e166c96666d0f6affa425ba467686ce4a2b5c00851bfd975ef43c312e5cb0d92"
+        }
+      },
+      {
+        "agent_visible": false,
+        "assignment": "test",
+        "dataset": "test-2",
+        "noise": "not stated",
+        "operating_conditions": {
+          "source": "task.yaml, field description",
+          "statement": "not stated per dataset; the task description states the conditions of the recordings as a whole",
+          "task_description": null
+        },
+        "preprocessing": "not stated",
+        "samples": 300,
+        "sampling_period_s": 0.01,
+        "source": {
+          "provenance_document": "provenance.md of the task folder",
+          "recording_names": "not stated",
+          "task_file": "test/held_out_2.csv",
+          "working_directory_file": null
+        },
+        "trajectories": [
+          {
+            "id": "test-2",
+            "samples": 300
+          }
+        ],
+        "trajectory_column": null,
+        "version": {
+          "sha256": "ca0abade1ef11419a4f75d52f0afcfb5a423a7f4de20b8452bf1d2aacad1d675"
+        }
+      },
+      {
+        "agent_visible": false,
+        "assignment": "test",
+        "dataset": "test-3",
+        "noise": "not stated",
+        "operating_conditions": {
+          "source": "task.yaml, field description",
+          "statement": "not stated per dataset; the task description states the conditions of the recordings as a whole",
+          "task_description": null
+        },
+        "preprocessing": "not stated",
+        "samples": 141,
+        "sampling_period_s": 0.01,
+        "source": {
+          "provenance_document": "provenance.md of the task folder",
+          "recording_names": "not stated",
+          "task_file": "test/held_out_3.csv",
+          "working_directory_file": null
+        },
+        "trajectories": [
+          {
+            "id": "test-3",
+            "samples": 141
+          }
+        ],
+        "trajectory_column": null,
+        "version": {
+          "sha256": "9973cbfa04845c79c094a7345d60bcab30028884a203ceb620f878ddb3235fbb"
+        }
+      },
+      {
+        "agent_visible": false,
+        "assignment": "test",
+        "dataset": "test-4",
+        "noise": "not stated",
+        "operating_conditions": {
+          "source": "task.yaml, field description",
+          "statement": "not stated per dataset; the task description states the conditions of the recordings as a whole",
+          "task_description": null
+        },
+        "preprocessing": "not stated",
+        "samples": 91,
+        "sampling_period_s": 0.01,
+        "source": {
+          "provenance_document": "provenance.md of the task folder",
+          "recording_names": "not stated",
+          "task_file": "test/held_out_4.csv",
+          "working_directory_file": null
+        },
+        "trajectories": [
+          {
+            "id": "test-4",
+            "samples": 91
+          }
+        ],
+        "trajectory_column": null,
+        "version": {
+          "sha256": "bda563d433a4c13b29606a4770dc851b194ce67c3e870d664647ca5c0dd09855"
+        }
+      }
+    ],
+    "format_version": 1,
+    "provenance_document": {
+      "file": "provenance.md",
+      "sha256": "9785ac2346255b653a8b2820bc4f03ff1633ea1c5334c213d7b82406be0a7d93"
+    },
+    "sampling_period_note": null,
+    "sampling_period_s": 0.01,
+    "separation": {
+      "delayed_variables": "not applicable: the task declares no delayed variables",
+      "filtering": "the harness applies no filtering or other preprocessing; the preprocessing of the task authors is stated per dataset, and any filtering by the agent is applied by its own scripts to the data in its working directory, which contain no test data",
+      "per_trajectory_evaluation": "every trajectory and static dataset is evaluated on its own; a simulation starts once per trajectory and the end of one trajectory is never joined to the beginning of another",
+      "sealing": "the 4 sealed test trajectory file(s) are held in the task store and opened only by the evaluation module of the harness; they are never copied into the working directory, and the brief, the execution messages and the results permitted to the agent contain no test value, test trajectory, test-derived plot or failure location on test data; the leak scanner searches the working directory and the transcript for them",
+      "selection": "the agent fits and recommends from the training and validation data only; its recommendation is recorded in the pool file before any test result exists; the ranking on test data is computed afterwards by the harness and is labeled oracle-based selection on test data",
+      "use_of_test_data": "the authors used the test data during the development of the framework and of the tasks; a result of a round after the user has seen test results is labeled test-informed"
+    },
+    "task_id": "task-jdhj",
+    "user_facing": "contains recording names and digests of sealed files; never shown to the agent"
+  },
+  "provenance_file": "provenance.json",
+  "rounds": [
+    {
+      "candidate_files": {
+        "complete": [
+          "Duffing",
+          "HarmonicLinear",
+          "Hybrid",
+          "ShiftedSine"
+        ],
+        "incomplete": [],
+        "missing": []
+      },
+      "check_report": {
+        "evaluated": [
+          "ShiftedSine",
+          "HarmonicLinear",
+          "Duffing",
+          "Hybrid"
+        ],
+        "issues": [],
+        "order": [
+          "ShiftedSine",
+          "HarmonicLinear",
+          "Duffing",
+          "Hybrid"
+        ],
+        "order_from_pool_file": true,
+        "outside_limit": [],
+        "passed": true,
+        "text": "File and expression checks of the candidate files (rules F1 to P1)\nTask task-jdhj (continuous); pool limit 10; training data data/train.csv: 3522 rows in 13 trajectories\n\nPool file models/pool.json: valid (pool version 1, 4 label(s) in the order, recommendation: ShiftedSine)\n\nCandidate ShiftedSine (models/ShiftedSine.json, position 1 of 4): passed\n  diagnostics: 6 fitted, 0 fixed, 0 tied parameter(s); 0 non-integer numeric literal(s); evaluated on 3522 training rows\nCandidate HarmonicLinear (models/HarmonicLinear.json, position 2 of 4): passed\n  diagnostics: 7 fitted, 0 fixed, 0 tied parameter(s); 0 non-integer numeric literal(s); evaluated on 3522 training rows\nCandidate Duffing (models/Duffing.json, position 3 of 4): passed\n  diagnostics: 7 fitted, 0 fixed, 0 tied parameter(s); 0 non-integer numeric literal(s); evaluated on 3522 training rows\nCandidate Hybrid (models/Hybrid.json, position 4 of 4): passed\n  diagnostics: 7 fitted, 1 fixed, 0 tied parameter(s); 0 non-integer numeric literal(s); evaluated on 3522 training rows\n\nSummary: 4 of 4 candidate(s) within the limit passed the file and expression checks (0 outside the limit); pool file: valid; candidates to be evaluated: ShiftedSine, HarmonicLinear, Duffing, Hybrid; result: PASS (exit status 0).\n"
+      },
+      "consumption": {
+        "cached_input_tokens": 721453,
+        "checks_s": 0.0,
+        "cost_usd": 1.7590620000000003,
+        "elapsed_s": 652.7029999999795,
+        "estimated_usage_turns": 0,
+        "evaluation_s": 13.125,
+        "excess": {
+          "seconds": 0.0,
+          "turns": 0.0,
+          "usd": 0.0
+        },
+        "input_tokens": 780176,
+        "output_tokens": 17871,
+        "reasoning_tokens": 6018,
+        "turns": 28,
+        "waiting_s": 0.0,
+        "web_search_calls": 2
+      },
+      "correction_used": false,
+      "done_count": 1,
+      "error": null,
+      "evaluated_labels": [
+        "ShiftedSine",
+        "HarmonicLinear",
+        "Duffing",
+        "Hybrid"
+      ],
+      "evaluation": {
+        "folder": "evaluation/v1",
+        "permitted_file": "evaluation/v1/permitted.json",
+        "report": {
+          "candidates": [
+            {
+              "allowed_violations": [],
+              "checks": {
+                "issues": [],
+                "notes": [],
+                "passed": true
+              },
+              "complexity": {
+                "fitted_parameters": 6,
+                "fixed_parameters": 0,
+                "node_count": 25,
+                "node_count_per_key": {
+                  "dx1": 24,
+                  "dy": 1
+                },
+                "noninteger_literals": 0,
+                "tied_parameters": 0
+              },
+              "excluded_by_requirements": false,
+              "exclusions": [],
+              "expressions": {
+                "dx1": "-a*sin(y + delta) - b*x1 + c*x2 - f*tanh(x1/s)",
+                "dy": "x1"
+              },
+              "failed_computations": [],
+              "label": "ShiftedSine",
+              "position": 1,
+              "requirements": [],
+              "sealed": {
+                "eligible": true,
+                "failed_computations": [],
+                "failed_numerically": false,
+                "ineligibility": [],
+                "rank": 4,
+                "reference_comparison": null,
+                "score_S": 0.049195139867364956,
+                "test": {
+                  "finished": true,
+                  "group": "test",
+                  "pooled_rmse": 0.049195139867364956,
+                  "scored_samples": 978,
+                  "trajectories": [
+                    {
+                      "completed_samples": 449,
+                      "failure": null,
+                      "finished": true,
+                      "group": "test",
+                      "measures": {
+                        "mean": -0.03131797041752311,
+                        "n": 449,
+                        "nrmse": 0.11027204870649032,
+                        "r2": 0.9878400752740735,
+                        "rmse": 0.04163755535853095,
+                        "sse": 0.7784250212893933,
+                        "std": 0.3775893877636851
+                      },
+                      "n_samples": 450,
+                      "note": null,
+                      "prefix_diagnostic": null,
+                      "required_samples": 449,
+                      "scoring_interval": [
+                        1,
+                        450
+                      ],
+                      "trajectory": "test-1"
+                    },
+                    {
+                      "completed_samples": 299,
+                      "failure": null,
+                      "finished": true,
+                      "group": "test",
+                      "measures": {
+                        "mean": 0.17143219309689317,
+                        "n": 299,
+                        "nrmse": 0.10794592197328708,
+                        "r2": 0.988347677929337,
+                        "rmse": 0.06671476207186763,
+                        "sse": 1.3308069840134666,
+                        "std": 0.6180387443295658
+                      },
+                      "n_samples": 300,
+                      "note": null,
+                      "prefix_diagnostic": null,
+                      "required_samples": 299,
+                      "scoring_interval": [
+                        1,
+                        300
+                      ],
+                      "trajectory": "test-2"
+                    },
+                    {
+                      "completed_samples": 140,
+                      "failure": null,
+                      "finished": true,
+                      "group": "test",
+                      "measures": {
+                        "mean": -0.02670353755551293,
+                        "n": 140,
+                        "nrmse": 0.3582251775808153,
+                        "r2": 0.8716747221471933,
+                        "rmse": 0.01896243647540641,
+                        "sse": 0.050340359591735294,
+                        "std": 0.052934404564929004
+                      },
+                      "n_samples": 141,
+                      "note": null,
+                      "prefix_diagnostic": null,
+                      "required_samples": 140,
+                      "scoring_interval": [
+                        1,
+                        141
+                      ],
+                      "trajectory": "test-3"
+                    },
+                    {
+                      "completed_samples": 90,
+                      "failure": null,
+                      "finished": true,
+                      "group": "test",
+                      "measures": {
+                        "mean": -0.12576842589871143,
+                        "n": 90,
+                        "nrmse": 0.09090113504119718,
+                        "r2": 0.991736983648222,
+                        "rmse": 0.04799836367239507,
+                        "sse": 0.20734586237047456,
+                        "std": 0.5280282105459058
+                      },
+                      "n_samples": 91,
+                      "note": null,
+                      "prefix_diagnostic": null,
+                      "required_samples": 90,
+                      "scoring_interval": [
+                        1,
+                        91
+                      ],
+                      "trajectory": "test-4"
+                    }
+                  ]
+                }
+              },
+              "sensitivity": {
+                "assumptions": [
+                  "the fitting target is the one implied by the formulation (the model file has no structured field for it)"
+                ],
+                "available": true,
+                "data": [
+                  "train",
+                  "val"
+                ],
+                "deficient": false,
+                "dependent_groups": [],
+                "method": "analytic derivatives (SymPy), ties differentiated through their equations",
+                "parameters": [
+                  "a",
+                  "b",
+                  "c",
+                  "f",
+                  "s",
+                  "delta"
+                ],
+                "rank": 6,
+                "rank_threshold": "s_i / s_1 > 1e-08",
+                "reason": null,
+                "rows": 4714,
+                "rows_dropped": 0,
+                "scaling": "rows of each target divided by the standard deviation of its measured column; columns divided by their Euclidean norm",
+                "singular_values": [
+                  1.4194209241345388,
+                  1.1050755924293671,
+                  0.9967545296919119,
+                  0.9775333039568401,
+                  0.7703111241830308,
+                  0.47072496672655995
+                ],
+                "targets": [
+                  "dx1"
+                ],
+                "zero_columns": []
+              },
+              "status": "evaluated",
+              "structure": {
+                "dx1": "P1*x2 - P2*sin(P3 + y) - P4*x1 - P5*tanh(x1/P6)",
+                "dy": "x1"
+              },
+              "structure_group": 1,
+              "unresolved_requirements": [],
+              "visible": {
+                "train": {
+                  "finished": true,
+                  "group": "train",
+                  "pooled_rmse": 0.05784071411137845,
+                  "scored_samples": 3509,
+                  "trajectories": [
+                    {
+                      "completed_samples": 449,
+                      "failure": null,
+                      "finished": true,
+                      "group": "train",
+                      "measures": {
+                        "mean": 0.08278691375784947,
+                        "n": 449,
+                        "nrmse": 0.08072622270680838,
+                        "r2": 0.9934832769674907,
+                        "rmse": 0.020704469269266678,
+                        "sse": 0.1924750964271817,
+                        "std": 0.25647761749566517
+                      },
+                      "n_samples": 450,
+                      "note": null,
+                      "prefix_diagnostic": null,
+                      "required_samples": 449,
+                      "scoring_interval": [
+                        1,
+                        450
+                      ],
+                      "trajectory": "1"
+                    },
+                    {
+                      "completed_samples": 449,
+                      "failure": null,
+                      "finished": true,
+                      "group": "train",
+                      "measures": {
+                        "mean": -0.01861166249120006,
+                        "n": 449,
+                        "nrmse": 0.09050525584441446,
+                        "r2": 0.9918087986645371,
+                        "rmse": 0.0603175989269568,
+                        "sse": 1.633557520400636,
+                        "std": 0.6664541010816811
+                      },
+                      "n_samples": 450,
+                      "note": null,
+                      "prefix_diagnostic": null,
+                      "required_samples": 449,
+                      "scoring_interval": [
+                        1,
+                        450
+                      ],
+                      "trajectory": "2"
+                    },
+                    {
+                      "completed_samples": 299,
+                      "failure": null,
+                      "finished": true,
+                      "group": "train",
+                      "measures": {
+                        "mean": -0.3052073023460745,
+                        "n": 299,
+                        "nrmse": 0.17103515505258465,
+                        "r2": 0.9707469757361383,
+                        "rmse": 0.08077524837378586,
+                        "sse": 1.9508675842041914,
+                        "std": 0.4722727812826057
+                      },
+                      "n_samples": 300,
+                      "note": null,
+                      "prefix_diagnostic": null,
+                      "required_samples": 299,
+                      "scoring_interval": [
+                        1,
+                        300
+                      ],
+                      "trajectory": "3"
+                    },
+                    {
+                      "completed_samples": 299,
+                      "failure": null,
+                      "finished": true,
+                      "group": "train",
+                      "measures": {
+                        "mean": 0.07273995297927136,
+                        "n": 299,
+                        "nrmse": 0.08127220925414662,
+                        "r2": 0.9933948280029502,
+                        "rmse": 0.06660539802172785,
+                        "sse": 1.326447434644204,
+                        "std": 0.8195347294355673
+                      },
+                      "n_samples": 300,
+                      "note": null,
+                      "prefix_diagnostic": null,
+                      "required_samples": 299,
+                      "scoring_interval": [
+                        1,
+                        300
+                      ],
+                      "trajectory": "4"
+                    },
+                    {
+                      "completed_samples": 441,
+                      "failure": null,
+                      "finished": true,
+                      "group": "train",
+                      "measures": {
+                        "mean": 0.024313505049210933,
+                        "n": 441,
+                        "nrmse": 0.10288645769967714,
+                        "r2": 0.9894143768220125,
+                        "rmse": 0.0393800349516135,
+                        "sse": 0.6838971343805226,
+                        "std": 0.3827523644225636
+                      },
+                      "n_samples": 442,
+                      "note": null,
+                      "prefix_diagnostic": null,
+                      "required_samples": 441,
+                      "scoring_interval": [
+                        1,
+                        442
+                      ],
+                      "trajectory": "5"
+                    },
+                    {
+                      "completed_samples": 441,
+                      "failure": null,
+                      "finished": true,
+                      "group": "train",
+                      "measures": {
+                        "mean": 0.06467691542390433,
+                        "n": 441,
+                        "nrmse": 0.05401876371021913,
+                        "r2": 0.9970819731672195,
+                        "rmse": 0.02465634058999567,
+                        "sse": 0.2680993928988318,
+                        "std": 0.4564402977132786
+                      },
+                      "n_samples": 442,
+                      "note": null,
+                      "prefix_diagnostic": null,
+                      "required_samples": 441,
+                      "scoring_interval": [
+                        1,
+                        442
+                      ],
+                      "trajectory": "6"
+                    },
+                    {
+                      "completed_samples": 441,
+                      "failure": null,
+                      "finished": true,
+                      "group": "train",
+                      "measures": {
+                        "mean": -0.020089095880097843,
+                        "n": 441,
+                        "nrmse": 0.18795983847094197,
+                        "r2": 0.9646710991219775,
+                        "rmse": 0.0975211959697255,
+                        "sse": 4.194079195544232,
+                        "std": 0.518840603200465
+                      },
+                      "n_samples": 442,
+                      "note": null,
+                      "prefix_diagnostic": null,
+                      "required_samples": 441,
+                      "scoring_interval": [
+                        1,
+                        442
+                      ],
+                      "trajectory": "7"
+                    },
+                    {
+                      "completed_samples": 140,
+                      "failure": null,
+                      "finished": true,
+                      "group": "train",
+                      "measures": {
+                        "mean": 0.03621807530638514,
+                        "n": 140,
+                        "nrmse": 0.4924076473399615,
+                        "r2": 0.7575347088411242,
+                        "rmse": 0.08086421690115818,
+                        "sse": 0.9154630205052577,
+                        "std": 0.16422209796698992
+                      },
+                      "n_samples": 141,
+                      "note": null,
+                      "prefix_diagnostic": null,
+                      "required_samples": 140,
+                      "scoring_interval": [
+                        1,
+                        141
+                      ],
+                      "trajectory": "8"
+                    },
+                    {
+                      "completed_samples": 140,
+                      "failure": null,
+                      "finished": true,
+                      "group": "train",
+                      "measures": {
+                        "mean": 0.09830941010983475,
+                        "n": 140,
+                        "nrmse": 0.0976035732140751,
+                        "r2": 0.9904735424958446,
+                        "rmse": 0.02134461903000548,
+                        "sse": 0.06378298661505008,
+                        "std": 0.2186868608097991
+                      },
+                      "n_samples": 141,
+                      "note": null,
+                      "prefix_diagnostic": null,
+                      "required_samples": 140,
+                      "scoring_interval": [
+                        1,
+                        141
+                      ],
+                      "trajectory": "9"
+                    },
+                    {
+                      "completed_samples": 140,
+                      "failure": null,
+                      "finished": true,
+                      "group": "train",
+                      "measures": {
+                        "mean": -0.11235681726088624,
+                        "n": 140,
+                        "nrmse": 0.5986973865449293,
+                        "r2": 0.6415614393442715,
+                        "rmse": 0.029437258328197602,
+                        "sse": 0.12131730490334548,
+                        "std": 0.049168843876335314
+                      },
+                      "n_samples": 141,
+                      "note": null,
+                      "prefix_diagnostic": null,
+                      "required_samples": 140,
+                      "scoring_interval": [
+                        1,
+                        141
+                      ],
+                      "trajectory": "10"
+                    },
+                    {
+                      "completed_samples": 90,
+                      "failure": null,
+                      "finished": true,
+                      "group": "train",
+                      "measures": {
+                        "mean": 0.05358160803622594,
+                        "n": 90,
+                        "nrmse": 0.046155341151285195,
+                        "r2": 0.9978696844832085,
+                        "rmse": 0.007596380807711866,
+                        "sse": 0.005193450123819586,
+                        "std": 0.16458291972781453
+                      },
+                      "n_samples": 91,
+                      "note": null,
+                      "prefix_diagnostic": null,
+                      "required_samples": 90,
+                      "scoring_interval": [
+                        1,
+                        91
+                      ],
+                      "trajectory": "11"
+                    },
+                    {
+                      "completed_samples": 90,
+                      "failure": null,
+                      "finished": true,
+                      "group": "train",
+                      "measures": {
+                        "mean": -0.05777039824101206,
+                        "n": 90,
+                        "nrmse": 2.8731382330760993,
+                        "r2": -7.254923306363651,
+                        "rmse": 0.014659370901300076,
+                        "sse": 0.019340743969969508,
+                        "std": 0.005102215665274536
+                      },
+                      "n_samples": 91,
+                      "note": null,
+                      "prefix_diagnostic": null,
+                      "required_samples": 90,
+                      "scoring_interval": [
+                        1,
+                        91
+                      ],
+                      "trajectory": "12"
+                    },
+                    {
+                      "completed_samples": 90,
+                      "failure": null,
+                      "finished": true,
+                      "group": "train",
+                      "measures": {
+                        "mean": -0.06147049625524025,
+                        "n": 90,
+                        "nrmse": 0.1172197016133376,
+                        "r2": 0.9862595415536801,
+                        "rmse": 0.06368392440297416,
+                        "sse": 0.3650078004627354,
+                        "std": 0.5432868666825544
+                      },
+                      "n_samples": 91,
+                      "note": null,
+                      "prefix_diagnostic": null,
+                      "required_samples": 90,
+                      "scoring_interval": [
+                        1,
+                        91
+                      ],
+                      "trajectory": "13"
+                    }
+                  ]
+                },
+                "val": {
+                  "finished": true,
+                  "group": "val",
+                  "pooled_rmse": 0.07929740111285453,
+                  "scored_samples": 1189,
+                  "trajectories": [
+                    {
+                      "completed_samples": 449,
+                      "failure": null,
+                      "finished": true,
+                      "group": "val",
+                      "measures": {
+                        "mean": 0.2512644404967997,
+                        "n": 449,
+                        "nrmse": 0.1658353488765137,
+                        "r2": 0.972498637063005,
+                        "rmse": 0.09067372406415342,
+                        "sse": 3.6915541818123434,
+                        "std": 0.5467695800590258
+                      },
+                      "n_samples": 450,
+                      "note": null,
+                      "prefix_diagnostic": null,
+                      "required_samples": 449,
+                      "scoring_interval": [
+                        1,
+                        450
+                      ],
+                      "trajectory": "1"
+                    },
+                    {
+                      "completed_samples": 299,
+                      "failure": null,
+                      "finished": true,
+                      "group": "val",
+                      "measures": {
+                        "mean": -0.25228354918175416,
+                        "n": 299,
+                        "nrmse": 0.12538649034717173,
+                        "r2": 0.9842782280384186,
+                        "rmse": 0.07010624991678056,
+                        "sse": 1.4695509969408342,
+                        "std": 0.559121239638094
+                      },
+                      "n_samples": 300,
+                      "note": null,
+                      "prefix_diagnostic": null,
+                      "required_samples": 299,
+                      "scoring_interval": [
+                        1,
+                        300
+                      ],
+                      "trajectory": "2"
+                    },
+                    {
+                      "completed_samples": 441,
+                      "failure": null,
+                      "finished": true,
+                      "group": "val",
+                      "measures": {
+                        "mean": -0.06533230436751053,
+                        "n": 441,
+                        "nrmse": 0.19278447109693922,
+                        "r2": 0.9628341477038734,
+                        "rmse": 0.07245953367654676,
+                        "sse": 2.3154193530945726,
+                        "std": 0.3758577299522813
+                      },
+                      "n_samples": 442,
+                      "note": null,
+                      "prefix_diagnostic": null,
+                      "required_samples": 441,
+                      "scoring_interval": [
+                        1,
+                        442
+                      ],
+                      "trajectory": "3"
+                    }
+                  ]
+                }
+              },
+              "within_limit": true
+            },
+            {
+              "allowed_violations": [],
+              "checks": {
+                "issues": [],
+                "notes": [],
+                "passed": true
+              },
+              "complexity": {
+                "fitted_parameters": 7,
+                "fixed_parameters": 0,
+                "node_count": 30,
+                "node_count_per_key": {
+                  "dx1": 29,
+                  "dy": 1
+                },
+                "noninteger_literals": 0,
+                "tied_parameters": 0
+              },
+              "excluded_by_requirements": false,
+              "exclusions": [],
+              "expressions": {
+                "dx1": "-a*sin(y) + ell*y + harm*cos(y) - b*x1 + c*x2 - f*tanh(x1/s)",
+                "dy": "x1"
+              },
+              "failed_computations": [],
+              "label": "HarmonicLinear",
+              "position": 2,
+              "requirements": [],
+              "sealed": {
+                "eligible": true,
+                "failed_computations": [],
+                "failed_numerically": false,
+                "ineligibility": [],
+                "rank": 3,
+                "reference_comparison": null,
+                "score_S": 0.04699902492040719,
+                "test": {
+                  "finished": true,
+                  "group": "test",
+                  "pooled_rmse": 0.04699902492040719,
+                  "scored_samples": 978,
+                  "trajectories": [
+                    {
+                      "completed_samples": 449,
+                      "failure": null,
+                      "finished": true,
+                      "group": "test",
+                      "measures": {
+                        "mean": -0.03131797041752311,
+                        "n": 449,
+                        "nrmse": 0.10443428997324941,
+                        "r2": 0.9890934790777832,
+                        "rmse": 0.03943327961253441,
+                        "sse": 0.6981876099091444,
+                        "std": 0.3775893877636851
+                      },
+                      "n_samples": 450,
+                      "note": null,
+                      "prefix_diagnostic": null,
+                      "required_samples": 449,
+                      "scoring_interval": [
+                        1,
+                        450
+                      ],
+                      "trajectory": "test-1"
+                    },
+                    {
+                      "completed_samples": 299,
+                      "failure": null,
+                      "finished": true,
+                      "group": "test",
+                      "measures": {
+                        "mean": 0.17143219309689317,
+                        "n": 299,
+                        "nrmse": 0.10433514422212689,
+                        "r2": 0.989114177680148,
+                        "rmse": 0.06448316152448746,
+                        "sse": 1.2432653579377488,
+                        "std": 0.6180387443295658
+                      },
+                      "n_samples": 300,
+                      "note": null,
+                      "prefix_diagnostic": null,
+                      "required_samples": 299,
+                      "scoring_interval": [
+                        1,
+                        300
+                      ],
+                      "trajectory": "test-2"
+                    },
+                    {
+                      "completed_samples": 140,
+                      "failure": null,
+                      "finished": true,
+                      "group": "test",
+                      "measures": {
+                        "mean": -0.02670353755551293,
+                        "n": 140,
+                        "nrmse": 0.38480269743117357,
+                        "r2": 0.8519268840496927,
+                        "rmse": 0.020369301663497708,
+                        "sse": 0.058087183036199856,
+                        "std": 0.052934404564929004
+                      },
+                      "n_samples": 141,
+                      "note": null,
+                      "prefix_diagnostic": null,
+                      "required_samples": 140,
+                      "scoring_interval": [
+                        1,
+                        141
+                      ],
+                      "trajectory": "test-3"
+                    },
+                    {
+                      "completed_samples": 90,
+                      "failure": null,
+                      "finished": true,
+                      "group": "test",
+                      "measures": {
+                        "mean": -0.12576842589871143,
+                        "n": 90,
+                        "nrmse": 0.08004369140542571,
+                        "r2": 0.993593007466193,
+                        "rmse": 0.04226532713829563,
+                        "sse": 0.16077220902964343,
+                        "std": 0.5280282105459058
+                      },
+                      "n_samples": 91,
+                      "note": null,
+                      "prefix_diagnostic": null,
+                      "required_samples": 90,
+                      "scoring_interval": [
+                        1,
+                        91
+                      ],
+                      "trajectory": "test-4"
+                    }
+                  ]
+                }
+              },
+              "sensitivity": {
+                "assumptions": [
+                  "the fitting target is the one implied by the formulation (the model file has no structured field for it)"
+                ],
+                "available": true,
+                "data": [
+                  "train",
+                  "val"
+                ],
+                "deficient": false,
+                "dependent_groups": [],
+                "method": "analytic derivatives (SymPy), ties differentiated through their equations",
+                "parameters": [
+                  "a",
+                  "b",
+                  "c",
+                  "f",
+                  "s",
+                  "ell",
+                  "harm"
+                ],
+                "rank": 7,
+                "rank_threshold": "s_i / s_1 > 1e-08",
+                "reason": null,
+                "rows": 4714,
+                "rows_dropped": 0,
+                "scaling": "rows of each target divided by the standard deviation of its measured column; columns divided by their Euclidean norm",
+                "singular_values": [
+                  1.4811479976307897,
+                  1.3616050365981809,
+                  1.0211941171444894,
+                  0.9889926896983086,
+                  0.8120408800394223,
+                  0.4712207868649599,
+                  0.22322398488674203
+                ],
+                "targets": [
+                  "dx1"
+                ],
+                "zero_columns": []
+              },
+              "status": "evaluated",
+              "structure": {
+                "dx1": "P1*x2 + P2*y + P3*cos(y) - P4*sin(y) - P5*x1 - P6*tanh(x1/P7)",
+                "dy": "x1"
+              },
+              "structure_group": 2,
+              "unresolved_requirements": [],
+              "visible": {
+                "train": {
+                  "finished": true,
+                  "group": "train",
+                  "pooled_rmse": 0.04672833372888443,
+                  "scored_samples": 3509,
+                  "trajectories": [
+                    {
+                      "completed_samples": 449,
+                      "failure": null,
+                      "finished": true,
+                      "group": "train",
+                      "measures": {
+                        "mean": 0.08278691375784947,
+                        "n": 449,
+                        "nrmse": 0.11771154361260272,
+                        "r2": 0.9861439925003384,
+                        "rmse": 0.030190376257497428,
+                        "sse": 0.4092450095375997,
+                        "std": 0.25647761749566517
+                      },
+                      "n_samples": 450,
+                      "note": null,
+                      "prefix_diagnostic": null,
+                      "required_samples": 449,
+                      "scoring_interval": [
+                        1,
+                        450
+                      ],
+                      "trajectory": "1"
+                    },
+                    {
+                      "completed_samples": 449,
+                      "failure": null,
+                      "finished": true,
+                      "group": "train",
+                      "measures": {
+                        "mean": -0.01861166249120006,
+                        "n": 449,
+                        "nrmse": 0.053947486590166814,
+                        "r2": 0.9970896686906038,
+                        "rmse": 0.03595352368106567,
+                        "sse": 0.5804024834231425,
+                        "std": 0.6664541010816811
+                      },
+                      "n_samples": 450,
+                      "note": null,
+                      "prefix_diagnostic": null,
+                      "required_samples": 449,
+                      "scoring_interval": [
+                        1,
+                        450
+                      ],
+                      "trajectory": "2"
+                    },
+                    {
+                      "completed_samples": 299,
+                      "failure": null,
+                      "finished": true,
+                      "group": "train",
+                      "measures": {
+                        "mean": -0.3052073023460745,
+                        "n": 299,
+                        "nrmse": 0.17533159138639043,
+                        "r2": 0.9692588330619158,
+                        "rmse": 0.08280433831075595,
+                        "sse": 2.0501109744815555,
+                        "std": 0.4722727812826057
+                      },
+                      "n_samples": 300,
+                      "note": null,
+                      "prefix_diagnostic": null,
+                      "required_samples": 299,
+                      "scoring_interval": [
+                        1,
+                        300
+                      ],
+                      "trajectory": "3"
+                    },
+                    {
+                      "completed_samples": 299,
+                      "failure": null,
+                      "finished": true,
+                      "group": "train",
+                      "measures": {
+                        "mean": 0.07273995297927136,
+                        "n": 299,
+                        "nrmse": 0.06482966348589235,
+                        "r2": 0.9957971147323059,
+                        "rmse": 0.053130160724309664,
+                        "sse": 0.8440213795987022,
+                        "std": 0.8195347294355673
+                      },
+                      "n_samples": 300,
+                      "note": null,
+                      "prefix_diagnostic": null,
+                      "required_samples": 299,
+                      "scoring_interval": [
+                        1,
+                        300
+                      ],
+                      "trajectory": "4"
+                    },
+                    {
+                      "completed_samples": 441,
+                      "failure": null,
+                      "finished": true,
+                      "group": "train",
+                      "measures": {
+                        "mean": 0.024313505049210933,
+                        "n": 441,
+                        "nrmse": 0.078364707568446,
+                        "r2": 0.9938589726077119,
+                        "rmse": 0.02999427710910547,
+                        "sse": 0.39674858675033353,
+                        "std": 0.3827523644225636
+                      },
+                      "n_samples": 442,
+                      "note": null,
+                      "prefix_diagnostic": null,
+                      "required_samples": 441,
+                      "scoring_interval": [
+                        1,
+                        442
+                      ],
+                      "trajectory": "5"
+                    },
+                    {
+                      "completed_samples": 441,
+                      "failure": null,
+                      "finished": true,
+                      "group": "train",
+                      "measures": {
+                        "mean": 0.06467691542390433,
+                        "n": 441,
+                        "nrmse": 0.095822895548564,
+                        "r2": 0.990817972688689,
+                        "rmse": 0.04373743097193495,
+                        "sse": 0.8436166247989256,
+                        "std": 0.4564402977132786
+                      },
+                      "n_samples": 442,
+                      "note": null,
+                      "prefix_diagnostic": null,
+                      "required_samples": 441,
+                      "scoring_interval": [
+                        1,
+                        442
+                      ],
+                      "trajectory": "6"
+                    },
+                    {
+                      "completed_samples": 441,
+                      "failure": null,
+                      "finished": true,
+                      "group": "train",
+                      "measures": {
+                        "mean": -0.020089095880097843,
+                        "n": 441,
+                        "nrmse": 0.0885390742808205,
+                        "r2": 0.9921608323254953,
+                        "rmse": 0.04593766670667168,
+                        "sse": 0.9306287271018843,
+                        "std": 0.518840603200465
+                      },
+                      "n_samples": 442,
+                      "note": null,
+                      "prefix_diagnostic": null,
+                      "required_samples": 441,
+                      "scoring_interval": [
+                        1,
+                        442
+                      ],
+                      "trajectory": "7"
+                    },
+                    {
+                      "completed_samples": 140,
+                      "failure": null,
+                      "finished": true,
+                      "group": "train",
+                      "measures": {
+                        "mean": 0.03621807530638514,
+                        "n": 140,
+                        "nrmse": 0.5157529960615889,
+                        "r2": 0.7339988470534947,
+                        "rmse": 0.08469803904599481,
+                        "sse": 1.0043260945531605,
+                        "std": 0.16422209796698992
+                      },
+                      "n_samples": 141,
+                      "note": null,
+                      "prefix_diagnostic": null,
+                      "required_samples": 140,
+                      "scoring_interval": [
+                        1,
+                        141
+                      ],
+                      "trajectory": "8"
+                    },
+                    {
+                      "completed_samples": 140,
+                      "failure": null,
+                      "finished": true,
+                      "group": "train",
+                      "measures": {
+                        "mean": 0.09830941010983475,
+                        "n": 140,
+                        "nrmse": 0.11549722398058906,
+                        "r2": 0.9866603912527776,
+                        "rmse": 0.02525772534456127,
+                        "sse": 0.089313376541381,
+                        "std": 0.2186868608097991
+                      },
+                      "n_samples": 141,
+                      "note": null,
+                      "prefix_diagnostic": null,
+                      "required_samples": 140,
+                      "scoring_interval": [
+                        1,
+                        141
+                      ],
+                      "trajectory": "9"
+                    },
+                    {
+                      "completed_samples": 140,
+                      "failure": null,
+                      "finished": true,
+                      "group": "train",
+                      "measures": {
+                        "mean": -0.11235681726088624,
+                        "n": 140,
+                        "nrmse": 0.6381119196711421,
+                        "r2": 0.5928131779736099,
+                        "rmse": 0.03137522535393901,
+                        "sse": 0.13781666724146402,
+                        "std": 0.049168843876335314
+                      },
+                      "n_samples": 141,
+                      "note": null,
+                      "prefix_diagnostic": null,
+                      "required_samples": 140,
+                      "scoring_interval": [
+                        1,
+                        141
+                      ],
+                      "trajectory": "10"
+                    },
+                    {
+                      "completed_samples": 90,
+                      "failure": null,
+                      "finished": true,
+                      "group": "train",
+                      "measures": {
+                        "mean": 0.05358160803622594,
+                        "n": 90,
+                        "nrmse": 0.07310911391754411,
+                        "r2": 0.9946550574621915,
+                        "rmse": 0.012032511427262811,
+                        "sse": 0.01303031981224891,
+                        "std": 0.16458291972781453
+                      },
+                      "n_samples": 91,
+                      "note": null,
+                      "prefix_diagnostic": null,
+                      "required_samples": 90,
+                      "scoring_interval": [
+                        1,
+                        91
+                      ],
+                      "trajectory": "11"
+                    },
+                    {
+                      "completed_samples": 90,
+                      "failure": null,
+                      "finished": true,
+                      "group": "train",
+                      "measures": {
+                        "mean": -0.05777039824101206,
+                        "n": 90,
+                        "nrmse": 2.7784458254237654,
+                        "r2": -6.719761204814748,
+                        "rmse": 0.014176229815593775,
+                        "sse": 0.01808689426060769,
+                        "std": 0.005102215665274536
+                      },
+                      "n_samples": 91,
+                      "note": null,
+                      "prefix_diagnostic": null,
+                      "required_samples": 90,
+                      "scoring_interval": [
+                        1,
+                        91
+                      ],
+                      "trajectory": "12"
+                    },
+                    {
+                      "completed_samples": 90,
+                      "failure": null,
+                      "finished": true,
+                      "group": "train",
+                      "measures": {
+                        "mean": -0.06147049625524025,
+                        "n": 90,
+                        "nrmse": 0.11390967327420592,
+                        "r2": 0.9870245863345637,
+                        "rmse": 0.06188562947797685,
+                        "sse": 0.3446848022296894,
+                        "std": 0.5432868666825544
+                      },
+                      "n_samples": 91,
+                      "note": null,
+                      "prefix_diagnostic": null,
+                      "required_samples": 90,
+                      "scoring_interval": [
+                        1,
+                        91
+                      ],
+                      "trajectory": "13"
+                    }
+                  ]
+                },
+                "val": {
+                  "finished": true,
+                  "group": "val",
+                  "pooled_rmse": 0.08157536011092786,
+                  "scored_samples": 1189,
+                  "trajectories": [
+                    {
+                      "completed_samples": 449,
+                      "failure": null,
+                      "finished": true,
+                      "group": "val",
+                      "measures": {
+                        "mean": 0.2512644404967997,
+                        "n": 449,
+                        "nrmse": 0.1788979292732467,
+                        "r2": 0.9679955309017444,
+                        "rmse": 0.09781594566216238,
+                        "sse": 4.296013692376613,
+                        "std": 0.5467695800590258
+                      },
+                      "n_samples": 450,
+                      "note": null,
+                      "prefix_diagnostic": null,
+                      "required_samples": 449,
+                      "scoring_interval": [
+                        1,
+                        450
+                      ],
+                      "trajectory": "1"
+                    },
+                    {
+                      "completed_samples": 299,
+                      "failure": null,
+                      "finished": true,
+                      "group": "val",
+                      "measures": {
+                        "mean": -0.25228354918175416,
+                        "n": 299,
+                        "nrmse": 0.12055237566006431,
+                        "r2": 0.9854671247227147,
+                        "rmse": 0.06740339372037235,
+                        "sse": 1.3584220280220358,
+                        "std": 0.559121239638094
+                      },
+                      "n_samples": 300,
+                      "note": null,
+                      "prefix_diagnostic": null,
+                      "required_samples": 299,
+                      "scoring_interval": [
+                        1,
+                        300
+                      ],
+                      "trajectory": "2"
+                    },
+                    {
+                      "completed_samples": 441,
+                      "failure": null,
+                      "finished": true,
+                      "group": "val",
+                      "measures": {
+                        "mean": -0.06533230436751053,
+                        "n": 441,
+                        "nrmse": 0.19037112164760114,
+                        "r2": 0.9637588360426342,
+                        "rmse": 0.07155245763093696,
+                        "sse": 2.2578115991249197,
+                        "std": 0.3758577299522813
+                      },
+                      "n_samples": 442,
+                      "note": null,
+                      "prefix_diagnostic": null,
+                      "required_samples": 441,
+                      "scoring_interval": [
+                        1,
+                        442
+                      ],
+                      "trajectory": "3"
+                    }
+                  ]
+                }
+              },
+              "within_limit": true
+            },
+            {
+              "allowed_violations": [],
+              "checks": {
+                "issues": [],
+                "notes": [],
+                "passed": true
+              },
+              "complexity": {
+                "fitted_parameters": 7,
+                "fixed_parameters": 0,
+                "node_count": 28,
+                "node_count_per_key": {
+                  "dx1": 27,
+                  "dy": 1
+                },
+                "noninteger_literals": 0,
+                "tied_parameters": 0
+              },
+              "excluded_by_requirements": false,
+              "exclusions": [],
+              "expressions": {
+                "dx1": "-a*y + q*y**3 - b*x1 + c*x2 - f*tanh(x1/s) + bias",
+                "dy": "x1"
+              },
+              "failed_computations": [],
+              "label": "Duffing",
+              "position": 3,
+              "requirements": [],
+              "sealed": {
+                "eligible": true,
+                "failed_computations": [],
+                "failed_numerically": false,
+                "ineligibility": [],
+                "rank": 1,
+                "reference_comparison": null,
+                "score_S": 0.03990870087614233,
+                "test": {
+                  "finished": true,
+                  "group": "test",
+                  "pooled_rmse": 0.03990870087614233,
+                  "scored_samples": 978,
+                  "trajectories": [
+                    {
+                      "completed_samples": 449,
+                      "failure": null,
+                      "finished": true,
+                      "group": "test",
+                      "measures": {
+                        "mean": -0.03131797041752311,
+                        "n": 449,
+                        "nrmse": 0.06969796725341201,
+                        "r2": 0.9951421933607423,
+                        "rmse": 0.026317212783589217,
+                        "sse": 0.3109754642248236,
+                        "std": 0.3775893877636851
+                      },
+                      "n_samples": 450,
+                      "note": null,
+                      "prefix_diagnostic": null,
+                      "required_samples": 449,
+                      "scoring_interval": [
+                        1,
+                        450
+                      ],
+                      "trajectory": "test-1"
+                    },
+                    {
+                      "completed_samples": 299,
+                      "failure": null,
+                      "finished": true,
+                      "group": "test",
+                      "measures": {
+                        "mean": 0.17143219309689317,
+                        "n": 299,
+                        "nrmse": 0.09561752114318292,
+                        "r2": 0.990857289650433,
+                        "rmse": 0.05909533270323848,
+                        "sse": 1.0441852458446277,
+                        "std": 0.6180387443295658
+                      },
+                      "n_samples": 300,
+                      "note": null,
+                      "prefix_diagnostic": null,
+                      "required_samples": 299,
+                      "scoring_interval": [
+                        1,
+                        300
+                      ],
+                      "trajectory": "test-2"
+                    },
+                    {
+                      "completed_samples": 140,
+                      "failure": null,
+                      "finished": true,
+                      "group": "test",
+                      "measures": {
+                        "mean": -0.02670353755551293,
+                        "n": 140,
+                        "nrmse": 0.08932932374975515,
+                        "r2": 0.9920202719184115,
+                        "rmse": 0.0047285945628810595,
+                        "sse": 0.0031303449156151646,
+                        "std": 0.052934404564929004
+                      },
+                      "n_samples": 141,
+                      "note": null,
+                      "prefix_diagnostic": null,
+                      "required_samples": 140,
+                      "scoring_interval": [
+                        1,
+                        141
+                      ],
+                      "trajectory": "test-3"
+                    },
+                    {
+                      "completed_samples": 90,
+                      "failure": null,
+                      "finished": true,
+                      "group": "test",
+                      "measures": {
+                        "mean": -0.12576842589871143,
+                        "n": 90,
+                        "nrmse": 0.08913652953590227,
+                        "r2": 0.9920546791022953,
+                        "rmse": 0.047066602185114756,
+                        "sse": 0.19937385371266642,
+                        "std": 0.5280282105459058
+                      },
+                      "n_samples": 91,
+                      "note": null,
+                      "prefix_diagnostic": null,
+                      "required_samples": 90,
+                      "scoring_interval": [
+                        1,
+                        91
+                      ],
+                      "trajectory": "test-4"
+                    }
+                  ]
+                }
+              },
+              "sensitivity": {
+                "assumptions": [
+                  "the fitting target is the one implied by the formulation (the model file has no structured field for it)"
+                ],
+                "available": true,
+                "data": [
+                  "train",
+                  "val"
+                ],
+                "deficient": false,
+                "dependent_groups": [],
+                "method": "analytic derivatives (SymPy), ties differentiated through their equations",
+                "parameters": [
+                  "a",
+                  "b",
+                  "c",
+                  "f",
+                  "s",
+                  "q",
+                  "bias"
+                ],
+                "rank": 7,
+                "rank_threshold": "s_i / s_1 > 1e-08",
+                "reason": null,
+                "rows": 4714,
+                "rows_dropped": 0,
+                "scaling": "rows of each target divided by the standard deviation of its measured column; columns divided by their Euclidean norm",
+                "singular_values": [
+                  1.4593958852157556,
+                  1.307901022250972,
+                  1.0315372983146196,
+                  0.9889191034370489,
+                  0.834463404639379,
+                  0.47577233470347785,
+                  0.4414067139290741
+                ],
+                "targets": [
+                  "dx1"
+                ],
+                "zero_columns": []
+              },
+              "status": "evaluated",
+              "structure": {
+                "dx1": "P1 + P2*x2 + P3*y**3 - P4*y - P5*x1 - P6*tanh(x1/P7)",
+                "dy": "x1"
+              },
+              "structure_group": 3,
+              "unresolved_requirements": [],
+              "visible": {
+                "train": {
+                  "finished": true,
+                  "group": "train",
+                  "pooled_rmse": 0.05334542764915751,
+                  "scored_samples": 3509,
+                  "trajectories": [
+                    {
+                      "completed_samples": 449,
+                      "failure": null,
+                      "finished": true,
+                      "group": "train",
+                      "measures": {
+                        "mean": 0.08278691375784947,
+                        "n": 449,
+                        "nrmse": 0.13151167905575983,
+                        "r2": 0.9827046782719349,
+                        "rmse": 0.03372980211707585,
+                        "sse": 0.5108270983348355,
+                        "std": 0.25647761749566517
+                      },
+                      "n_samples": 450,
+                      "note": null,
+                      "prefix_diagnostic": null,
+                      "required_samples": 449,
+                      "scoring_interval": [
+                        1,
+                        450
+                      ],
+                      "trajectory": "1"
+                    },
+                    {
+                      "completed_samples": 449,
+                      "failure": null,
+                      "finished": true,
+                      "group": "train",
+                      "measures": {
+                        "mean": -0.01861166249120006,
+                        "n": 449,
+                        "nrmse": 0.06004846412308799,
+                        "r2": 0.9963941819564582,
+                        "rmse": 0.040019545178488186,
+                        "sse": 0.7191022343355825,
+                        "std": 0.6664541010816811
+                      },
+                      "n_samples": 450,
+                      "note": null,
+                      "prefix_diagnostic": null,
+                      "required_samples": 449,
+                      "scoring_interval": [
+                        1,
+                        450
+                      ],
+                      "trajectory": "2"
+                    },
+                    {
+                      "completed_samples": 299,
+                      "failure": null,
+                      "finished": true,
+                      "group": "train",
+                      "measures": {
+                        "mean": -0.3052073023460745,
+                        "n": 299,
+                        "nrmse": 0.17285532636383463,
+                        "r2": 0.9701210361476522,
+                        "rmse": 0.0816348657413607,
+                        "sse": 1.9926111400783855,
+                        "std": 0.4722727812826057
+                      },
+                      "n_samples": 300,
+                      "note": null,
+                      "prefix_diagnostic": null,
+                      "required_samples": 299,
+                      "scoring_interval": [
+                        1,
+                        300
+                      ],
+                      "trajectory": "3"
+                    },
+                    {
+                      "completed_samples": 299,
+                      "failure": null,
+                      "finished": true,
+                      "group": "train",
+                      "measures": {
+                        "mean": 0.07273995297927136,
+                        "n": 299,
+                        "nrmse": 0.06580045693144815,
+                        "r2": 0.9956702998676127,
+                        "rmse": 0.053925759668051056,
+                        "sse": 0.8694882791771441,
+                        "std": 0.8195347294355673
+                      },
+                      "n_samples": 300,
+                      "note": null,
+                      "prefix_diagnostic": null,
+                      "required_samples": 299,
+                      "scoring_interval": [
+                        1,
+                        300
+                      ],
+                      "trajectory": "4"
+                    },
+                    {
+                      "completed_samples": 441,
+                      "failure": null,
+                      "finished": true,
+                      "group": "train",
+                      "measures": {
+                        "mean": 0.024313505049210933,
+                        "n": 441,
+                        "nrmse": 0.061274190976592646,
+                        "r2": 0.996245473520164,
+                        "rmse": 0.02345284147437055,
+                        "sse": 0.2425657759908823,
+                        "std": 0.3827523644225636
+                      },
+                      "n_samples": 442,
+                      "note": null,
+                      "prefix_diagnostic": null,
+                      "required_samples": 441,
+                      "scoring_interval": [
+                        1,
+                        442
+                      ],
+                      "trajectory": "5"
+                    },
+                    {
+                      "completed_samples": 441,
+                      "failure": null,
+                      "finished": true,
+                      "group": "train",
+                      "measures": {
+                        "mean": 0.06467691542390433,
+                        "n": 441,
+                        "nrmse": 0.1418229960511864,
+                        "r2": 0.9798862377910652,
+                        "rmse": 0.06473373054019266,
+                        "sse": 1.84799103851577,
+                        "std": 0.4564402977132786
+                      },
+                      "n_samples": 442,
+                      "note": null,
+                      "prefix_diagnostic": null,
+                      "required_samples": 441,
+                      "scoring_interval": [
+                        1,
+                        442
+                      ],
+                      "trajectory": "6"
+                    },
+                    {
+                      "completed_samples": 441,
+                      "failure": null,
+                      "finished": true,
+                      "group": "train",
+                      "measures": {
+                        "mean": -0.020089095880097843,
+                        "n": 441,
+                        "nrmse": 0.12419959332330009,
+                        "r2": 0.9845744610183269,
+                        "rmse": 0.06443979191711346,
+                        "sse": 1.831246671003509,
+                        "std": 0.518840603200465
+                      },
+                      "n_samples": 442,
+                      "note": null,
+                      "prefix_diagnostic": null,
+                      "required_samples": 441,
+                      "scoring_interval": [
+                        1,
+                        442
+                      ],
+                      "trajectory": "7"
+                    },
+                    {
+                      "completed_samples": 140,
+                      "failure": null,
+                      "finished": true,
+                      "group": "train",
+                      "measures": {
+                        "mean": 0.03621807530638514,
+                        "n": 140,
+                        "nrmse": 0.5967542945249608,
+                        "r2": 0.6438843119660163,
+                        "rmse": 0.09800024221770005,
+                        "sse": 1.3445666464619035,
+                        "std": 0.16422209796698992
+                      },
+                      "n_samples": 141,
+                      "note": null,
+                      "prefix_diagnostic": null,
+                      "required_samples": 140,
+                      "scoring_interval": [
+                        1,
+                        141
+                      ],
+                      "trajectory": "8"
+                    },
+                    {
+                      "completed_samples": 140,
+                      "failure": null,
+                      "finished": true,
+                      "group": "train",
+                      "measures": {
+                        "mean": 0.09830941010983475,
+                        "n": 140,
+                        "nrmse": 0.1555740925799277,
+                        "r2": 0.9757967017179321,
+                        "rmse": 0.03402200992963744,
+                        "sse": 0.16204960235132881,
+                        "std": 0.2186868608097991
+                      },
+                      "n_samples": 141,
+                      "note": null,
+                      "prefix_diagnostic": null,
+                      "required_samples": 140,
+                      "scoring_interval": [
+                        1,
+                        141
+                      ],
+                      "trajectory": "9"
+                    },
+                    {
+                      "completed_samples": 140,
+                      "failure": null,
+                      "finished": true,
+                      "group": "train",
+                      "measures": {
+                        "mean": -0.11235681726088624,
+                        "n": 140,
+                        "nrmse": 0.34422194089092184,
+                        "r2": 0.8815112554092867,
+                        "rmse": 0.016924994870474858,
+                        "sse": 0.04010376319118404,
+                        "std": 0.049168843876335314
+                      },
+                      "n_samples": 141,
+                      "note": null,
+                      "prefix_diagnostic": null,
+                      "required_samples": 140,
+                      "scoring_interval": [
+                        1,
+                        141
+                      ],
+                      "trajectory": "10"
+                    },
+                    {
+                      "completed_samples": 90,
+                      "failure": null,
+                      "finished": true,
+                      "group": "train",
+                      "measures": {
+                        "mean": 0.05358160803622594,
+                        "n": 90,
+                        "nrmse": 0.11685384873785447,
+                        "r2": 0.9863451780351506,
+                        "rmse": 0.019232147606708484,
+                        "sse": 0.03328879514096006,
+                        "std": 0.16458291972781453
+                      },
+                      "n_samples": 91,
+                      "note": null,
+                      "prefix_diagnostic": null,
+                      "required_samples": 90,
+                      "scoring_interval": [
+                        1,
+                        91
+                      ],
+                      "trajectory": "11"
+                    },
+                    {
+                      "completed_samples": 90,
+                      "failure": null,
+                      "finished": true,
+                      "group": "train",
+                      "measures": {
+                        "mean": -0.05777039824101206,
+                        "n": 90,
+                        "nrmse": 1.9177645945269457,
+                        "r2": -2.6778210400211004,
+                        "rmse": 0.009784848556504251,
+                        "sse": 0.0086168935146351,
+                        "std": 0.005102215665274536
+                      },
+                      "n_samples": 91,
+                      "note": null,
+                      "prefix_diagnostic": null,
+                      "required_samples": 90,
+                      "scoring_interval": [
+                        1,
+                        91
+                      ],
+                      "trajectory": "12"
+                    },
+                    {
+                      "completed_samples": 90,
+                      "failure": null,
+                      "finished": true,
+                      "group": "train",
+                      "measures": {
+                        "mean": -0.06147049625524025,
+                        "n": 90,
+                        "nrmse": 0.12010924256222044,
+                        "r2": 0.9855737698511297,
+                        "rmse": 0.06525377405124365,
+                        "sse": 0.38322495251376837,
+                        "std": 0.5432868666825544
+                      },
+                      "n_samples": 91,
+                      "note": null,
+                      "prefix_diagnostic": null,
+                      "required_samples": 90,
+                      "scoring_interval": [
+                        1,
+                        91
+                      ],
+                      "trajectory": "13"
+                    }
+                  ]
+                },
+                "val": {
+                  "finished": true,
+                  "group": "val",
+                  "pooled_rmse": 0.08240743982203051,
+                  "scored_samples": 1189,
+                  "trajectories": [
+                    {
+                      "completed_samples": 449,
+                      "failure": null,
+                      "finished": true,
+                      "group": "val",
+                      "measures": {
+                        "mean": 0.2512644404967997,
+                        "n": 449,
+                        "nrmse": 0.18979567797887342,
+                        "r2": 0.9639776006205398,
+                        "rmse": 0.1037745031455267,
+                        "sse": 4.835347228892319,
+                        "std": 0.5467695800590258
+                      },
+                      "n_samples": 450,
+                      "note": null,
+                      "prefix_diagnostic": null,
+                      "required_samples": 449,
+                      "scoring_interval": [
+                        1,
+                        450
+                      ],
+                      "trajectory": "1"
+                    },
+                    {
+                      "completed_samples": 299,
+                      "failure": null,
+                      "finished": true,
+                      "group": "val",
+                      "measures": {
+                        "mean": -0.25228354918175416,
+                        "n": 299,
+                        "nrmse": 0.11297093619145963,
+                        "r2": 0.9872375675760252,
+                        "rmse": 0.06316444988644493,
+                        "sse": 1.1929345711077066,
+                        "std": 0.559121239638094
+                      },
+                      "n_samples": 300,
+                      "note": null,
+                      "prefix_diagnostic": null,
+                      "required_samples": 299,
+                      "scoring_interval": [
+                        1,
+                        300
+                      ],
+                      "trajectory": "2"
+                    },
+                    {
+                      "completed_samples": 441,
+                      "failure": null,
+                      "finished": true,
+                      "group": "val",
+                      "measures": {
+                        "mean": -0.06533230436751053,
+                        "n": 441,
+                        "nrmse": 0.18123051942883403,
+                        "r2": 0.967155498827555,
+                        "rmse": 0.06811689163059437,
+                        "sse": 2.0462007181076345,
+                        "std": 0.3758577299522813
+                      },
+                      "n_samples": 442,
+                      "note": null,
+                      "prefix_diagnostic": null,
+                      "required_samples": 441,
+                      "scoring_interval": [
+                        1,
+                        442
+                      ],
+                      "trajectory": "3"
+                    }
+                  ]
+                }
+              },
+              "within_limit": true
+            },
+            {
+              "allowed_violations": [],
+              "checks": {
+                "issues": [],
+                "notes": [],
+                "passed": true
+              },
+              "complexity": {
+                "fitted_parameters": 7,
+                "fixed_parameters": 1,
+                "node_count": 46,
+                "node_count_per_key": {
+                  "dx1": 45,
+                  "dy": 1
+                },
+                "noninteger_literals": 0,
+                "tied_parameters": 0
+              },
+              "excluded_by_requirements": false,
+              "exclusions": [],
+              "expressions": {
+                "dx1": "Piecewise((-h*x1, (Abs(x1) < s) & (Abs((-a*sin(y + delta) + c*x2)) < fs)), ((-a*sin(y + delta) + c*x2) - b*x1 - f*sign(x1), True))",
+                "dy": "x1"
+              },
+              "failed_computations": [],
+              "label": "Hybrid",
+              "position": 4,
+              "requirements": [],
+              "sealed": {
+                "eligible": true,
+                "failed_computations": [],
+                "failed_numerically": false,
+                "ineligibility": [],
+                "rank": 2,
+                "reference_comparison": null,
+                "score_S": 0.046113973564723784,
+                "test": {
+                  "finished": true,
+                  "group": "test",
+                  "pooled_rmse": 0.046113973564723784,
+                  "scored_samples": 978,
+                  "trajectories": [
+                    {
+                      "completed_samples": 449,
+                      "failure": null,
+                      "finished": true,
+                      "group": "test",
+                      "measures": {
+                        "mean": -0.03131797041752311,
+                        "n": 449,
+                        "nrmse": 0.10111286220959696,
+                        "r2": 0.989776189095783,
+                        "rmse": 0.03817914373675557,
+                        "sse": 0.6544835103958571,
+                        "std": 0.3775893877636851
+                      },
+                      "n_samples": 450,
+                      "note": null,
+                      "prefix_diagnostic": null,
+                      "required_samples": 449,
+                      "scoring_interval": [
+                        1,
+                        450
+                      ],
+                      "trajectory": "test-1"
+                    },
+                    {
+                      "completed_samples": 299,
+                      "failure": null,
+                      "finished": true,
+                      "group": "test",
+                      "measures": {
+                        "mean": 0.17143219309689317,
+                        "n": 299,
+                        "nrmse": 0.10210689332538266,
+                        "r2": 0.9895741823354389,
+                        "rmse": 0.06310601613821243,
+                        "sse": 1.190728412578062,
+                        "std": 0.6180387443295658
+                      },
+                      "n_samples": 300,
+                      "note": null,
+                      "prefix_diagnostic": null,
+                      "required_samples": 299,
+                      "scoring_interval": [
+                        1,
+                        300
+                      ],
+                      "trajectory": "test-2"
+                    },
+                    {
+                      "completed_samples": 140,
+                      "failure": null,
+                      "finished": true,
+                      "group": "test",
+                      "measures": {
+                        "mean": -0.02670353755551293,
+                        "n": 140,
+                        "nrmse": 0.45850506742830904,
+                        "r2": 0.7897731031425618,
+                        "rmse": 0.024270692734320164,
+                        "sse": 0.08246931361252943,
+                        "std": 0.052934404564929004
+                      },
+                      "n_samples": 141,
+                      "note": null,
+                      "prefix_diagnostic": null,
+                      "required_samples": 140,
+                      "scoring_interval": [
+                        1,
+                        141
+                      ],
+                      "trajectory": "test-3"
+                    },
+                    {
+                      "completed_samples": 90,
+                      "failure": null,
+                      "finished": true,
+                      "group": "test",
+                      "measures": {
+                        "mean": -0.12576842589871143,
+                        "n": 90,
+                        "nrmse": 0.07783814628215495,
+                        "r2": 0.9939412229833579,
+                        "rmse": 0.04110073709357673,
+                        "sse": 0.15203435306717827,
+                        "std": 0.5280282105459058
+                      },
+                      "n_samples": 91,
+                      "note": null,
+                      "prefix_diagnostic": null,
+                      "required_samples": 90,
+                      "scoring_interval": [
+                        1,
+                        91
+                      ],
+                      "trajectory": "test-4"
+                    }
+                  ]
+                }
+              },
+              "sensitivity": {
+                "assumptions": [
+                  "the fitting target is the one implied by the formulation (the model file has no structured field for it)"
+                ],
+                "available": true,
+                "data": [
+                  "train",
+                  "val"
+                ],
+                "deficient": true,
+                "dependent_groups": [
+                  {
+                    "components": {
+                      "fs": 1.0
+                    },
+                    "parameters": [
+                      "fs"
+                    ],
+                    "relative": 0.0,
+                    "singular_value": 0.0
+                  },
+                  {
+                    "components": {
+                      "s": 1.0
+                    },
+                    "parameters": [
+                      "s"
+                    ],
+                    "relative": 0.0,
+                    "singular_value": 0.0
+                  }
+                ],
+                "method": "analytic derivatives (SymPy), ties differentiated through their equations",
+                "parameters": [
+                  "a",
+                  "b",
+                  "c",
+                  "f",
+                  "s",
+                  "delta",
+                  "fs"
+                ],
+                "rank": 5,
+                "rank_threshold": "s_i / s_1 > 1e-08",
+                "reason": null,
+                "rows": 4714,
+                "rows_dropped": 0,
+                "scaling": "rows of each target divided by the standard deviation of its measured column; columns divided by their Euclidean norm",
+                "singular_values": [
+                  1.4091557789306917,
+                  1.089358506226132,
+                  0.9750581322320547,
+                  0.7800431660009578,
+                  0.5180466519169504,
+                  0.0,
+                  0.0
+                ],
+                "targets": [
+                  "dx1"
+                ],
+                "zero_columns": [
+                  "s",
+                  "fs"
+                ]
+              },
+              "status": "evaluated",
+              "structure": {
+                "dx1": "Piecewise((-100.0*x1, (P1 > Abs(x1)) & (P2 > Abs(P3*sin(P4 + y) - P5*x2))), (-P3*sin(P4 + y) + P5*x2 - P6*x1 - P7*sign(x1), True))",
+                "dy": "x1"
+              },
+              "structure_group": 4,
+              "unresolved_requirements": [],
+              "visible": {
+                "train": {
+                  "finished": true,
+                  "group": "train",
+                  "pooled_rmse": 0.056124709367311586,
+                  "scored_samples": 3509,
+                  "trajectories": [
+                    {
+                      "completed_samples": 449,
+                      "failure": null,
+                      "finished": true,
+                      "group": "train",
+                      "measures": {
+                        "mean": 0.08278691375784947,
+                        "n": 449,
+                        "nrmse": 0.07042191782454933,
+                        "r2": 0.9950407534899124,
+                        "rmse": 0.018061645703115928,
+                        "sse": 0.14647414743169385,
+                        "std": 0.25647761749566517
+                      },
+                      "n_samples": 450,
+                      "note": null,
+                      "prefix_diagnostic": null,
+                      "required_samples": 449,
+                      "scoring_interval": [
+                        1,
+                        450
+                      ],
+                      "trajectory": "1"
+                    },
+                    {
+                      "completed_samples": 449,
+                      "failure": null,
+                      "finished": true,
+                      "group": "train",
+                      "measures": {
+                        "mean": -0.01861166249120006,
+                        "n": 449,
+                        "nrmse": 0.08256660893528335,
+                        "r2": 0.993182755088928,
+                        "rmse": 0.05502685513732696,
+                        "sse": 1.3595516990506606,
+                        "std": 0.6664541010816811
+                      },
+                      "n_samples": 450,
+                      "note": null,
+                      "prefix_diagnostic": null,
+                      "required_samples": 449,
+                      "scoring_interval": [
+                        1,
+                        450
+                      ],
+                      "trajectory": "2"
+                    },
+                    {
+                      "completed_samples": 299,
+                      "failure": null,
+                      "finished": true,
+                      "group": "train",
+                      "measures": {
+                        "mean": -0.3052073023460745,
+                        "n": 299,
+                        "nrmse": 0.1826884645276737,
+                        "r2": 0.9666249249285209,
+                        "rmse": 0.08627878925073311,
+                        "sse": 2.225764812897153,
+                        "std": 0.4722727812826057
+                      },
+                      "n_samples": 300,
+                      "note": null,
+                      "prefix_diagnostic": null,
+                      "required_samples": 299,
+                      "scoring_interval": [
+                        1,
+                        300
+                      ],
+                      "trajectory": "3"
+                    },
+                    {
+                      "completed_samples": 299,
+                      "failure": null,
+                      "finished": true,
+                      "group": "train",
+                      "measures": {
+                        "mean": 0.07273995297927136,
+                        "n": 299,
+                        "nrmse": 0.07835413826547,
+                        "r2": 0.9938606290166756,
+                        "rmse": 0.06421393750354898,
+                        "sse": 1.2329055011431984,
+                        "std": 0.8195347294355673
+                      },
+                      "n_samples": 300,
+                      "note": null,
+                      "prefix_diagnostic": null,
+                      "required_samples": 299,
+                      "scoring_interval": [
+                        1,
+                        300
+                      ],
+                      "trajectory": "4"
+                    },
+                    {
+                      "completed_samples": 441,
+                      "failure": null,
+                      "finished": true,
+                      "group": "train",
+                      "measures": {
+                        "mean": 0.024313505049210933,
+                        "n": 441,
+                        "nrmse": 0.05997834095614735,
+                        "r2": 0.9964025986161481,
+                        "rmse": 0.022956851815108082,
+                        "sse": 0.23241451696002657,
+                        "std": 0.3827523644225636
+                      },
+                      "n_samples": 442,
+                      "note": null,
+                      "prefix_diagnostic": null,
+                      "required_samples": 441,
+                      "scoring_interval": [
+                        1,
+                        442
+                      ],
+                      "trajectory": "5"
+                    },
+                    {
+                      "completed_samples": 441,
+                      "failure": null,
+                      "finished": true,
+                      "group": "train",
+                      "measures": {
+                        "mean": 0.06467691542390433,
+                        "n": 441,
+                        "nrmse": 0.04159094567300344,
+                        "r2": 0.9982701932380252,
+                        "rmse": 0.01898378362516249,
+                        "sse": 0.15892936196060148,
+                        "std": 0.4564402977132786
+                      },
+                      "n_samples": 442,
+                      "note": null,
+                      "prefix_diagnostic": null,
+                      "required_samples": 441,
+                      "scoring_interval": [
+                        1,
+                        442
+                      ],
+                      "trajectory": "6"
+                    },
+                    {
+                      "completed_samples": 441,
+                      "failure": null,
+                      "finished": true,
+                      "group": "train",
+                      "measures": {
+                        "mean": -0.020089095880097843,
+                        "n": 441,
+                        "nrmse": 0.18539711099810077,
+                        "r2": 0.965627911233558,
+                        "rmse": 0.09619154890187817,
+                        "sse": 4.080491009342808,
+                        "std": 0.518840603200465
+                      },
+                      "n_samples": 442,
+                      "note": null,
+                      "prefix_diagnostic": null,
+                      "required_samples": 441,
+                      "scoring_interval": [
+                        1,
+                        442
+                      ],
+                      "trajectory": "7"
+                    },
+                    {
+                      "completed_samples": 140,
+                      "failure": null,
+                      "finished": true,
+                      "group": "train",
+                      "measures": {
+                        "mean": 0.03621807530638514,
+                        "n": 140,
+                        "nrmse": 0.5543413119873319,
+                        "r2": 0.6927057098241634,
+                        "rmse": 0.09103509324433336,
+                        "sse": 1.1602343482806257,
+                        "std": 0.16422209796698992
+                      },
+                      "n_samples": 141,
+                      "note": null,
+                      "prefix_diagnostic": null,
+                      "required_samples": 140,
+                      "scoring_interval": [
+                        1,
+                        141
+                      ],
+                      "trajectory": "8"
+                    },
+                    {
+                      "completed_samples": 140,
+                      "failure": null,
+                      "finished": true,
+                      "group": "train",
+                      "measures": {
+                        "mean": 0.09830941010983475,
+                        "n": 140,
+                        "nrmse": 0.04840014525593932,
+                        "r2": 0.9976574259392039,
+                        "rmse": 0.01058447582875966,
+                        "sse": 0.01568435799974365,
+                        "std": 0.2186868608097991
+                      },
+                      "n_samples": 141,
+                      "note": null,
+                      "prefix_diagnostic": null,
+                      "required_samples": 140,
+                      "scoring_interval": [
+                        1,
+                        141
+                      ],
+                      "trajectory": "9"
+                    },
+                    {
+                      "completed_samples": 140,
+                      "failure": null,
+                      "finished": true,
+                      "group": "train",
+                      "measures": {
+                        "mean": -0.11235681726088624,
+                        "n": 140,
+                        "nrmse": 0.4185113859222226,
+                        "r2": 0.8248482198534605,
+                        "rmse": 0.02057772099487848,
+                        "sse": 0.059281964188028745,
+                        "std": 0.049168843876335314
+                      },
+                      "n_samples": 141,
+                      "note": null,
+                      "prefix_diagnostic": null,
+                      "required_samples": 140,
+                      "scoring_interval": [
+                        1,
+                        141
+                      ],
+                      "trajectory": "10"
+                    },
+                    {
+                      "completed_samples": 90,
+                      "failure": null,
+                      "finished": true,
+                      "group": "train",
+                      "measures": {
+                        "mean": 0.05358160803622594,
+                        "n": 90,
+                        "nrmse": 0.1763776189326536,
+                        "r2": 0.9688909355396477,
+                        "rmse": 0.02902874349857599,
+                        "sse": 0.0758401154195506,
+                        "std": 0.16458291972781453
+                      },
+                      "n_samples": 91,
+                      "note": null,
+                      "prefix_diagnostic": null,
+                      "required_samples": 90,
+                      "scoring_interval": [
+                        1,
+                        91
+                      ],
+                      "trajectory": "11"
+                    },
+                    {
+                      "completed_samples": 90,
+                      "failure": null,
+                      "finished": true,
+                      "group": "train",
+                      "measures": {
+                        "mean": -0.05777039824101206,
+                        "n": 90,
+                        "nrmse": 0.8261741892187294,
+                        "r2": 0.3174362090687749,
+                        "rmse": 0.00421531889047729,
+                        "sse": 0.0015992022013573226,
+                        "std": 0.005102215665274536
+                      },
+                      "n_samples": 91,
+                      "note": null,
+                      "prefix_diagnostic": null,
+                      "required_samples": 90,
+                      "scoring_interval": [
+                        1,
+                        91
+                      ],
+                      "trajectory": "12"
+                    },
+                    {
+                      "completed_samples": 90,
+                      "failure": null,
+                      "finished": true,
+                      "group": "train",
+                      "measures": {
+                        "mean": -0.06147049625524025,
+                        "n": 90,
+                        "nrmse": 0.10699698518977438,
+                        "r2": 0.9885516451602993,
+                        "rmse": 0.058130056828232204,
+                        "sse": 0.30411931561681554,
+                        "std": 0.5432868666825544
+                      },
+                      "n_samples": 91,
+                      "note": null,
+                      "prefix_diagnostic": null,
+                      "required_samples": 90,
+                      "scoring_interval": [
+                        1,
+                        91
+                      ],
+                      "trajectory": "13"
+                    }
+                  ]
+                },
+                "val": {
+                  "finished": true,
+                  "group": "val",
+                  "pooled_rmse": 0.08586466470760458,
+                  "scored_samples": 1189,
+                  "trajectories": [
+                    {
+                      "completed_samples": 449,
+                      "failure": null,
+                      "finished": true,
+                      "group": "val",
+                      "measures": {
+                        "mean": 0.2512644404967997,
+                        "n": 449,
+                        "nrmse": 0.18134757470275953,
+                        "r2": 0.9671130571494271,
+                        "rmse": 0.09915533726495063,
+                        "sse": 4.414469627748622,
+                        "std": 0.5467695800590258
+                      },
+                      "n_samples": 450,
+                      "note": null,
+                      "prefix_diagnostic": null,
+                      "required_samples": 449,
+                      "scoring_interval": [
+                        1,
+                        450
+                      ],
+                      "trajectory": "1"
+                    },
+                    {
+                      "completed_samples": 299,
+                      "failure": null,
+                      "finished": true,
+                      "group": "val",
+                      "measures": {
+                        "mean": -0.25228354918175416,
+                        "n": 299,
+                        "nrmse": 0.12652497218569994,
+                        "r2": 0.9839914314134078,
+                        "rmse": 0.07074279929364391,
+                        "sse": 1.496358551918335,
+                        "std": 0.559121239638094
+                      },
+                      "n_samples": 300,
+                      "note": null,
+                      "prefix_diagnostic": null,
+                      "required_samples": 299,
+                      "scoring_interval": [
+                        1,
+                        300
+                      ],
+                      "trajectory": "2"
+                    },
+                    {
+                      "completed_samples": 441,
+                      "failure": null,
+                      "finished": true,
+                      "group": "val",
+                      "measures": {
+                        "mean": -0.06533230436751053,
+                        "n": 441,
+                        "nrmse": 0.21408571441814028,
+                        "r2": 0.9541673068820745,
+                        "rmse": 0.08046577063641458,
+                        "sse": 2.8553604476534264,
+                        "std": 0.3758577299522813
+                      },
+                      "n_samples": 442,
+                      "note": null,
+                      "prefix_diagnostic": null,
+                      "required_samples": 441,
+                      "scoring_interval": [
+                        1,
+                        442
+                      ],
+                      "trajectory": "3"
+                    }
+                  ]
+                }
+              },
+              "within_limit": true
+            }
+          ],
+          "counts": {
+            "accepted_by_checks": 4,
+            "eligible": 4,
+            "evaluated": 4,
+            "excluded_by_requirements": 0,
+            "failed_numerically": 0,
+            "failed_numerically_on_visible_data": 0,
+            "outside_limit": 0,
+            "overlap": {
+              "excluded_and_failed_numerically": [],
+              "note": "the categories overlap: the candidates accepted by the checks include those outside the pool limit, and a candidate can be both excluded by requirements and failed numerically; the counts need not sum to the pool size"
+            },
+            "proposed": 4
+          },
+          "format_version": 1,
+          "formulation": "continuous",
+          "pool_file": {
+            "issues": [],
+            "order": [
+              "ShiftedSine",
+              "HarmonicLinear",
+              "Duffing",
+              "Hybrid"
+            ],
+            "order_from_pool_file": true,
+            "pool_cap": 10,
+            "pool_version": 1,
+            "valid": true
+          },
+          "recommendation": {
+            "agent": {
+              "label": "ShiftedSine",
+              "reason": "Among the four structurally distinct retained models, `ShiftedSine` had the lowest held-out uninterrupted RK4 output RMSE: `0.07929740111285531` in recorded `y` units on all three trajectories of data/val.csv, versus `0.08157536011092963` for `HarmonicLinear`, `0.08240743982203075` for `Duffing`, and `0.08586466470760443` for `Hybrid`. It uses fewer fitted coefficients than the harmonic-linear and hybrid alternatives and avoids their positive unbounded coordinate correction or switching sensitivity. Its smooth-friction transition width is bound-limited and trajectory-dependent residual offsets remain; the small validation differences are not statistically established and do not guarantee test ranking. Validation was used for selection, not coefficient fitting."
+            },
+            "notes": [],
+            "present": true,
+            "sealed": {
+              "eligible": true,
+              "note": "the test error of the recommended candidate (practical selection); sealed",
+              "rank": 4,
+              "test_score_S": 0.049195139867364956
+            }
+          },
+          "sealed": {
+            "no_ranking_reason": null,
+            "ranking": {
+              "candidates_considered": 4,
+              "criterion": "pooled test RMSE S, increasing",
+              "entries": [
+                {
+                  "allowed_violations": [],
+                  "label": "Duffing",
+                  "rank": 1,
+                  "score_S": 0.03990870087614233,
+                  "tied_with_previous": false,
+                  "unresolved_requirements": []
+                },
+                {
+                  "allowed_violations": [],
+                  "label": "Hybrid",
+                  "rank": 2,
+                  "score_S": 0.046113973564723784,
+                  "tied_with_previous": false,
+                  "unresolved_requirements": []
+                },
+                {
+                  "allowed_violations": [],
+                  "label": "HarmonicLinear",
+                  "rank": 3,
+                  "score_S": 0.04699902492040719,
+                  "tied_with_previous": false,
+                  "unresolved_requirements": []
+                },
+                {
+                  "allowed_violations": [],
+                  "label": "ShiftedSine",
+                  "rank": 4,
+                  "score_S": 0.049195139867364956,
+                  "tied_with_previous": false,
+                  "unresolved_requirements": []
+                }
+              ],
+              "label": "oracle-based selection on test data",
+              "note": "This ranking selects on the test data. It measures whether the pool contains an accurate model, not whether the agent can recognize that model without test data. A rank is not evidence of physical admissibility: each entry carries its unresolved requirements and any violation allowed by the user.",
+              "pool_size": 4,
+              "tie_rule": "|S_a - S_b| <= 1e-12 * max(S_a, S_b) for consecutive candidates; tied candidates share a rank",
+              "ties": []
+            },
+            "test_trajectories": [
+              {
+                "n_samples": 450,
+                "scored_samples": 449,
+                "trajectory": "test-1"
+              },
+              {
+                "n_samples": 300,
+                "scored_samples": 299,
+                "trajectory": "test-2"
+              },
+              {
+                "n_samples": 141,
+                "scored_samples": 140,
+                "trajectory": "test-3"
+              },
+              {
+                "n_samples": 91,
+                "scored_samples": 90,
+                "trajectory": "test-4"
+              }
+            ]
+          },
+          "settings": {
+            "discontinuities": "expressions with jumps (Piecewise, sign) are evaluated pointwise at the sample instants and Runge-Kutta stages; no event detection or step refinement is applied at a jump",
+            "failure_limits": [
+              {
+                "justification": "numerical divergence bound, about 394 times the largest training magnitude of y",
+                "lower": -1000.0,
+                "unit": "not supplied",
+                "upper": 1000.0,
+                "variable": "y"
+              },
+              {
+                "justification": "numerical divergence bound, about 50 times the largest training magnitude of x1",
+                "lower": -1000.0,
+                "unit": "not supplied",
+                "upper": 1000.0,
+                "variable": "x1"
+              }
+            ],
+            "harness_version": "0.1.0.dev0",
+            "horizon": null,
+            "horizon_note": null,
+            "initialization": 1,
+            "input_hold": "zero_order",
+            "integrator": "rk4",
+            "measurement": "y",
+            "mode": "simulation",
+            "pool_cap": 10,
+            "reference_samples": 2000,
+            "reference_seed": 20260925,
+            "requirement_confirmation_points": 5,
+            "sampling_period_s": 0.01,
+            "scoring": "after_initialization",
+            "sensitivity_rank_threshold": 1e-08,
+            "software": {
+              "numpy": "2.5.1",
+              "sympy": "1.14.0"
+            },
+            "substeps": 1,
+            "symbolic_time_limit_s": 10.0,
+            "tie_relative_tolerance": 1e-12,
+            "time_limit_s": 60.0,
+            "top_k": 5
+          },
+          "structures": {
+            "convention": "ties resolved, fixed values kept, given constants kept, fitted parameters renamed P1..Pn in order of first occurrence; equal when a one-to-one renaming of the fitted parameters makes every expression identical in SymPy's canonical form",
+            "distinct": 4,
+            "exhaustive": true,
+            "groups": [
+              [
+                "ShiftedSine"
+              ],
+              [
+                "HarmonicLinear"
+              ],
+              [
+                "Duffing"
+              ],
+              [
+                "Hybrid"
+              ]
+            ]
+          },
+          "task_id": "task-jdhj"
+        },
+        "report_file": "evaluation/v1/evaluation.json",
+        "report_sha256": "f6e82e7cc6fbed41109a23a96a403ee57baa6d27b0baa5b64bebf664f6f39d89"
+      },
+      "final_text": "DONE",
+      "helpers": [],
+      "limit": null,
+      "mode": "round",
+      "order_assigned_by_harness": false,
+      "outcome": "completed",
+      "pool": {
+        "files": {
+          "Duffing.json": "5934cfa3d4822275d65b706d62689bc97cfc08ced6fbeb952ebed53476105438",
+          "HarmonicLinear.json": "650e117409e2135b51dc967f32b7771f42c6658f9b2f91bb505cad0d8cacacda",
+          "Hybrid.json": "6aca17d6c8070ebe0a41174a92f712102bc6bf6fb9fffca24c30ac84357d92ca",
+          "ShiftedSine.json": "f56f909663ed4da8df5b9ace0dcdd73310710177bd55c24d712dedff904b8f00",
+          "pool.json": "bb7e9387374bd6edea5e6b24cdd4c48ea752cde5b91820492da31410adc24993"
+        },
+        "folder": "pools/v1",
+        "not_copied": [],
+        "pool_version": 1,
+        "round": 1,
+        "session": "session-1",
+        "source": "<tmp>\\aspire-runs-blind\\26247b36d05f9626\\workspace\\models",
+        "taken": "at the end of the round",
+        "taken_at": "2026-10-08T01:06:50.028488+00:00"
+      },
+      "pool_version": 1,
+      "previous_labels": [],
+      "reminder_sent": false,
+      "round": 1,
+      "session": "session-1",
+      "termination_message": null,
+      "termination_reason": "the agent sent the completion message DONE and at least one candidate within the pool limit passed the file and expression checks",
+      "test_informed": false
+    }
+  ],
+  "run_id": "r04",
+  "seeds": {
+    "harness": "none: the harness draws no other random numbers",
+    "language_model": "none: the requests set no seed, and the responses of the language model are not reproducible",
+    "reference_comparison": null,
+    "requirement_sampling": {},
+    "run": {
+      "attempt": 1,
+      "run_index": 4
+    }
+  },
+  "software": {
+    "aspire_sysid": "0.1.0.dev0",
+    "matplotlib": "3.11.1",
+    "numpy": "2.5.1",
+    "platform": "Windows-11-10.0.26200-SP0",
+    "python": "3.12.10",
+    "python_implementation": "CPython",
+    "pyyaml": "6.0.3",
+    "scipy": "1.18.0",
+    "sympy": "1.14.0"
+  },
+  "task": {
+    "files": {
+      "data/train.csv": "98a8000e2d4dc97e2f31a279eee1da183ffe347a8702f8fca3fc632df37ffc72",
+      "data/val.csv": "f254b00381ef1019b50e820c5a239728b97c43d99a5a1444df27551af0354ae9",
+      "task.yaml": "4db2e108303b19f9a5e59c76787f1f0e1f376e0601ff1867447b0823ac3037c3"
+    },
+    "folder": "tasks/task-jdhj",
+    "formulation": "continuous",
+    "id": "task-jdhj",
+    "sealed_files": {
+      "test/held_out_1.csv": "e166c96666d0f6affa425ba467686ce4a2b5c00851bfd975ef43c312e5cb0d92",
+      "test/held_out_2.csv": "ca0abade1ef11419a4f75d52f0afcfb5a423a7f4de20b8452bf1d2aacad1d675",
+      "test/held_out_3.csv": "9973cbfa04845c79c094a7345d60bcab30028884a203ceb620f878ddb3235fbb",
+      "test/held_out_4.csv": "bda563d433a4c13b29606a4770dc851b194ce67c3e870d664647ca5c0dd09855"
+    },
+    "sealed_sha256": "68bd001039df9e3c6a2e8bce2af4c2a588467fefac6f3d78b54100adc043bf15",
+    "spec_sha256": "badc71798abebf186658b3be380e493074613f54a0f9b4eb60aebf7d310604e9",
+    "title": "Identification task jdhj"
+  },
+  "user_facing": "contains results on sealed test data and recording names; never shown to the agent",
+  "termination_reason": "the agent sent the completion message DONE and at least one candidate within the pool limit passed the file and expression checks",
+  "texts": {
+    "brief": "# Task: Identification task jdhj\n\n## 1 System and intended use\n\nThe task gives no description of the system.\n\nThe task states no intended use of the model.\n\n## 2 Data\n\n`data/train.csv` holds 3522 samples of training data: 13 trajectories of 450, 450, 300, 300, 442, 442, 442, 141, 141, 141, 91, 91, 91 consecutive samples; the column `trajectory` holds the trajectory number. `data/val.csv` holds 1192 samples of validation data: 3 trajectories of 450, 300, 442 consecutive samples; the column `trajectory` holds the trajectory number. Whether and how you use the validation data is your decision. Row k+1 of a trajectory is the sample that follows row k; different trajectories are separate experiments. The sampling period is T_s = 0.01 s.\n\n| Column | Role | Unit | Training range | Description |\n|---|---|---|---|---|\n| `y` | state, scored output | not supplied | not declared | not supplied |\n| `x1` | state | not supplied | not declared | not supplied |\n| `x2` | input | not supplied | not declared | not supplied |\n| `dx1` | sampled time derivative of `x1` | not supplied | not declared | not supplied |\n\nThe task does not state the units. The task does not describe the columns.\n\n## 3 What you deliver\n\nA candidate is a continuous-time model of 2 closed-form expressions, `dy` and `dx1`: the time derivatives of the states `y` and `x1` as functions of `y`, `x1` and `x2`. The column `dx1` is a possible fitting target for the derivative of `x1`; it is not an argument of the expressions. `FORMAT.md` states how an expression is written and what it may contain.\n\nWrite one file per candidate, `models/<label>.json`; `FORMAT.md` describes the file and gives an example. Write also `models/pool.json`, which lists the labels of your candidates in the order in which they are to be evaluated. You can recommend one candidate that you consider the best-performing. `models/pool.json` then names that candidate and gives your reason. Run `python check_submission.py` to check your files: it prints every error with its location, so that you can correct it.\n\nAt most 10 candidates are evaluated, in the order of `models/pool.json`. Consider various identification approaches, for example physically motivated structures, symbolic-regression search or sparse regression; before fitting, list the approaches and the model families you will try. Build the pool from structurally different model families, not from variations of one form. Examine the residuals of your best candidates and try structures that can represent what they show. Include only candidates you would defend as a model of the system.\n\n## 4 Evaluation\n\nThe harness, the software that runs this task, evaluates every candidate on test data that you cannot access. For each test trajectory it starts from the first logged state and integrates the expressions with the classical fourth-order Runge–Kutta method, one step per sampling period, with the logged inputs held constant between samples; a simulated state is never replaced by a later measurement. The score is the root mean squared error (RMSE) between simulated and logged `y` over all test samples after the first of each trajectory. An evaluation fails when a value is not finite, when `y` leaves [-1000, 1000] or `x1` leaves [-1000, 1000], or when it takes longer than 60 s.\n\n## 5 Limits and completion\n\nOne round: 60 turns, 3600 s of execution time, 10 USD; a turn is one response of yours. When the files pass the check, send the exact message DONE. If the harness's check of the files then fails, you receive its report and may correct the files once. If a limit ends the round earlier, the complete candidate files are evaluated.\n",
+    "brief_sha256": "2bd63a02510bb77a24e1b78140dffdf223c4eb9bca6f81bc845e1e2ed1f7eb2b",
+    "first_user_message": "The identification round begins. The task brief is TASK.md in the working directory; the candidate file format and the writing rules are in FORMAT.md.",
+    "first_user_message_sha256": "274ef7dab7038187fdb10b5d9a6687d2203be019d755f7c10a2c5de6cd155b4c",
+    "helper_system_prompt": "You are a helper agent for system identification. The main agent has assigned you the subtask stated in the first message. You work in the same working directory as the main agent, with the tools described in this request; you cannot start further helper agents. Your turns and costs count toward the main agent's budget. Do not access information outside the permissions stated in TASK.md. When the subtask is finished, reply with text only, without a tool request. State what you did, the files you wrote, the methods, data and settings you used, and the results; give every number with its unit, the data set it was computed on and, for an error, its definition. Follow the writing rules in FORMAT.md. That reply ends your work and is returned to the main agent.",
+    "helper_system_prompt_sha256": "88b7af5b641a2c553131930a523c04031548a901ecbc32314d9adb9905675b5e",
+    "supplied": true,
+    "system_prompt": "You are an agent for system identification. Your task is in TASK.md in the working directory; read it first. FORMAT.md describes the files you deliver and how to write your texts. A human will assess your models and your explanations.\n\nHow you identify the models is your decision. You may read and write files in the working directory, write and run code, fetch web resources, search the web, install Python packages and start helper agents. The installed symbolic-regression packages are gplearn 0.4.3 and PySINDy 2.1.0; symbolic-regression search is suited to tasks of this kind, and whether you use it is your decision. Models of any kind, including black-box models, may serve as intermediate tools; the models you deliver have the form that TASK.md requires.\n\nReport what you actually did: the methods, the data and the settings you used. Helper agents cannot start further helpers, and their turns and cost count toward your limits. Everything you do is recorded. The test data and the evaluation results are not available to you; do not try to reach them or any file outside the working directory.\n\nEnvironment description (supplied by the harness from the run environment):\n- Tools: read_file, write_file, list_files, run_shell, web_fetch, web_search, install_package, start_helper.\n- Shell: run_shell passes each command to the Windows command interpreter cmd.exe, not to a POSIX shell. POSIX shell syntax such as here-documents (<<) does not work there; run Python code from a script file or with python -c.\n- Python 3.12.10.\n- Installed packages and versions (28): cloudpickle 3.1.2, contourpy 1.4.0, cycler 0.12.1, derivative 0.6.3, fonttools 4.66.1, gplearn 0.4.3, importlib-metadata 9.0.1, joblib 1.6.0, kiwisolver 1.5.1, matplotlib 3.11.2, mpmath 1.3.0, narwhals 2.26.0, numpy 2.5.3, packaging 26.3, pandas 3.0.6, pillow 12.3.0, pip 25.0.1, pyparsing 3.3.3, pysindy 2.1.0, python-dateutil 2.9.0.post0, scikit-learn 1.9.1, scipy 1.18.1, six 1.17.0, sympy 1.14.0, threadpoolctl 3.7.0, typing-extensions 4.16.0, tzdata 2026.5, zipp 4.1.1.",
+    "system_prompt_sha256": "f9e3e30d66553fc7bcd891a936cd6c981fc25d8cd145a1731ab846ac1f985eb6"
+  },
+  "transcript": {
+    "file": "transcript.jsonl",
+    "present": true,
+    "sha256": "045510eac762b226ac1188034d7cfa61d0fe0c7b8add41918659871f039bb7c0"
+  },
+  "workspace_manifest": {
+    "brief_sha256": "2bd63a02510bb77a24e1b78140dffdf223c4eb9bca6f81bc845e1e2ed1f7eb2b",
+    "files": [
+      {
+        "bytes": 8130,
+        "name": "FORMAT.md",
+        "sha256": "ed4cc6f5dad015fbb83237a40eca6cc763a799432554a698494bbc32d94fd4bb"
+      },
+      {
+        "bytes": 3663,
+        "name": "TASK.md",
+        "sha256": "2bd63a02510bb77a24e1b78140dffdf223c4eb9bca6f81bc845e1e2ed1f7eb2b"
+      },
+      {
+        "bytes": 985,
+        "name": "check_config.json",
+        "sha256": "871a146b248a0eddd130f816da87f41e4a1a72155eb13c2074e8c53bf4253fdf"
+      },
+      {
+        "bytes": 102476,
+        "name": "check_submission.py",
+        "sha256": "9e6e1ffa2c5973f214cb0d57d9a1c967366795102f999b92c0d89a8a7acb5e0e"
+      },
+      {
+        "bytes": 179789,
+        "name": "data/train.csv",
+        "sha256": "98a8000e2d4dc97e2f31a279eee1da183ffe347a8702f8fca3fc632df37ffc72"
+      },
+      {
+        "bytes": 65398,
+        "name": "data/val.csv",
+        "sha256": "f254b00381ef1019b50e820c5a239728b97c43d99a5a1444df27551af0354ae9"
+      }
+    ],
+    "folders": [
+      "data",
+      "models"
+    ],
+    "format_sha256": "ed4cc6f5dad015fbb83237a40eca6cc763a799432554a698494bbc32d94fd4bb",
+    "interactive": false,
+    "task_id": "task-jdhj",
+    "workspace": "<tmp>\\aspire-runs-blind\\26247b36d05f9626\\workspace"
+  }
+}

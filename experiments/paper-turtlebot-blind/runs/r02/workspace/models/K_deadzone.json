@@ -1,0 +1,56 @@
+{
+  "expressions": {
+    "y_next": "y+(Max(0, speedoffset+speedgain*x3))*cos(x2+(turngain*sign(x4)*Max(0, Abs(x4)-threshold)+turnbias)/2)",
+    "x1_next": "x1+(Max(0, speedoffset+speedgain*x3))*sin(x2+(turngain*sign(x4)*Max(0, Abs(x4)-threshold)+turnbias)/2)",
+    "x2_next": "atan2(sin(x2+(turngain*sign(x4)*Max(0, Abs(x4)-threshold)+turnbias)), cos(x2+(turngain*sign(x4)*Max(0, Abs(x4)-threshold)+turnbias)))"
+  },
+  "parameters": [
+    {
+      "name": "speedoffset",
+      "value": -0.0017128516732565382,
+      "unit": "unknown position unit per sample",
+      "type": "fitted",
+      "description": "Offset of per-sample displacement length, estimated jointly with all other fitted parameters from full training rollouts."
+    },
+    {
+      "name": "speedgain",
+      "value": 0.18003037770011862,
+      "unit": "unknown position unit per x3 unit per sample",
+      "type": "fitted",
+      "description": "Multiplier of the current `x3` input in displacement length, estimated jointly with all other fitted parameters from full training rollouts."
+    },
+    {
+      "name": "turngain",
+      "value": 0.19502523683935466,
+      "unit": "inferred radian per x4 unit per sample",
+      "type": "fitted",
+      "description": "Multiplier of the model-specific `x4` input response in angular increment, estimated jointly with all other fitted parameters from full training rollouts."
+    },
+    {
+      "name": "turnbias",
+      "value": 0.0019465097221174118,
+      "unit": "inferred radian per sample",
+      "type": "fitted",
+      "description": "Constant per-sample angular increment, estimated jointly with all other fitted parameters from full training rollouts; its mechanism is unknown."
+    },
+    {
+      "name": "threshold",
+      "value": 0.11838031274427337,
+      "unit": "unknown x4 input unit",
+      "type": "fitted",
+      "description": "Half-width of the exact dead zone in `x4` input units, estimated jointly with all other fitted parameters from full training rollouts."
+    }
+  ],
+  "estimation": {
+    "criterion": "Weighted output-error nonlinear least squares over complete free-running training trajectories: sum of squared errors in `y` and `x1` plus `0.09` times squared errors in unwrapped `x2`. No measured states are reinserted after the first sample. Position units are unreported; `x2` is computationally interpreted in radians. The dimensionless angular residual weight is `0.3`. It was selected from `0.3`, `1`, and `3` by leave-one-trajectory-out `y` rollout error, to emphasize coordinate accuracy while preserving heading consistency.",
+    "data": "data/train.csv, all three trajectories and all 150 samples per trajectory. There are 149 within-trajectory transitions per experiment, 447 transitions in total. No transitions cross trajectory boundaries. Initial states are the first logged states. Only the angular observations were unwrapped using numpy.unwrap to avoid artificial branch-cut residuals; position observations and inputs were not filtered. All rows were used in the final fit because no quality labels justify deleting them.",
+    "method": "All fitted parameters were estimated together in one step by nonlinear least squares, scipy.optimize.least_squares with `method = trf`, two-point finite-difference Jacobian and ordinary quadratic loss. This method permits the nonlinear trigonometric rollout criterion and bounds; linear least squares cannot fit that criterion. Starting values were `speedoffset = 0` (same implied units as the coefficient), `speedgain = 0.18` (same implied units as the coefficient), `turngain = 0.2` (same implied units as the coefficient), `turnbias = 0` (same implied units as the coefficient), `threshold = 0.1` (same implied units as the coefficient). They approximate the exploratory linear input gains with a small or zero bias; attenuation was initialized moderately within the input range rather than at a singular zero scale. The bound `0 <= threshold <= 0.5` in unknown `x4` input units was chosen to allow a moderate dead zone within observed commands without eliminating almost all commands; other parameters are unbounded. Termination tolerances were `ftol = 1e-10`, `xtol = 1e-10`, and `gtol = 1e-10`; maximum function evaluations were `1500` (dimensionless algorithm settings). No random numbers or seeds were used. Fits were also repeated on each pair of trajectories for validation and on the first `90` samples per trajectory for temporal forecasts, but submitted coefficients use all samples. Method reference checked: SciPy least_squares documentation, Trust Region Reflective method; SciPy source optimize/_lsq/trf.py. The installed SciPy version was 1.18.1.",
+    "script": "fit_candidates.py"
+  },
+  "discussion": {
+    "family": "Nonsmooth discrete-time planar kinematics with static dead-zone input nonlinearity (a Hammerstein-type input map followed by geometric integration). The planar geometric part is the unicycle/differential-drive kinematic model discretized with midpoint heading; reference checked: Frank Dellaert and Seth Hutchinson, Introduction to Robotics and Perception, section 5.2, Motion Model for the Differential Drive Robot (roboticsbook.org). This is an analogy for the data, not an assertion of the unknown system identity.",
+    "interpretation": "`y` and `x1` are treated as two accumulated coordinates; `x2` sets the direction. `x3` and `x4` are the current inputs. `speedoffset` is the fitted offset in distance per sample, `speedgain` scales `x3`, and `Max(0, speedoffset+speedgain*x3)` truncates negative displacement lengths to zero. `turngain` scales the excess input magnitude beyond `threshold`; `sign(x4)*Max(0, Abs(x4)-threshold)` is zero inside the threshold interval and odd outside. `turnbias` is a constant angular increment. The `cos` and `sin` terms project displacement along the midpoint direction. The `atan2(sin(...), cos(...))` term wraps the accumulated direction onto the principal-angle interval. All terms have mathematical meanings; mechanical causes of attenuation or bias are not known.",
+    "origin": "After the affine and degree-two/three polynomial maps showed poor or unstable held-out rollouts, a trigonometric planar structure was inferred from motion directions and angle wrapping. Linear and bilinear turning laws were tried, followed by cubic, saturating `tanh`, and subtractive `tanh` dictionaries. Larger inferred gain for large inputs motivated a guessed dead-zone nonlinearity, not a known mechanical friction law. The retained turning expression `turngain*sign(x4)*Max(0, Abs(x4)-threshold)+turnbias` is nonsmooth and monotone. The speed expression `Max(0, speedoffset+speedgain*x3)` was chosen to prevent the fitted offset from producing reverse motion at small positive commands. No genetic symbolic regression or sparse-thresholding package was used. Structure selection was manual dictionary comparison guided by rollouts and residuals.",
+    "limitations": "The physical system, column units and intended use are unknown. Interpreting `x2` as an angle in radians is inferred from wrapping near `-pi` and `pi`, not supplied metadata. Coefficients map one sample to the next; the supplied sampling period `T_s = 0.2` s is already absorbed in them. The models assume translation invariance: absolute `y` and `x1` do not change the increments. This is supported by the observed direction of motion but not established globally. Only three experiments are available; leave-one-trajectory-out validation is noisy, and hyperparameter selection used these same experiments, so its results are not an unbiased test score. No test data were accessed. Input-change residuals and their positive lag-one correlations indicate missing transient dynamics, disturbances, or both. The prescribed three-state model has no actuator or previous-input state, so that behavior is not fully represented. Long-horizon accuracy outside the observed input/state support is unknown; no global state bound is guaranteed for accumulated positions. The exact threshold and speed cutoff are empirical approximations; a threshold crossing is continuous but has a derivative discontinuity. Input-change residual RMS on all training transitions was about `0.00545` for `y`, `0.00503` for `x1` in unknown position units, and `0.0891` in inferred radians for `x2`; non-switch RMS was approximately `0.00165`, `0.00150`, and `0.0201` in the corresponding units. The angular residual still correlates with current `x4`, especially during changes; the static threshold does not remove lag."
+  }
+}

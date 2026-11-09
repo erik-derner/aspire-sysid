@@ -1,0 +1,9 @@
+{
+  "order": [
+    "TrigSmooth",
+    "Polynomial",
+    "ForceClamp"
+  ],
+  "recommended": "TrigSmooth",
+  "reason": "Recommend the bounded trigonometric oscillator with arctangent resistance: its training-only fit had the lowest pre-refit validation output RMSE among the delivered families (`0.07191246` in unspecified `y` units, on all validation trajectories excluding their initial rows), with fewer fitted coefficients than Polynomial and less validation error than ForceClamp. Validation contains overlapping suffixes with training, so this is a comparative diagnostic rather than an independent test claim. All delivered candidates were subsequently refitted on both supplied files. The final TrigSmooth RMSE is `0.04056977` on training and `0.06814319` on validation, both in-sample and in unspecified `y` units. Polynomial provides a nonperiodic restoring alternative; ForceClamp provides a sticking-capable alternative. Near-rest drift and validation-trajectory-specific errors remain; no test result is claimed."
+}

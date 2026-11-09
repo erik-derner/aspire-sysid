@@ -1,0 +1,440 @@
+Projected final fit both supplied files; angle RMSE in rad, derivative residuals in rad/s^2
+train moving speed >0.5 rad/s: {'mean': 1.4133381055363057, 'std': 11.056493637464403}
+train theta moving residual mean/count:                   mean  count
+theta                        
+(-3.2, -1.0] -5.014142    115
+(-1.0, -0.2] -0.644515    448
+(-0.2, 0.2]   3.513851    486
+(0.2, 1.0]    3.531107    362
+(1.0, 3.2]    0.242941    108
+train omega moving residual mean/count:                    mean  count
+omega                         
+(-24.0, -5.0] -0.618429    301
+(-5.0, -0.5]   1.875871    383
+(0.5, 5.0]     2.317984    566
+(5.0, 24.0]    1.124797    269
+train u moving residual mean/count:                    mean  count
+u                             
+(-10.0, -1.0]  5.686163    303
+(-1.0, -0.01]  1.059037    134
+(-0.01, 0.01]  1.152875    682
+(0.01, 1.0]    0.432447    148
+(1.0, 10.0]   -2.254846    252
+train trajectory 1 angle bias/RMSE/final error (rad): [-0.036912026847731906, 0.041305239112189175, -0.013335741044109894]
+train trajectory 2 angle bias/RMSE/final error (rad): [-0.022623390698527458, 0.05658415894961422, -0.0355713101458945]
+train trajectory 3 angle bias/RMSE/final error (rad): [-0.018606007499203395, 0.0823575937346303, -0.014796242921669596]
+train trajectory 4 angle bias/RMSE/final error (rad): [-0.010247698173473482, 0.06402786245724608, -0.06018562950607146]
+train trajectory 5 angle bias/RMSE/final error (rad): [-0.0031140670792408616, 0.0161435096096876, -0.0008402133363745266]
+train trajectory 6 angle bias/RMSE/final error (rad): [-0.030084500437058518, 0.03388658325851128, -0.030917661269062317]
+train trajectory 7 angle bias/RMSE/final error (rad): [-0.03058412327778407, 0.12259869290479063, -0.058982365193561294]
+train trajectory 8 angle bias/RMSE/final error (rad): [-0.12445583918566899, 0.12993167788360982, -0.13380596640340395]
+train trajectory 9 angle bias/RMSE/final error (rad): [-0.010325643616696857, 0.029752950086186263, 0.007477451944754965]
+train trajectory 10 angle bias/RMSE/final error (rad): [-0.028351589097593066, 0.029800215981104328, -0.03325865025723583]
+train trajectory 11 angle bias/RMSE/final error (rad): [-0.019020381637932553, 0.022624324659831326, -0.01758437087868292]
+train trajectory 12 angle bias/RMSE/final error (rad): [-0.013798603986770065, 0.014055409103687853, -0.014508158512291695]
+train trajectory 13 angle bias/RMSE/final error (rad): [0.019320583640880896, 0.049603923889389, -0.06878745656972732]
+val moving speed >0.5 rad/s: {'mean': 4.863108722967989, 'std': 22.151910443975293}
+val theta moving residual mean/count:                    mean  count
+theta                         
+(-3.2, -1.0]  -3.737035     37
+(-1.0, -0.2]   0.650765    160
+(-0.2, 0.2]   10.575239    141
+(0.2, 1.0]     6.577146    184
+(1.0, 3.2]     2.290852     50
+val omega moving residual mean/count:                    mean  count
+omega                         
+(-24.0, -5.0] -0.452776     86
+(-5.0, -0.5]   9.026073    179
+(0.5, 5.0]     3.525990    194
+(5.0, 24.0]    4.609981    113
+val u moving residual mean/count:                     mean  count
+u                              
+(-10.0, -1.0]  10.706818    135
+(-1.0, -0.01]  10.585591     64
+(-0.01, 0.01]  -0.525526    161
+(0.01, 1.0]    -0.073686     48
+(1.0, 10.0]     4.554552    164
+val trajectory 1 angle bias/RMSE/final error (rad): [-0.11346280273617776, 0.12510604652163632, -0.12730686943344327]
+val trajectory 2 angle bias/RMSE/final error (rad): [-0.032513623538250845, 0.07430859344813286, -0.063911000250282]
+val trajectory 3 angle bias/RMSE/final error (rad): [0.03586477807838968, 0.049160702486036253, 0.02483123059798689]
+R2 max acceleration*theta over 4001 grid points (rad^2/s^2): -0.0
+R3 min finite-difference voltage derivative over 30000 points (rad/(s^2 V)): 0.0
+Stress: 100 deterministic-seed random binary/zero voltage runs, each 20 s; maximal absolute angle (rad): 58.852181363278085
+
+Compensated final fit both supplied files; angle RMSE in rad, derivative residuals in rad/s^2
+train moving speed >0.5 rad/s: {'mean': 1.4521892486703216, 'std': 11.19884343060288}
+train theta moving residual mean/count:                   mean  count
+theta                        
+(-3.2, -1.0] -5.363948    115
+(-1.0, -0.2] -0.892112    448
+(-0.2, 0.2]   3.554585    486
+(0.2, 1.0]    3.809635    362
+(1.0, 3.2]    1.072029    108
+train omega moving residual mean/count:                    mean  count
+omega                         
+(-24.0, -5.0] -0.711969    301
+(-5.0, -0.5]   1.926312    383
+(0.5, 5.0]     2.397172    566
+(5.0, 24.0]    1.210415    269
+train u moving residual mean/count:                    mean  count
+u                             
+(-10.0, -1.0]  6.288759    303
+(-1.0, -0.01]  1.092398    134
+(-0.01, 0.01]  1.140425    682
+(0.01, 1.0]    0.273606    148
+(1.0, 10.0]   -2.635967    252
+train trajectory 1 angle bias/RMSE/final error (rad): [-0.026795120785741772, 0.04572468774219227, 0.025477854417114143]
+train trajectory 2 angle bias/RMSE/final error (rad): [-0.020881419386771807, 0.04901304320996307, -0.03354627347937991]
+train trajectory 3 angle bias/RMSE/final error (rad): [-0.020866975714202433, 0.08788354389366917, -0.011824451113895441]
+train trajectory 4 angle bias/RMSE/final error (rad): [-0.009631669501507798, 0.06252740861481584, -0.06360411508548505]
+train trajectory 5 angle bias/RMSE/final error (rad): [-0.0006225242776313615, 0.014544404578713853, 0.0018582197683916345]
+train trajectory 6 angle bias/RMSE/final error (rad): [-0.027607734881042702, 0.030669411908709775, -0.028190355604587485]
+train trajectory 7 angle bias/RMSE/final error (rad): [-0.03307818329414018, 0.12563024542220605, -0.061676269912550714]
+train trajectory 8 angle bias/RMSE/final error (rad): [-0.16038623567128302, 0.16752384835260292, -0.17627146548468786]
+train trajectory 9 angle bias/RMSE/final error (rad): [0.0010984369238205528, 0.033455593529043634, 0.020616094463042467]
+train trajectory 10 angle bias/RMSE/final error (rad): [-0.031678720107386205, 0.033030578162264686, -0.03305959630721582]
+train trajectory 11 angle bias/RMSE/final error (rad): [-0.01819373809307381, 0.02184940049037943, -0.016435826639865522]
+train trajectory 12 angle bias/RMSE/final error (rad): [-0.011510397039507816, 0.011707313311692542, -0.012059801365718041]
+train trajectory 13 angle bias/RMSE/final error (rad): [0.013422176840099333, 0.0525730142160897, -0.07382431684913965]
+val moving speed >0.5 rad/s: {'mean': 4.888675438471071, 'std': 22.222108794371344}
+val theta moving residual mean/count:                    mean  count
+theta                         
+(-3.2, -1.0]  -3.775921     37
+(-1.0, -0.2]   0.515138    160
+(-0.2, 0.2]   10.583380    141
+(0.2, 1.0]     6.701936    184
+(1.0, 3.2]     2.563930     50
+val omega moving residual mean/count:                    mean  count
+omega                         
+(-24.0, -5.0] -0.579334     86
+(-5.0, -0.5]   9.135571    179
+(0.5, 5.0]     3.513080    194
+(5.0, 24.0]    4.684429    113
+val u moving residual mean/count:                     mean  count
+u                              
+(-10.0, -1.0]  11.042194    135
+(-1.0, -0.01]  10.821000     64
+(-0.01, 0.01]  -0.491249    161
+(0.01, 1.0]    -0.160639     48
+(1.0, 10.0]     4.267585    164
+val trajectory 1 angle bias/RMSE/final error (rad): [-0.11245482253277124, 0.12370521128622289, -0.12475494677099502]
+val trajectory 2 angle bias/RMSE/final error (rad): [-0.030802647196686316, 0.07075688405476054, -0.05422151073501895]
+val trajectory 3 angle bias/RMSE/final error (rad): [0.0335108207438362, 0.04808818509826195, 0.022401106792993952]
+R2 max acceleration*theta over 4001 grid points (rad^2/s^2): -0.0
+R3 min finite-difference voltage derivative over 30000 points (rad/(s^2 V)): 0.0006305374000703523
+Stress: 100 deterministic-seed random binary/zero voltage runs, each 20 s; maximal absolute angle (rad): 59.154473836460014
+
+Harmonic final fit both supplied files; angle RMSE in rad, derivative residuals in rad/s^2
+train moving speed >0.5 rad/s: {'mean': 1.0467896811871669, 'std': 11.665066449329196}
+train theta moving residual mean/count:                   mean  count
+theta                        
+(-3.2, -1.0] -1.665879    115
+(-1.0, -0.2] -3.151257    448
+(-0.2, 0.2]   3.505708    486
+(0.2, 1.0]    5.730205    362
+(1.0, 3.2]   -5.413847    108
+train omega moving residual mean/count:                    mean  count
+omega                         
+(-24.0, -5.0] -2.282198    301
+(-5.0, -0.5]   2.143125    383
+(0.5, 5.0]     1.928131    566
+(5.0, 24.0]    1.356417    269
+train u moving residual mean/count:                    mean  count
+u                             
+(-10.0, -1.0]  3.470599    303
+(-1.0, -0.01]  0.713426    134
+(-0.01, 0.01]  1.187755    682
+(0.01, 1.0]    0.948892    148
+(1.0, 10.0]   -2.014294    252
+train trajectory 1 angle bias/RMSE/final error (rad): [-0.04021245326996116, 0.048689659814600494, -0.015661932583647648]
+train trajectory 2 angle bias/RMSE/final error (rad): [-0.013718859488259518, 0.036899665034296314, -0.03745233688278039]
+train trajectory 3 angle bias/RMSE/final error (rad): [-0.015629223048720907, 0.09054813875605268, -0.01880008294989815]
+train trajectory 4 angle bias/RMSE/final error (rad): [-0.004895687718302098, 0.04386361591069851, -0.057361070174973876]
+train trajectory 5 angle bias/RMSE/final error (rad): [-0.0023061667958314425, 0.016419577206615264, -0.004383191323192018]
+train trajectory 6 angle bias/RMSE/final error (rad): [-0.02250219461369821, 0.0470760124349016, -0.02970248907582673]
+train trajectory 7 angle bias/RMSE/final error (rad): [-0.039676533876145, 0.08428327830489561, -0.05997477342117895]
+train trajectory 8 angle bias/RMSE/final error (rad): [-0.11459432069683645, 0.12081584701546703, -0.11281939578990985]
+train trajectory 9 angle bias/RMSE/final error (rad): [-0.018658704156048957, 0.0250245131764474, -0.013561079278836013]
+train trajectory 10 angle bias/RMSE/final error (rad): [-0.022483993512398184, 0.023540929369317974, -0.02575510691840019]
+train trajectory 11 angle bias/RMSE/final error (rad): [-0.0075314808495364535, 0.013918740271058131, -0.005828254501354477]
+train trajectory 12 angle bias/RMSE/final error (rad): [-0.013522059182086347, 0.013767477016561846, -0.014202974538397549]
+train trajectory 13 angle bias/RMSE/final error (rad): [0.014531964742178735, 0.0478994566647886, -0.05050150552631567]
+val moving speed >0.5 rad/s: {'mean': 4.605114010454285, 'std': 22.4120301856175}
+val theta moving residual mean/count:                    mean  count
+theta                         
+(-3.2, -1.0]  -2.737161     37
+(-1.0, -0.2]  -2.230074    160
+(-0.2, 0.2]   10.653860    141
+(0.2, 1.0]     8.770309    184
+(1.0, 3.2]    -0.474383     50
+val omega moving residual mean/count:                    mean  count
+omega                         
+(-24.0, -5.0] -0.761567     86
+(-5.0, -0.5]   8.334012    179
+(0.5, 5.0]     2.592950    194
+(5.0, 24.0]    6.237164    113
+val u moving residual mean/count:                     mean  count
+u                              
+(-10.0, -1.0]   7.449974    135
+(-1.0, -0.01]  10.082546     64
+(-0.01, 0.01]   0.059754    161
+(0.01, 1.0]     0.065914     48
+(1.0, 10.0]     5.916534    164
+val trajectory 1 angle bias/RMSE/final error (rad): [-0.11738896960758706, 0.12853962771581856, -0.1022539725112344]
+val trajectory 2 angle bias/RMSE/final error (rad): [-0.005150589104733951, 0.06448984605376948, -0.059041268757851956]
+val trajectory 3 angle bias/RMSE/final error (rad): [0.03596962754309544, 0.040510673587598335, 0.029509239055128735]
+R2 max acceleration*theta over 4001 grid points (rad^2/s^2): -0.0
+R3 min finite-difference voltage derivative over 30000 points (rad/(s^2 V)): 0.0
+Stress: 100 deterministic-seed random binary/zero voltage runs, each 20 s; maximal absolute angle (rad): 59.23323714389142
+
+SaturatingDamping final fit both supplied files; angle RMSE in rad, derivative residuals in rad/s^2
+train moving speed >0.5 rad/s: {'mean': 1.4367962188842331, 'std': 11.03539831185275}
+train theta moving residual mean/count:                   mean  count
+theta                        
+(-3.2, -1.0] -4.599546    115
+(-1.0, -0.2] -0.525935    448
+(-0.2, 0.2]   3.391595    486
+(0.2, 1.0]    3.452077    362
+(1.0, 3.2]    0.454565    108
+train omega moving residual mean/count:                    mean  count
+omega                         
+(-24.0, -5.0] -0.493681    301
+(-5.0, -0.5]   1.354657    383
+(0.5, 5.0]     2.712849    566
+(5.0, 24.0]    1.028942    269
+train u moving residual mean/count:                    mean  count
+u                             
+(-10.0, -1.0]  5.596930    303
+(-1.0, -0.01]  1.316821    134
+(-0.01, 0.01]  1.154835    682
+(0.01, 1.0]    0.736848    148
+(1.0, 10.0]   -2.327307    252
+train trajectory 1 angle bias/RMSE/final error (rad): [-0.05279669858235036, 0.05644902817753634, -0.08060529168184447]
+train trajectory 2 angle bias/RMSE/final error (rad): [-0.010128475720425545, 0.05102212672230762, 0.0069282993402194765]
+train trajectory 3 angle bias/RMSE/final error (rad): [-0.011570984245743345, 0.07646653106988163, 0.012558608780619963]
+train trajectory 4 angle bias/RMSE/final error (rad): [-0.008000505886876284, 0.05338142464660323, -0.03831421078499476]
+train trajectory 5 angle bias/RMSE/final error (rad): [0.0040018556545730185, 0.019406553507397836, 0.009053667517683784]
+train trajectory 6 angle bias/RMSE/final error (rad): [-0.022770499752518627, 0.029478303955127023, -0.020925750687520717]
+train trajectory 7 angle bias/RMSE/final error (rad): [-0.0381541386343543, 0.12453583835322177, -0.06917783338163139]
+train trajectory 8 angle bias/RMSE/final error (rad): [-0.07876347890547677, 0.08618090342887454, -0.07045339322205078]
+train trajectory 9 angle bias/RMSE/final error (rad): [-0.07048457157181447, 0.07415399474845656, -0.07984426267944968]
+train trajectory 10 angle bias/RMSE/final error (rad): [0.00548716865569117, 0.006629178145292743, 0.00770078730604748]
+train trajectory 11 angle bias/RMSE/final error (rad): [-0.03474145187247774, 0.03834829511667741, -0.03873987859449597]
+train trajectory 12 angle bias/RMSE/final error (rad): [-0.0038766929103928823, 0.003933070808487265, -0.0038935437450303423]
+train trajectory 13 angle bias/RMSE/final error (rad): [0.0279817945770084, 0.05075542337963403, -0.04345660317073775]
+val moving speed >0.5 rad/s: {'mean': 4.8395990527750214, 'std': 22.06725014379215}
+val theta moving residual mean/count:                    mean  count
+theta                         
+(-3.2, -1.0]  -3.613419     37
+(-1.0, -0.2]   0.749805    160
+(-0.2, 0.2]   10.532328    141
+(0.2, 1.0]     6.418862    184
+(1.0, 3.2]     2.316987     50
+val omega moving residual mean/count:                    mean  count
+omega                         
+(-24.0, -5.0] -0.562500     86
+(-5.0, -0.5]   8.297677    179
+(0.5, 5.0]     4.152582    194
+(5.0, 24.0]    4.652571    113
+val u moving residual mean/count:                     mean  count
+u                              
+(-10.0, -1.0]  10.451490    135
+(-1.0, -0.01]  10.407680     64
+(-0.01, 0.01]  -0.515361    161
+(0.01, 1.0]    -0.260818     48
+(1.0, 10.0]     4.796953    164
+val trajectory 1 angle bias/RMSE/final error (rad): [-0.10066843299501922, 0.11352936689288348, -0.07117167651024461]
+val trajectory 2 angle bias/RMSE/final error (rad): [-0.029537826831693856, 0.06963915889677064, -0.06908350298924765]
+val trajectory 3 angle bias/RMSE/final error (rad): [0.029025067416086812, 0.047456627709070096, 0.015347635891733147]
+R2 max acceleration*theta over 4001 grid points (rad^2/s^2): -0.0
+R3 min finite-difference voltage derivative over 30000 points (rad/(s^2 V)): 0.0
+Stress: 100 deterministic-seed random binary/zero voltage runs, each 20 s; maximal absolute angle (rad): 58.90013655517666
+
+HarmonicAsymmetric final fit both supplied files; angle RMSE in rad, derivative residuals in rad/s^2
+train moving speed >0.5 rad/s: {'mean': -0.4520033711816526, 'std': 11.414852694364127}
+train theta moving residual mean/count:                   mean  count
+theta                        
+(-3.2, -1.0] -3.401151    115
+(-1.0, -0.2] -4.190727    448
+(-0.2, 0.2]   1.909634    486
+(0.2, 1.0]    3.747890    362
+(1.0, 3.2]   -6.507717    108
+train omega moving residual mean/count:                    mean  count
+omega                         
+(-24.0, -5.0] -3.702815    301
+(-5.0, -0.5]   0.382337    383
+(0.5, 5.0]     0.556576    566
+(5.0, 24.0]   -0.124548    269
+train u moving residual mean/count:                    mean  count
+u                             
+(-10.0, -1.0]  1.827731    303
+(-1.0, -0.01] -0.739640    134
+(-0.01, 0.01] -0.335557    682
+(0.01, 1.0]   -0.448369    148
+(1.0, 10.0]   -3.357443    252
+train trajectory 1 angle bias/RMSE/final error (rad): [-0.02562377023781316, 0.03741973092339541, 0.0019980508163501]
+train trajectory 2 angle bias/RMSE/final error (rad): [0.0003893334705202732, 0.04027506892598431, -0.0319976336378094]
+train trajectory 3 angle bias/RMSE/final error (rad): [0.003355639421055977, 0.07816441740778689, -0.0050289762256824425]
+train trajectory 4 angle bias/RMSE/final error (rad): [0.015836045883940997, 0.05036846217158225, -0.05131343762813203]
+train trajectory 5 angle bias/RMSE/final error (rad): [0.018267719215470896, 0.023534566157063806, 0.01768387096998817]
+train trajectory 6 angle bias/RMSE/final error (rad): [-0.0019340269742063603, 0.0407850625743554, -0.007609917077858558]
+train trajectory 7 angle bias/RMSE/final error (rad): [-0.01970932491458552, 0.08542227883458096, -0.04126578968666038]
+train trajectory 8 angle bias/RMSE/final error (rad): [-0.10801966694065271, 0.11301436168442701, -0.11152952129777832]
+train trajectory 9 angle bias/RMSE/final error (rad): [-0.007961374388445026, 0.015445948686790235, -0.003956784763116006]
+train trajectory 10 angle bias/RMSE/final error (rad): [-0.006440873611109996, 0.0069500146355406965, -0.0074448427699199266]
+train trajectory 11 angle bias/RMSE/final error (rad): [0.009380465657257541, 0.012924696467707143, 0.014291094642894103]
+train trajectory 12 angle bias/RMSE/final error (rad): [-0.010501289006888489, 0.01069771282228779, -0.011043078649345082]
+train trajectory 13 angle bias/RMSE/final error (rad): [0.029816528746253467, 0.05223365318535198, -0.036025676400508015]
+val moving speed >0.5 rad/s: {'mean': 3.1163064017551716, 'std': 22.34280508979513}
+val theta moving residual mean/count:                   mean  count
+theta                        
+(-3.2, -1.0] -4.259814     37
+(-1.0, -0.2] -3.326002    160
+(-0.2, 0.2]   9.141604    141
+(0.2, 1.0]    6.981313    184
+(1.0, 3.2]   -2.024540     50
+val omega moving residual mean/count:                    mean  count
+omega                         
+(-24.0, -5.0] -2.341287     86
+(-5.0, -0.5]   6.658201    179
+(0.5, 5.0]     1.430783    194
+(5.0, 24.0]    4.552991    113
+val u moving residual mean/count:                    mean  count
+u                             
+(-10.0, -1.0]  6.218833    135
+(-1.0, -0.01]  8.522371     64
+(-0.01, 0.01] -1.513835    161
+(0.01, 1.0]   -1.560964     48
+(1.0, 10.0]    4.367114    164
+val trajectory 1 angle bias/RMSE/final error (rad): [-0.09960407477316596, 0.11469595654564452, -0.08935874006850658]
+val trajectory 2 angle bias/RMSE/final error (rad): [0.006703784917373461, 0.06539499135323125, -0.05005466839823715]
+val trajectory 3 angle bias/RMSE/final error (rad): [0.053812172161986596, 0.05816814277149019, 0.046922126301350016]
+R2 max acceleration*theta over 4001 grid points (rad^2/s^2): -0.0
+R3 min finite-difference voltage derivative over 30000 points (rad/(s^2 V)): 0.0
+Stress: 100 deterministic-seed random binary/zero voltage runs, each 20 s; maximal absolute angle (rad): 58.820907711150134
+
+AngleFriction final fit both supplied files; angle RMSE in rad, derivative residuals in rad/s^2
+train moving speed >0.5 rad/s: {'mean': 1.588809337153628, 'std': 11.606064197602695}
+train theta moving residual mean/count:                   mean  count
+theta                        
+(-3.2, -1.0] -4.154606    115
+(-1.0, -0.2] -2.267450    448
+(-0.2, 0.2]   3.743757    486
+(0.2, 1.0]    5.520473    362
+(1.0, 3.2]    0.825201    108
+train omega moving residual mean/count:                    mean  count
+omega                         
+(-24.0, -5.0] -0.969100    301
+(-5.0, -0.5]   0.917482    383
+(0.5, 5.0]     3.472041    566
+(5.0, 24.0]    1.444348    269
+train u moving residual mean/count:                    mean  count
+u                             
+(-10.0, -1.0]  6.824915    303
+(-1.0, -0.01]  1.461405    134
+(-0.01, 0.01]  1.202273    682
+(0.01, 1.0]    0.714271    148
+(1.0, 10.0]   -3.079519    252
+train trajectory 1 angle bias/RMSE/final error (rad): [-0.03886991917095205, 0.04339019506229608, -0.02319328747652738]
+train trajectory 2 angle bias/RMSE/final error (rad): [-0.014642393489490046, 0.04961733986865163, -0.015585708867060427]
+train trajectory 3 angle bias/RMSE/final error (rad): [-0.02757883503580264, 0.07808020178888657, -0.028387305459253186]
+train trajectory 4 angle bias/RMSE/final error (rad): [-0.009888545391584702, 0.05743512498487332, -0.05265416547150554]
+train trajectory 5 angle bias/RMSE/final error (rad): [-0.002822037219513147, 0.02072686286852949, -0.00511580817622735]
+train trajectory 6 angle bias/RMSE/final error (rad): [-0.01860259365091708, 0.05964123842670407, -0.028108438572117124]
+train trajectory 7 angle bias/RMSE/final error (rad): [-0.04486316547957788, 0.0691658190082926, -0.061905165135092644]
+train trajectory 8 angle bias/RMSE/final error (rad): [-0.12604279594689977, 0.1318167729921843, -0.13250324064651198]
+train trajectory 9 angle bias/RMSE/final error (rad): [-0.007106182221444016, 0.025613753198277578, 0.008428913363638713]
+train trajectory 10 angle bias/RMSE/final error (rad): [-0.03501581643045076, 0.036923971991110915, -0.040907253134386715]
+train trajectory 11 angle bias/RMSE/final error (rad): [-0.013654674952805246, 0.01788181045961895, -0.011894616440699793]
+train trajectory 12 angle bias/RMSE/final error (rad): [-0.014912884786791696, 0.015186278147500827, -0.015671149769182664]
+train trajectory 13 angle bias/RMSE/final error (rad): [0.01670138998601984, 0.04764668673295684, -0.058923753197625696]
+val moving speed >0.5 rad/s: {'mean': 5.320919887911515, 'std': 22.29353186523048}
+val theta moving residual mean/count:                    mean  count
+theta                         
+(-3.2, -1.0]  -2.779004     37
+(-1.0, -0.2]  -1.187390    160
+(-0.2, 0.2]   10.667444    141
+(0.2, 1.0]     8.140488    184
+(1.0, 3.2]     6.688247     50
+val omega moving residual mean/count:                    mean  count
+omega                         
+(-24.0, -5.0]  0.007919     86
+(-5.0, -0.5]   7.666791    179
+(0.5, 5.0]     5.329834    194
+(5.0, 24.0]    5.633113    113
+val u moving residual mean/count:                     mean  count
+u                              
+(-10.0, -1.0]  10.392002    135
+(-1.0, -0.01]  11.374712     64
+(-0.01, 0.01]   0.317741    161
+(0.01, 1.0]    -0.515822     48
+(1.0, 10.0]     5.404070    164
+val trajectory 1 angle bias/RMSE/final error (rad): [-0.1187427964587108, 0.13004469009394992, -0.12149233226417958]
+val trajectory 2 angle bias/RMSE/final error (rad): [-0.013422831247470252, 0.04647102959058701, -0.03757417091106503]
+val trajectory 3 angle bias/RMSE/final error (rad): [0.03608293366388436, 0.04135754997207621, 0.029573974965471834]
+R2 max acceleration*theta over 4001 grid points (rad^2/s^2): -0.0
+R3 min finite-difference voltage derivative over 30000 points (rad/(s^2 V)): 0.0
+Stress: 100 deterministic-seed random binary/zero voltage runs, each 20 s; maximal absolute angle (rad): 52.99894382163889
+
+HarmonicMotorAsymmetric final fit both supplied files; angle RMSE in rad, derivative residuals in rad/s^2
+train moving speed >0.5 rad/s: {'mean': -0.26111135129170704, 'std': 11.282458226631489}
+train theta moving residual mean/count:                   mean  count
+theta                        
+(-3.2, -1.0] -3.477734    115
+(-1.0, -0.2] -3.659198    448
+(-0.2, 0.2]   1.916123    486
+(0.2, 1.0]    3.789901    362
+(1.0, 3.2]   -6.116189    108
+train omega moving residual mean/count:                    mean  count
+omega                         
+(-24.0, -5.0] -3.597689    301
+(-5.0, -0.5]   0.316413    383
+(0.5, 5.0]     0.895335    566
+(5.0, 24.0]    0.216841    269
+train u moving residual mean/count:                    mean  count
+u                             
+(-10.0, -1.0]  2.884857    303
+(-1.0, -0.01]  0.253120    134
+(-0.01, 0.01] -0.132504    682
+(0.01, 1.0]   -1.307888    148
+(1.0, 10.0]   -4.050486    252
+train trajectory 1 angle bias/RMSE/final error (rad): [-0.02693850745673783, 0.03395635215542655, -0.014474464978437213]
+train trajectory 2 angle bias/RMSE/final error (rad): [-0.0010385432138926875, 0.04553666011520082, -0.0351327535649987]
+train trajectory 3 angle bias/RMSE/final error (rad): [0.019304449052956762, 0.05837628559706741, 0.021393877194912238]
+train trajectory 4 angle bias/RMSE/final error (rad): [0.012882550787303068, 0.04909517867414239, -0.05280829067439035]
+train trajectory 5 angle bias/RMSE/final error (rad): [0.01835384090488297, 0.023335118568616534, 0.018364774114805124]
+train trajectory 6 angle bias/RMSE/final error (rad): [-0.0020079573073228585, 0.039081986380138364, -0.006888147194933841]
+train trajectory 7 angle bias/RMSE/final error (rad): [-0.026554686905239846, 0.08741262576802128, -0.049030163192937695]
+train trajectory 8 angle bias/RMSE/final error (rad): [-0.1063001062765434, 0.11126966763787212, -0.11028206489070463]
+train trajectory 9 angle bias/RMSE/final error (rad): [-0.012545926066315863, 0.018964851857375977, -0.007410354670764119]
+train trajectory 10 angle bias/RMSE/final error (rad): [-0.005956968619868196, 0.0066497373146055605, -0.007614283700447366]
+train trajectory 11 angle bias/RMSE/final error (rad): [0.005712912572772823, 0.010499108584219539, 0.010209455862280642]
+train trajectory 12 angle bias/RMSE/final error (rad): [-0.010657271981717136, 0.010861805420694502, -0.011220831017451784]
+train trajectory 13 angle bias/RMSE/final error (rad): [0.027639236834303728, 0.048974162053754086, -0.04013092829782145]
+val moving speed >0.5 rad/s: {'mean': 3.5251963845300143, 'std': 22.359498442655546}
+val theta moving residual mean/count:                   mean  count
+theta                        
+(-3.2, -1.0] -3.908534     37
+(-1.0, -0.2] -2.618468    160
+(-0.2, 0.2]   9.367257    141
+(0.2, 1.0]    7.201049    184
+(1.0, 3.2]   -1.315866     50
+val omega moving residual mean/count:                    mean  count
+omega                         
+(-24.0, -5.0] -2.374723     86
+(-5.0, -0.5]   7.001959    179
+(0.5, 5.0]     2.302009    194
+(5.0, 24.0]    4.607948    113
+val u moving residual mean/count:                     mean  count
+u                              
+(-10.0, -1.0]   7.879771    135
+(-1.0, -0.01]  10.216571     64
+(-0.01, 0.01]  -1.197217    161
+(0.01, 1.0]    -2.100199     48
+(1.0, 10.0]     3.611855    164
+val trajectory 1 angle bias/RMSE/final error (rad): [-0.10338917057555631, 0.11883634958960183, -0.09405287968995686]
+val trajectory 2 angle bias/RMSE/final error (rad): [0.0022374631691455416, 0.055382106714163944, -0.04136787249280696]
+val trajectory 3 angle bias/RMSE/final error (rad): [0.04669884127422799, 0.0513403401267965, 0.03919109935674801]
+R2 max acceleration*theta over 4001 grid points (rad^2/s^2): -0.0
+R3 min finite-difference voltage derivative over 30000 points (rad/(s^2 V)): 0.0
+Stress: 100 deterministic-seed random binary/zero voltage runs, each 20 s; maximal absolute angle (rad): 27.45761330091034

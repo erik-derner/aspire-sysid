@@ -1,0 +1,62 @@
+{
+  "expressions": {
+    "dtheta": "omega",
+    "domega": "a*u-g*sin(theta)-b*omega-c*exp(-(omega/vs)**2)*tanh(omega/v)"
+  },
+  "parameters": [
+    {
+      "name": "a",
+      "value": 28.9630245363397,
+      "unit": "rad/(s^2*V)",
+      "type": "fitted",
+      "description": "Voltage-to-acceleration gain; positive motor torque per effective inertia. Estimated jointly with all other parameters of this candidate by the output-error procedure below."
+    },
+    {
+      "name": "b",
+      "value": 3.1393765760042216,
+      "unit": "1/s",
+      "type": "fitted",
+      "description": "Viscous acceleration coefficient, including mechanical drag and motor back-EMF effects that cannot be separated by these data. Estimated jointly with all other parameters of this candidate by the output-error procedure below."
+    },
+    {
+      "name": "g",
+      "value": 113.30574112404314,
+      "unit": "rad/s^2",
+      "type": "fitted",
+      "description": "Sinusoidal restoring-acceleration amplitude, interpreted as gravitational torque divided by effective inertia. Estimated jointly with all other parameters of this candidate by the output-error procedure below."
+    },
+    {
+      "name": "c",
+      "value": 19.83689074644385,
+      "unit": "rad/s^2",
+      "type": "fitted",
+      "description": "Dry-friction acceleration scale. Estimated jointly with all other parameters of this candidate by the output-error procedure below."
+    },
+    {
+      "name": "v",
+      "value": 0.12000000000001923,
+      "unit": "rad/s",
+      "type": "fitted",
+      "description": "Low-speed regularization width of the friction transition. Estimated jointly with all other parameters of this candidate by the output-error procedure below."
+    },
+    {
+      "name": "vs",
+      "value": 9.354196552481351,
+      "unit": "rad/s",
+      "type": "fitted",
+      "description": "Speed scale of the Gaussian speed-weakening friction envelope. Estimated jointly with all other parameters of this candidate by the output-error procedure below."
+    }
+  ],
+  "estimation": {
+    "criterion": "SciPy soft-L1 loss on open-loop angle residuals, defined as simulated `theta` minus measured `theta`, with loss scale `0.04` rad. This downweights large encoder/transient/stopping discrepancies without discarding their samples. The angle output-error criterion matches the intended autonomous simulation use; differentiation-based acceleration residuals were only used for initialization and structural diagnostics.",
+    "data": "data/train.csv, all 13 trajectories, and data/val.csv, all 3 trajectories. The validation file was first reserved for comparison of training-only structures, then included in the final estimation to reduce parameter uncertainty. The final loss uses every angle sample after the first of each trajectory, with equal weight per sample; the first logged `theta` and `omega` initialize that trajectory. Inputs `u` are held at the logged value between samples. No test data were accessed. In cross-validation the three validation trajectories are internally numbered 14 through 16; their file IDs remain 1 through 3.",
+    "method": "All 6 fitted parameters were optimized together by bounded nonlinear least squares using scipy.optimize.least_squares (Trust Region Reflective algorithm), with `soft_l1` loss, `x_scale = \"jac\"`, `diff_step = 0.0001`, `max_nfev = 350`, `ftol = 2e-8`, `xtol = 2e-8`, and `gtol = 1e-7`. Here solver tolerances and finite-difference scale are numerical settings, not physical parameters. Each residual evaluation integrates separate trajectories by classical RK4, one step of `0.01` s, with zero-order-held `u`, exactly as the task specifies. Numba compiles the simulator; it does not change the model. Parameter ordering is `a` (rad/(s^2*V)), `b` (1/s), `g` (rad/s^2), `c` (rad/s^2), `v` (rad/s), `vs` (rad/s). Six initial vectors in that ordering were `[28.460000000000001, 3.056, 111.67, 19.949999999999999, 0.12, 9.4800000000000004]`; `[30.711853493076514, 2.9393315096039849, 108.88622082784906, 20.823337840696155, 0.12000000999999999, 9.4800000000000004]`; `[28.692015414123919, 3.3299979813088161, 110.45861070568938, 19.693434255790855, 0.12000000999999999, 9.4800000000000004]`; `[29.61248805127887, 2.9465279153401731, 113.29093253097471, 20.463778098035487, 0.12000000999999999, 9.4800000000000004]`; `[29.362322427114744, 3.3395742310273371, 114.07641874325033, 20.015931536054001, 0.12000000999999999, 9.4800000000000004]`; `[28.057392836818018, 3.0293181007555927, 123.05880096451847, 20.520439843145013, 0.12000000999999999, 9.4800000000000004]`; each component has the corresponding unit just listed. Bounds in that same order are lower `[1, 0, 20, 0, 0.12, 0.20000000000000001]` and upper `[60, 10, 200, 60, 5, 15]`, with the corresponding component units. The first start came from the preceding torque-balance/output-error fit; the other five are deterministic local perturbations, using numpy.random.default_rng with seed `271828`, to reduce sensitivity to local minima. The same script evaluates both ordinary squared loss and soft-L1 loss (scale `0.04` rad), with six starts per loss; the best fitting objective is retained within each loss. Leave-one-trajectory-out refits on the 16 available trajectories then select the loss by aggregate held-out angle RMSE. Those refits are warm-started from the full-data estimate but exclude the held-out trajectory from their objective; their limit is `max_nfev = 180`. The delivered values are the selected full-data fit, not an average of cross-validation parameters. Every other setting is identical between those refits and the full-data fit. Positive gain, restoring amplitude and friction scale, nonnegative viscous drag, and bounded modulation coefficients were imposed for stability and the physical requirements. The velocity-width lower bound `0.12` rad/s avoids an excessively stiff explicit-RK4 regularization; stopping rates are bounded below the approximately `278` 1/s scalar RK4 stability limit for this sampling period. Bounds on `hs` and `hc` guarantee a positive angular envelope even at their extreme combinations. This direct low-dimensional output-error method was preferred to a black-box predictor because states are never corrected after initialization.",
+    "script": "fit_final.py"
+  },
+  "discussion": {
+    "family": "Gaussian Stribeck-type speed-weakening friction with viscous drag and a pendulum torque balance. Background: B. Armstrong-Helouvry, P. Dupont and C. Canudas de Wit, 'A survey of models, analysis tools and compensation methods for the control of machines with friction', Automatica (1994). This bibliographic reference is recalled from memory; the attempted web retrieval did not return usable source text. The custom algebraic closures here are not claimed to be the exact models in that survey.",
+    "interpretation": "`dtheta = omega` is kinematics. `a*u` is motor acceleration, `-g*sin(theta)` is restoring acceleration and `-b*omega` is viscous drag. `-c*exp(-(omega/vs)**2)*tanh(omega/v)` opposes angular velocity, approaching smooth Coulomb drag at speeds above `v` but below `vs`, and decreasing at higher speeds. `c` controls the friction scale, `v` the near-zero regularization and `vs` the speed-weakening scale. There is no angle-dependent friction in this candidate.",
+    "origin": "The original physically motivated smooth Coulomb family was extended by a standard Gaussian Stribeck envelope after speed-dependent derivative residuals were examined. In its initial fit a separate high-speed dry-friction asymptote converged essentially to zero, while the viscous term increased. The asymptote was therefore removed rather than retained as a tiny uninterpretable coefficient; all six remaining parameters were re-estimated jointly. This is an independently defensible alternative torque-balance family, not a perturbation of the projection coefficients. Its robust-loss fit was selected by cross-validation.",
+    "limitations": "The high-speed dry-friction asymptote is assumed zero; these recordings do not determine it separately from viscous drag. This is an effective speed-weakening approximation, not evidence that felt friction vanishes at arbitrarily high speed. It has no exact nonzero stick band: at rest the friction term is zero, so nonzero resting angles slowly creep. The fitted transition width reaches its imposed lower bound. It omits the angular and directional effects that improved the recommended model. Its overall cross-validated angle error is larger, but it is useful as a structurally simpler speed-dependent alternative. Full-data angle RMSE is `0.07078063` rad and aggregate leave-one-trajectory-out angle RMSE is `0.07691553` rad across all 16 known trajectories; these are not test scores."
+  }
+}

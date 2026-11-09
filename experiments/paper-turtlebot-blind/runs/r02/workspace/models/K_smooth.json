@@ -1,0 +1,49 @@
+{
+  "expressions": {
+    "y_next": "y+(speedgain*x3)*cos(x2+(turngain*(x4-width*tanh(x4/width))+turnbias)/2)",
+    "x1_next": "x1+(speedgain*x3)*sin(x2+(turngain*(x4-width*tanh(x4/width))+turnbias)/2)",
+    "x2_next": "atan2(sin(x2+(turngain*(x4-width*tanh(x4/width))+turnbias)), cos(x2+(turngain*(x4-width*tanh(x4/width))+turnbias)))"
+  },
+  "parameters": [
+    {
+      "name": "speedgain",
+      "value": 0.1650822679420416,
+      "unit": "unknown position unit per x3 unit per sample",
+      "type": "fitted",
+      "description": "Multiplier of the current `x3` input in displacement length, estimated jointly with all other fitted parameters from full training rollouts."
+    },
+    {
+      "name": "turngain",
+      "value": 0.27272557024545946,
+      "unit": "inferred radian per x4 unit per sample",
+      "type": "fitted",
+      "description": "Multiplier of the model-specific `x4` input response in angular increment, estimated jointly with all other fitted parameters from full training rollouts."
+    },
+    {
+      "name": "turnbias",
+      "value": 0.00254413587357521,
+      "unit": "inferred radian per sample",
+      "type": "fitted",
+      "description": "Constant per-sample angular increment, estimated jointly with all other fitted parameters from full training rollouts; its mechanism is unknown."
+    },
+    {
+      "name": "width",
+      "value": 0.2994386950456653,
+      "unit": "unknown x4 input unit",
+      "type": "fitted",
+      "description": "Positive scale in `x4` input units in `x4-width*tanh(x4/width)`, estimated jointly with all other fitted parameters from full training rollouts."
+    }
+  ],
+  "estimation": {
+    "criterion": "Weighted output-error nonlinear least squares over complete free-running training trajectories: sum of squared errors in `y` and `x1` plus `0.09` times squared errors in unwrapped `x2`. No measured states are reinserted after the first sample. Position units are unreported; `x2` is computationally interpreted in radians. The dimensionless angular residual weight is `0.3`. It was selected from `0.3`, `1`, and `3` by leave-one-trajectory-out `y` rollout error, to emphasize coordinate accuracy while preserving heading consistency.",
+    "data": "data/train.csv, all three trajectories and all 150 samples per trajectory. There are 149 within-trajectory transitions per experiment, 447 transitions in total. No transitions cross trajectory boundaries. Initial states are the first logged states. Only the angular observations were unwrapped using numpy.unwrap to avoid artificial branch-cut residuals; position observations and inputs were not filtered. All rows were used in the final fit because no quality labels justify deleting them.",
+    "method": "All fitted parameters were estimated together in one step by nonlinear least squares, scipy.optimize.least_squares with `method = trf`, two-point finite-difference Jacobian and ordinary quadratic loss. This method permits the nonlinear trigonometric rollout criterion and bounds; linear least squares cannot fit that criterion. Starting values were `speedgain = 0.1667` (same implied units as the coefficient), `turngain = 0.2` (same implied units as the coefficient), `turnbias = 0.002` (same implied units as the coefficient), `width = 0.1` (same implied units as the coefficient). They approximate the exploratory linear input gains with a small or zero bias; attenuation was initialized moderately within the input range rather than at a singular zero scale. Bounds were `0 <= speedgain <= 1` in implied position-per-input-per-sample units, `0 <= turngain <= 1` in inferred radian-per-input-per-sample units, `-0.05 <= turnbias <= 0.05` in inferred radian per sample, and `0.001 <= width <= 1` in unknown `x4` input units. These broad bounds enforce positive gains and a nonsingular attenuation scale while allowing the observed response. The width upper bound is approximately the observed maximum command magnitude. No fitted parameter ended on a bound. Termination tolerances were `ftol = 1e-11`, `xtol = 1e-11`, and `gtol = 1e-11`; maximum function evaluations were `1500` (dimensionless algorithm settings). No random numbers or seeds were used. Fits were also repeated on each pair of trajectories for validation and on the first `90` samples per trajectory for temporal forecasts, but submitted coefficients use all samples. Method reference checked: SciPy least_squares documentation, Trust Region Reflective method; SciPy source optimize/_lsq/trf.py. The installed SciPy version was 1.18.1.",
+    "script": "fit_candidates.py"
+  },
+  "discussion": {
+    "family": "Smooth analytic discrete-time planar kinematics with a monotone hyperbolic-tangent attenuation input map. The planar geometric part is the unicycle/differential-drive kinematic model discretized with midpoint heading; reference checked: Frank Dellaert and Seth Hutchinson, Introduction to Robotics and Perception, section 5.2, Motion Model for the Differential Drive Robot (roboticsbook.org). This is an analogy for the data, not an assertion of the unknown system identity.",
+    "interpretation": "`y` and `x1` are treated as accumulated coordinates and `x2` as direction. `x3` and `x4` are current inputs. `speedgain*x3` is displacement length per sample. `turngain` scales the attenuated command `x4-width*tanh(x4/width)`; positive `width` sets the input scale of attenuation. For small command this odd function grows cubically; for large magnitude it approaches an affine response with a sign-dependent subtraction. Its derivative is nonnegative, so it cannot reverse incremental command response. `turnbias` is a constant angular increment. `cos` and `sin` project displacement at midpoint direction, and `atan2(sin(...), cos(...))` wraps the next angle. None of these inferred roles confirms a specific mechanism or unit.",
+    "origin": "The geometric structure was inferred from motion directions and angle wrapping after generic affine/polynomial baselines. A searched subtractive `tanh` law reduced rollout errors, but unconstrained subtraction could reverse the response near zero. That version was rejected. The retained guessed analytic input law `turngain*(x4-width*tanh(x4/width))+turnbias` ties the subtraction amplitude to its width, giving a monotone response with zero slope at zero command before adding the bias. Proportional distance `speedgain*x3` was selected to give zero displacement at zero input and reduce fitted degrees of freedom. This is an analytic small-input attenuation law rather than a literal hard dead zone. No genetic symbolic regression or sparse-thresholding package was used.",
+    "limitations": "The physical system, column units and intended use are unknown. Interpreting `x2` as an angle in radians is inferred from wrapping near `-pi` and `pi`, not supplied metadata. Coefficients map one sample to the next; the supplied sampling period `T_s = 0.2` s is already absorbed in them. The models assume translation invariance: absolute `y` and `x1` do not change the increments. This is supported by the observed direction of motion but not established globally. Only three experiments are available; leave-one-trajectory-out validation is noisy, and hyperparameter selection used these same experiments, so its results are not an unbiased test score. No test data were accessed. Input-change residuals and their positive lag-one correlations indicate missing transient dynamics, disturbances, or both. The prescribed three-state model has no actuator or previous-input state, so that behavior is not fully represented. Long-horizon accuracy outside the observed input/state support is unknown; no global state bound is guaranteed for accumulated positions. There is no exact dead zone, only small-input attenuation. Its gain beyond the observed range grows linearly, and the estimated width is not a measured physical threshold. The initial unconstrained subtractive-tanh family was discarded because it allowed local sign reversal; this candidate avoids that defect by construction."
+  }
+}

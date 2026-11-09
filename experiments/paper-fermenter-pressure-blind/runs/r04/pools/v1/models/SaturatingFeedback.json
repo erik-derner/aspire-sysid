@@ -1,0 +1,117 @@
+{
+  "expressions": {
+    "dy": "c0 + c1*sqrt(Max(y-h,epsy)) + c2*tanh(a*(x1/n1-u0)) + c3*tanh(b*(x2/n2-w0)) + c4*tanh(a*(x1/n1-u0))*sqrt(Max(y-h,epsy)) + c5*tanh(b*(x2/n2-w0))*sqrt(Max(y-h,epsy))"
+  },
+  "parameters": [
+    {
+      "name": "n1",
+      "value": 70.0,
+      "unit": "x1-unit",
+      "type": "fixed",
+      "description": "Convenient input normalization, selected by inspection of the training input scale, not optimized; gives dimensionless `x1/n1`."
+    },
+    {
+      "name": "n2",
+      "value": 20.0,
+      "unit": "x2-unit",
+      "type": "fixed",
+      "description": "Convenient input normalization selected by inspection of the training input scale, not optimized; gives dimensionless `x2/n2`."
+    },
+    {
+      "name": "c0",
+      "value": 0.013575452858087539,
+      "unit": "state-unit/s",
+      "type": "fitted",
+      "description": "Coefficient of the corresponding ordered drift, square-root feedback, two saturating forcings or two mixed terms; jointly estimated."
+    },
+    {
+      "name": "c1",
+      "value": -0.016945345699585564,
+      "unit": "state-unit**0.5/s",
+      "type": "fitted",
+      "description": "Coefficient of the corresponding ordered drift, square-root feedback, two saturating forcings or two mixed terms; jointly estimated."
+    },
+    {
+      "name": "c2",
+      "value": 0.002646425928400174,
+      "unit": "state-unit/s",
+      "type": "fitted",
+      "description": "Coefficient of the corresponding ordered drift, square-root feedback, two saturating forcings or two mixed terms; jointly estimated."
+    },
+    {
+      "name": "c3",
+      "value": 0.3485019061227088,
+      "unit": "state-unit/s",
+      "type": "fitted",
+      "description": "Coefficient of the corresponding ordered drift, square-root feedback, two saturating forcings or two mixed terms; jointly estimated."
+    },
+    {
+      "name": "c4",
+      "value": 0.07598656156195399,
+      "unit": "state-unit**0.5/s",
+      "type": "fitted",
+      "description": "Coefficient of the corresponding ordered drift, square-root feedback, two saturating forcings or two mixed terms; jointly estimated."
+    },
+    {
+      "name": "c5",
+      "value": 0.025151842003056684,
+      "unit": "state-unit**0.5/s",
+      "type": "fitted",
+      "description": "Coefficient of the corresponding ordered drift, square-root feedback, two saturating forcings or two mixed terms; jointly estimated."
+    },
+    {
+      "name": "h",
+      "value": 0.9939999999999141,
+      "unit": "state-unit",
+      "type": "fitted",
+      "description": "State shift before square root."
+    },
+    {
+      "name": "a",
+      "value": 1.6817177803594459,
+      "unit": "-",
+      "type": "fitted",
+      "description": "First-input hyperbolic-tangent slope."
+    },
+    {
+      "name": "u0",
+      "value": 1.3128249244160912,
+      "unit": "-",
+      "type": "fitted",
+      "description": "First-input normalized center."
+    },
+    {
+      "name": "b",
+      "value": 0.06762459965103144,
+      "unit": "-",
+      "type": "fitted",
+      "description": "Second-input hyperbolic-tangent slope."
+    },
+    {
+      "name": "w0",
+      "value": 0.3722731426418734,
+      "unit": "-",
+      "type": "fitted",
+      "description": "Second-input normalized center."
+    },
+    {
+      "name": "epsy",
+      "value": 1e-06,
+      "unit": "state-unit",
+      "type": "fixed",
+      "description": "Small positive floor selected for the shifted state before fractional powers or square roots; ensures real finite evaluation near and below the offset, not inferred as a physical threshold."
+    }
+  ],
+  "estimation": {
+    "criterion": "Final criterion: sum of squared free-running errors in `y` on both available trajectories, excluding only the first state of each file, to match the evaluation criterion. Initial derivative least squares and then teacher-forced one-step RK4 output least squares supplied starting values; those criteria do not define the final estimates.",
+    "data": "Both complete files data/train.csv (one stated trajectory) and data/val.csv (one stated trajectory) were used in the final fit. Training-only fits were compared on validation first. During final fitting each file was initialized only at its first observed state, with no later state resets; all subsequent observations contributed equal output-error weight. Sampling period was 5 s, with current-row inputs held constant during each classical RK4 step. Validation was subsequently used for fitting, so final validation errors are in-sample and are not unbiased generalization estimates.",
+    "method": "All parameters were estimated jointly at every stage. Initial derivative fit on all training rows used The optimizer is scipy.optimize.least_squares, default Trust Region Reflective algorithm, finite-difference two-point Jacobian and linear loss; its official documentation was checked online. Nonlinear least squares was used because RK4 output error is nonlinear even in coefficients of a polynomial vector field. Numeric initialization in the expression parameter order was [0.0, -0.1, 0.01, 0.02, 0.05, 0.01, 0.99, 2.0, 0.8, 2.0, 0.8]; units are those of the corresponding parameter rows. This seed came from the previously fitted helper model or polynomial model, except exponential and sigmoid seeds, which were moderate hand-chosen coefficients and scale parameters. Numeric derivative-stage output was [0.017394070080756052, 0.13640922674200184, 0.016129449568352473, 0.05906093635681033, 0.22593977506259813, 0.010627251627095748, 0.9920052166593135, 1.2134331650072445, 1.9999976377609854, 0.38139673825180803, 2.7056273411013517e-06] and numeric one-step-stage output was [0.018723809783396318, 0.03975063628356295, 0.008117215992241649, 0.04924846397517057, 0.13798659034716662, 0.009749900913879285, 0.9912775886027484, 1.317896473219022, 1.6601218669010591, 0.47994518194520736, 0.342650927297341]. These numbers are in the corresponding parameter units. They document actual starts, not extra constants in the model. Bounds in the same order were [-1, -1, -1, -1, -1, -1, 0.8, 0.01, 0, 0.01, 0] to [1, 1, 1, 1, 1, 1, 0.994, 20, 2, 20, 2], in the corresponding parameter units; these prevent extreme coefficients and invalid powers while permitting broad empirical nonlinear shapes. Max_nfev was 300 for derivative initialization, 180 for one-step training fit, and 200 for free-running fit; default convergence tolerances were 1e-8. The final fit on both files started directly from the documented one-step values, not from the training-only output-error fit. A separate training-only free-running fit was used for validation comparison. No random numbers or seed were used. nonlinear_dynamic.py reproduces the sequence and retains the exact original initialization vectors in its referenced working-directory result files.",
+    "script": "nonlinear_dynamic.py"
+  },
+  "discussion": {
+    "family": "Saturating hyperbolic-tangent nonlinear state-space vector field with transformed bilinear feedback.",
+    "interpretation": "The saturating first- and second-input maps are `tanh(a*(x1/n1-u0))` and `tanh(b*(x2/n2-w0))`. Their separate forcings are `c2*tanh(a*(x1/n1-u0))` and `c3*tanh(b*(x2/n2-w0))`; mixed terms `c4*tanh(a*(x1/n1-u0))*sqrt(Max(y-h,epsy))` and `c5*tanh(b*(x2/n2-w0))*sqrt(Max(y-h,epsy))` modify the square-root state feedback. `c0` is constant drift. Saturation is mathematical boundedness, not a measured actuator property.",
+    "origin": "Hyperbolic-tangent maps were a deliberately bounded alternative to power and exponential input extrapolation. A purely additive sigmoid model was inadequate, so shifted square-root state response and both transformed state-input products were added based on interaction residuals. No neural-network package or genetic symbolic search was used.",
+    "limitations": "No system description or units are supplied, so these are empirical vector fields rather than asserted physical laws. Unit labels state-unit, x1-unit and x2-unit denote unknown logged units; only seconds are known. The fitted domain is approximately `0.99 <= y <= 2.19` state-unit, `1.63 <= x1 <= 94.45` x1-unit, and `0.08 <= x2 <= 30.80` x2-unit on the two supplied files. Polynomial derivative residuals have temporal dependence and correlate with the next change in `x2`; this suggests sampling alignment or omitted dynamics, but is not proof of a particular mechanism. Abrupt near-baseline states midway through the files are not reset in fitting or prediction. No memory, next input, or hidden state is included in the delivered expressions; the irreducible consequences of these omissions remain. Extrapolation and input regimes not represented here are unvalidated. The second-input tangent is nearly linear on the observed domain; its slope, center and amplitude are strongly confounded. The finite iteration budget was reached, so this candidate is not asserted to be a converged global optimum. Bounded input maps do not by themselves guarantee stable state feedback."
+  }
+}

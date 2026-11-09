@@ -1,0 +1,107 @@
+{
+  "expressions": {
+    "dp": "a*flow - (c*Max(0,1/(1+exp((Min(Max(valve,0),vmax)-vmid)/vwidth))-sclosed)/(sref-sclosed))*2*(p-patm)/(sqrt(delta)+sqrt(delta+4*Abs(p-patm)))"
+  },
+  "parameters": [
+    {
+      "name": "a",
+      "value": 0.0012265531523118307,
+      "unit": "bar/(s*(l/min))",
+      "type": "fitted",
+      "description": "Positive inlet conversion gain `a`: estimated jointly with all other fitted parameters in the pressure-simulation fit; represents gas storage and standard-volume conversion together, not independently measured tank volume."
+    },
+    {
+      "name": "patm",
+      "value": 0.9850000000000001,
+      "unit": "bar",
+      "type": "fitted",
+      "description": "Effective atmospheric equilibrium `patm`, estimated jointly in the pressure-simulation fit with bounds `0.985 <= patm <= 1.01` bar. These bounds admit a small pressure-calibration/ambient offset around the task's approximate atmospheric level while excluding the markedly lower equilibrium demanded by the rejected linear-outflow fit. This is not a barometer measurement."
+    },
+    {
+      "name": "c",
+      "value": 0.05694374460029963,
+      "unit": "bar**0.5/s",
+      "type": "fitted",
+      "description": "Outlet coefficient `c` at the reference closure `vref`, estimated jointly; the interpretation of its units follows the candidate pressure-drive law."
+    },
+    {
+      "name": "vmid",
+      "value": 81.10499310145325,
+      "unit": "%",
+      "type": "fitted",
+      "description": "Sigmoid location `vmid`, estimated jointly; controls where valve conductance changes most rapidly, without asserting an actual geometric port location."
+    },
+    {
+      "name": "vwidth",
+      "value": 19.392908838345335,
+      "unit": "%",
+      "type": "fitted",
+      "description": "Positive sigmoid width `vwidth`, estimated jointly; controls the smoothness of the calibrated conductance decrease."
+    },
+    {
+      "name": "vmax",
+      "value": 100.0,
+      "unit": "%",
+      "type": "fixed",
+      "description": "Full-closure endpoint `vmax = 100` % from the task definition; fixed to enforce a sealed outlet at that endpoint."
+    },
+    {
+      "name": "vref",
+      "value": 70.0,
+      "unit": "%",
+      "type": "fixed",
+      "description": "Reference closure `vref = 70` % chosen before fitting to lie in the dense training-input region and to normalize `c`; no physical threshold is asserted."
+    },
+    {
+      "name": "sclosed",
+      "value": 0.2740191650530594,
+      "unit": "-",
+      "type": "tied",
+      "description": "Endpoint sigmoid ordinate `sclosed`, tied rather than separately fitted, so full closure has exactly zero nonnegative conductance.",
+      "equation": "1/(1+exp((vmax-vmid)/vwidth))"
+    },
+    {
+      "name": "sref",
+      "value": 0.6393701892457858,
+      "unit": "-",
+      "type": "tied",
+      "description": "Reference sigmoid ordinate `sref`, tied to the fitted valve curve so `c` is its reference coefficient.",
+      "equation": "1/(1+exp((vref-vmid)/vwidth))"
+    },
+    {
+      "name": "kappa",
+      "value": 0.49999999999999994,
+      "unit": "1/s",
+      "type": "fitted",
+      "description": "Maximum atmospheric pressure-relaxation rate `kappa` at the fully open valve, estimated jointly with the other fitted coefficients subject to `0.01 <= kappa <= 0.5` 1/s. The upper bound is chosen for numerical stability, not inferred as a fundamental property."
+    },
+    {
+      "name": "copen",
+      "value": 0.110808216554387,
+      "unit": "bar**0.5/s",
+      "type": "tied",
+      "description": "Fully open outlet coefficient `copen`, computed from the fitted sigmoid and reference coefficient, not independently estimated.",
+      "equation": "c*(1/(1+exp((0-vmid)/vwidth))-sclosed)/(sref-sclosed)"
+    },
+    {
+      "name": "delta",
+      "value": 0.04911384342385571,
+      "unit": "bar",
+      "type": "tied",
+      "description": "Viscous-to-inertial crossover pressure `delta`, tied to `copen` and the estimated fastest rate `kappa`; this reparameterization enforces a stable atmospheric relaxation rate.",
+      "equation": "(copen/kappa)**2"
+    }
+  ],
+  "estimation": {
+    "criterion": "Unweighted sum of squared free-running pressure errors, in bar squared, over every sample after the initial one. Each trajectory is initialized only at its first logged `p`; current-row `valve` and `flow` are held constant during a classical RK4 step of `5` s. The final fit has `2904` pressure residuals, with `1451` from training and `1453` from validation. This directly matches the intended long-horizon simulation criterion instead of fitting the filtered `dp` column. Final training RMSE is 0.0255843258 bar and final validation-data RMSE is 0.0370516217 bar; the pooled supplied-data RMSE is 0.0318423858 bar. Validation data are part of this final estimation objective, not an independent performance test.",
+    "data": "All rows of `data/train.csv` (one trajectory, `1452` samples) and `data/val.csv` (one separate trajectory, `1454` samples). The initial samples are used to initialize simulations but not to score residuals. A training-only preliminary fit used only `data/train.csv`; its validation RMSE was 0.0383008428 bar. Validation was first used for structural comparison and residual inspection, then included in the final joint fit to improve input/pressure coverage. The experiments are never concatenated into one state trajectory; no rows are excluded and no future inputs are used.",
+    "method": "Bound-constrained nonlinear least squares with the Trust Region Reflective algorithm, `scipy.optimize.least_squares`, using two-point finite-difference Jacobians and `x_scale = 'jac'`. This is used because the closed-form model is nonlinear in the coefficients and the criterion includes recursive state integration; ordinary linear least squares cannot minimize this objective. Numba compiles only the model and RK4 loops; it does not change the integration rule. First all fitted coefficients were estimated together against training-trajectory simulation; all were then re-estimated together against the two independently initialized trajectories in one combined objective. Training-fit starting values: `a = 0.0013` bar/(s*(l/min)), `c = 0.053` bar**0.5/s, `patm = 0.994` bar, `vmid = 82` %, `vwidth = 20` %, `kappa = 0.461707171884` 1/s. These scales were chosen to represent an approximately nominal gas-storage gain, an outlet coefficient of comparable magnitude, an equilibrium close to atmosphere, and moderate valve/pressure nonlinearities rather than an extreme initial stiffness. Joint-fit starting values: `a = 0.00126513703368` bar/(s*(l/min)), `c = 0.0591770486651` bar**0.5/s, `patm = 0.985` bar, `vmid = 80.0763922332` %, `vwidth = 17.6930644631` %, `kappa = 0.48` 1/s. They are the converged training values except that `kappa` is reset to `0.48` 1/s to start strictly inside its numerical-stability bound. The fitted `kappa` replaces direct estimation of `delta`, with the tie `delta = (copen/kappa)**2`; the fixed upper rate `0.5` 1/s makes the worst-case RK4 relaxation product at the task's `5` s step equal to `2.5`, below the classical negative-real-axis stability limit of approximately `2.785`. The optimum reaches that rate bound and the lower atmospheric bound. Bounds: `0.0001 <= a <= 0.004` bar/(s*(l/min)), `0.0001 <= c <= 0.3` bar**0.5/s, `0.985 <= patm <= 1.01` bar, `0 <= vmid <= 98` %, `2 <= vwidth <= 70` %, and `0.01 <= kappa <= 0.5` 1/s. Maximum function evaluations per stage: `350`. For this candidate the actual maximum is `350`. Stopping tolerances `ftol = 1e-10`, `xtol = 1e-10`, and `gtol = 1e-10` are the dimensionless solver settings, not data-derived noise levels. No random numbers or stochastic search were used; no seed applies. ",
+    "script": "fit_candidates.py"
+  },
+  "discussion": {
+    "family": "Nonlinear ideal-gas storage balance with mixed linear-quadratic outlet resistance (a Darcy-Forchheimer-type constitutive law) and monotone sigmoid valve calibration. Its signed outlet law is obtained by solving a positive linear-plus-quadratic pressure-drop relation for flow; that algebraic derivation, rather than a porous-media assumption, is used here. The ideal-gas storage basis is the NASA Glenn Beginner's Guide to Aeronautics, \"Equation of State\" (page last updated May 13, 2021), read during this round. The isentropic/choked-flow reference is the same guide's \"Mass Flow Choking\" (page last updated May 13, 2021), also read during this round. Neither source determines the rig's fitted valve characteristic or the empirical smoothing.",
+    "interpretation": "The term `a*flow` is inlet mass accumulation converted to pressure rate. Let `C = c*Max(0,1/(1+exp((Min(Max(valve,0),vmax)-vmid)/vwidth))-sclosed)/(sref-sclosed)` denote the outlet coefficient, solely as notation in this discussion; no extra state is simulated. The signed discharge `C*2*(p-patm)/(sqrt(delta)+sqrt(delta+4*Abs(p-patm)))` has a linear low-drop limit and an inertial square-root high-drop limit. The logistic curve calibrates positive decreasing conductance, while its endpoint subtraction gives an exactly sealed full-closure outlet. `vmid` and `vwidth` describe that calibration, not measured valve geometry. `patm` is an effective sensor-level atmospheric equilibrium. `kappa` and its tie define the fastest zero-flow relaxation, making numerical stability explicit.",
+    "origin": "Mass conservation supplied `a*flow` minus an outlet term; atmospheric relaxation supplied the signed pressure excess. Early linear-pressure drives gave supplied-trajectory RMSE of approximately `0.06` bar and were rejected. Regularized square-root and generalized-power drives improved simulation. Residual pressure-bin biases near atmospheric pressure suggested a finite low-drop conductance, so this mixed viscous/inertial law was tried as a physically defensible interpolation rather than an unconstrained polynomial. The sigmoid conductance was chosen after simple open-fraction power and exponential curves; its saturating open-end calibration marginally improved training-only validation accuracy. The unconstrained mixed fit had a fully-open atmospheric relaxation rate above the stable RK4 range; the `kappa` reparameterization was added after checking this, at a small fit cost. No symbolic-regression-generated terms are used.",
+    "limitations": "Ambient pressure, pressure-sensor offset, temperature, exact effective gas volume, and standard-flow calibration are not separately identified. The final `patm = 0.985` bar is at its assumed lower bound and `kappa = 0.5` 1/s is at its stability bound, so neither should be interpreted as an independently measured physical constant. The fit absorbs some unmodelled dynamics and the apparent one-sample flow logging mismatch. The training-only validation RMSE is reported separately from final in-sample validation-data RMSE. The model cannot represent temperature dynamics, delays, bubble inventory, leaks or valve hysteresis. Clipping outside `0 <= valve <= 100` % is a numerical extension, not a calibrated extrapolation. Physical requirements: R1 holds because the derivative with respect to inlet `flow` is the fitted positive `a`. R2 holds for `p >= patm`: conductance is nonnegative and nonincreasing in `valve`, and the outlet pressure drive is nonnegative. All supplied pressure observations exceed the final fitted `patm`. A passive bidirectional outlet necessarily reverses the R2 sign below `patm`, because closing it also suppresses atmospheric air admission; therefore literal R2 is not claimed in that unobserved sub-atmospheric regime. R3 holds exactly at `p = patm` with `flow = 0`, for every valve opening, and `patm` is approximately the task's `1` bar. R4 holds in continuous time on either side of `patm`, because the outlet term has the sign of `p-patm` and opposes it whenever the outlet is open. R5 holds exactly at `valve = vmax` or the full-closure endpoint: outlet conductance is zero and `dp = a*flow >= 0` for `flow >= 0`. No measured inlet-flow sample was exactly zero and neither experiment reached full closure, so those endpoints are assumptions rather than empirical verifications."
+  }
+}

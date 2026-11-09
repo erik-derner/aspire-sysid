@@ -1,0 +1,90 @@
+{
+  "expressions": {
+    "dy": "x1",
+    "dx1": "bias - rest*sin(freq*y) + even*(cos(freq*y) - 1) + gain*x2 - visc*exp(Min(Max(-dampSlope*y, -expCap), expCap))*x1 - fric*tanh(x1/velScale)"
+  },
+  "parameters": [
+    {
+      "name": "bias",
+      "value": 3.212105718793746,
+      "unit": "V/s",
+      "type": "fitted",
+      "description": "`bias` is the constant acceleration offset. Estimated jointly in the final free-run output-error fit on both supplied files, from the training-only starting value reported in estimation."
+    },
+    {
+      "name": "rest",
+      "value": 110.306761061318,
+      "unit": "V/s",
+      "type": "fitted",
+      "description": "`rest` is the amplitude of the odd sinusoidal restoring term. Estimated jointly in the final free-run output-error fit on both supplied files, from the training-only starting value reported in estimation."
+    },
+    {
+      "name": "visc",
+      "value": 1.7616525076568226,
+      "unit": "1/s",
+      "type": "fitted",
+      "description": "`visc` is the positive baseline velocity damping coefficient. Estimated jointly in the final free-run output-error fit on both supplied files, from the training-only starting value reported in estimation."
+    },
+    {
+      "name": "gain",
+      "value": 28.170383647861666,
+      "unit": "V/(s*U)",
+      "type": "fitted",
+      "description": "`gain` is the linear input coefficient. Estimated jointly in the final free-run output-error fit on both supplied files, from the training-only starting value reported in estimation."
+    },
+    {
+      "name": "freq",
+      "value": 1.0313315446008842,
+      "unit": "1/Y",
+      "type": "fitted",
+      "description": "`freq` is the inverse-state frequency inside sine and cosine. Estimated jointly in the final free-run output-error fit on both supplied files, from the training-only starting value reported in estimation."
+    },
+    {
+      "name": "fric",
+      "value": 21.001155855734446,
+      "unit": "V/s",
+      "type": "fitted",
+      "description": "`fric` is the magnitude of saturating moving-velocity damping. Estimated jointly in the final free-run output-error fit on both supplied files, from the training-only starting value reported in estimation."
+    },
+    {
+      "name": "velScale",
+      "value": 0.2,
+      "unit": "V",
+      "type": "fixed",
+      "description": "`velScale` is the velocity width of the hyperbolic tangent transition. Fixed at `velScale = 0.2` V in the final fit. This is a manually chosen smoothing hyperparameter, not a continuously optimized final coefficient: sensitivity fits on all training trajectories tested `velScale = 0.09`, `velScale = 0.12`, `velScale = 0.2` and `velScale = 0.4` V and compared their held-out validation simulations. The choice balances validation performance with resolution of the damping transition at `T_s = 0.01` s; its precise value is not identified physically."
+    },
+    {
+      "name": "dampSlope",
+      "value": 0.26079846366992976,
+      "unit": "1/Y",
+      "type": "fitted",
+      "description": "`dampSlope` is the state dependence of positive exponential velocity damping. Estimated jointly in the final free-run output-error fit on both supplied files, from the training-only starting value reported in estimation."
+    },
+    {
+      "name": "even",
+      "value": 3.806895795911808,
+      "unit": "V/s",
+      "type": "fitted",
+      "description": "`even` is the coefficient of the even cosine-minus-one restoring correction. Estimated jointly in the final free-run output-error fit on both supplied files, from the training-only starting value reported in estimation."
+    },
+    {
+      "name": "expCap",
+      "value": 40.0,
+      "unit": "-",
+      "type": "fixed",
+      "description": "`expCap = 40` is a chosen dimensionless numerical safety cap for the exponential argument. It prevents overflow far beyond observed states; it is inactive over all fitted and screened trajectories. It is not inferred physical saturation."
+    }
+  ],
+  "estimation": {
+    "criterion": "Sum of squared free-run errors in `y` at every within-trajectory row after its initial sample, with equal weight per sample. This matches the scored output and long-run simulation requirement rather than optimizing the noisy centered derivative target. Errors have unit Y and the minimized sum has unit Y**2.",
+    "data": "Final coefficient estimation uses data/train.csv (all trajectories, all 3522 rows) and data/val.csv (all trajectories, all 1192 rows), with each initial row used solely to initialize simulation. No rows or trajectories are otherwise omitted. Structural screening first fits training data only and evaluates all validation trajectories without resetting the states; final refitting then uses both files to exploit all available experiments. Consequently final validation-file errors are in-sample, not new held-out evidence. The file names, sample counts and row roles are as supplied in TASK.md.",
+    "method": "Classical fourth-order Runge-Kutta with `T_s = 0.01` s and `x2` held at the preceding logged sample is used, with measured initial states and no subsequent state replacement. Every trajectory is separate. SciPy `scipy.optimize.least_squares` uses trust-region reflective bounded nonlinear least squares, linear loss, two-point finite-difference Jacobians, Jacobian-based parameter scaling, `max_nfev = 350`, and `ftol = xtol = gtol = 1e-10`; the last four are dimensionless numerical settings. This method handles the small bounded nonlinear output-error problem directly; derivative least squares alone is insufficient because centered differentiated, quantized measurements need not be instantaneous acceleration. Numba only accelerates the deterministic RK4 calculations. No random numbers or seeds are used. All fitted parameters listed in this candidate are re-estimated together in one final step on both files. They start from this family's preceding training-only simulation least-squares fit, whose numerical values are: `bias = 2.921686812374148` V/s; `rest = 109.6721888145227` V/s; `visc = 1.734202142319573` 1/s; `gain = 27.81363594500145` V/(s*U); `freq = 1.041613473073061` 1/Y; `fric = 20.66858943061521` V/s; `dampSlope = 0.2447628475639066` 1/Y; `even = 3.498254599324194` V/s. These warm starts were chosen because the preliminary fit already tracked the measured trajectories. The final optimization bounds are `-10 <= bias <= 10` V/s; `1 <= rest <= 300` V/s; `0.05 <= visc <= 30` 1/s; `1 <= gain <= 100` V/(s*U); `0.4 <= freq <= 1.6` 1/Y; `0 <= fric <= 60` V/s; `-1 <= dampSlope <= 1` 1/Y; `-30 <= even <= 30` V/s. Bounds keep damping positive, constrain plausible local restoring and forcing magnitudes, and avoid unresolved velocity transitions; they are search restrictions, not established physical limits. The final-step fixed velocity smoothing width was selected by the stated sensitivity sweep, not re-estimated. Its uncertainty is not included in the objective. The earlier training-only search and its initial values are reproducible in the scripts stated in origin. `reproduce_candidates.py` reproduces the final joint step from the exact numerical training-fit starting values. References: the SciPy reference documentation for `scipy.optimize.least_squares` describes the trust-region reflective method; Steven H. Strogatz, Nonlinear Dynamics and Chaos, is a general oscillator reference. These bibliographic references are cited from memory; attempted web checking returned no usable content, so neither source was verified online in this round. Neither reference establishes the identity or physics of this undisclosed system.",
+    "script": "reproduce_candidates.py"
+  },
+  "discussion": {
+    "family": "Continuous-time, forced second-order trigonometric oscillator with smooth Coulomb-like damping, an even trigonometric force correction and positive exponential state-dependent viscous damping. This is a phenomenological family, not identification of a pendulum apparatus. References: the SciPy reference documentation for `scipy.optimize.least_squares` describes the trust-region reflective method; Steven H. Strogatz, Nonlinear Dynamics and Chaos, is a general oscillator reference. These bibliographic references are cited from memory; attempted web checking returned no usable content, so neither source was verified online in this round. Neither reference establishes the identity or physics of this undisclosed system.",
+    "interpretation": "Units are not supplied. In this record, Y denotes the unknown unit of `y`, V the unknown unit of `x1`, U the unknown unit of `x2`, and s seconds; these are unit placeholders, not expression symbols. The numerical relation `dy = x1` is assumed from within-trajectory centered differences, implying compatible numerical scaling V = Y/s, not a known physical calibration. The expressions use only the logged states and input; the column `dx1` is not an argument. `dy = x1` supplies kinematic motion. In `bias - rest*sin(freq*y) + even*(cos(freq*y) - 1) + gain*x2 - visc*exp(Min(Max(-dampSlope*y, -expCap), expCap))*x1 - fric*tanh(x1/velScale)`, `bias` supplies a constant offset, `-rest*sin(freq*y)` supplies odd locally restoring acceleration, `even*(cos(freq*y) - 1)` supplies an even state-dependent correction with zero value at the origin, and `gain*x2` supplies linear forcing. `-visc*exp(Min(Max(-dampSlope*y, -expCap), expCap))*x1` opposes velocity with a positive state-dependent coefficient; `-fric*tanh(x1/velScale)` is odd saturating velocity damping, with smooth behavior near zero. `expCap` caps the exponential argument for numerical safety. No material or force units are asserted.",
+    "origin": "PLAN.md lists the families before fitting. Kinematics came from centered-difference inspection in inspect_data.py. Affine, cubic and sine restoring candidates were tried in fit_models.py; sine or cubic restoring improved free-run error over affine dynamics. The helper derivative regression and residuals.py showed antisymmetric velocity residuals, motivating saturation via `tanh`. The training-only one-term forward screening in search_terms.py tested quadratic state, state-velocity, input-state and nonlinear input terms; `y*x1` and an even state force improved simulation residuals. Their operators are empirical choices, not physical deductions. In fit_final.py, `-visc*exp(-dampSlope*y)*x1` replaced affine state-dependent damping to preserve its sign on extrapolation; `even*(cos(freq*y) - 1)` is a bounded even correction instead of unbounded quadratic forcing. Values were subsequently jointly refitted; this structure did not come from automated genetic-programming symbolic regression.",
+    "limitations": "Units are not supplied. In this record, Y denotes the unknown unit of `y`, V the unknown unit of `x1`, U the unknown unit of `x2`, and s seconds; these are unit placeholders, not expression symbols. The numerical relation `dy = x1` is assumed from within-trajectory centered differences, implying compatible numerical scaling V = Y/s, not a known physical calibration. The expressions use only the logged states and input; the column `dx1` is not an argument. Physical identity, calibrated units, independent measurement noise, hidden actuator dynamics and friction memory are unknown. The derivative columns are centered finite differences, not independent acceleration measurements. Training coverage is approximately `-2.514 <= y <= 2.536` Y, `-20.107 <= x1 <= 14.452` V and `-4.946 <= x2 <= 3.954` U, computed from data/train.csv and rounded outward. There is no guarantee outside this support or beyond the supplied trajectory durations. In particular, the asserted kinematic equation does not resolve quantization or initial-velocity error.  Sinusoidal restoring is only locally restoring and introduces periodic equilibria not verified by the experiments. Exponential damping and the even force correction are empirical and correlated with velocity damping; the saturation law gives slow creep rather than exact static friction. The cap is inactive locally but arbitrary on extreme extrapolation."
+  }
+}

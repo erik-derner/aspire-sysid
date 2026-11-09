@@ -1,0 +1,12 @@
+{
+  "order": [
+    "HarmonicMotorAsymmetric",
+    "HarmonicAsymmetric",
+    "AngleFriction",
+    "SaturatingDamping",
+    "Projected",
+    "Compensated"
+  ],
+  "recommended": "HarmonicMotorAsymmetric",
+  "reason": "HarmonicMotorAsymmetric has the lowest pooled leave-one-trajectory-out angle RMSE among the tested families: `0.072298` rad on the supplied training and validation trajectories; its full supplied-data fit has RMSE `0.061758` rad. The slightly simpler HarmonicAsymmetric gives cross-validation RMSE `0.073252` rad and is a close alternative. The recommended model combines exact rest-force cancellation, dissipative damping, restoring harmonic torque, directional friction, and a monotone saturating motor map. Selection used supplied data, not hidden tests; the small advantage of motor saturation should not be read as uniquely identifying hardware saturation. The pool also retains materially different smooth rest-compensation, angle-dependent friction, bounded nonlinear damping, and minimal projected-force families."
+}

@@ -1,0 +1,75 @@
+{
+  "expressions": {
+    "dp": "a*flow - 2*(c*(Min(Max(vmax-valve,0),vmax)/vscale)**beta)*(p-patm)/(ell*(c*(Min(Max(vmax-valve,0),vmax)/vscale)**beta)+sqrt((ell*(c*(Min(Max(vmax-valve,0),vmax)/vscale)**beta))**2+4*Abs(p-patm)+epsdrop))"
+  },
+  "parameters": [
+    {
+      "name": "a",
+      "value": 0.0012724515348838644,
+      "unit": "bar/(s*(l/min))",
+      "type": "fitted",
+      "description": "Positive inlet conversion gain `a`: estimated jointly with all other fitted parameters in the pressure-simulation fit; represents gas storage and standard-volume conversion together, not independently measured tank volume."
+    },
+    {
+      "name": "patm",
+      "value": 0.9918234348654509,
+      "unit": "bar",
+      "type": "fitted",
+      "description": "Effective atmospheric equilibrium `patm`, estimated jointly in the pressure-simulation fit with bounds `0.985 <= patm <= 1.01` bar. These bounds admit a small pressure-calibration/ambient offset around the task's approximate atmospheric level while excluding the markedly lower equilibrium demanded by the rejected linear-outflow fit. This is not a barometer measurement."
+    },
+    {
+      "name": "c",
+      "value": 0.055717129368927344,
+      "unit": "bar**0.5/s",
+      "type": "fitted",
+      "description": "Reference inertial outlet coefficient `c`, jointly estimated."
+    },
+    {
+      "name": "beta",
+      "value": 1.070967900695662,
+      "unit": "-",
+      "type": "fitted",
+      "description": "Positive open-fraction power `beta`, jointly estimated; determines how inertial conductance closes with the valve."
+    },
+    {
+      "name": "ell",
+      "value": 2.5637320708341482,
+      "unit": "s",
+      "type": "fitted",
+      "description": "Positive linear pressure-drop coefficient `ell`, jointly estimated. In pressure-rate units it is the fixed-line viscous resistance; its reciprocal bounds the small-drop relaxation rate."
+    },
+    {
+      "name": "vmax",
+      "value": 100.0,
+      "unit": "%",
+      "type": "fixed",
+      "description": "Full-closure endpoint `vmax = 100` % from the task definition; not fitted."
+    },
+    {
+      "name": "vscale",
+      "value": 30.0,
+      "unit": "%",
+      "type": "fixed",
+      "description": "Open-fraction scale `vscale = 30` % chosen to normalize inertial conductance at `valve = 70` %, within dense training coverage."
+    },
+    {
+      "name": "epsdrop",
+      "value": 1e-08,
+      "unit": "bar",
+      "type": "fixed",
+      "description": "Fixed squared-denominator regularization `epsdrop = 1e-8` bar prevents the removable zero divided by zero at full closure and atmospheric pressure. It was chosen as a tiny positive scale compared with measured pressure excesses, not estimated; its effect is negligible except at that singular endpoint."
+    }
+  ],
+  "estimation": {
+    "criterion": "Unweighted sum of squared free-running pressure errors, in bar squared, over every sample after the initial one. Each trajectory is initialized only at its first logged `p`; current-row `valve` and `flow` are held constant during a classical RK4 step of `5` s. The final fit has `2904` pressure residuals, with `1451` from training and `1453` from validation. This directly matches the intended long-horizon simulation criterion instead of fitting the filtered `dp` column. Final training RMSE is 0.0261182481 bar and final validation-data RMSE is 0.0374925911 bar; the pooled supplied-data RMSE is 0.0323137399 bar. Validation data are part of this final estimation objective, not an independent performance test.",
+    "data": "All rows of `data/train.csv` (one trajectory, `1452` samples) and `data/val.csv` (one separate trajectory, `1454` samples). The initial samples are used to initialize simulations but not to score residuals. A training-only preliminary fit used only `data/train.csv`; its validation RMSE was 0.0387075653 bar. Validation was first used for structural comparison and residual inspection, then included in the final joint fit to improve input/pressure coverage. The experiments are never concatenated into one state trajectory; no rows are excluded and no future inputs are used.",
+    "method": "Bound-constrained nonlinear least squares with the Trust Region Reflective algorithm, `scipy.optimize.least_squares`, using two-point finite-difference Jacobians and `x_scale = 'jac'`. This is used because the closed-form model is nonlinear in the coefficients and the criterion includes recursive state integration; ordinary linear least squares cannot minimize this objective. Numba compiles only the model and RK4 loops; it does not change the integration rule. First all fitted coefficients were estimated together against training-trajectory simulation; all were then re-estimated together against the two independently initialized trajectories in one combined objective. Training-fit starting values: `a = 0.0013` bar/(s*(l/min)), `patm = 0.994` bar, `ell = 3` s, `c = 0.06` bar**0.5/s, `beta = 1`. These scales were chosen to represent an approximately nominal gas-storage gain, an outlet coefficient of comparable magnitude, an equilibrium close to atmosphere, and moderate valve/pressure nonlinearities rather than an extreme initial stiffness. Joint-fit starting values: `a = 0.00132616362088` bar/(s*(l/min)), `patm = 0.993307927025` bar, `ell = 2.45662277494` s, `c = 0.0586547243136` bar**0.5/s, `beta = 1.09521324343`. They are the converged training values, to retain a physically plausible training optimum as the initial point. Only `a`, `patm`, `ell`, `c`, and `beta` are fitted. A separate exponent for the linear resistance was initially tried, but its incremental accuracy was too small to justify another uncertain parameter; this candidate fixes the line resistance independent of `valve`. No derivative prefit determines its coefficients. Bounds: `0.0001 <= a <= 0.004` bar/(s*(l/min)), `0.985 <= patm <= 1.01` bar, `0.01 <= ell <= 30` s, `0.0001 <= c <= 0.3` bar**0.5/s, `0.1 <= beta <= 8`. Maximum function evaluations per stage: `350`. For this candidate the actual maximum is `350`. Stopping tolerances `ftol = 1e-10`, `xtol = 1e-10`, and `gtol = 1e-10` are the dimensionless solver settings, not data-derived noise levels. No random numbers or stochastic search were used; no seed applies. ",
+    "script": "fit_candidates.py"
+  },
+  "discussion": {
+    "family": "Lumped gas-storage model with a series combination of fixed viscous line resistance and valve-dependent inertial resistance. This is a mixed linear-quadratic pressure-drop model, solved explicitly for the signed outlet flow. The ideal-gas storage basis is the NASA Glenn Beginner's Guide to Aeronautics, \"Equation of State\" (page last updated May 13, 2021), read during this round. The isentropic/choked-flow reference is the same guide's \"Mass Flow Choking\" (page last updated May 13, 2021), also read during this round. Neither source determines the rig's fitted valve characteristic or the empirical smoothing.",
+    "interpretation": "The inlet term is `a*flow`. Write `C = c*(Min(Max(vmax-valve,0),vmax)/vscale)**beta` for the reference-normalized inertial coefficient. Neglecting only the tiny endpoint regularization, the outlet pressure-rate quantity `qout` solves `p-patm = ell*qout + qout*Abs(qout)/C**2`. This equation is dimensional in bar because `ell` has units s and `C` has units bar**0.5/s. The delivered radical is the explicit solution; it combines the fixed line resistance and closing-valve inertial resistance in series rather than multiplying one universal pressure curve by a valve coefficient. `beta` gives a monotone valve calibration and the exact zero coefficient at full closure. The two terms represent distinct pressure-drop mechanisms; their coefficients cannot be converted to actual pipe dimensions without independent gas-storage and temperature calibration.",
+    "origin": "Starting from the same conservation law, pressure residuals of separable square-root models motivated a pressure crossover that varies with valve opening. A fixed linear line loss together with a closing-valve quadratic loss supplies this dependence automatically. It was proposed and fitted after the separable drive screen; a version allowing a valve-dependent linear-resistance exponent and pressure-squared compressible variants were also tried. The extra linear exponent gave a negligible validation advantage, so this more parsimonious five-coefficient series model was retained. The open-fraction power curve was chosen because it is monotone, low-dimensional, positive and exactly sealed at full closure.",
+    "limitations": "`ell` is an effective resistance in pressure-rate units, not a measured pipe friction coefficient; gas storage, temperature and geometry are confounded. The model uses low-Mach mixed resistance rather than a full choked nozzle law, so high-pressure extrapolation beyond the supplied approximately `2.19` bar maximum is uncertain. Its largest zero-flow local relaxation rate is bounded by `1/ell = 0.39005636` 1/s, which is below the RK4 rate limit for a `5` s step. The tiny `epsdrop` regularization is numerical rather than an independently supported microscopic flow law. Input logging mismatch and additional unmodelled states still leave correlated residuals. Physical requirements: R1 holds because the derivative with respect to inlet `flow` is the fitted positive `a`. R2 holds for `p >= patm`: conductance is nonnegative and nonincreasing in `valve`, and the outlet pressure drive is nonnegative. All supplied pressure observations exceed the final fitted `patm`. A passive bidirectional outlet necessarily reverses the R2 sign below `patm`, because closing it also suppresses atmospheric air admission; therefore literal R2 is not claimed in that unobserved sub-atmospheric regime. R3 holds exactly at `p = patm` with `flow = 0`, for every valve opening, and `patm` is approximately the task's `1` bar. R4 holds in continuous time on either side of `patm`, because the outlet term has the sign of `p-patm` and opposes it whenever the outlet is open. R5 holds exactly at `valve = vmax` or the full-closure endpoint: outlet conductance is zero and `dp = a*flow >= 0` for `flow >= 0`. No measured inlet-flow sample was exactly zero and neither experiment reached full closure, so those endpoints are assumptions rather than empirical verifications."
+  }
+}

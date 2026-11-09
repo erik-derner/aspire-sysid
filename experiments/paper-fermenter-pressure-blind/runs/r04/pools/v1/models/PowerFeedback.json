@@ -1,0 +1,124 @@
+{
+  "expressions": {
+    "dy": "c0 + c1*(Max(y-h,epsy)**b) + c2*(Max(x1/n1,epsu)**a*Max(x2/n2,epsu)**d) + c3*(Max(x2/n2,epsu)**e) + c4*(Max(x1/n1,epsu)**a*Max(x2/n2,epsu)**d)*(Max(y-h,epsy)**b) + c5*(Max(x2/n2,epsu)**e)*(Max(y-h,epsy)**b)"
+  },
+  "parameters": [
+    {
+      "name": "n1",
+      "value": 70.0,
+      "unit": "x1-unit",
+      "type": "fixed",
+      "description": "Convenient input normalization, selected by inspection of the training input scale, not optimized; gives dimensionless `x1/n1`."
+    },
+    {
+      "name": "n2",
+      "value": 20.0,
+      "unit": "x2-unit",
+      "type": "fixed",
+      "description": "Convenient input normalization selected by inspection of the training input scale, not optimized; gives dimensionless `x2/n2`."
+    },
+    {
+      "name": "c0",
+      "value": 0.009194304876005265,
+      "unit": "state-unit/s",
+      "type": "fitted",
+      "description": "Coefficient of the corresponding ordered term in `dy`; jointly fitted, not a separately measured flow."
+    },
+    {
+      "name": "c1",
+      "value": -0.09346634403183647,
+      "unit": "state-unit**(1-b)/s",
+      "type": "fitted",
+      "description": "Coefficient of the corresponding ordered term in `dy`; jointly fitted, not a separately measured flow."
+    },
+    {
+      "name": "c2",
+      "value": -0.001691453340799667,
+      "unit": "state-unit/s",
+      "type": "fitted",
+      "description": "Coefficient of the corresponding ordered term in `dy`; jointly fitted, not a separately measured flow."
+    },
+    {
+      "name": "c3",
+      "value": 0.029717332858217253,
+      "unit": "state-unit/s",
+      "type": "fitted",
+      "description": "Coefficient of the corresponding ordered term in `dy`; jointly fitted, not a separately measured flow."
+    },
+    {
+      "name": "c4",
+      "value": 0.03685004541479434,
+      "unit": "state-unit**(1-b)/s",
+      "type": "fitted",
+      "description": "Coefficient of the corresponding ordered term in `dy`; jointly fitted, not a separately measured flow."
+    },
+    {
+      "name": "c5",
+      "value": -0.004248236369841403,
+      "unit": "state-unit**(1-b)/s",
+      "type": "fitted",
+      "description": "Coefficient of the corresponding ordered term in `dy`; jointly fitted, not a separately measured flow."
+    },
+    {
+      "name": "h",
+      "value": 0.9939999999753577,
+      "unit": "state-unit",
+      "type": "fitted",
+      "description": "Fitted shift of the state-power argument."
+    },
+    {
+      "name": "b",
+      "value": 0.37121519851545504,
+      "unit": "-",
+      "type": "fitted",
+      "description": "Exponent in `Max(y-h,epsy)**b`."
+    },
+    {
+      "name": "a",
+      "value": 2.616949535318926,
+      "unit": "-",
+      "type": "fitted",
+      "description": "Exponent of normalized first input."
+    },
+    {
+      "name": "d",
+      "value": 1.0194526466982108e-06,
+      "unit": "-",
+      "type": "fitted",
+      "description": "Exponent of normalized second input in the input product."
+    },
+    {
+      "name": "e",
+      "value": 0.9264691991121312,
+      "unit": "-",
+      "type": "fitted",
+      "description": "Exponent of the separate second-input forcing."
+    },
+    {
+      "name": "epsy",
+      "value": 1e-06,
+      "unit": "state-unit",
+      "type": "fixed",
+      "description": "Small positive floor selected for the shifted state before fractional powers or square roots; ensures real finite evaluation near and below the offset, not inferred as a physical threshold."
+    },
+    {
+      "name": "epsu",
+      "value": 1e-06,
+      "unit": "-",
+      "type": "fixed",
+      "description": "Small dimensionless floor chosen for normalized input powers so evaluation is defined for zero or negative inputs; not a fitted physical cutoff."
+    }
+  ],
+  "estimation": {
+    "criterion": "Final criterion: sum of squared free-running errors in `y` on both available trajectories, excluding only the first state of each file, to match the evaluation criterion. Initial derivative least squares and then teacher-forced one-step RK4 output least squares supplied starting values; those criteria do not define the final estimates.",
+    "data": "Both complete files data/train.csv (one stated trajectory) and data/val.csv (one stated trajectory) were used in the final fit. Training-only fits were compared on validation first. During final fitting each file was initialized only at its first observed state, with no later state resets; all subsequent observations contributed equal output-error weight. Sampling period was 5 s, with current-row inputs held constant during each classical RK4 step. Validation was subsequently used for fitting, so final validation errors are in-sample and are not unbiased generalization estimates.",
+    "method": "All parameters were estimated jointly at every stage. Initial derivative fit on all training rows used The optimizer is scipy.optimize.least_squares, default Trust Region Reflective algorithm, finite-difference two-point Jacobian and linear loss; its official documentation was checked online. Nonlinear least squares was used because RK4 output error is nonlinear even in coefficients of a polynomial vector field. Numeric initialization in the expression parameter order was [0.0009911710771358065, -0.07914881494126348, 0.002361462398551728, 0.02129731867827349, 0.029851217936046934, 0.0008174951835605293, 0.9921999999999999, 0.5128370789229064, 2.8099636705718485, 0.04114493137309606, 0.9456048076282154]; units are those of the corresponding parameter rows. This seed came from the previously fitted helper model or polynomial model, except exponential and sigmoid seeds, which were moderate hand-chosen coefficients and scale parameters. Numeric derivative-stage output was [-0.0002802836766338972, -0.07975552058655538, 0.0026838109316852815, 0.02150619623550039, 0.029517312395095953, 0.002345717647212916, 0.9931626691622716, 0.5257669294826379, 2.8204200204806127, 0.03282329427589178, 0.9063365611372383] and numeric one-step-stage output was [-0.0009671988358588193, -0.09211745621402145, 0.0024126124173557075, 0.025887646243640865, 0.034584199729251835, 0.004076125290731165, 0.9939999999991411, 0.5073064068266566, 2.6852123985917857, 3.619233910259195e-08, 0.8357146620925903]. These numbers are in the corresponding parameter units. They document actual starts, not extra constants in the model. Bounds in the same order were [-1, -1, -1, -1, -1, -1, 0.8, 0.15, 0.1, 0, 0.1] to [1, 1, 1, 1, 1, 1, 0.994, 2, 8, 3, 3], in the corresponding parameter units; these prevent extreme coefficients and invalid powers while permitting broad empirical nonlinear shapes. Max_nfev was 300 for derivative initialization, 180 for one-step training fit, and 200 for free-running fit; default convergence tolerances were 1e-8. The final fit on both files started directly from the documented one-step values, not from the training-only output-error fit. A separate training-only free-running fit was used for validation comparison. No random numbers or seed were used. nonlinear_dynamic.py reproduces the sequence and retains the exact original initialization vectors in its referenced working-directory result files.",
+    "script": "nonlinear_dynamic.py"
+  },
+  "discussion": {
+    "family": "Generalized power-law nonlinear state-space vector field with bilinear interactions in transformed variables.",
+    "interpretation": "The transformed state is `(Max(y-h,epsy)**b)`; the combined forcing transform is `(Max(x1/n1,epsu)**a*Max(x2/n2,epsu)**d)` and the separate second-input transform is `(Max(x2/n2,epsu)**e)`. The terms `c0`, `c1*(Max(y-h,epsy)**b)`, `c2*(Max(x1/n1,epsu)**a*Max(x2/n2,epsu)**d)` and `c3*(Max(x2/n2,epsu)**e)` provide drift, state feedback and input forcing. The products `c4*(Max(x1/n1,epsu)**a*Max(x2/n2,epsu)**d)*(Max(y-h,epsy)**b)` and `c5*(Max(x2/n2,epsu)**e)*(Max(y-h,epsy)**b)` change state feedback with the inputs. All are mathematical effects; no flow mechanism is established.",
+    "origin": "Generalized powers were initially tried as an empirical alternative to square-root laws, not taken from system physics. Additive transformed forcing improved the affine baseline, but residual state dependence led to adding two transformed state-input interactions. Power exponents and state shift were then jointly fitted. The nearly zero fitted product exponent indicates that this input dependence is weak and not separately well determined.",
+    "limitations": "No system description or units are supplied, so these are empirical vector fields rather than asserted physical laws. Unit labels state-unit, x1-unit and x2-unit denote unknown logged units; only seconds are known. The fitted domain is approximately `0.99 <= y <= 2.19` state-unit, `1.63 <= x1 <= 94.45` x1-unit, and `0.08 <= x2 <= 30.80` x2-unit on the two supplied files. Polynomial derivative residuals have temporal dependence and correlate with the next change in `x2`; this suggests sampling alignment or omitted dynamics, but is not proof of a particular mechanism. Abrupt near-baseline states midway through the files are not reset in fitting or prediction. No memory, next input, or hidden state is included in the delivered expressions; the irreducible consequences of these omissions remain. Extrapolation and input regimes not represented here are unvalidated. The fitted offset reaches its imposed upper bound and the product exponent is nearly zero; their interpretations are weakly identifiable. Below the offset the floor changes the law to a flat extension."
+  }
+}

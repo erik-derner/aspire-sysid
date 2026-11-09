@@ -1,0 +1,110 @@
+{
+  "expressions": {
+    "dy": "b0+b1*Max(x2/v0,floor)**q-(d0+d1*Max(cos(pi*x1/a0),floor)**r)*((y-h)/s0)*(((y-h)/s0)**2+eps**2)**((p-1)/2)"
+  },
+  "parameters": [
+    {
+      "name": "s0",
+      "value": 1.0,
+      "unit": "U_y",
+      "type": "fixed",
+      "description": "State normalization `s0 = 1` U_y, chosen for dimensionless state power without changing its numerical magnitude."
+    },
+    {
+      "name": "v0",
+      "value": 20.0,
+      "unit": "U_x2",
+      "type": "fixed",
+      "description": "Input normalization `v0 = 20` U_x2, chosen during initial data inspection, not fitted."
+    },
+    {
+      "name": "a0",
+      "value": 180.0,
+      "unit": "U_x1",
+      "type": "fixed",
+      "description": "Trigonometric input scale `a0 = 180` U_x1. Chosen as a structural hypothesis so that the cosine crosses zero at `x1 = 90` U_x1, near the supplied upper excitation. This does not assert that the input is an angle or has degree units."
+    },
+    {
+      "name": "eps",
+      "value": 0.05,
+      "unit": "-",
+      "type": "fixed",
+      "description": "Dimensionless smoothing scale `eps = 0.05`, chosen after diagnosing steep feedback in the preliminary `eps = 0.001` model. Values `0.02` and `0.05` were compared on both supplied files; the latter reduced steepness without worsening rollout fit. It corresponds to `eps*s0 = 0.05` U_y and avoids a singular fractional-power slope."
+    },
+    {
+      "name": "floor",
+      "value": 1e-12,
+      "unit": "-",
+      "type": "fixed",
+      "description": "Positive guard `floor = 1e-12`, chosen to define fractional input powers and parameter derivatives at zero. Not estimated from data."
+    },
+    {
+      "name": "b0",
+      "value": 0.0022593025474100517,
+      "unit": "U_y/s",
+      "type": "fitted",
+      "description": "Constant drift coefficient; jointly estimated by final rollout least squares."
+    },
+    {
+      "name": "b1",
+      "value": 0.02678226761042399,
+      "unit": "U_y/s",
+      "type": "fitted",
+      "description": "Input forcing amplitude multiplying `Max(x2/v0,floor)**q`; jointly estimated by final rollout least squares."
+    },
+    {
+      "name": "d0",
+      "value": 0.01782377862997993,
+      "unit": "U_y/s",
+      "type": "fitted",
+      "description": "Baseline restoring amplitude; jointly estimated by final rollout least squares."
+    },
+    {
+      "name": "d1",
+      "value": 0.08631695326436996,
+      "unit": "U_y/s",
+      "type": "fitted",
+      "description": "Cosine-dependent restoring amplitude; jointly estimated by final rollout least squares."
+    },
+    {
+      "name": "h",
+      "value": 0.9857630695925617,
+      "unit": "U_y",
+      "type": "fitted",
+      "description": "State translation in the nonlinear response; jointly estimated by final rollout least squares."
+    },
+    {
+      "name": "p",
+      "value": 0.47325300798212033,
+      "unit": "-",
+      "type": "fitted",
+      "description": "Dimensionless state power; jointly estimated by final rollout least squares."
+    },
+    {
+      "name": "q",
+      "value": 0.9175676859667842,
+      "unit": "-",
+      "type": "fitted",
+      "description": "Dimensionless second-input power; jointly estimated by final rollout least squares."
+    },
+    {
+      "name": "r",
+      "value": 0.8228825407070693,
+      "unit": "-",
+      "type": "fitted",
+      "description": "Dimensionless cosine power; jointly estimated by final rollout least squares."
+    }
+  ],
+  "estimation": {
+    "criterion": "Sum of squared full-rollout state residuals `y_sim-y` over every row after the first in each file. Each rollout uses classical fourth-order Runge\u2013Kutta, one step of `5` s, with `x1` and `x2` held at the left sample. This matches the supplied evaluation objective rather than treating the sampled derivative as an instantaneous derivative. ",
+    "data": "All rows of `data/train.csv` and `data/val.csv`, treated as two separately initialized uninterrupted trajectories, with sampling period `5` s from TASK.md. No measured-state resets inside either file and no rows removed. Validation was first used for structure comparison, then explicitly included in final calibration to use both available excitation patterns. Final validation errors are calibration diagnostics, not independent generalization estimates. ",
+    "method": "Final parameters were estimated jointly with nonlinear least squares using `scipy.optimize.least_squares`, trust-region reflective method, `jac` supplied by forward sensitivity propagation through all four RK4 stages, and `x_scale = \"jac\"`. This uses the exact chosen rollout and avoids finite-difference Jacobian cost; ordinary least squares cannot minimize its nonlinear trajectory objective. Parameter optimization coordinates are scaled by `Max(Abs(initial_value),0.01)`, a dimensionless numerical conditioning rule implemented in `refine.py`. The stopping tolerances `ftol = 1e-8`, `xtol = 1e-8`, and `gtol = 1e-8` are dimensionless solver settings; the maximum is `120` function evaluations. Final optimization is deterministic and uses no random seed. An initial trigonometric feature family was fitted against training `dy` by separable nonlinear least squares (variable projection): `scipy.optimize.least_squares` for the translation and powers, with `numpy.linalg.lstsq` profiling linear amplitudes at each iteration. Two starts were used for the original translation, `h = 0.95` U_y and `h = 0.99` U_y; powers started at `p = 0.5`, `q = 1`, and `r = 1`. The smaller derivative sum of squares selected that initialization. Preliminary smoothed derivative and training-rollout fits then provided the final-stage initialization. The final smoothing was chosen explicitly for lower feedback slope and near-identical rollout error, not claimed as a physical parameter. All eight final fitted parameters were then estimated together with `eps = 0.05` held fixed. Bounds are assumed regularity/search constraints: `b1 >= 0`, `0 <= d0 <= 0.03` U_y/s, `0 <= d1 <= 0.1` U_y/s, `0.8 <= h <= 1.05` U_y, `0.4 <= p <= 1`, `0.1 <= q <= 4`, and `0.1 <= r <= 5`. `b0` is unbounded. Actual final-stage starts: `b0 = 0.0026832452358942489` U_y/s; `b1 = 0.024283580120892878` U_y/s; `d0 = 0.015686939102190812` U_y/s; `d1 = 0.089310725936835519` U_y/s; `h = 0.99783393887987104` U_y; `p = 0.50306236927012959`; `q = 1.0077059399736541`; `r = 0.83179959343386856`. No random seed applies.",
+    "script": "reproduce_models.py"
+  },
+  "discussion": {
+    "family": "Scalar nonlinear relaxation / generalized power-law drift with trigonometric gain scheduling. This is a phenomenological nonlinear state-space ODE, not a known physical apparatus model. General estimation reference: L. Ljung, System Identification: Theory for the User, second edition, Prentice Hall, 1999 (bibliographic details checked against the publisher). ",
+    "interpretation": "The actual units are not supplied. `U_y`, `U_x1`, and `U_x2` denote placeholders for the unknown units of `y`, `x1`, and `x2`; `s` denotes seconds. Normalized features and exponents are dimensionless. The forcing is `b0+b1*Max(x2/v0,floor)**q`. The normalized state response is `((y-h)/s0)*(((y-h)/s0)**2+eps**2)**((p-1)/2)`; it is smooth and odd around `y = h` U_y, approximately a signed power far from that translation and approximately linear very near it. The positive factor `d0+d1*Max(cos(pi*x1/a0),floor)**r` supplies input-dependent restoring feedback: the feedback becomes weaker as the input increases over the supplied range. Cosine clipping is a mathematical gain saturation, not evidence for an angular actuator.",
+    "origin": "Polynomial coefficients suggested input-dependent feedback. Signed/shifted power regression brought the state exponent near a square root; the fitted feedback varied nonlinearly with the first input. Cosine, sine and algebraic input-gain families were therefore guessed and compared by derivative fit and validation rollouts. The cosine family gave a compact competitive alternative. A smooth signed power replaced a clipped fractional power so the state field stays real and differentiable below the fitted translation. Larger smoothing was subsequently tested to reduce fixed-step RK4 stiffness.",
+    "limitations": "No physical apparatus, units, measurement noise model or intended operating envelope is known. Inputs and the state are correlated along only two supplied files, so the fitted coefficients need not be separately causally identifiable. One anomalous middle transition occurs in each file; it was not used as a reset. Oscillatory serially correlated derivative residuals remain, consistent with omitted dynamics or timing effects but not proof of their cause; an autonomous scalar state with only the two current inputs cannot explicitly represent input history. Extrapolation beyond the supplied excitation is unvalidated. The fixed trigonometric scale is not independently identified; nothing establishes periodic behavior beyond the supplied range. At the final parameters, the analytic upper bound on the feedback slope magnitude multiplied by the sampling period is about `2.523`, computed from both-file fitted parameters. This is only a local scalar linear-stability diagnostic for RK4, not a proof of nonlinear integration accuracy. The positive baseline source is empirical and does not establish behavior with both inputs shut off."
+  }
+}

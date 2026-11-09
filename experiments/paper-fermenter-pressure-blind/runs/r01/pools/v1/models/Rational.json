@@ -1,0 +1,117 @@
+{
+  "expressions": {
+    "dy": "(a0*(1) + a1*((y-yc)) + a2*((x1/sx)) + a3*((x2/sz)) + a4*((y-yc)**2) + a5*((y-yc)*(x1/sx)) + a6*((y-yc)*(x2/sz)) + a7*((x1/sx)**2) + a8*((x1/sx)*(x2/sz)) + a9*((x2/sz)**2))/(1+d*(y-yc))"
+  },
+  "parameters": [
+    {
+      "name": "sx",
+      "value": 100.0,
+      "unit": "unknown input x1 unit",
+      "type": "fixed",
+      "description": "Scale of `x1`; chosen as a convenient round value near the observed input range, not a fitted physical constant."
+    },
+    {
+      "name": "sz",
+      "value": 30.0,
+      "unit": "unknown input x2 unit",
+      "type": "fixed",
+      "description": "Scale of `x2`; chosen as a convenient round value near the observed training input range, not a physical constant."
+    },
+    {
+      "name": "yc",
+      "value": 1.0,
+      "unit": "unknown state unit",
+      "type": "fixed",
+      "description": "Reference state in `y-yc`; chosen near the observed lower state range to condition the basis; it is not an inferred physical lower bound."
+    },
+    {
+      "name": "d",
+      "value": 0.9465148243490236,
+      "unit": "inverse unknown state unit",
+      "type": "fitted",
+      "description": "Coefficient of `y-yc` in the rational denominator; estimated by variable projection nonlinear least squares."
+    },
+    {
+      "name": "a0",
+      "value": -0.0009265477021839179,
+      "unit": "unknown state unit**1/s",
+      "type": "fitted",
+      "description": "Numerator coefficient multiplying `1`; estimated by conditional ordinary least squares at each trial denominator."
+    },
+    {
+      "name": "a1",
+      "value": -0.29701847492276967,
+      "unit": "unknown state unit**0/s",
+      "type": "fitted",
+      "description": "Numerator coefficient multiplying `(y-yc)`; estimated by conditional ordinary least squares at each trial denominator."
+    },
+    {
+      "name": "a2",
+      "value": -0.017557476402229988,
+      "unit": "unknown state unit**1/s",
+      "type": "fitted",
+      "description": "Numerator coefficient multiplying `(x1/sx)`; estimated by conditional ordinary least squares at each trial denominator."
+    },
+    {
+      "name": "a3",
+      "value": 0.025881097390428126,
+      "unit": "unknown state unit**1/s",
+      "type": "fitted",
+      "description": "Numerator coefficient multiplying `(x2/sz)`; estimated by conditional ordinary least squares at each trial denominator."
+    },
+    {
+      "name": "a4",
+      "value": -0.01096236718067329,
+      "unit": "unknown state unit**-1/s",
+      "type": "fitted",
+      "description": "Numerator coefficient multiplying `(y-yc)**2`; estimated by conditional ordinary least squares at each trial denominator."
+    },
+    {
+      "name": "a5",
+      "value": 0.3078196609522995,
+      "unit": "unknown state unit**0/s",
+      "type": "fitted",
+      "description": "Numerator coefficient multiplying `(y-yc)*(x1/sx)`; estimated by conditional ordinary least squares at each trial denominator."
+    },
+    {
+      "name": "a6",
+      "value": 0.04168581040771214,
+      "unit": "unknown state unit**0/s",
+      "type": "fitted",
+      "description": "Numerator coefficient multiplying `(y-yc)*(x2/sz)`; estimated by conditional ordinary least squares at each trial denominator."
+    },
+    {
+      "name": "a7",
+      "value": 0.02623432228033186,
+      "unit": "unknown state unit**1/s",
+      "type": "fitted",
+      "description": "Numerator coefficient multiplying `(x1/sx)**2`; estimated by conditional ordinary least squares at each trial denominator."
+    },
+    {
+      "name": "a8",
+      "value": -0.01575910638403613,
+      "unit": "unknown state unit**1/s",
+      "type": "fitted",
+      "description": "Numerator coefficient multiplying `(x1/sx)*(x2/sz)`; estimated by conditional ordinary least squares at each trial denominator."
+    },
+    {
+      "name": "a9",
+      "value": 0.01171592758705263,
+      "unit": "unknown state unit**1/s",
+      "type": "fitted",
+      "description": "Numerator coefficient multiplying `(x2/sz)**2`; estimated by conditional ordinary least squares at each trial denominator."
+    }
+  ],
+  "estimation": {
+    "criterion": "Unweighted sum of squared residuals on the logged derivative `dy`, to estimate the instantaneous vector field while allowing state-dependent curvature in a denominator.",
+    "data": "All rows of `data/train.csv` estimated the parameters. `data/val.csv` was used only to compare derivative and free-running state errors, not as a fitting target.",
+    "method": "Variable projection: for each denominator coefficient `d`, all numerator coefficients are fitted jointly with `numpy.linalg.lstsq` using `rcond = None`; `scipy.optimize.least_squares` then minimizes the projected derivative residual vector over `d`. Initial `d = 0` in inverse unknown state units reduces to the quadratic polynomial and is a neutral start. Bounds are `-0.6 <= d <= 10` in inverse unknown state units, chosen to avoid a pole inside the observed training state range and limit extreme curvature. The outer method uses at most `150` function evaluations and otherwise SciPy defaults. Numerator coefficients need no starting values because they are solved directly. No seed applies. State-only, input-only, combined, and quadratic-state denominators were compared, with numerator degrees from `1` to `3`; this simple state denominator was retained.",
+    "script": "rational_screen.py"
+  },
+  "discussion": {
+    "family": "Rational nonlinear state-space model, quadratic numerator and affine state-dependent denominator, estimated with variable projection (separable nonlinear least squares).",
+    "interpretation": "Each numerator monomial provides constant drift, input forcing, state curvature, or state-input interaction. Division by `1+d*(y-yc)` reduces the magnitude of all terms as state increases over the observed range. This can represent state-dependent effective response times, but no physical storage law is asserted.",
+    "origin": "The derivative-fitted cubic showed remaining nonlinear residuals and state-dependent input sensitivity. A rational rescaling of a quadratic vector field was hypothesized as a compact alternative to higher polynomial degree. Several denominator libraries were searched deterministically; this candidate preserves modest complexity and good held-out simulation performance.",
+    "limitations": "The units and physical system are unknown. Only one supplied training trajectory and one supplied validation trajectory are available. Validation was used repeatedly for structure selection, so its error is not an unbiased estimate of generalization. Inputs and state are correlated, and global behavior is not identified. No delayed or future input is present. Residuals suggest sampling alignment or omitted dynamics: cubic derivative residual correlation with `x2` at the next sample minus its current value is approximately `0.8375` on training and `0.7193` on validation; this diagnostic is not proof of causation. These memoryless models cannot explicitly reproduce that dependence. The denominator has a pole outside the observed state interval, so the model is not defensible near that pole or at arbitrary extrapolated states. Validation free-running RMSE is `0.0383590` in unknown state units and training RMSE is `0.0283616` in unknown state units, excluding first samples."
+  }
+}

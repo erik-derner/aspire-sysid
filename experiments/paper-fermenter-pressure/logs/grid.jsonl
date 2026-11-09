@@ -1,0 +1,13 @@
+{"at": "2026-10-08T13:37:31.589070+00:00", "dry_run": false, "event": "grid_start", "experiment": "paper-fermenter-pressure", "pid": 99404, "resume": false, "runs": 5, "task": "fermenter-pressure"}
+{"at": "2026-10-08T13:37:31.593095+00:00", "attempt": 1, "event": "run_start", "mode": "worker process", "run": "r01"}
+{"at": "2026-10-08T13:37:31.593095+00:00", "attempt": 1, "event": "run_start", "mode": "worker process", "run": "r02"}
+{"at": "2026-10-08T13:37:31.593095+00:00", "attempt": 1, "event": "run_start", "mode": "worker process", "run": "r03"}
+{"at": "2026-10-08T13:50:54.781738+00:00", "attempt": 1, "cost_usd": 1.528132, "event": "run_end", "exit_status": 0, "leak_findings": 0, "outcome": "completed", "run": "r03"}
+{"at": "2026-10-08T13:50:54.797470+00:00", "attempt": 1, "event": "run_start", "mode": "worker process", "run": "r04"}
+{"at": "2026-10-08T13:51:30.484855+00:00", "attempt": 1, "cost_usd": 2.343638, "event": "run_end", "exit_status": 0, "leak_findings": 0, "outcome": "completed", "run": "r02"}
+{"at": "2026-10-08T13:51:30.485878+00:00", "attempt": 1, "event": "run_start", "mode": "worker process", "run": "r05"}
+{"at": "2026-10-08T13:54:52.889519+00:00", "attempt": 1, "cost_usd": 2.5801700000000003, "event": "run_end", "exit_status": 0, "leak_findings": 0, "outcome": "completed", "run": "r01"}
+{"at": "2026-10-08T14:02:37.982159+00:00", "attempt": 1, "cost_usd": 1.613618, "event": "run_end", "exit_status": 0, "leak_findings": 0, "outcome": "completed", "run": "r04"}
+{"at": "2026-10-08T14:03:34.247634+00:00", "attempt": 1, "cost_usd": 2.0065060000000003, "event": "run_end", "exit_status": 0, "leak_findings": 0, "outcome": "completed", "run": "r05"}
+{"added": ["r01", "r02", "r03", "r04", "r05"], "at": "2026-10-08T14:03:37.146183+00:00", "event": "experiment_export", "folder": "experiments/paper-fermenter-pressure/export/matlab", "status": "written", "verified": true}
+{"at": "2026-10-08T14:03:37.146183+00:00", "event": "grid_end", "executed": 5, "failed": 0, "leak_findings": 0, "skipped_finished": 0}

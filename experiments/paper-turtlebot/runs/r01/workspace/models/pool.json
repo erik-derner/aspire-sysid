@@ -1,0 +1,12 @@
+{
+  "order": [
+    "CalibratedMidpoint",
+    "WheelDeadzone",
+    "ForwardDeadzone",
+    "AngularDeadzone",
+    "PhaseAdjusted",
+    "SparseCommandMap"
+  ],
+  "recommended": "CalibratedMidpoint",
+  "reason": "Recommend the two-gain physical midpoint model: its leave-one-trajectory-out 25-transition (5 s) `x` RMSE is 0.029936 m. The wheel-dead-zone model achieves 0.029800 m, only about 0.000136 m lower, while adding two weakly identifiable parameters; this is not convincing evidence of improvement with three validation trajectories. Other structural candidates give about 0.0306 to 0.0315 m. The recommended model preserves zero-command stationarity and coordinate invariance, has no polynomial extrapolation, and provides the clearest defensible memoryless approximation. Selection uses training-only validation, not inaccessible test results."
+}

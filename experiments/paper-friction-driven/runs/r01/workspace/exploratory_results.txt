@@ -1,0 +1,164 @@
+DERIVATIVE EXPLORATION; no final model files generated.
+Data: only data/train.csv and data/val.csv. `theta` rad, `omega` rad/s, `u` V, `domega` rad/s^2. Sample period `TS = 0.01` s (TASK.md).
+Moving subset: `Abs(omega) > 0.5` rad/s, selected to exclude near-stick samples, not to characterize static friction.
+Methods: bounded linear least squares (scipy.optimize.lsq_linear), no starting values; all coefficients together; nonnegative basic coefficients. Robust comparison: scipy.optimize.least_squares, soft-L1 residual loss, scale 10 rad/s^2, initialized from bounded least squares. No random seeds apply.
+Error definition throughout: residual `r = domega - prediction` rad/s^2; RMSE = square root of mean squared residual on named subset; mean residual = arithmetic mean of residual. Diagnostic numerical differentiation uses numpy.gradient independently per trajectory; angle unwrapped before differentiation. No reference claims needed: interpretations below are data-based.
+train: 3522 samples, 13 trajectories, 1519 moving samples.
+train interior derivative identity numeric_accel minus domega: n=3496 samples, RMSE=1.50280073e-13 rad/s^2, max absolute error=3.66640052e-12 rad/s^2.
+train interior derivative identity numeric_velocity minus omega: n=3496 samples, RMSE=1.82479798e-14 rad/s, max absolute error=2.22044605e-13 rad/s.
+train omega grid increment: sorted unique positive differences median=3.55271368e-15 rad/s; acceleration unique positive differences median=4.26325641e-14 rad/s^2 (floating roundoff can affect this diagnostic).
+val: 1192 samples, 3 trajectories, 572 moving samples.
+val interior derivative identity numeric_accel minus domega: n=1186 samples, RMSE=1.4814758e-13 rad/s^2, max absolute error=2.87059265e-12 rad/s^2.
+val interior derivative identity numeric_velocity minus omega: n=1186 samples, RMSE=1.8534921e-14 rad/s, max absolute error=1.66089364e-13 rad/s.
+val omega grid increment: sorted unique positive differences median=5.32907052e-15 rad/s; acceleration unique positive differences median=6.1e-14 rad/s^2 (floating roundoff can affect this diagnostic).
+
+BASE AND STRUCTURALLY DISTINCT LINEAR EXTENSIONS (fit train moving rows only; evaluate both files moving rows):
+base: `motor = 26.512691` rad/(s^2 V), `gravity = 108.38543` rad/s^2, `viscous = 1.6181489` 1/s, `coulomb = 19.026032` rad/s^2
+  train moving n=1519 samples RMSE=10.48809 rad/s^2; mean residual=1.172006 rad/s^2.
+  val moving n=572 samples RMSE=22.33587 rad/s^2; mean residual=4.648133 rad/s^2.
+quadratic_drag: `motor = 26.512691` rad/(s^2 V), `gravity = 108.38543` rad/s^2, `viscous = 1.6181489` 1/s, `coulomb = 19.026032` rad/s^2, `quadratic = 3.6934468e-27` 1/rad
+  train moving n=1519 samples RMSE=10.48809 rad/s^2; mean residual=1.172006 rad/s^2.
+  val moving n=572 samples RMSE=22.33587 rad/s^2; mean residual=4.648133 rad/s^2.
+angle_drag: `motor = 26.592457` rad/(s^2 V), `gravity = 109.18421` rad/s^2, `viscous = 2.1955748` 1/s, `coulomb = 19.260765` rad/s^2, `angle_viscous = -0.82809706` 1/s
+  train moving n=1519 samples RMSE=10.32177 rad/s^2; mean residual=1.117939 rad/s^2.
+  val moving n=572 samples RMSE=22.29793 rad/s^2; mean residual=4.807908 rad/s^2.
+angle_friction: `motor = 26.538944` rad/(s^2 V), `gravity = 109.286` rad/s^2, `viscous = 1.5053311` 1/s, `coulomb = 24.678314` rad/s^2, `angle_coulomb = -6.4263769` rad/s^2
+  train moving n=1519 samples RMSE=10.23167 rad/s^2; mean residual=1.14165 rad/s^2.
+  val moving n=572 samples RMSE=22.27873 rad/s^2; mean residual=4.842854 rad/s^2.
+harmonic_gravity: `motor = 26.511261` rad/(s^2 V), `gravity = 107.72467` rad/s^2, `viscous = 1.6070906` 1/s, `coulomb = 19.082115` rad/s^2, `gravity2 = 0.77644335` rad/s^2
+  train moving n=1519 samples RMSE=10.48194 rad/s^2; mean residual=1.137672 rad/s^2.
+  val moving n=572 samples RMSE=22.34898 rad/s^2; mean residual=4.643533 rad/s^2.
+nonlinear_motor: `motor = 26.436078` rad/(s^2 V), `gravity = 108.39393` rad/s^2, `viscous = 1.6187964` 1/s, `coulomb = 19.02329` rad/s^2, `motor3 = 0.0072122969` rad/(s^2 V^3)
+  train moving n=1519 samples RMSE=10.48788 rad/s^2; mean residual=1.180271 rad/s^2.
+  val moving n=572 samples RMSE=22.33661 rad/s^2; mean residual=4.65472 rad/s^2.
+asymmetric_friction: `motor = 26.595733` rad/(s^2 V), `gravity = 108.25695` rad/s^2, `viscous = 1.5857945` 1/s, `coulomb = 19.332142` rad/s^2, `moving_bias = -1.2204687` rad/s^2
+  train moving n=1519 samples RMSE=10.41967 rad/s^2; mean residual=2.469826e-15 rad/s^2.
+  val moving n=572 samples RMSE=22.09604 rad/s^2; mean residual=3.425011 rad/s^2.
+base robust soft-L1: `motor = 26.736641` rad/(s^2 V), `gravity = 108.32098` rad/s^2, `viscous = 1.6388371` 1/s, `coulomb = 18.904532` rad/s^2
+  train moving RMSE=10.49482 rad/s^2.
+  val moving RMSE=22.33698 rad/s^2.
+
+INPUT ALIGNMENT: u shifted by integer samples separately per trajectory; shift +1 means previous logged u, delay 0.01 s. Current theta/omega retained. Each shift refits train moving rows.
+shift=-4 samples (-0.04 s): `motor = 16.340472` rad/(s^2 V), `gravity = 98.028123` rad/s^2, `viscous = 0.2683585` 1/s, `coulomb = 13.131072` rad/s^2
+  train moving valid n=1517 samples RMSE=32.58422 rad/s^2.
+  val moving valid n=572 samples RMSE=40.03925 rad/s^2.
+shift=-3 samples (-0.03 s): `motor = 19.144843` rad/(s^2 V), `gravity = 99.610239` rad/s^2, `viscous = 0.52072525` 1/s, `coulomb = 14.162658` rad/s^2
+  train moving valid n=1519 samples RMSE=28.47865 rad/s^2.
+  val moving valid n=572 samples RMSE=36.2944 rad/s^2.
+shift=-2 samples (-0.02 s): `motor = 21.942019` rad/(s^2 V), `gravity = 101.85888` rad/s^2, `viscous = 0.83797422` 1/s, `coulomb = 15.5623` rad/s^2
+  train moving valid n=1519 samples RMSE=23.15828 rad/s^2.
+  val moving valid n=572 samples RMSE=31.55931 rad/s^2.
+shift=-1 samples (-0.01 s): `motor = 24.560375` rad/(s^2 V), `gravity = 104.75504` rad/s^2, `viscous = 1.2231279` 1/s, `coulomb = 17.208308` rad/s^2
+  train moving valid n=1519 samples RMSE=16.56725 rad/s^2.
+  val moving valid n=572 samples RMSE=26.26282 rad/s^2.
+shift=0 samples (0 s): `motor = 26.512691` rad/(s^2 V), `gravity = 108.38543` rad/s^2, `viscous = 1.6181489` 1/s, `coulomb = 19.026032` rad/s^2
+  train moving valid n=1519 samples RMSE=10.48809 rad/s^2.
+  val moving valid n=572 samples RMSE=22.33587 rad/s^2.
+shift=1 samples (0.01 s): `motor = 27.121947` rad/(s^2 V), `gravity = 112.17819` rad/s^2, `viscous = 1.9475954` 1/s, `coulomb = 20.417725` rad/s^2
+  train moving valid n=1510 samples RMSE=11.22821 rad/s^2.
+  val moving valid n=570 samples RMSE=22.26301 rad/s^2.
+shift=2 samples (0.02 s): `motor = 26.200116` rad/(s^2 V), `gravity = 115.46579` rad/s^2, `viscous = 2.1270201` 1/s, `coulomb = 21.054314` rad/s^2
+  train moving valid n=1499 samples RMSE=18.0607 rad/s^2.
+  val moving valid n=568 samples RMSE=26.66823 rad/s^2.
+shift=3 samples (0.03 s): `motor = 23.860842` rad/(s^2 V), `gravity = 117.61822` rad/s^2, `viscous = 2.120228` 1/s, `coulomb = 20.711313` rad/s^2
+  train moving valid n=1488 samples RMSE=25.25699 rad/s^2.
+  val moving valid n=565 samples RMSE=33.24837 rad/s^2.
+shift=4 samples (0.04 s): `motor = 20.36085` rad/(s^2 V), `gravity = 118.07061` rad/s^2, `viscous = 1.9314456` 1/s, `coulomb = 19.366843` rad/s^2
+  train moving valid n=1477 samples RMSE=31.37945 rad/s^2.
+  val moving valid n=562 samples RMSE=39.58966 rad/s^2.
+
+TIME-AVERAGED REGRESSORS: supplied acceleration equals central velocity derivative on interiors. If velocity is also central angle derivative, acceleration is a second-difference spanning four sample intervals; physical acceleration then has an approximate triangular smoothing kernel rather than an instantaneous target.
+Triangular halfwidth=1 samples (0.01 s): `motor = 27.208649` rad/(s^2 V), `gravity = 109.18223` rad/s^2, `viscous = 1.637607` 1/s, `coulomb = 19.51106` rad/s^2
+  train moving valid n=1510 samples RMSE=9.822087 rad/s^2.
+  val moving valid n=570 samples RMSE=21.17718 rad/s^2.
+Triangular halfwidth=2 samples (0.02 s): `motor = 28.081371` rad/(s^2 V), `gravity = 110.31552` rad/s^2, `viscous = 1.6577053` 1/s, `coulomb = 20.194185` rad/s^2
+  train moving valid n=1499 samples RMSE=9.680634 rad/s^2.
+  val moving valid n=568 samples RMSE=20.33479 rad/s^2.
+Triangular halfwidth=3 samples (0.03 s): `motor = 29.031089` rad/(s^2 V), `gravity = 111.74324` rad/s^2, `viscous = 1.7020233` 1/s, `coulomb = 20.805672` rad/s^2
+  train moving valid n=1488 samples RMSE=10.12354 rad/s^2.
+  val moving valid n=565 samples RMSE=20.18167 rad/s^2.
+
+BASE RESIDUALS: correlation and equal-frequency bins; each bin reports mean residual, not prediction error magnitude.
+train:
+  Pearson correlation r with theta=0.03260363 (dimensionless).
+  theta range [-2.5133,-0.61575] rad, n=254 samples, residual mean=-0.731785 rad/s^2, residual RMSE=14.3461 rad/s^2.
+  theta range [-0.61261,-0.24504] rad, n=253 samples, residual mean=0.120387 rad/s^2, residual RMSE=9.19577 rad/s^2.
+  theta range [-0.2419,-0.062832] rad, n=259 samples, residual mean=2.36942 rad/s^2, residual RMSE=8.31493 rad/s^2.
+  theta range [-0.05969,0.16965] rad, n=250 samples, residual mean=3.29413 rad/s^2, residual RMSE=9.85923 rad/s^2.
+  theta range [0.17279,0.49009] rad, n=251 samples, residual mean=3.58226 rad/s^2, residual RMSE=10.1369 rad/s^2.
+  theta range [0.49323,2.5353] rad, n=252 samples, residual mean=-1.58995 rad/s^2, residual RMSE=10.0436 rad/s^2.
+  Pearson correlation r with omega=3.4476e-05 (dimensionless).
+  omega range [-20.106,-5.6549] rad/s, n=254 samples, residual mean=0.719055 rad/s^2, residual RMSE=11.5732 rad/s^2.
+  omega range [-5.6549,-2.1991] rad/s, n=254 samples, residual mean=1.77083 rad/s^2, residual RMSE=10.9454 rad/s^2.
+  omega range [-2.1991,0.7854] rad/s, n=266 samples, residual mean=1.61482 rad/s^2, residual RMSE=9.19367 rad/s^2.
+  omega range [0.7854,2.3562] rad/s, n=241 samples, residual mean=2.84201 rad/s^2, residual RMSE=9.40591 rad/s^2.
+  omega range [2.3562,5.3407] rad/s, n=251 samples, residual mean=-0.368767 rad/s^2, residual RMSE=10.9681 rad/s^2.
+  omega range [5.3407,14.451] rad/s, n=253 samples, residual mean=0.497788 rad/s^2, residual RMSE=10.6397 rad/s^2.
+  Pearson correlation r with u=0.01024414 (dimensionless).
+  u range [-4.9451,-1.6342] V, n=254 samples, residual mean=1.394 rad/s^2, residual RMSE=11.5083 rad/s^2.
+  u range [-1.6308,0] V, n=864 samples, residual mean=1.08374 rad/s^2, residual RMSE=10.0007 rad/s^2.
+  u range [0.0047663,0.99236] V, n=148 samples, residual mean=1.58548 rad/s^2, residual RMSE=12.1728 rad/s^2.
+  u range [0.99272,3.9525] V, n=253 samples, residual mean=1.00867 rad/s^2, residual RMSE=9.96177 rad/s^2.
+  trajectory 1: n=235 moving samples; input kind=driven; residual mean=4.54095 rad/s^2; RMSE=9.55596 rad/s^2.
+  trajectory 2: n=310 moving samples; input kind=driven; residual mean=0.995909 rad/s^2; RMSE=11.5005 rad/s^2.
+  trajectory 3: n=197 moving samples; input kind=driven; residual mean=-1.18319 rad/s^2; RMSE=12.9279 rad/s^2.
+  trajectory 4: n=285 moving samples; input kind=driven; residual mean=-0.189618 rad/s^2; RMSE=10.1332 rad/s^2.
+  trajectory 5: n=91 moving samples; input kind=free; residual mean=1.84688 rad/s^2; RMSE=8.74079 rad/s^2.
+  trajectory 6: n=95 moving samples; input kind=free; residual mean=3.29904 rad/s^2; RMSE=9.68576 rad/s^2.
+  trajectory 7: n=102 moving samples; input kind=free; residual mean=-1.92049 rad/s^2; RMSE=11.4773 rad/s^2.
+  trajectory 8: n=26 moving samples; input kind=free; residual mean=11.4961 rad/s^2; RMSE=13.0708 rad/s^2.
+  trajectory 9: n=39 moving samples; input kind=free; residual mean=4.233 rad/s^2; RMSE=7.10449 rad/s^2.
+  trajectory 10: n=25 moving samples; input kind=free; residual mean=2.15505 rad/s^2; RMSE=5.18183 rad/s^2.
+  trajectory 11: n=26 moving samples; input kind=free; residual mean=1.77992 rad/s^2; RMSE=5.77604 rad/s^2.
+  trajectory 12: n=4 moving samples; input kind=free; residual mean=3.02755 rad/s^2; RMSE=5.91943 rad/s^2.
+  trajectory 13: n=84 moving samples; input kind=free; residual mean=-2.02719 rad/s^2; RMSE=7.75399 rad/s^2.
+  residual Pearson correlation with `cos(theta)*omega`=0.0804105 (dimensionless).
+  residual Pearson correlation with `cos(theta)*sign(omega)`=0.0808991 (dimensionless).
+  residual Pearson correlation with `sin(2*theta)`=-0.00967307 (dimensionless).
+  residual Pearson correlation with `omega*Abs(omega)`=0.0266245 (dimensionless).
+  residual Pearson correlation with `u**3`=0.019094 (dimensionless).
+val:
+  Pearson correlation r with theta=0.06450409 (dimensionless).
+  theta range [-2.2274,-0.5969] rad, n=96 samples, residual mean=-0.038282 rad/s^2, residual RMSE=15.3915 rad/s^2.
+  theta range [-0.59376,-0.22619] rad, n=95 samples, residual mean=1.04015 rad/s^2, residual RMSE=20.2627 rad/s^2.
+  theta range [-0.22305,0.043982] rad, n=95 samples, residual mean=10.4081 rad/s^2, residual RMSE=29.903 rad/s^2.
+  theta range [0.047124,0.30159] rad, n=95 samples, residual mean=6.92073 rad/s^2, residual RMSE=33.9817 rad/s^2.
+  theta range [0.30788,0.70686] rad, n=95 samples, residual mean=8.59365 rad/s^2, residual RMSE=15.0718 rad/s^2.
+  theta range [0.71,1.7781] rad, n=96 samples, residual mean=1.05161 rad/s^2, residual RMSE=8.77282 rad/s^2.
+  Pearson correlation r with omega=-0.02583254 (dimensionless).
+  omega range [-17.907,-4.3982] rad/s, n=97 samples, residual mean=0.032726 rad/s^2, residual RMSE=11.8161 rad/s^2.
+  omega range [-4.3982,-2.1991] rad/s, n=94 samples, residual mean=10.9079 rad/s^2, residual RMSE=29.4375 rad/s^2.
+  omega range [-2.1991,0.94248] rad/s, n=96 samples, residual mean=8.64605 rad/s^2, residual RMSE=17.4686 rad/s^2.
+  omega range [0.94248,2.5133] rad/s, n=94 samples, residual mean=1.94769 rad/s^2, residual RMSE=28.2999 rad/s^2.
+  omega range [2.6704,5.8119] rad/s, n=96 samples, residual mean=2.21274 rad/s^2, residual RMSE=26.9462 rad/s^2.
+  omega range [5.8119,13.195] rad/s, n=95 samples, residual mean=4.25983 rad/s^2, residual RMSE=13.0109 rad/s^2.
+  Pearson correlation r with u=0.003930069 (dimensionless).
+  u range [-4.8197,-1.8243] V, n=96 samples, residual mean=7.20068 rad/s^2, residual RMSE=25.3953 rad/s^2.
+  u range [-1.8225,-0.19772] V, n=95 samples, residual mean=8.86976 rad/s^2, residual RMSE=22.4666 rad/s^2.
+  u range [-0.19694,0] V, n=169 samples, residual mean=-0.754442 rad/s^2, residual RMSE=11.5285 rad/s^2.
+  u range [0.020718,0.44033] V, n=21 samples, residual mean=5.56597 rad/s^2, residual RMSE=16.6046 rad/s^2.
+  u range [0.44462,2.0582] V, n=95 samples, residual mean=4.43983 rad/s^2, residual RMSE=36.7757 rad/s^2.
+  u range [2.0676,3.8395] V, n=96 samples, residual mean=7.43407 rad/s^2, residual RMSE=13.982 rad/s^2.
+  trajectory 1: n=281 moving samples; input kind=driven; residual mean=11.0784 rad/s^2; RMSE=21.9651 rad/s^2.
+  trajectory 2: n=198 moving samples; input kind=driven; residual mean=0.732277 rad/s^2; RMSE=26.7827 rad/s^2.
+  trajectory 3: n=93 moving samples; input kind=free; residual mean=-6.44397 rad/s^2; RMSE=9.13751 rad/s^2.
+  residual Pearson correlation with `cos(theta)*omega`=0.0135523 (dimensionless).
+  residual Pearson correlation with `cos(theta)*sign(omega)`=-0.018733 (dimensionless).
+  residual Pearson correlation with `sin(2*theta)`=0.0714348 (dimensionless).
+  residual Pearson correlation with `omega*Abs(omega)`=-0.0130063 (dimensionless).
+  residual Pearson correlation with `u**3`=0.0108386 (dimensionless).
+
+POSITIVE ANGLE-DEPENDENT DAMPING: `motor*u - gravity*sin(theta) - viscous*exp(angle_rate*cos(theta))*omega - coulomb*sign(omega)`. Nonlinear least squares fits all five coefficients, initialized from basic fit and angle_rate=0; positivity bounds on four physical magnitudes; angle_rate bounds [-3,3] dimensionless avoid extreme extrapolation.
+`motor = 26.589036` rad/(s^2 V), `gravity = 109.07873` rad/s^2, `viscous = 2.1092231` 1/s, `coulomb = 19.156491` rad/s^2, `angle_rate = -0.38614719` dimensionless
+  train moving n=1519 samples RMSE=10.34615 rad/s^2.
+  val moving n=572 samples RMSE=22.30221 rad/s^2.
+
+INTERPRETATION AND DEFENSIBLE INITIALIZATIONS:
+1. Basic moving balance `motor*u - gravity*sin(theta) - viscous*omega - coulomb*sign(omega)` gives physical starting coefficients above. Moving data do not identify static breakaway torque. Never equate a discontinuous sign friction law with a complete sticking model.
+2. Positive angle-dependent damping above is structurally distinct and globally dissipative. exp multiplier is mathematical modulation, not an established mechanical explanation. The derivative evidence must be checked with open-loop trajectory simulation before accepting.
+3. Angle-dependent Coulomb friction `-(coulomb + angle_coulomb*cos(theta))*sign(omega)` is defensible only if `coulomb >= Abs(angle_coulomb)`; unconstrained extension values above are screening estimates, not final coefficients. Fits that violate this must be projected or refitted. May represent changing friction load, but data alone do not establish that mechanism.
+4. Non-sinusoidal restoring torque `-gravity*sin(theta) - gravity2*sin(2*theta)` is globally restoring on the specified interval when `gravity >= 2*Abs(gravity2)`; screening values above supply starts, not a proof of final validity.
+5. Nonlinear motor `motor*u + motor3*u**3` must satisfy `motor + 3*motor3*u**2 >= 0` throughout required input domain [-10,10] V. Negative unconstrained cubic slopes cannot automatically be submitted; a monotone saturation `gain*voltage_scale*tanh(u/voltage_scale)` is safer, initialized with basic motor gain and voltage_scale=10 V (chosen domain scale, not estimated).
+6. Quadratic dissipative drag `-quadratic*omega*Abs(omega)` has globally correct sign for nonnegative quadratic coefficient. A coefficient hitting zero means these train derivative residuals do not support that extension.
+7. Near-rest sticking extension requires a deadband of net driving torque and a low-speed transition, fitted by simulation rather than extrapolated from selected moving data. Initialize dynamic friction magnitude from basic coulomb, static threshold at the same magnitude, and speed scale 0.2 rad/s (chosen close to encoder velocity grid). Validate carefully: a discontinuity or very steep regularization may be unstable with fixed-step integration.
+Time alignment cannot be resolved solely from a small derivative RMSE advantage: centrally differentiated encoder targets are smoothed and highly quantized; input waveform is also smooth at the sample scale. A delayed or averaged regressor is a diagnostic, not an admissible additional state or a claim of a true physical delay.

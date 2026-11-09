@@ -1,0 +1,85 @@
+{
+  "expressions": {
+    "y_next": "y + (a*x3+b)*cos(x2+m*(c*x4+d*(Abs(x3-l*x4)-Abs(x3+l*x4))+e))",
+    "x1_next": "x1 + (a*x3+b)*sin(x2+m*(c*x4+d*(Abs(x3-l*x4)-Abs(x3+l*x4))+e))",
+    "x2_next": "atan2(sin(x2+(c*x4+d*(Abs(x3-l*x4)-Abs(x3+l*x4))+e)),cos(x2+(c*x4+d*(Abs(x3-l*x4)-Abs(x3+l*x4))+e)))"
+  },
+  "parameters": [
+    {
+      "name": "a",
+      "value": 0.16912528645080727,
+      "unit": "unknown; column units not supplied",
+      "type": "fitted",
+      "description": "Longitudinal input gain `a`, estimated in the auxiliary lag regression."
+    },
+    {
+      "name": "b",
+      "value": 7.782238579096582e-06,
+      "unit": "unknown; column units not supplied",
+      "type": "fitted",
+      "description": "Longitudinal increment offset `b`, estimated in the auxiliary lag regression."
+    },
+    {
+      "name": "c",
+      "value": 0.07857631780502426,
+      "unit": "unknown; column units not supplied",
+      "type": "fitted",
+      "description": "Angular linear gain `c`, the sum of current and previous angular-input coefficients."
+    },
+    {
+      "name": "d",
+      "value": -0.3198696036794598,
+      "unit": "unknown; column units not supplied",
+      "type": "fitted",
+      "description": "Angular absolute-contrast gain `d`, the sum of current and previous contrast coefficients."
+    },
+    {
+      "name": "l",
+      "value": 0.1,
+      "unit": "unknown; column units not supplied",
+      "type": "fixed",
+      "description": "Fixed mixing scale `l = 0.1`, a heuristic structural scale suggested by the relative magnitudes of the logged inputs; not a measured geometric quantity. It was not optimized for this candidate."
+    },
+    {
+      "name": "e",
+      "value": -0.0006588921147864368,
+      "unit": "unknown; column units not supplied",
+      "type": "fitted",
+      "description": "Angular increment offset `e`, the intercept of the auxiliary angular regression."
+    },
+    {
+      "name": "m",
+      "value": -0.26914528918464836,
+      "unit": "-",
+      "type": "tied",
+      "description": "Effective dimensionless phase fraction `m`, tied to fitted geometric arc fraction and auxiliary delay fraction.",
+      "equation": "arc-delay"
+    },
+    {
+      "name": "arc",
+      "value": 0.4480684583258992,
+      "unit": "-",
+      "type": "fitted",
+      "description": "Local arc fraction `arc`, fitted by ordinary least squares of observed rotated side displacement on a constant and the product of forward displacement and angular increment, using the 267 transitions whose within-block phase is at least two."
+    },
+    {
+      "name": "delay",
+      "value": 0.7172137475105476,
+      "unit": "-",
+      "type": "fitted",
+      "description": "Delay fraction `delay`, estimated by scalar ordinary least squares of angular residual on the difference of previous and current static-map predictions, using the 444 auxiliary transitions."
+    }
+  ],
+  "estimation": {
+    "criterion": "Two ordinary least-squares auxiliary criteria: squared residuals of observed body-frame forward displacement on a constant, current `x3` and previous `x3`; and squared residuals of unwrapped angular increment on a constant, current and previous `x4`, and current and previous absolute-input contrasts. These separate the systematic lag effect from the effective static gain. The arc and delay fractions are then obtained by the two scalar regression criteria described in their parameter rows.",
+    "data": "`data/train.csv`, all three trajectories. The final simulation criterion uses all 447 within-trajectory transitions, never crossing experiment boundaries. Auxiliary lag fits use 444 transitions: the first transition of each trajectory is omitted because its previous input is unknown. Previous logged inputs are used only during estimation; the delivered expressions do not use history. No test data were accessed.",
+    "method": "Ordinary least squares using `numpy.linalg.lstsq`; no initial values or random seeds are needed because all four regressions are linear in their fitted coefficients. First fit the two lag-aware regressions independently, then sum corresponding current and previous coefficients to obtain effective static gains; the intercepts are retained. `l = 0.1` is fixed before these regressions. Next estimate `arc` with the stated steady-phase regression. Finally estimate `delay` as the scalar projection of observed angular residual onto the difference of previous and current static-map predictions; set `m = arc-delay`. This staged reduction is used because missing input memory otherwise biases direct one-step regression.",
+    "script": "fit_submission.py"
+  },
+  "discussion": {
+    "family": "Discrete-time unicycle-like kinematic model. A relevant general reference is Murray, Li and Sastry, A Mathematical Introduction to Robotic Manipulation (1994), cited from memory, not verified online. Its angular static map is a continuous piecewise-affine coupled-input model represented by absolute values.",
+    "interpretation": "Define explanatory `V = a*x3+b` and `H = c*x4+d*(Abs(x3-l*x4)-Abs(x3+l*x4))+e`. The contrast term is continuous and changes slope on `x3-l*x4 = 0` or `x3+l*x4 = 0`; it permits angular response to depend on longitudinal input without a high-degree polynomial. Position increments are `V*cos(x2+m*H)` and `V*sin(x2+m*H)`. `arc` is the fitted local side-displacement fraction and `delay` is the fitted previous-input blending fraction; `m = arc-delay` is an effective lag compensation. Neither is an additional model state.",
+    "origin": "Affine and degree-two and degree-three polynomial increment regressions were tried first, using ordinary least squares and leave-one-trajectory-out simulation; they extrapolated poorly or diverged and were excluded. Nearly longitudinal displacement after rotation by `x2` motivated trigonometric kinematics; this is an empirical structural inference rather than a supplied physical law. Large residuals at input changes motivated auxiliary current/previous-input regressions. Absolute-value contrasts, dead zones, smooth friction and input interactions were then compared. No genetic-programming symbolic-regression package was used. The absolute-value contrast was suggested by a trial feature library of transformed input channels. A fixed mixing scale was deliberately retained: allowing it to vary with trajectory-level fitting produced less reliable held-out predictions. Unlike the shared dead-zone candidate, the longitudinal response here remains independent and affine.",
+    "limitations": "The units and physical system are not supplied. Equal coordinate scales for `y` and `x1`, and an angular interpretation of `x2` in radians, are inferred modelling assumptions, not supplied facts. Only three short trajectories are available; numerical input ranges and initial conditions outside the logged experiments are not validated. Residuals indicate input-change transients with memory missing from the permitted state vector. The memoryless expressions cannot reproduce these exactly. The phase correction is an effective numerical correction, not an identified actuator time constant. Wrapping `x2_next` with `atan2(sin(...),cos(...))` prevents a discontinuity from being treated as a large rotation, but the output coordinates can still drift during long simulations. Training free-running `y` RMSE is `0.153039`; pooled leave-one-trajectory-out `y` RMSE is `0.142038`, both in unspecified `y` units and computed after the first sample of each training trajectory. One-step angular RMSE immediately after a five-sample input-block boundary is `0.0795077` radians versus `0.0145108` radians at other phases, on the 447 training transitions. This supports the missing-memory limitation."
+  }
+}

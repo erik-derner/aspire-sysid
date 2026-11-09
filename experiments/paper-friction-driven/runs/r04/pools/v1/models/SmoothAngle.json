@@ -1,0 +1,69 @@
+{
+  "expressions": {
+    "dtheta": "omega",
+    "domega": "a*u-g*sin(theta)-b*omega-c*(1+hs*sin(theta)+hc*cos(theta))*tanh(omega/v)"
+  },
+  "parameters": [
+    {
+      "name": "a",
+      "value": 28.79422899933597,
+      "unit": "rad/(s^2*V)",
+      "type": "fitted",
+      "description": "Voltage-to-acceleration gain; positive motor torque per effective inertia. Estimated jointly with all other parameters of this candidate by the output-error procedure below."
+    },
+    {
+      "name": "b",
+      "value": 1.7727922682514017,
+      "unit": "1/s",
+      "type": "fitted",
+      "description": "Viscous acceleration coefficient, including mechanical drag and motor back-EMF effects that cannot be separated by these data. Estimated jointly with all other parameters of this candidate by the output-error procedure below."
+    },
+    {
+      "name": "g",
+      "value": 114.10503215337434,
+      "unit": "rad/s^2",
+      "type": "fitted",
+      "description": "Sinusoidal restoring-acceleration amplitude, interpreted as gravitational torque divided by effective inertia. Estimated jointly with all other parameters of this candidate by the output-error procedure below."
+    },
+    {
+      "name": "c",
+      "value": 28.068093380390206,
+      "unit": "rad/s^2",
+      "type": "fitted",
+      "description": "Dry-friction acceleration scale. Estimated jointly with all other parameters of this candidate by the output-error procedure below."
+    },
+    {
+      "name": "v",
+      "value": 0.12000000108523239,
+      "unit": "rad/s",
+      "type": "fitted",
+      "description": "Low-speed regularization width of the friction transition. Estimated jointly with all other parameters of this candidate by the output-error procedure below."
+    },
+    {
+      "name": "hs",
+      "value": -0.23694091583438195,
+      "unit": "-",
+      "type": "fitted",
+      "description": "Dimensionless sine coefficient of angular friction modulation. Estimated jointly with all other parameters of this candidate by the output-error procedure below."
+    },
+    {
+      "name": "hc",
+      "value": -0.315627013940686,
+      "unit": "-",
+      "type": "fitted",
+      "description": "Dimensionless cosine coefficient of angular friction modulation. Estimated jointly with all other parameters of this candidate by the output-error procedure below."
+    }
+  ],
+  "estimation": {
+    "criterion": "SciPy soft-L1 loss on open-loop angle residuals, defined as simulated `theta` minus measured `theta`, with loss scale `0.04` rad. This downweights large encoder/transient/stopping discrepancies without discarding their samples. The angle output-error criterion matches the intended autonomous simulation use; differentiation-based acceleration residuals were only used for initialization and structural diagnostics.",
+    "data": "data/train.csv, all 13 trajectories, and data/val.csv, all 3 trajectories. The validation file was first reserved for comparison of training-only structures, then included in the final estimation to reduce parameter uncertainty. The final loss uses every angle sample after the first of each trajectory, with equal weight per sample; the first logged `theta` and `omega` initialize that trajectory. Inputs `u` are held at the logged value between samples. No test data were accessed. In cross-validation the three validation trajectories are internally numbered 14 through 16; their file IDs remain 1 through 3.",
+    "method": "All 7 fitted parameters were optimized together by bounded nonlinear least squares using scipy.optimize.least_squares (Trust Region Reflective algorithm), with `soft_l1` loss, `x_scale = \"jac\"`, `diff_step = 0.0001`, `max_nfev = 350`, `ftol = 2e-8`, `xtol = 2e-8`, and `gtol = 1e-7`. Here solver tolerances and finite-difference scale are numerical settings, not physical parameters. Each residual evaluation integrates separate trajectories by classical RK4, one step of `0.01` s, with zero-order-held `u`, exactly as the task specifies. Numba compiles the simulator; it does not change the model. Parameter ordering is `a` (rad/(s^2*V)), `b` (1/s), `g` (rad/s^2), `c` (rad/s^2), `v` (rad/s), `hs` (dimensionless), `hc` (dimensionless). Six initial vectors in that ordering were `[28.78580889036532, 1.7722722306053798, 114.17653297608969, 27.723912183665373, 0.12000000000000001, -0.22846389392140354, -0.30226335369636131]`; `[33.295231122134901, 1.9386848506237793, 123.36515400102255, 22.846891043789892, 0.12000000999999999, -0.20651483987224167, -0.18481099991173888]`; `[31.437572460602524, 1.7691401722100053, 106.29025156096748, 26.348911820389144, 0.12000000999999999, -0.25787704074548151, -0.2957689763289566]`; `[28.637886628571671, 1.5834360448716591, 118.47290533087657, 28.776410903063564, 0.12000000999999999, -0.17411822136613872, -0.37370897940302217]`; `[30.364387449547547, 1.6683301715868037, 113.01282785020403, 27.659888102307473, 0.12000000999999999, -0.2104651306228352, -0.27627713151883065]`; `[28.976278233445651, 1.7655927566724441, 120.43744718280901, 26.966801535908672, 0.12000000999999999, -0.27236185380445943, -0.28772938089342559]`; each component has the corresponding unit just listed. Bounds in that same order are lower `[1, 0, 20, 0, 0.12, -0.65000000000000002, -0.65000000000000002]` and upper `[60, 10, 200, 60, 5, 0.65000000000000002, 0.65000000000000002]`, with the corresponding component units. The first start came from the preceding torque-balance/output-error fit; the other five are deterministic local perturbations, using numpy.random.default_rng with seed `271828`, to reduce sensitivity to local minima. The same script evaluates both ordinary squared loss and soft-L1 loss (scale `0.04` rad), with six starts per loss; the best fitting objective is retained within each loss. Leave-one-trajectory-out refits on the 16 available trajectories then select the loss by aggregate held-out angle RMSE. Those refits are warm-started from the full-data estimate but exclude the held-out trajectory from their objective; their limit is `max_nfev = 180`. The delivered values are the selected full-data fit, not an average of cross-validation parameters. Every other setting is identical between those refits and the full-data fit. Positive gain, restoring amplitude and friction scale, nonnegative viscous drag, and bounded modulation coefficients were imposed for stability and the physical requirements. The velocity-width lower bound `0.12` rad/s avoids an excessively stiff explicit-RK4 regularization; stopping rates are bounded below the approximately `278` 1/s scalar RK4 stability limit for this sampling period. Bounds on `hs` and `hc` guarantee a positive angular envelope even at their extreme combinations. This direct low-dimensional output-error method was preferred to a black-box predictor because states are never corrected after initialization.",
+    "script": "fit_final.py"
+  },
+  "discussion": {
+    "family": "Regularized Coulomb-plus-viscous pendulum model with an empirical trigonometric friction envelope. Background: B. Armstrong-Helouvry, P. Dupont and C. Canudas de Wit, 'A survey of models, analysis tools and compensation methods for the control of machines with friction', Automatica (1994). This bibliographic reference is recalled from memory; the attempted web retrieval did not return usable source text. The custom algebraic closures here are not claimed to be the exact models in that survey.",
+    "interpretation": "`dtheta = omega` is kinematics. `a*u`, `-g*sin(theta)` and `-b*omega` represent motor drive, restoring torque per inertia and viscous drag. `-c*(1+hs*sin(theta)+hc*cos(theta))*tanh(omega/v)` is smooth, odd-in-speed dry-friction drag, with an angle-dependent positive magnitude. `hs` and `hc` describe mathematical modulation rather than a measured pressure law. `v` makes friction approximately linear at low speed and Coulomb-like outside that region.",
+    "origin": "This is the smooth Coulomb benchmark from the preregistered physical model plan, extended with angular friction modulation after a moving-sample linear-library residual fit supported sine and cosine modulation of sliding friction. The sine restoring torque was retained because the linear restoring law gave substantially larger derivative error. The structure was specified manually; only its constants were optimized. Robust estimation was chosen over ordinary output-error least squares by leave-one-trajectory-out simulation comparison.",
+    "limitations": "Unlike the recommended projection model, `tanh(omega/v)` supplies zero friction at exactly zero speed: the only exact free equilibria are zeros of the sine restoring torque. Apparent sticking is low-speed creep, so it cannot reproduce permanent nonzero rest angles. `v` reaches its chosen lower bound, indicating insufficient evidence to estimate a sharp physical transition width. The regularization is also sampling-period sensitive. The periodic envelope is empirical and may absorb sensor artifacts. Motor torque and inertia cannot be separated, and voltage extrapolation beyond the observed range is an assumption. Full-data angle RMSE is `0.05740852` rad and aggregate leave-one-trajectory-out angle RMSE is `0.06128174` rad across all 16 known trajectories; these are not test scores."
+  }
+}

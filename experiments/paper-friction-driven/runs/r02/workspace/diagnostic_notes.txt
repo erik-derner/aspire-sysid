@@ -1,0 +1,139 @@
+TRAIN-ONLY DERIVATIVE AND STRUCTURE DIAGNOSTICS
+Source: data/train.csv only. fit_models.py was imported without executing its main program; only the parameter and training fields of fit_results.json were analyzed. No validation metrics are used. No submission files are created. All reported acceleration residuals are prediction minus logged `domega`; RMSE is sqrt(mean(residual**2)). Angle residuals are simulated `theta` minus logged `theta`.
+All training: 3522 samples across 13 trajectories; sample period = 0.01 s. Moving-clean subset: `Abs(omega)>1` rad/s, two endpoint samples per trajectory removed and samples within 0.02 s of an input increment exceeding 0.5 V excluded (the logged input is continuously varying, so exact inequality would incorrectly discard nearly all driven samples); 935 samples. This subset limits numerical sticking and input-transition derivative contamination, not a claim that excluded data are invalid.
+TRAJECTORIES: sample count, voltage range (V), unique voltage count, moving count at `Abs(omega)>1` rad/s
+1: 450 samples; voltage range [-3.89531, 3.17744] V; 301 unique values; 183 moving samples
+2: 450 samples; voltage range [-3.61381, 3.60983] V; 301 unique values; 282 moving samples
+3: 300 samples; voltage range [-4.94511, 3.9525] V; 201 unique values; 166 moving samples
+4: 300 samples; voltage range [-4.25734, 3.58254] V; 201 unique values; 260 moving samples
+5: 442 samples; voltage range [0, 0] V; 1 unique values; 84 moving samples
+6: 442 samples; voltage range [0, 0] V; 1 unique values; 89 moving samples
+7: 442 samples; voltage range [0, 0] V; 1 unique values; 94 moving samples
+8: 141 samples; voltage range [0, 0] V; 1 unique values; 25 moving samples
+9: 141 samples; voltage range [0, 0] V; 1 unique values; 28 moving samples
+10: 141 samples; voltage range [0, 0] V; 1 unique values; 7 moving samples
+11: 91 samples; voltage range [0, 0] V; 1 unique values; 24 moving samples
+12: 91 samples; voltage range [0, 0] V; 1 unique values; 0 moving samples
+13: 91 samples; voltage range [0, 0] V; 1 unique values; 70 moving samples
+
+EXISTING SIMULATION-FITTED FAMILY DERIVATIVE RESIDUALS
+Family 0: all training derivative n = 3522 samples; acceleration residual mean = -1.92002 rad/s^2; acceleration RMSE = 9.92631 rad/s^2; moving-clean n = 935 samples; acceleration residual mean = -1.39874 rad/s^2; acceleration RMSE = 8.95283 rad/s^2; train angle simulation RMSE excluding every trajectory initial sample = 0.0661168 rad.
+Family 1: all training derivative n = 3522 samples; acceleration residual mean = -1.341 rad/s^2; acceleration RMSE = 8.16666 rad/s^2; moving-clean n = 935 samples; acceleration residual mean = -1.40837 rad/s^2; acceleration RMSE = 8.99933 rad/s^2; train angle simulation RMSE excluding every trajectory initial sample = 0.0640317 rad.
+  positive motion: n = 500 samples; acceleration residual mean = -1.10041 rad/s^2; acceleration RMSE = 9.39554 rad/s^2
+  negative motion: n = 435 samples; acceleration residual mean = -1.76234 rad/s^2; acceleration RMSE = 8.5212 rad/s^2
+  free moving: n = 535 samples; acceleration residual mean = -1.27709 rad/s^2; acceleration RMSE = 9.23096 rad/s^2
+  driven moving: n = 400 samples; acceleration residual mean = -1.58395 rad/s^2; acceleration RMSE = 8.67987 rad/s^2
+  input-transition neighborhood: n = 493 samples; acceleration residual mean = -1.48492 rad/s^2; acceleration RMSE = 14.8133 rad/s^2
+Family 3: all training derivative n = 3522 samples; acceleration residual mean = -1.35129 rad/s^2; acceleration RMSE = 8.187 rad/s^2; moving-clean n = 935 samples; acceleration residual mean = -1.42009 rad/s^2; acceleration RMSE = 9.04054 rad/s^2; train angle simulation RMSE excluding every trajectory initial sample = 0.06397 rad.
+Family 4: all training derivative n = 3522 samples; acceleration residual mean = -1.34201 rad/s^2; acceleration RMSE = 8.16576 rad/s^2; moving-clean n = 935 samples; acceleration residual mean = -1.40798 rad/s^2; acceleration RMSE = 8.99908 rad/s^2; train angle simulation RMSE excluding every trajectory initial sample = 0.0640318 rad.
+Family 5: all training derivative n = 3522 samples; acceleration residual mean = -1.27495 rad/s^2; acceleration RMSE = 8.25768 rad/s^2; moving-clean n = 935 samples; acceleration residual mean = -1.02275 rad/s^2; acceleration RMSE = 9.18901 rad/s^2; train angle simulation RMSE excluding every trajectory initial sample = 0.0550311 rad.
+  positive motion: n = 500 samples; acceleration residual mean = -1.19518 rad/s^2; acceleration RMSE = 9.57366 rad/s^2
+  negative motion: n = 435 samples; acceleration residual mean = -0.824544 rad/s^2; acceleration RMSE = 8.72597 rad/s^2
+  free moving: n = 535 samples; acceleration residual mean = -1.2629 rad/s^2; acceleration RMSE = 9.1676 rad/s^2
+  driven moving: n = 400 samples; acceleration residual mean = -0.701532 rad/s^2; acceleration RMSE = 9.21757 rad/s^2
+  input-transition neighborhood: n = 493 samples; acceleration residual mean = -1.07807 rad/s^2; acceleration RMSE = 14.8714 rad/s^2
+Family 6: all training derivative n = 3522 samples; acceleration residual mean = -0.522287 rad/s^2; acceleration RMSE = 8.14005 rad/s^2; moving-clean n = 935 samples; acceleration residual mean = 0.513947 rad/s^2; acceleration RMSE = 8.91345 rad/s^2; train angle simulation RMSE excluding every trajectory initial sample = 0.0597033 rad.
+  positive motion: n = 500 samples; acceleration residual mean = 0.735351 rad/s^2; acceleration RMSE = 9.32998 rad/s^2
+  negative motion: n = 435 samples; acceleration residual mean = 0.25946 rad/s^2; acceleration RMSE = 8.40923 rad/s^2
+  free moving: n = 535 samples; acceleration residual mean = 0.57443 rad/s^2; acceleration RMSE = 9.2166 rad/s^2
+  driven moving: n = 400 samples; acceleration residual mean = 0.433051 rad/s^2; acceleration RMSE = 8.49109 rad/s^2
+  input-transition neighborhood: n = 493 samples; acceleration residual mean = 0.0225094 rad/s^2; acceleration RMSE = 14.7129 rad/s^2
+Family 7: all training derivative n = 3522 samples; acceleration residual mean = -1.3442 rad/s^2; acceleration RMSE = 8.20958 rad/s^2; moving-clean n = 935 samples; acceleration residual mean = -1.40989 rad/s^2; acceleration RMSE = 9.06786 rad/s^2; train angle simulation RMSE excluding every trajectory initial sample = 0.0638379 rad.
+
+ENCODER DERIVATIVE TIMING CHECKS
+Logged `omega` versus backward finite difference: interior training RMSE = 0.235974 rad/s; moving-clean RMSE = 0.327404 rad/s.
+Logged `omega` versus central finite difference: interior training RMSE = 1.82819e-14 rad/s; moving-clean RMSE = 2.72043e-14 rad/s.
+Logged `omega` versus forward finite difference: interior training RMSE = 0.235974 rad/s; moving-clean RMSE = 0.327404 rad/s.
+Logged `domega` versus backward finite difference: interior training RMSE = 7.15892 rad/s^2; moving-clean RMSE = 8.40972 rad/s^2.
+Logged `domega` versus central finite difference: interior training RMSE = 1.50825e-13 rad/s^2; moving-clean RMSE = 2.25673e-13 rad/s^2.
+Logged `domega` versus forward finite difference: interior training RMSE = 7.15892 rad/s^2; moving-clean RMSE = 8.40972 rad/s^2.
+
+MOVING-CLEAN DERIVATIVE LEAST SQUARES
+Fixed `v = 0.5` rad/s is an analyst-chosen smoothing scale, not fitted; on this subset tanh is already near saturated. Simultaneous ordinary least squares uses numpy.linalg.lstsq; no starts or random seed needed. The criterion is sum of squared acceleration residuals on the moving-clean subset. These derivative fits are diagnostics, not selected simulation models.
+base: training moving-clean derivative RMSE = 8.89037 rad/s^2; leave-one-trajectory-out pooled derivative RMSE = 9.02602 rad/s^2.
+  coefficient of `u` = 27.8763591 rad/(s^2 V).
+  coefficient of `-sin(theta)` = 110.447846 rad/s^2.
+  coefficient of `-omega` = 1.89232038 1/s.
+  coefficient of `-tanh(omega/v)` = 20.0109106 rad/s^2.
+cubic_input: training moving-clean derivative RMSE = 8.86809 rad/s^2; leave-one-trajectory-out pooled derivative RMSE = 9.01253 rad/s^2.
+  coefficient of `u` = 28.7684555 rad/(s^2 V).
+  coefficient of `-sin(theta)` = 110.369548 rad/s^2.
+  coefficient of `-omega` = 1.88576455 1/s.
+  coefficient of `-tanh(omega/v)` = 20.1125568 rad/s^2.
+  coefficient of `u**3` = -0.0737749755 rad/(s^2 V^3).
+directional_input: training moving-clean derivative RMSE = 8.86742 rad/s^2; leave-one-trajectory-out pooled derivative RMSE = 9.01435 rad/s^2.
+  coefficient of `u` = 29.4500214 rad/(s^2 V).
+  coefficient of `-sin(theta)` = 110.364576 rad/s^2.
+  coefficient of `-omega` = 1.88248469 1/s.
+  coefficient of `-tanh(omega/v)` = 20.1320024 rad/s^2.
+  coefficient of `u*Abs(u)` = -0.467377865 rad/(s^2 V^2).
+harmonic_restore: training moving-clean derivative RMSE = 8.85026 rad/s^2; leave-one-trajectory-out pooled derivative RMSE = 9.10916 rad/s^2.
+  coefficient of `u` = 27.8700539 rad/(s^2 V).
+  coefficient of `-sin(theta)` = 108.895684 rad/s^2.
+  coefficient of `-omega` = 1.87260877 1/s.
+  coefficient of `-tanh(omega/v)` = 20.0853041 rad/s^2.
+  coefficient of `-sin(theta)*cos(theta)` = 3.64900373 rad/s^2.
+directional_friction: training moving-clean derivative RMSE = 8.78909 rad/s^2; leave-one-trajectory-out pooled derivative RMSE = 8.96005 rad/s^2.
+  coefficient of `u` = 27.9649967 rad/(s^2 V).
+  coefficient of `-sin(theta)` = 110.257568 rad/s^2.
+  coefficient of `-omega` = 1.87743948 1/s.
+  coefficient of `-tanh(omega/v)` = 20.218235 rad/s^2.
+  coefficient of `-tanh(omega/v)**2` = -1.3596205 rad/s^2.
+quadratic_drag: training moving-clean derivative RMSE = 8.83989 rad/s^2; leave-one-trajectory-out pooled derivative RMSE = 8.99114 rad/s^2.
+  coefficient of `u` = 27.9850509 rad/(s^2 V).
+  coefficient of `-sin(theta)` = 110.464437 rad/s^2.
+  coefficient of `-omega` = 2.87346648 1/s.
+  coefficient of `-tanh(omega/v)` = 17.7319407 rad/s^2.
+  coefficient of `-omega*Abs(omega)` = -0.0695788567 1/rad.
+combined: training moving-clean derivative RMSE = 8.74858 rad/s^2; leave-one-trajectory-out pooled derivative RMSE = 9.13385 rad/s^2.
+  coefficient of `u` = 28.597507 rad/(s^2 V).
+  coefficient of `-sin(theta)` = 108.928706 rad/s^2.
+  coefficient of `-omega` = 1.85770123 1/s.
+  coefficient of `-tanh(omega/v)` = 20.3342914 rad/s^2.
+  coefficient of `u**3` = -0.0534261217 rad/(s^2 V^3).
+  coefficient of `-sin(theta)*cos(theta)` = 3.03255816 rad/s^2.
+  coefficient of `-tanh(omega/v)**2` = -1.23253315 rad/s^2.
+
+INPUT TIMING LEAST SQUARES
+Input index shift = -2 samples (-0.02 s; positive uses future input): all interior acceleration RMSE = 14.0589 rad/s^2; input-transition interior acceleration RMSE = 29.5197 rad/s^2; coefficient of shifted `u` = 25.8912 rad/(s^2 V).
+Input index shift = -1 samples (-0.01 s; positive uses future input): all interior acceleration RMSE = 9.92562 rad/s^2; input-transition interior acceleration RMSE = 15.4187 rad/s^2; coefficient of shifted `u` = 26.9762 rad/(s^2 V).
+Input index shift = 0 samples (0.00 s; positive uses future input): all interior acceleration RMSE = 9.44561 rad/s^2; input-transition interior acceleration RMSE = 13.354 rad/s^2; coefficient of shifted `u` = 26.4009 rad/(s^2 V).
+Input index shift = 1 samples (0.01 s; positive uses future input): all interior acceleration RMSE = 12.9933 rad/s^2; input-transition interior acceleration RMSE = 26.0271 rad/s^2; coefficient of shifted `u` = 24.4153 rad/(s^2 V).
+Input index shift = 2 samples (0.02 s; positive uses future input): all interior acceleration RMSE = 17.2103 rad/s^2; input-transition interior acceleration RMSE = 37.5497 rad/s^2; coefficient of shifted `u` = 21.6363 rad/(s^2 V).
+Contemporaneous plus neighboring input differences diagnostic: interior RMSE = 8.70733 rad/s^2; transition RMSE = 9.50421 rad/s^2; coefficients: current `u` 27.5542 rad/(s^2 V), previous-minus-current `u` 15.267 rad/(s^2 V), next-minus-current `u` 5.15248 rad/(s^2 V). This is noncausal/off-contract and must not be submitted; it tests derivative filtering/timing.
+
+CONDITIONAL RESIDUAL SUMMARIES FOR BASIC DERIVATIVE FIT
+`-5 <= u < -2` V: n = 120 samples; acceleration residual mean = -1.05207 rad/s^2; acceleration RMSE = 8.61269 rad/s^2
+`-2 <= u < -0.5` V: n = 40 samples; acceleration residual mean = -3.85218 rad/s^2; acceleration RMSE = 8.67341 rad/s^2
+`-0.5 <= u < 0.5` V: n = 614 samples; acceleration residual mean = -0.928836 rad/s^2; acceleration RMSE = 8.97405 rad/s^2
+`0.5 <= u < 2` V: n = 82 samples; acceleration residual mean = -3.11335 rad/s^2; acceleration RMSE = 8.34083 rad/s^2
+`2 <= u < 5` V: n = 79 samples; acceleration residual mean = -1.70707 rad/s^2; acceleration RMSE = 9.30379 rad/s^2
+`-3.15 <= theta < -2` rad: n = 12 samples; acceleration residual mean = 19.3961 rad/s^2; acceleration RMSE = 20.6194 rad/s^2
+`-2 <= theta < -1` rad: n = 65 samples; acceleration residual mean = 2.2279 rad/s^2; acceleration RMSE = 14.6554 rad/s^2
+`-1 <= theta < -0.3` rad: n = 218 samples; acceleration residual mean = -2.11627 rad/s^2; acceleration RMSE = 8.69567 rad/s^2
+`-0.3 <= theta < 0.3` rad: n = 416 samples; acceleration residual mean = -2.67372 rad/s^2; acceleration RMSE = 7.62923 rad/s^2
+`0.3 <= theta < 1` rad: n = 152 samples; acceleration residual mean = -1.27694 rad/s^2; acceleration RMSE = 8.11988 rad/s^2
+`1 <= theta < 2` rad: n = 58 samples; acceleration residual mean = 2.54637 rad/s^2; acceleration RMSE = 8.04491 rad/s^2
+`2 <= theta < 3.15` rad: n = 14 samples; acceleration residual mean = 0.118441 rad/s^2; acceleration RMSE = 5.11048 rad/s^2
+`-30 <= omega < -10` rad/s: n = 56 samples; acceleration residual mean = -0.565597 rad/s^2; acceleration RMSE = 9.019 rad/s^2
+`-10 <= omega < -3` rad/s: n = 242 samples; acceleration residual mean = -1.42007 rad/s^2; acceleration RMSE = 9.05399 rad/s^2
+`-3 <= omega < -1` rad/s: n = 137 samples; acceleration residual mean = -1.78156 rad/s^2; acceleration RMSE = 7.97478 rad/s^2
+`1 <= omega < 3` rad/s: n = 192 samples; acceleration residual mean = -2.25637 rad/s^2; acceleration RMSE = 8.12443 rad/s^2
+`3 <= omega < 10` rad/s: n = 235 samples; acceleration residual mean = 0.0408357 rad/s^2; acceleration RMSE = 9.33885 rad/s^2
+`10 <= omega < 30` rad/s: n = 73 samples; acceleration residual mean = -2.70909 rad/s^2; acceleration RMSE = 10.2214 rad/s^2
+
+FREE-RESPONSE REST AND CONSTRAINTS
+Near-rest free-response subset (`Abs(omega)<0.01` rad/s and `Abs(domega)<0.01` rad/s^2): 1653 training samples; angle range = [-0.0879646, 0.163363] rad. A smooth Coulomb-only model predicts return toward exact equilibrium except at zeros of restoring torque; a static threshold can sustain this observed interval.
+For existing families let `D` denote input acceleration minus restoring acceleration, `h = exp(-(omega/v)**2)` and `clip(D) = Min(Max(D,-fs),fs)`. The core `D-h*clip(D)` has derivative with respect to `D` between `1-h` and 1; hence increasing input maps imply R3 (nondecreasing, flat within a static band at rest). At `omega=0` and `u=0`, its sign equals the sign of `D` or it is zero, so R2 follows if restoring torque opposes angle. These arguments are analytic and do not rely on fitted-domain sampling.
+Family 5 uses `-g*sin(theta)*(1+q*cos(theta))`; `g>=0` and `Abs(q)<=1` suffice for R2 on the stated angle domain. Family 6 changes friction to `-(c+d*tanh(omega/v))*tanh(omega/v)`; `c>=Abs(d)` keeps friction opposing velocity, and this term vanishes at rest so does not change R2. Family 4 input `a*u+k*u**3` has slope `a+3*k*u**2`; positive cubic coefficient enforces hardening only. A negative cubic coefficient is also R3-valid if `a+300*k>=0` rad/(s^2 V) for the task input range, with the numeric factor carrying V^2. Saturating monotone maps avoid this global restriction.
+
+FREE VERSUS DRIVEN MOVING-CLEAN BASIC FITS
+free: 535 samples; training derivative RMSE = 9.00426 rad/s^2.
+  coefficient `-sin(theta)` = 107.945976 rad/s^2.
+  coefficient `-omega` = 1.83319089 1/s.
+  coefficient `-tanh(omega/v)` = 19.7707739 rad/s^2.
+driven: 400 samples; training derivative RMSE = 8.52792 rad/s^2.
+  coefficient `u` = 27.9943425 rad/(s^2 V).
+  coefficient `-sin(theta)` = 113.071531 rad/s^2.
+  coefficient `-omega` = 1.82820531 1/s.
+  coefficient `-tanh(omega/v)` = 20.6154729 rad/s^2.

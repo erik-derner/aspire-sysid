@@ -1,0 +1,11 @@
+{
+  "order": [
+    "CubicPolynomial",
+    "RationalGain",
+    "PowerFeedback",
+    "ExponentialFeedback",
+    "SaturatingFeedback"
+  ],
+  "recommended": "CubicPolynomial",
+  "reason": "The complete cubic polynomial had the best validation free-running error among the derivative-fitted polynomial screens, approximately 0.0365 state-unit, without the singularity risks seen in higher degrees. Final output-error refitting on both files gives approximately 0.0233 state-unit training and 0.0334 state-unit validation RMSE, better than the other retained final fits. Those final figures are fitting diagnostics, not independent validation. Its interactions are explicit and it avoids fitted fractional-power branch thresholds. RationalGain is a lower-complexity alternative. Test performance remains unknown."
+}

@@ -1,0 +1,768 @@
+{
+  "expressions": {
+    "dy": "a0*1 + a1*((y-y0)/s0) + a2*(x1/u0) + a3*(x2/v0) + w0*exp(-((((y-y0)/s0)/sy-my0)**2+((x1/u0-1)*three-mu0)**2+((x2/v0-1)*three-mv0)**2)/(2*ell**2)) + w1*exp(-((((y-y0)/s0)/sy-my1)**2+((x1/u0-1)*three-mu1)**2+((x2/v0-1)*three-mv1)**2)/(2*ell**2)) + w2*exp(-((((y-y0)/s0)/sy-my2)**2+((x1/u0-1)*three-mu2)**2+((x2/v0-1)*three-mv2)**2)/(2*ell**2)) + w3*exp(-((((y-y0)/s0)/sy-my3)**2+((x1/u0-1)*three-mu3)**2+((x2/v0-1)*three-mv3)**2)/(2*ell**2)) + w4*exp(-((((y-y0)/s0)/sy-my4)**2+((x1/u0-1)*three-mu4)**2+((x2/v0-1)*three-mv4)**2)/(2*ell**2)) + w5*exp(-((((y-y0)/s0)/sy-my5)**2+((x1/u0-1)*three-mu5)**2+((x2/v0-1)*three-mv5)**2)/(2*ell**2)) + w6*exp(-((((y-y0)/s0)/sy-my6)**2+((x1/u0-1)*three-mu6)**2+((x2/v0-1)*three-mv6)**2)/(2*ell**2)) + w7*exp(-((((y-y0)/s0)/sy-my7)**2+((x1/u0-1)*three-mu7)**2+((x2/v0-1)*three-mv7)**2)/(2*ell**2)) + w8*exp(-((((y-y0)/s0)/sy-my8)**2+((x1/u0-1)*three-mu8)**2+((x2/v0-1)*three-mv8)**2)/(2*ell**2)) + w9*exp(-((((y-y0)/s0)/sy-my9)**2+((x1/u0-1)*three-mu9)**2+((x2/v0-1)*three-mv9)**2)/(2*ell**2)) + w10*exp(-((((y-y0)/s0)/sy-my10)**2+((x1/u0-1)*three-mu10)**2+((x2/v0-1)*three-mv10)**2)/(2*ell**2)) + w11*exp(-((((y-y0)/s0)/sy-my11)**2+((x1/u0-1)*three-mu11)**2+((x2/v0-1)*three-mv11)**2)/(2*ell**2)) + w12*exp(-((((y-y0)/s0)/sy-my12)**2+((x1/u0-1)*three-mu12)**2+((x2/v0-1)*three-mv12)**2)/(2*ell**2)) + w13*exp(-((((y-y0)/s0)/sy-my13)**2+((x1/u0-1)*three-mu13)**2+((x2/v0-1)*three-mv13)**2)/(2*ell**2)) + w14*exp(-((((y-y0)/s0)/sy-my14)**2+((x1/u0-1)*three-mu14)**2+((x2/v0-1)*three-mv14)**2)/(2*ell**2)) + w15*exp(-((((y-y0)/s0)/sy-my15)**2+((x1/u0-1)*three-mu15)**2+((x2/v0-1)*three-mv15)**2)/(2*ell**2)) + w16*exp(-((((y-y0)/s0)/sy-my16)**2+((x1/u0-1)*three-mu16)**2+((x2/v0-1)*three-mv16)**2)/(2*ell**2)) + w17*exp(-((((y-y0)/s0)/sy-my17)**2+((x1/u0-1)*three-mu17)**2+((x2/v0-1)*three-mv17)**2)/(2*ell**2)) + w18*exp(-((((y-y0)/s0)/sy-my18)**2+((x1/u0-1)*three-mu18)**2+((x2/v0-1)*three-mv18)**2)/(2*ell**2)) + w19*exp(-((((y-y0)/s0)/sy-my19)**2+((x1/u0-1)*three-mu19)**2+((x2/v0-1)*three-mv19)**2)/(2*ell**2)) + w20*exp(-((((y-y0)/s0)/sy-my20)**2+((x1/u0-1)*three-mu20)**2+((x2/v0-1)*three-mv20)**2)/(2*ell**2)) + w21*exp(-((((y-y0)/s0)/sy-my21)**2+((x1/u0-1)*three-mu21)**2+((x2/v0-1)*three-mv21)**2)/(2*ell**2)) + w22*exp(-((((y-y0)/s0)/sy-my22)**2+((x1/u0-1)*three-mu22)**2+((x2/v0-1)*three-mv22)**2)/(2*ell**2)) + w23*exp(-((((y-y0)/s0)/sy-my23)**2+((x1/u0-1)*three-mu23)**2+((x2/v0-1)*three-mv23)**2)/(2*ell**2))"
+  },
+  "parameters": [
+    {
+      "name": "y0",
+      "value": 1.0,
+      "unit": "U_y",
+      "type": "fixed",
+      "description": "State translation `y0 = 1` U_y, chosen before polynomial fitting as a convenient origin close to the observed lower state range; it is not a known physical zero."
+    },
+    {
+      "name": "s0",
+      "value": 1.0,
+      "unit": "U_y",
+      "type": "fixed",
+      "description": "State scale `s0 = 1` U_y, chosen to make `(y-y0)/s0` dimensionless without changing its numerical value."
+    },
+    {
+      "name": "u0",
+      "value": 60.0,
+      "unit": "U_x1",
+      "type": "fixed",
+      "description": "Input scale `u0 = 60` U_x1, chosen as a convenient near-central scale from inspection of training input magnitudes, not fitted."
+    },
+    {
+      "name": "v0",
+      "value": 20.0,
+      "unit": "U_x2",
+      "type": "fixed",
+      "description": "Input scale `v0 = 20` U_x2, chosen as a convenient near-central scale from inspection of training input magnitudes, not fitted."
+    },
+    {
+      "name": "sy",
+      "value": 0.3,
+      "unit": "-",
+      "type": "fixed",
+      "description": "Additional dimensionless state scaling `sy = 0.3`, chosen from the approximate training state spread for roughly balanced K-means coordinates."
+    },
+    {
+      "name": "three",
+      "value": 3.0,
+      "unit": "-",
+      "type": "fixed",
+      "description": "Dimensionless input-coordinate scale `three = 3`, chosen so input deviations in `(x1/u0-1)*three` and `(x2/v0-1)*three` have order-one spreads."
+    },
+    {
+      "name": "ell",
+      "value": 2.0,
+      "unit": "-",
+      "type": "fitted",
+      "description": "Common dimensionless Gaussian width selected with cluster count and ridge penalty by a finite-grid validation-rollout comparison; subsequently carried unchanged into the final weight fit."
+    },
+    {
+      "name": "a0",
+      "value": 0.047884310408496285,
+      "unit": "U_y/s",
+      "type": "fitted",
+      "description": "Affine-tail coefficient of `1`; jointly estimated with all bump weights."
+    },
+    {
+      "name": "a1",
+      "value": -0.11408846963717369,
+      "unit": "U_y/s",
+      "type": "fitted",
+      "description": "Affine-tail coefficient of `((y-y0)/s0)`; jointly estimated with all bump weights."
+    },
+    {
+      "name": "a2",
+      "value": 0.04039544093584417,
+      "unit": "U_y/s",
+      "type": "fitted",
+      "description": "Affine-tail coefficient of `(x1/u0)`; jointly estimated with all bump weights."
+    },
+    {
+      "name": "a3",
+      "value": 0.006629380880060986,
+      "unit": "U_y/s",
+      "type": "fitted",
+      "description": "Affine-tail coefficient of `(x2/v0)`; jointly estimated with all bump weights."
+    },
+    {
+      "name": "my0",
+      "value": 0.2920686921408009,
+      "unit": "-",
+      "type": "fitted",
+      "description": "Center coordinate for `((y-y0)/s0)/sy` of Gaussian bump `w0`, estimated by training-only K-means, then carried unchanged into the final weight fit."
+    },
+    {
+      "name": "mu0",
+      "value": -1.478174072088197,
+      "unit": "-",
+      "type": "fitted",
+      "description": "Center coordinate for `(x1/u0-1)*three` of Gaussian bump `w0`, estimated by training-only K-means, then carried unchanged into the final weight fit."
+    },
+    {
+      "name": "mv0",
+      "value": -0.04081541327543037,
+      "unit": "-",
+      "type": "fitted",
+      "description": "Center coordinate for `(x2/v0-1)*three` of Gaussian bump `w0`, estimated by training-only K-means, then carried unchanged into the final weight fit."
+    },
+    {
+      "name": "w0",
+      "value": -0.4075357174172068,
+      "unit": "U_y/s",
+      "type": "fitted",
+      "description": "Amplitude of local Gaussian bump `exp(-((((y-y0)/s0)/sy-my0)**2+((x1/u0-1)*three-mu0)**2+((x2/v0-1)*three-mv0)**2)/(2*ell**2))`; jointly estimated with all affine-tail coefficients in final regularized rollout fit."
+    },
+    {
+      "name": "my1",
+      "value": 1.0226815076744034,
+      "unit": "-",
+      "type": "fitted",
+      "description": "Center coordinate for `((y-y0)/s0)/sy` of Gaussian bump `w1`, estimated by training-only K-means, then carried unchanged into the final weight fit."
+    },
+    {
+      "name": "mu1",
+      "value": 0.5995664830477733,
+      "unit": "-",
+      "type": "fitted",
+      "description": "Center coordinate for `(x1/u0-1)*three` of Gaussian bump `w1`, estimated by training-only K-means, then carried unchanged into the final weight fit."
+    },
+    {
+      "name": "mv1",
+      "value": 0.2935647145757136,
+      "unit": "-",
+      "type": "fitted",
+      "description": "Center coordinate for `(x2/v0-1)*three` of Gaussian bump `w1`, estimated by training-only K-means, then carried unchanged into the final weight fit."
+    },
+    {
+      "name": "w1",
+      "value": -0.38254034008736165,
+      "unit": "U_y/s",
+      "type": "fitted",
+      "description": "Amplitude of local Gaussian bump `exp(-((((y-y0)/s0)/sy-my1)**2+((x1/u0-1)*three-mu1)**2+((x2/v0-1)*three-mv1)**2)/(2*ell**2))`; jointly estimated with all affine-tail coefficients in final regularized rollout fit."
+    },
+    {
+      "name": "my2",
+      "value": 0.34593635135226786,
+      "unit": "-",
+      "type": "fitted",
+      "description": "Center coordinate for `((y-y0)/s0)/sy` of Gaussian bump `w2`, estimated by training-only K-means, then carried unchanged into the final weight fit."
+    },
+    {
+      "name": "mu2",
+      "value": 0.528195418733539,
+      "unit": "-",
+      "type": "fitted",
+      "description": "Center coordinate for `(x1/u0-1)*three` of Gaussian bump `w2`, estimated by training-only K-means, then carried unchanged into the final weight fit."
+    },
+    {
+      "name": "mv2",
+      "value": -1.5231241356242786,
+      "unit": "-",
+      "type": "fitted",
+      "description": "Center coordinate for `(x2/v0-1)*three` of Gaussian bump `w2`, estimated by training-only K-means, then carried unchanged into the final weight fit."
+    },
+    {
+      "name": "w2",
+      "value": 0.21423793752485099,
+      "unit": "U_y/s",
+      "type": "fitted",
+      "description": "Amplitude of local Gaussian bump `exp(-((((y-y0)/s0)/sy-my2)**2+((x1/u0-1)*three-mu2)**2+((x2/v0-1)*three-mv2)**2)/(2*ell**2))`; jointly estimated with all affine-tail coefficients in final regularized rollout fit."
+    },
+    {
+      "name": "my3",
+      "value": 2.317402184009552,
+      "unit": "-",
+      "type": "fitted",
+      "description": "Center coordinate for `((y-y0)/s0)/sy` of Gaussian bump `w3`, estimated by training-only K-means, then carried unchanged into the final weight fit."
+    },
+    {
+      "name": "mu3",
+      "value": 1.1735554758707682,
+      "unit": "-",
+      "type": "fitted",
+      "description": "Center coordinate for `(x1/u0-1)*three` of Gaussian bump `w3`, estimated by training-only K-means, then carried unchanged into the final weight fit."
+    },
+    {
+      "name": "mv3",
+      "value": 0.8958079147338867,
+      "unit": "-",
+      "type": "fitted",
+      "description": "Center coordinate for `(x2/v0-1)*three` of Gaussian bump `w3`, estimated by training-only K-means, then carried unchanged into the final weight fit."
+    },
+    {
+      "name": "w3",
+      "value": 0.16779172839107356,
+      "unit": "U_y/s",
+      "type": "fitted",
+      "description": "Amplitude of local Gaussian bump `exp(-((((y-y0)/s0)/sy-my3)**2+((x1/u0-1)*three-mu3)**2+((x2/v0-1)*three-mv3)**2)/(2*ell**2))`; jointly estimated with all affine-tail coefficients in final regularized rollout fit."
+    },
+    {
+      "name": "my4",
+      "value": 0.07627826929092396,
+      "unit": "-",
+      "type": "fitted",
+      "description": "Center coordinate for `((y-y0)/s0)/sy` of Gaussian bump `w4`, estimated by training-only K-means, then carried unchanged into the final weight fit."
+    },
+    {
+      "name": "mu4",
+      "value": -1.6019979572296148,
+      "unit": "-",
+      "type": "fitted",
+      "description": "Center coordinate for `(x1/u0-1)*three` of Gaussian bump `w4`, estimated by training-only K-means, then carried unchanged into the final weight fit."
+    },
+    {
+      "name": "mv4",
+      "value": -1.4462441897392273,
+      "unit": "-",
+      "type": "fitted",
+      "description": "Center coordinate for `(x2/v0-1)*three` of Gaussian bump `w4`, estimated by training-only K-means, then carried unchanged into the final weight fit."
+    },
+    {
+      "name": "w4",
+      "value": -0.14500372208743922,
+      "unit": "U_y/s",
+      "type": "fitted",
+      "description": "Amplitude of local Gaussian bump `exp(-((((y-y0)/s0)/sy-my4)**2+((x1/u0-1)*three-mu4)**2+((x2/v0-1)*three-mv4)**2)/(2*ell**2))`; jointly estimated with all affine-tail coefficients in final regularized rollout fit."
+    },
+    {
+      "name": "my5",
+      "value": 1.5059106018808155,
+      "unit": "-",
+      "type": "fitted",
+      "description": "Center coordinate for `((y-y0)/s0)/sy` of Gaussian bump `w5`, estimated by training-only K-means, then carried unchanged into the final weight fit."
+    },
+    {
+      "name": "mu5",
+      "value": 1.0016985193888346,
+      "unit": "-",
+      "type": "fitted",
+      "description": "Center coordinate for `(x1/u0-1)*three` of Gaussian bump `w5`, estimated by training-only K-means, then carried unchanged into the final weight fit."
+    },
+    {
+      "name": "mv5",
+      "value": -0.7372748517990113,
+      "unit": "-",
+      "type": "fitted",
+      "description": "Center coordinate for `(x2/v0-1)*three` of Gaussian bump `w5`, estimated by training-only K-means, then carried unchanged into the final weight fit."
+    },
+    {
+      "name": "w5",
+      "value": 0.0005834403580181203,
+      "unit": "U_y/s",
+      "type": "fitted",
+      "description": "Amplitude of local Gaussian bump `exp(-((((y-y0)/s0)/sy-my5)**2+((x1/u0-1)*three-mu5)**2+((x2/v0-1)*three-mv5)**2)/(2*ell**2))`; jointly estimated with all affine-tail coefficients in final regularized rollout fit."
+    },
+    {
+      "name": "my6",
+      "value": 1.11886848306432,
+      "unit": "-",
+      "type": "fitted",
+      "description": "Center coordinate for `((y-y0)/s0)/sy` of Gaussian bump `w6`, estimated by training-only K-means, then carried unchanged into the final weight fit."
+    },
+    {
+      "name": "mu6",
+      "value": 0.3195029970625757,
+      "unit": "-",
+      "type": "fitted",
+      "description": "Center coordinate for `(x1/u0-1)*three` of Gaussian bump `w6`, estimated by training-only K-means, then carried unchanged into the final weight fit."
+    },
+    {
+      "name": "mv6",
+      "value": 0.9853470063545335,
+      "unit": "-",
+      "type": "fitted",
+      "description": "Center coordinate for `(x2/v0-1)*three` of Gaussian bump `w6`, estimated by training-only K-means, then carried unchanged into the final weight fit."
+    },
+    {
+      "name": "w6",
+      "value": -0.30269465850557065,
+      "unit": "U_y/s",
+      "type": "fitted",
+      "description": "Amplitude of local Gaussian bump `exp(-((((y-y0)/s0)/sy-my6)**2+((x1/u0-1)*three-mu6)**2+((x2/v0-1)*three-mv6)**2)/(2*ell**2))`; jointly estimated with all affine-tail coefficients in final regularized rollout fit."
+    },
+    {
+      "name": "my7",
+      "value": 0.435136040051778,
+      "unit": "-",
+      "type": "fitted",
+      "description": "Center coordinate for `((y-y0)/s0)/sy` of Gaussian bump `w7`, estimated by training-only K-means, then carried unchanged into the final weight fit."
+    },
+    {
+      "name": "mu7",
+      "value": -1.7759930825233454,
+      "unit": "-",
+      "type": "fitted",
+      "description": "Center coordinate for `(x1/u0-1)*three` of Gaussian bump `w7`, estimated by training-only K-means, then carried unchanged into the final weight fit."
+    },
+    {
+      "name": "mv7",
+      "value": 0.8444832515716549,
+      "unit": "-",
+      "type": "fitted",
+      "description": "Center coordinate for `(x2/v0-1)*three` of Gaussian bump `w7`, estimated by training-only K-means, then carried unchanged into the final weight fit."
+    },
+    {
+      "name": "w7",
+      "value": -0.0184015724147554,
+      "unit": "U_y/s",
+      "type": "fitted",
+      "description": "Amplitude of local Gaussian bump `exp(-((((y-y0)/s0)/sy-my7)**2+((x1/u0-1)*three-mu7)**2+((x2/v0-1)*three-mv7)**2)/(2*ell**2))`; jointly estimated with all affine-tail coefficients in final regularized rollout fit."
+    },
+    {
+      "name": "my8",
+      "value": 0.5281121116695984,
+      "unit": "-",
+      "type": "fitted",
+      "description": "Center coordinate for `((y-y0)/s0)/sy` of Gaussian bump `w8`, estimated by training-only K-means, then carried unchanged into the final weight fit."
+    },
+    {
+      "name": "mu8",
+      "value": 0.4391579749367454,
+      "unit": "-",
+      "type": "fitted",
+      "description": "Center coordinate for `(x1/u0-1)*three` of Gaussian bump `w8`, estimated by training-only K-means, then carried unchanged into the final weight fit."
+    },
+    {
+      "name": "mv8",
+      "value": -0.8311925268173217,
+      "unit": "-",
+      "type": "fitted",
+      "description": "Center coordinate for `(x2/v0-1)*three` of Gaussian bump `w8`, estimated by training-only K-means, then carried unchanged into the final weight fit."
+    },
+    {
+      "name": "w8",
+      "value": -0.22856264386557484,
+      "unit": "U_y/s",
+      "type": "fitted",
+      "description": "Amplitude of local Gaussian bump `exp(-((((y-y0)/s0)/sy-my8)**2+((x1/u0-1)*three-mu8)**2+((x2/v0-1)*three-mv8)**2)/(2*ell**2))`; jointly estimated with all affine-tail coefficients in final regularized rollout fit."
+    },
+    {
+      "name": "my9",
+      "value": 2.6564663516150584,
+      "unit": "-",
+      "type": "fitted",
+      "description": "Center coordinate for `((y-y0)/s0)/sy` of Gaussian bump `w9`, estimated by training-only K-means, then carried unchanged into the final weight fit."
+    },
+    {
+      "name": "mu9",
+      "value": 1.1248499933878582,
+      "unit": "-",
+      "type": "fitted",
+      "description": "Center coordinate for `(x1/u0-1)*three` of Gaussian bump `w9`, estimated by training-only K-means, then carried unchanged into the final weight fit."
+    },
+    {
+      "name": "mv9",
+      "value": 0.019784302711486845,
+      "unit": "-",
+      "type": "fitted",
+      "description": "Center coordinate for `(x2/v0-1)*three` of Gaussian bump `w9`, estimated by training-only K-means, then carried unchanged into the final weight fit."
+    },
+    {
+      "name": "w9",
+      "value": -0.1119622101057993,
+      "unit": "U_y/s",
+      "type": "fitted",
+      "description": "Amplitude of local Gaussian bump `exp(-((((y-y0)/s0)/sy-my9)**2+((x1/u0-1)*three-mu9)**2+((x2/v0-1)*three-mv9)**2)/(2*ell**2))`; jointly estimated with all affine-tail coefficients in final regularized rollout fit."
+    },
+    {
+      "name": "my10",
+      "value": 0.6469427997415715,
+      "unit": "-",
+      "type": "fitted",
+      "description": "Center coordinate for `((y-y0)/s0)/sy` of Gaussian bump `w10`, estimated by training-only K-means, then carried unchanged into the final weight fit."
+    },
+    {
+      "name": "mu10",
+      "value": 0.1852737751874057,
+      "unit": "-",
+      "type": "fitted",
+      "description": "Center coordinate for `(x1/u0-1)*three` of Gaussian bump `w10`, estimated by training-only K-means, then carried unchanged into the final weight fit."
+    },
+    {
+      "name": "mv10",
+      "value": -0.19013650417327885,
+      "unit": "-",
+      "type": "fitted",
+      "description": "Center coordinate for `(x2/v0-1)*three` of Gaussian bump `w10`, estimated by training-only K-means, then carried unchanged into the final weight fit."
+    },
+    {
+      "name": "w10",
+      "value": -0.13645217608834428,
+      "unit": "U_y/s",
+      "type": "fitted",
+      "description": "Amplitude of local Gaussian bump `exp(-((((y-y0)/s0)/sy-my10)**2+((x1/u0-1)*three-mu10)**2+((x2/v0-1)*three-mv10)**2)/(2*ell**2))`; jointly estimated with all affine-tail coefficients in final regularized rollout fit."
+    },
+    {
+      "name": "my11",
+      "value": 0.1473270344540354,
+      "unit": "-",
+      "type": "fitted",
+      "description": "Center coordinate for `((y-y0)/s0)/sy` of Gaussian bump `w11`, estimated by training-only K-means, then carried unchanged into the final weight fit."
+    },
+    {
+      "name": "mu11",
+      "value": 0.5647902698051639,
+      "unit": "-",
+      "type": "fitted",
+      "description": "Center coordinate for `(x1/u0-1)*three` of Gaussian bump `w11`, estimated by training-only K-means, then carried unchanged into the final weight fit."
+    },
+    {
+      "name": "mv11",
+      "value": -2.3355770636168196,
+      "unit": "-",
+      "type": "fitted",
+      "description": "Center coordinate for `(x2/v0-1)*three` of Gaussian bump `w11`, estimated by training-only K-means, then carried unchanged into the final weight fit."
+    },
+    {
+      "name": "w11",
+      "value": -0.5124200815882729,
+      "unit": "U_y/s",
+      "type": "fitted",
+      "description": "Amplitude of local Gaussian bump `exp(-((((y-y0)/s0)/sy-my11)**2+((x1/u0-1)*three-mu11)**2+((x2/v0-1)*three-mv11)**2)/(2*ell**2))`; jointly estimated with all affine-tail coefficients in final regularized rollout fit."
+    },
+    {
+      "name": "my12",
+      "value": 1.725488321848184,
+      "unit": "-",
+      "type": "fitted",
+      "description": "Center coordinate for `((y-y0)/s0)/sy` of Gaussian bump `w12`, estimated by training-only K-means, then carried unchanged into the final weight fit."
+    },
+    {
+      "name": "mu12",
+      "value": 0.5815143723085702,
+      "unit": "-",
+      "type": "fitted",
+      "description": "Center coordinate for `(x1/u0-1)*three` of Gaussian bump `w12`, estimated by training-only K-means, then carried unchanged into the final weight fit."
+    },
+    {
+      "name": "mv12",
+      "value": 0.8289450921208026,
+      "unit": "-",
+      "type": "fitted",
+      "description": "Center coordinate for `(x2/v0-1)*three` of Gaussian bump `w12`, estimated by training-only K-means, then carried unchanged into the final weight fit."
+    },
+    {
+      "name": "w12",
+      "value": 0.0850364362447115,
+      "unit": "U_y/s",
+      "type": "fitted",
+      "description": "Amplitude of local Gaussian bump `exp(-((((y-y0)/s0)/sy-my12)**2+((x1/u0-1)*three-mu12)**2+((x2/v0-1)*three-mv12)**2)/(2*ell**2))`; jointly estimated with all affine-tail coefficients in final regularized rollout fit."
+    },
+    {
+      "name": "my13",
+      "value": 0.3026624520619712,
+      "unit": "-",
+      "type": "fitted",
+      "description": "Center coordinate for `((y-y0)/s0)/sy` of Gaussian bump `w13`, estimated by training-only K-means, then carried unchanged into the final weight fit."
+    },
+    {
+      "name": "mu13",
+      "value": -0.43447267037850845,
+      "unit": "-",
+      "type": "fitted",
+      "description": "Center coordinate for `(x1/u0-1)*three` of Gaussian bump `w13`, estimated by training-only K-means, then carried unchanged into the final weight fit."
+    },
+    {
+      "name": "mv13",
+      "value": -0.5145608292685615,
+      "unit": "-",
+      "type": "fitted",
+      "description": "Center coordinate for `(x2/v0-1)*three` of Gaussian bump `w13`, estimated by training-only K-means, then carried unchanged into the final weight fit."
+    },
+    {
+      "name": "w13",
+      "value": -0.05453175523861169,
+      "unit": "U_y/s",
+      "type": "fitted",
+      "description": "Amplitude of local Gaussian bump `exp(-((((y-y0)/s0)/sy-my13)**2+((x1/u0-1)*three-mu13)**2+((x2/v0-1)*three-mv13)**2)/(2*ell**2))`; jointly estimated with all affine-tail coefficients in final regularized rollout fit."
+    },
+    {
+      "name": "my14",
+      "value": 1.5895415035386882,
+      "unit": "-",
+      "type": "fitted",
+      "description": "Center coordinate for `((y-y0)/s0)/sy` of Gaussian bump `w14`, estimated by training-only K-means, then carried unchanged into the final weight fit."
+    },
+    {
+      "name": "mu14",
+      "value": 0.9936345279216766,
+      "unit": "-",
+      "type": "fitted",
+      "description": "Center coordinate for `(x1/u0-1)*three` of Gaussian bump `w14`, estimated by training-only K-means, then carried unchanged into the final weight fit."
+    },
+    {
+      "name": "mv14",
+      "value": 0.3141720145940781,
+      "unit": "-",
+      "type": "fitted",
+      "description": "Center coordinate for `(x2/v0-1)*three` of Gaussian bump `w14`, estimated by training-only K-means, then carried unchanged into the final weight fit."
+    },
+    {
+      "name": "w14",
+      "value": 0.02926172912794173,
+      "unit": "U_y/s",
+      "type": "fitted",
+      "description": "Amplitude of local Gaussian bump `exp(-((((y-y0)/s0)/sy-my14)**2+((x1/u0-1)*three-mu14)**2+((x2/v0-1)*three-mv14)**2)/(2*ell**2))`; jointly estimated with all affine-tail coefficients in final regularized rollout fit."
+    },
+    {
+      "name": "my15",
+      "value": 0.7764097896276737,
+      "unit": "-",
+      "type": "fitted",
+      "description": "Center coordinate for `((y-y0)/s0)/sy` of Gaussian bump `w15`, estimated by training-only K-means, then carried unchanged into the final weight fit."
+    },
+    {
+      "name": "mu15",
+      "value": 1.0222433785831226,
+      "unit": "-",
+      "type": "fitted",
+      "description": "Center coordinate for `(x1/u0-1)*three` of Gaussian bump `w15`, estimated by training-only K-means, then carried unchanged into the final weight fit."
+    },
+    {
+      "name": "mv15",
+      "value": -1.313579717243419,
+      "unit": "-",
+      "type": "fitted",
+      "description": "Center coordinate for `(x2/v0-1)*three` of Gaussian bump `w15`, estimated by training-only K-means, then carried unchanged into the final weight fit."
+    },
+    {
+      "name": "w15",
+      "value": 0.2031871355642343,
+      "unit": "U_y/s",
+      "type": "fitted",
+      "description": "Amplitude of local Gaussian bump `exp(-((((y-y0)/s0)/sy-my15)**2+((x1/u0-1)*three-mu15)**2+((x2/v0-1)*three-mv15)**2)/(2*ell**2))`; jointly estimated with all affine-tail coefficients in final regularized rollout fit."
+    },
+    {
+      "name": "my16",
+      "value": 0.8359613872709728,
+      "unit": "-",
+      "type": "fitted",
+      "description": "Center coordinate for `((y-y0)/s0)/sy` of Gaussian bump `w16`, estimated by training-only K-means, then carried unchanged into the final weight fit."
+    },
+    {
+      "name": "mu16",
+      "value": -0.10516656845334979,
+      "unit": "-",
+      "type": "fitted",
+      "description": "Center coordinate for `(x1/u0-1)*three` of Gaussian bump `w16`, estimated by training-only K-means, then carried unchanged into the final weight fit."
+    },
+    {
+      "name": "mv16",
+      "value": 0.4836100215003603,
+      "unit": "-",
+      "type": "fitted",
+      "description": "Center coordinate for `(x2/v0-1)*three` of Gaussian bump `w16`, estimated by training-only K-means, then carried unchanged into the final weight fit."
+    },
+    {
+      "name": "w16",
+      "value": 0.7497561015551093,
+      "unit": "U_y/s",
+      "type": "fitted",
+      "description": "Amplitude of local Gaussian bump `exp(-((((y-y0)/s0)/sy-my16)**2+((x1/u0-1)*three-mu16)**2+((x2/v0-1)*three-mv16)**2)/(2*ell**2))`; jointly estimated with all affine-tail coefficients in final regularized rollout fit."
+    },
+    {
+      "name": "my17",
+      "value": 0.18199274464259108,
+      "unit": "-",
+      "type": "fitted",
+      "description": "Center coordinate for `((y-y0)/s0)/sy` of Gaussian bump `w17`, estimated by training-only K-means, then carried unchanged into the final weight fit."
+    },
+    {
+      "name": "mu17",
+      "value": -1.8291865644000829,
+      "unit": "-",
+      "type": "fitted",
+      "description": "Center coordinate for `(x1/u0-1)*three` of Gaussian bump `w17`, estimated by training-only K-means, then carried unchanged into the final weight fit."
+    },
+    {
+      "name": "mv17",
+      "value": -0.6657799482345581,
+      "unit": "-",
+      "type": "fitted",
+      "description": "Center coordinate for `(x2/v0-1)*three` of Gaussian bump `w17`, estimated by training-only K-means, then carried unchanged into the final weight fit."
+    },
+    {
+      "name": "w17",
+      "value": 0.3714948788291912,
+      "unit": "U_y/s",
+      "type": "fitted",
+      "description": "Amplitude of local Gaussian bump `exp(-((((y-y0)/s0)/sy-my17)**2+((x1/u0-1)*three-mu17)**2+((x2/v0-1)*three-mv17)**2)/(2*ell**2))`; jointly estimated with all affine-tail coefficients in final regularized rollout fit."
+    },
+    {
+      "name": "my18",
+      "value": 0.7731591551392167,
+      "unit": "-",
+      "type": "fitted",
+      "description": "Center coordinate for `((y-y0)/s0)/sy` of Gaussian bump `w18`, estimated by training-only K-means, then carried unchanged into the final weight fit."
+    },
+    {
+      "name": "mu18",
+      "value": 0.9084542645348442,
+      "unit": "-",
+      "type": "fitted",
+      "description": "Center coordinate for `(x1/u0-1)*three` of Gaussian bump `w18`, estimated by training-only K-means, then carried unchanged into the final weight fit."
+    },
+    {
+      "name": "mv18",
+      "value": -0.45492034951845806,
+      "unit": "-",
+      "type": "fitted",
+      "description": "Center coordinate for `(x2/v0-1)*three` of Gaussian bump `w18`, estimated by training-only K-means, then carried unchanged into the final weight fit."
+    },
+    {
+      "name": "w18",
+      "value": 0.09383885372400029,
+      "unit": "U_y/s",
+      "type": "fitted",
+      "description": "Amplitude of local Gaussian bump `exp(-((((y-y0)/s0)/sy-my18)**2+((x1/u0-1)*three-mu18)**2+((x2/v0-1)*three-mv18)**2)/(2*ell**2))`; jointly estimated with all affine-tail coefficients in final regularized rollout fit."
+    },
+    {
+      "name": "my19",
+      "value": 2.713328686313353,
+      "unit": "-",
+      "type": "fitted",
+      "description": "Center coordinate for `((y-y0)/s0)/sy` of Gaussian bump `w19`, estimated by training-only K-means, then carried unchanged into the final weight fit."
+    },
+    {
+      "name": "mu19",
+      "value": 0.5957651677338973,
+      "unit": "-",
+      "type": "fitted",
+      "description": "Center coordinate for `(x1/u0-1)*three` of Gaussian bump `w19`, estimated by training-only K-means, then carried unchanged into the final weight fit."
+    },
+    {
+      "name": "mv19",
+      "value": 1.000051210237586,
+      "unit": "-",
+      "type": "fitted",
+      "description": "Center coordinate for `(x2/v0-1)*three` of Gaussian bump `w19`, estimated by training-only K-means, then carried unchanged into the final weight fit."
+    },
+    {
+      "name": "w19",
+      "value": -0.1927460825217996,
+      "unit": "U_y/s",
+      "type": "fitted",
+      "description": "Amplitude of local Gaussian bump `exp(-((((y-y0)/s0)/sy-my19)**2+((x1/u0-1)*three-mu19)**2+((x2/v0-1)*three-mv19)**2)/(2*ell**2))`; jointly estimated with all affine-tail coefficients in final regularized rollout fit."
+    },
+    {
+      "name": "my20",
+      "value": 3.318180703280265,
+      "unit": "-",
+      "type": "fitted",
+      "description": "Center coordinate for `((y-y0)/s0)/sy` of Gaussian bump `w20`, estimated by training-only K-means, then carried unchanged into the final weight fit."
+    },
+    {
+      "name": "mu20",
+      "value": 1.1082792047868697,
+      "unit": "-",
+      "type": "fitted",
+      "description": "Center coordinate for `(x1/u0-1)*three` of Gaussian bump `w20`, estimated by training-only K-means, then carried unchanged into the final weight fit."
+    },
+    {
+      "name": "mv20",
+      "value": 0.7538110381678531,
+      "unit": "-",
+      "type": "fitted",
+      "description": "Center coordinate for `(x2/v0-1)*three` of Gaussian bump `w20`, estimated by training-only K-means, then carried unchanged into the final weight fit."
+    },
+    {
+      "name": "w20",
+      "value": 0.1489424601604982,
+      "unit": "U_y/s",
+      "type": "fitted",
+      "description": "Amplitude of local Gaussian bump `exp(-((((y-y0)/s0)/sy-my20)**2+((x1/u0-1)*three-mu20)**2+((x2/v0-1)*three-mv20)**2)/(2*ell**2))`; jointly estimated with all affine-tail coefficients in final regularized rollout fit."
+    },
+    {
+      "name": "my21",
+      "value": 0.1792817043535636,
+      "unit": "-",
+      "type": "fitted",
+      "description": "Center coordinate for `((y-y0)/s0)/sy` of Gaussian bump `w21`, estimated by training-only K-means, then carried unchanged into the final weight fit."
+    },
+    {
+      "name": "mu21",
+      "value": -0.33593680930860126,
+      "unit": "-",
+      "type": "fitted",
+      "description": "Center coordinate for `(x1/u0-1)*three` of Gaussian bump `w21`, estimated by training-only K-means, then carried unchanged into the final weight fit."
+    },
+    {
+      "name": "mv21",
+      "value": -1.3163608041676609,
+      "unit": "-",
+      "type": "fitted",
+      "description": "Center coordinate for `(x2/v0-1)*three` of Gaussian bump `w21`, estimated by training-only K-means, then carried unchanged into the final weight fit."
+    },
+    {
+      "name": "w21",
+      "value": 0.0476927818383467,
+      "unit": "U_y/s",
+      "type": "fitted",
+      "description": "Amplitude of local Gaussian bump `exp(-((((y-y0)/s0)/sy-my21)**2+((x1/u0-1)*three-mu21)**2+((x2/v0-1)*three-mv21)**2)/(2*ell**2))`; jointly estimated with all affine-tail coefficients in final regularized rollout fit."
+    },
+    {
+      "name": "my22",
+      "value": -0.008607103367044067,
+      "unit": "-",
+      "type": "fitted",
+      "description": "Center coordinate for `((y-y0)/s0)/sy` of Gaussian bump `w22`, estimated by training-only K-means, then carried unchanged into the final weight fit."
+    },
+    {
+      "name": "mu22",
+      "value": -1.6683248751091238,
+      "unit": "-",
+      "type": "fitted",
+      "description": "Center coordinate for `(x1/u0-1)*three` of Gaussian bump `w22`, estimated by training-only K-means, then carried unchanged into the final weight fit."
+    },
+    {
+      "name": "mv22",
+      "value": -2.497708378732204,
+      "unit": "-",
+      "type": "fitted",
+      "description": "Center coordinate for `(x2/v0-1)*three` of Gaussian bump `w22`, estimated by training-only K-means, then carried unchanged into the final weight fit."
+    },
+    {
+      "name": "w22",
+      "value": -0.16091033135864566,
+      "unit": "U_y/s",
+      "type": "fitted",
+      "description": "Amplitude of local Gaussian bump `exp(-((((y-y0)/s0)/sy-my22)**2+((x1/u0-1)*three-mu22)**2+((x2/v0-1)*three-mv22)**2)/(2*ell**2))`; jointly estimated with all affine-tail coefficients in final regularized rollout fit."
+    },
+    {
+      "name": "my23",
+      "value": 0.01565397406617841,
+      "unit": "-",
+      "type": "fitted",
+      "description": "Center coordinate for `((y-y0)/s0)/sy` of Gaussian bump `w23`, estimated by training-only K-means, then carried unchanged into the final weight fit."
+    },
+    {
+      "name": "mu23",
+      "value": -0.39732491970062256,
+      "unit": "-",
+      "type": "fitted",
+      "description": "Center coordinate for `(x1/u0-1)*three` of Gaussian bump `w23`, estimated by training-only K-means, then carried unchanged into the final weight fit."
+    },
+    {
+      "name": "mv23",
+      "value": -2.388431371876504,
+      "unit": "-",
+      "type": "fitted",
+      "description": "Center coordinate for `(x2/v0-1)*three` of Gaussian bump `w23`, estimated by training-only K-means, then carried unchanged into the final weight fit."
+    },
+    {
+      "name": "w23",
+      "value": 0.3821920903959561,
+      "unit": "U_y/s",
+      "type": "fitted",
+      "description": "Amplitude of local Gaussian bump `exp(-((((y-y0)/s0)/sy-my23)**2+((x1/u0-1)*three-mu23)**2+((x2/v0-1)*three-mv23)**2)/(2*ell**2))`; jointly estimated with all affine-tail coefficients in final regularized rollout fit."
+    }
+  ],
+  "estimation": {
+    "criterion": "Sum of squared full-rollout state residuals `y_sim-y` over every row after the first in each file. Each rollout uses classical fourth-order Runge\u2013Kutta, one step of `5` s, with `x1` and `x2` held at the left sample. This matches the supplied evaluation objective rather than treating the sampled derivative as an instantaneous derivative. Added a dimensionless shrinkage penalty `0.01*sum(((coefficient-initial_coefficient)/scale)**2)` where `scale = Max(Abs(initial_coefficient),0.01)` in the optimizer's numerical coefficient coordinates. The anchor is the previous training-rollout coefficient vector. The weak penalty limits large compensating local weights where excitation is sparse; it is not a measured noise variance.",
+    "data": "All rows of `data/train.csv` and `data/val.csv`, treated as two separately initialized uninterrupted trajectories, with sampling period `5` s from TASK.md. No measured-state resets inside either file and no rows removed. Validation was first used for structure comparison, then explicitly included in final calibration to use both available excitation patterns. Final validation errors are calibration diagnostics, not independent generalization estimates. All centers were estimated on training states and inputs only; validation affects width/count selection and final amplitudes but not center positions.",
+    "method": "The normalized training coordinates are `((y-y0)/s0)/sy`, `(x1/u0-1)*three`, and `(x2/v0-1)*three`. K-means with `sklearn.cluster.KMeans`, K-means++ initialization, `n_init = 10`, and `random_state = 2026` estimated center coordinates by minimizing within-cluster squared distances; data-dependent K-means++ provides starting centers, so no manually specified numerical centers apply. Gaussian widths `0.7`, `1.2`, and `2`, cluster counts `8`, `16`, `24`, and `40`, and initial ridge penalties `0.0001`, `0.01`, and `1` were screened. For each, initial affine/bump amplitudes minimized training derivative squared error plus ridge penalty with `numpy.linalg.lstsq` on augmented design rows, requiring no starting values. Width `ell = 2`, count `24`, and ridge penalty `0.0001` were selected by lowest validation-rollout RMSE among candidates with negative affine state coefficient. Center coordinates and width were then held unchanged. Final parameters were estimated jointly with nonlinear least squares using `scipy.optimize.least_squares`, trust-region reflective method, `jac` supplied by forward sensitivity propagation through all four RK4 stages, and `x_scale = \"jac\"`. This uses the exact chosen rollout and avoids finite-difference Jacobian cost; ordinary least squares cannot minimize its nonlinear trajectory objective. Parameter optimization coordinates are scaled by `Max(Abs(initial_value),0.01)`, a dimensionless numerical conditioning rule implemented in `refine.py`. The stopping tolerances `ftol = 1e-8`, `xtol = 1e-8`, and `gtol = 1e-8` are dimensionless solver settings; the maximum is `120` function evaluations. Final optimization is deterministic and uses no random seed. A first regularized training-rollout coefficient refinement provided the following final-stage start/penalty anchor: `a0 = 0.04828607147144693` U_y/s; `a1 = -0.097690623506802229` U_y/s; `a2 = 0.05405391637114184` U_y/s; `a3 = 0.0025025532242078574` U_y/s; `w0 = -0.30911044736850657` U_y/s; `w1 = -0.32454865589819942` U_y/s; `w2 = 0.29817863397088734` U_y/s; `w3 = 0.10655606329902285` U_y/s; `w4 = -0.10443260403460639` U_y/s; `w5 = -0.00096673842437707794` U_y/s; `w6 = -0.46682495436046995` U_y/s; `w7 = -0.015531096088291401` U_y/s; `w8 = -0.23987906876254836` U_y/s; `w9 = -0.15110496089213943` U_y/s; `w10 = -0.17069939683889615` U_y/s; `w11 = -0.48694292922544241` U_y/s; `w12 = 0.36222571396562336` U_y/s; `w13 = -0.052151857434985849` U_y/s; `w14 = 0.030908563186527776` U_y/s; `w15 = 0.12090306712015972` U_y/s; `w16 = 0.70747823507086938` U_y/s; `w17 = 0.26213791244766921` U_y/s; `w18 = 0.095996927441533569` U_y/s; `w19 = -0.27462486613722409` U_y/s; `w20 = 0.17077096191345029` U_y/s; `w21 = 0.065895880969796733` U_y/s; `w22 = -0.13367850534263057` U_y/s; `w23 = 0.29847269195815779` U_y/s. All affine coefficients and Gaussian amplitudes were finally estimated together. The constraint `a1 <= -0.001` U_y/s prevents an unstable affine state tail outside the Gaussian support. The shrinkage weight is `0.01`, a dimensionless solver setting. K-means is reproducible with the stated seed; weight optimization uses no random numbers.",
+    "script": "reproduce_models.py"
+  },
+  "discussion": {
+    "family": "Gaussian radial-basis-function regression with an affine tail, represented as an explicit scalar continuous-time vector field. Reference: J. Moody and C. J. Darken, Fast Learning in Networks of Locally-Tuned Processing Units, Neural Computation 1, 281\u2013294, 1989, DOI 10.1162/neco.1989.1.2.281 (publisher bibliographic record checked). ",
+    "interpretation": "The actual units are not supplied. `U_y`, `U_x1`, and `U_x2` denote placeholders for the unknown units of `y`, `x1`, and `x2`; `s` denotes seconds. Normalized features and exponents are dimensionless. The affine tail `a0+a1*((y-y0)/s0)+a2*(x1/u0)+a3*(x2/v0)` supplies baseline forcing and negative far-field state feedback. Each `wi` is a signed local change in derivative around the normalized training-input/state center whose coordinates are `myi`, `mui`, and `mvi`; the actual numbered symbols and full bump expressions are specified in the parameter descriptions. `ell` is their common dimensionless width. Positive amplitudes increase the local derivative; negative amplitudes decrease it. No local bump is assigned a physical mechanism.",
+    "origin": "Polynomial/rational residuals still varied across state-input regions, so localized smooth corrections were tried as a structurally different interpolation family. Training K-means selected centers without fitting derivative labels. Validation rollouts selected width/count/ridge setting. Derivative fits with larger or narrower networks were not consistently better, so the lowest-screening-error configuration was retained rather than maximizing network size. A negative affine tail and mild amplitude shrinkage were imposed to limit unsupported far-field and cancellation behavior.",
+    "limitations": "No physical apparatus, units, measurement noise model or intended operating envelope is known. Inputs and the state are correlated along only two supplied files, so the fitted coefficients need not be separately causally identifiable. One anomalous middle transition occurs in each file; it was not used as a reset. Oscillatory serially correlated derivative residuals remain, consistent with omitted dynamics or timing effects but not proof of their cause; an autonomous scalar state with only the two current inputs cannot explicitly represent input history. Extrapolation beyond the supplied excitation is unvalidated. This model is less parsimonious and less mechanistically interpretable than the recommended polynomial. The center locations are empirical summaries, not physical thresholds; many amplitudes compensate one another. K-means centers may be poorly supported in directions normal to the two trajectories. Far from all centers the field becomes affine, an imposed extrapolation rule rather than a verified law. Its final derivative/trajectory calibration scores do not establish test performance."
+  }
+}

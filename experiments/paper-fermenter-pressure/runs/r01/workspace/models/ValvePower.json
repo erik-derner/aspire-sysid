@@ -1,0 +1,159 @@
+{
+  "expressions": {
+    "dp": "a*flow - (s1*Min(Max(k2-valve,0),k2-k1) + s2*Min(Max(k3-valve,0),k3-k2) + s3*Min(Max(k4-valve,0),k4-k3) + s4*Min(Max(k5-valve,0),k5-k4) + s5*Min(Max(k6-valve,0),k6-k5) + s6*Min(Max(k7-valve,0),k7-k6) + s7*Min(Max(k8-valve,0),k8-k7))*(pscale*((p-patm)/pscale)*(((p-patm)/pscale)**2+(delta/pscale)**2)**((n-1)/2))"
+  },
+  "parameters": [
+    {
+      "name": "a",
+      "value": 0.0012409062057503622,
+      "unit": "bar/(s*(l/min))",
+      "type": "fitted",
+      "description": "Positive inlet conversion gain `a`: estimated jointly with all other fitted parameters in the pressure-simulation fit; represents gas storage and standard-volume conversion together, not independently measured tank volume."
+    },
+    {
+      "name": "patm",
+      "value": 0.9850000000000001,
+      "unit": "bar",
+      "type": "fitted",
+      "description": "Effective atmospheric equilibrium `patm`, estimated jointly in the pressure-simulation fit with bounds `0.985 <= patm <= 1.01` bar. These bounds admit a small pressure-calibration/ambient offset around the task's approximate atmospheric level while excluding the markedly lower equilibrium demanded by the rejected linear-outflow fit. This is not a barometer measurement."
+    },
+    {
+      "name": "delta",
+      "value": 0.06581271898136883,
+      "unit": "bar",
+      "type": "fitted",
+      "description": "Positive pressure-drive smoothing scale `delta`, jointly estimated; ensures finite atmospheric relaxation rather than a singular square-root derivative."
+    },
+    {
+      "name": "n",
+      "value": 0.5530719332972804,
+      "unit": "-",
+      "type": "fitted",
+      "description": "Positive generalized pressure-drop exponent `n`, jointly estimated; it interpolates between linear and square-root-like discharge but is not asserted to be a literal Reynolds-number exponent."
+    },
+    {
+      "name": "pscale",
+      "value": 1.0,
+      "unit": "bar",
+      "type": "fixed",
+      "description": "Canonical pressure scale `pscale = 1` bar, fixed solely to make the generalized power dimensionally meaningful; it changes no numerical prediction in the task's bar convention."
+    },
+    {
+      "name": "k1",
+      "value": 0.0,
+      "unit": "%",
+      "type": "fixed",
+      "description": "Fixed valve-knot `k1 = 0.0` %; endpoints follow the task definition, and interior knots were chosen before this fit to cover the broad-open region coarsely and the densely sampled closing region more finely. This is a constitutive calibration grid, not an estimated threshold."
+    },
+    {
+      "name": "k2",
+      "value": 30.0,
+      "unit": "%",
+      "type": "fixed",
+      "description": "Fixed valve-knot `k2 = 30.0` %; endpoints follow the task definition, and interior knots were chosen before this fit to cover the broad-open region coarsely and the densely sampled closing region more finely. This is a constitutive calibration grid, not an estimated threshold."
+    },
+    {
+      "name": "k3",
+      "value": 50.0,
+      "unit": "%",
+      "type": "fixed",
+      "description": "Fixed valve-knot `k3 = 50.0` %; endpoints follow the task definition, and interior knots were chosen before this fit to cover the broad-open region coarsely and the densely sampled closing region more finely. This is a constitutive calibration grid, not an estimated threshold."
+    },
+    {
+      "name": "k4",
+      "value": 65.0,
+      "unit": "%",
+      "type": "fixed",
+      "description": "Fixed valve-knot `k4 = 65.0` %; endpoints follow the task definition, and interior knots were chosen before this fit to cover the broad-open region coarsely and the densely sampled closing region more finely. This is a constitutive calibration grid, not an estimated threshold."
+    },
+    {
+      "name": "k5",
+      "value": 75.0,
+      "unit": "%",
+      "type": "fixed",
+      "description": "Fixed valve-knot `k5 = 75.0` %; endpoints follow the task definition, and interior knots were chosen before this fit to cover the broad-open region coarsely and the densely sampled closing region more finely. This is a constitutive calibration grid, not an estimated threshold."
+    },
+    {
+      "name": "k6",
+      "value": 85.0,
+      "unit": "%",
+      "type": "fixed",
+      "description": "Fixed valve-knot `k6 = 85.0` %; endpoints follow the task definition, and interior knots were chosen before this fit to cover the broad-open region coarsely and the densely sampled closing region more finely. This is a constitutive calibration grid, not an estimated threshold."
+    },
+    {
+      "name": "k7",
+      "value": 95.0,
+      "unit": "%",
+      "type": "fixed",
+      "description": "Fixed valve-knot `k7 = 95.0` %; endpoints follow the task definition, and interior knots were chosen before this fit to cover the broad-open region coarsely and the densely sampled closing region more finely. This is a constitutive calibration grid, not an estimated threshold."
+    },
+    {
+      "name": "k8",
+      "value": 100.0,
+      "unit": "%",
+      "type": "fixed",
+      "description": "Fixed valve-knot `k8 = 100.0` %; endpoints follow the task definition, and interior knots were chosen before this fit to cover the broad-open region coarsely and the densely sampled closing region more finely. This is a constitutive calibration grid, not an estimated threshold."
+    },
+    {
+      "name": "s1",
+      "value": 0.00038865505379834784,
+      "unit": "1/(s*%)",
+      "type": "fitted",
+      "description": "Nonnegative conductance slope magnitude `s1` on interval `k1 <= valve <= k2`, jointly estimated in the simulation fit; each slope contributes only a monotone calibration increment."
+    },
+    {
+      "name": "s2",
+      "value": 0.0009365472839618702,
+      "unit": "1/(s*%)",
+      "type": "fitted",
+      "description": "Nonnegative conductance slope magnitude `s2` on interval `k2 <= valve <= k3`, jointly estimated in the simulation fit; each slope contributes only a monotone calibration increment."
+    },
+    {
+      "name": "s3",
+      "value": 0.0011559579310204688,
+      "unit": "1/(s*%)",
+      "type": "fitted",
+      "description": "Nonnegative conductance slope magnitude `s3` on interval `k3 <= valve <= k4`, jointly estimated in the simulation fit; each slope contributes only a monotone calibration increment."
+    },
+    {
+      "name": "s4",
+      "value": 0.0016235268123050129,
+      "unit": "1/(s*%)",
+      "type": "fitted",
+      "description": "Nonnegative conductance slope magnitude `s4` on interval `k4 <= valve <= k5`, jointly estimated in the simulation fit; each slope contributes only a monotone calibration increment."
+    },
+    {
+      "name": "s5",
+      "value": 0.0017848357480072445,
+      "unit": "1/(s*%)",
+      "type": "fitted",
+      "description": "Nonnegative conductance slope magnitude `s5` on interval `k5 <= valve <= k6`, jointly estimated in the simulation fit; each slope contributes only a monotone calibration increment."
+    },
+    {
+      "name": "s6",
+      "value": 0.0019253300659344648,
+      "unit": "1/(s*%)",
+      "type": "fitted",
+      "description": "Nonnegative conductance slope magnitude `s6` on interval `k6 <= valve <= k7`, jointly estimated in the simulation fit; each slope contributes only a monotone calibration increment."
+    },
+    {
+      "name": "s7",
+      "value": 0.001151995547393018,
+      "unit": "1/(s*%)",
+      "type": "fitted",
+      "description": "Nonnegative conductance slope magnitude `s7` on interval `k7 <= valve <= k8`, jointly estimated in the simulation fit; each slope contributes only a monotone calibration increment."
+    }
+  ],
+  "estimation": {
+    "criterion": "Unweighted sum of squared free-running pressure errors, in bar squared, over every sample after the initial one. Each trajectory is initialized only at its first logged `p`; current-row `valve` and `flow` are held constant during a classical RK4 step of `5` s. The final fit has `2904` pressure residuals, with `1451` from training and `1453` from validation. This directly matches the intended long-horizon simulation criterion instead of fitting the filtered `dp` column. Final training RMSE is 0.0248046416 bar and final validation-data RMSE is 0.0371080412 bar; the pooled supplied-data RMSE is 0.0315658168 bar. Validation data are part of this final estimation objective, not an independent performance test.",
+    "data": "All rows of `data/train.csv` (one trajectory, `1452` samples) and `data/val.csv` (one separate trajectory, `1454` samples). The initial samples are used to initialize simulations but not to score residuals. A training-only preliminary fit used only `data/train.csv`; its validation RMSE was 0.040157216 bar. Validation was first used for structural comparison and residual inspection, then included in the final joint fit to improve input/pressure coverage. The experiments are never concatenated into one state trajectory; no rows are excluded and no future inputs are used.",
+    "method": "Bound-constrained nonlinear least squares with the Trust Region Reflective algorithm, `scipy.optimize.least_squares`, using two-point finite-difference Jacobians and `x_scale = 'jac'`. This is used because the closed-form model is nonlinear in the coefficients and the criterion includes recursive state integration; ordinary linear least squares cannot minimize this objective. Numba compiles only the model and RK4 loops; it does not change the integration rule. First all fitted coefficients were estimated together against training-trajectory simulation; all were then re-estimated together against the two independently initialized trajectories in one combined objective. Training-fit starting values: `a = 0.0013` bar/(s*(l/min)), `patm = 0.994` bar, `s1 = 0.002` 1/(s*%), `s2 = 0.002` 1/(s*%), `s3 = 0.002` 1/(s*%), `s4 = 0.002` 1/(s*%), `s5 = 0.002` 1/(s*%), `s6 = 0.002` 1/(s*%), `s7 = 0.002` 1/(s*%), `delta = 0.05` bar, `n = 0.55`. These scales were chosen to represent an approximately nominal gas-storage gain, an outlet coefficient of comparable magnitude, an equilibrium close to atmosphere, and moderate valve/pressure nonlinearities rather than an extreme initial stiffness. Joint-fit starting values: `a = 0.00126969525203` bar/(s*(l/min)), `patm = 0.985` bar, `s1 = 0.000215956466579` 1/(s*%), `s2 = 0.000948329970179` 1/(s*%), `s3 = 0.00162553229765` 1/(s*%), `s4 = 0.00131387250483` 1/(s*%), `s5 = 0.00208855072619` 1/(s*%), `s6 = 0.00196351990865` 1/(s*%), `s7 = 0.000985866185413` 1/(s*%), `delta = 0.0869994333157` bar, `n = 0.544464507146`. They are the converged training values, to retain a physically plausible training optimum as the initial point. The seven nonnegative valve slopes and `a`, `patm`, `delta`, and `n` are fitted simultaneously. Nonnegative slopes guarantee a decreasing calibrated outlet coefficient without relying on sparse-polynomial cancellations. The reference `c` and unused exploratory valve parameters are not part of this delivered model. Bounds: `0.0001 <= a <= 0.004` bar/(s*(l/min)), `0.985 <= patm <= 1.01` bar, `0 <= s1,s2,s3,s4,s5,s6,s7 <= 0.006` 1/(s*%), `0.003 <= delta <= 2` bar, and `0.25 <= n <= 1.2`. Maximum function evaluations per stage: `350` for resistance models, but this candidate uses `300`. For this candidate the actual maximum is `300`. Stopping tolerances `ftol = 1e-10`, `xtol = 1e-10`, and `gtol = 1e-10` are the dimensionless solver settings, not data-derived noise levels. No random numbers or stochastic search were used; no seed applies. ",
+    "script": "fit_candidates.py"
+  },
+  "discussion": {
+    "family": "Shape-constrained nonlinear grey-box state-space model: ideal-gas storage, regularized signed generalized-power discharge, and a monotone piecewise-linear valve-conductance calibration. The constitutive calibration is a constrained regression, not a discovered exact valve equation. The ideal-gas storage basis is the NASA Glenn Beginner's Guide to Aeronautics, \"Equation of State\" (page last updated May 13, 2021), read during this round. The isentropic/choked-flow reference is the same guide's \"Mass Flow Choking\" (page last updated May 13, 2021), also read during this round. Neither source determines the rig's fitted valve characteristic or the empirical smoothing.",
+    "interpretation": "The inlet term `a*flow` is pressure accumulation. The outlet drive `pscale*((p-patm)/pscale)*(((p-patm)/pscale)**2+(delta/pscale)**2)**((n-1)/2)` has the sign of excess pressure, finite positive slope at atmospheric pressure, and an approximately `Abs(p-patm)**n` magnitude at high drop. The fitted `n` controls curvature; its mathematical effect is asserted, not a unique physical flow regime. The coefficient `s1*Min(Max(k2-valve,0),k2-k1) + s2*Min(Max(k3-valve,0),k3-k2) + s3*Min(Max(k4-valve,0),k4-k3) + s4*Min(Max(k5-valve,0),k5-k4) + s5*Min(Max(k6-valve,0),k6-k5) + s6*Min(Max(k7-valve,0),k7-k6) + s7*Min(Max(k8-valve,0),k8-k7)` integrates nonnegative interval slope magnitudes from the full-closure endpoint, so conductance is zero there and never increases with closure. `k1` through `k8` are closure knots; `s1` through `s7` are local calibration slopes, not seven different flow paths.",
+    "origin": "This model retains the physical inlet-minus-outlet balance but replaces guessed sigmoid or power valve geometry with a monotone calibration. It was tried after pressure/input-bin residual inspection of the lower-dimensional outlet models. The generalized pressure exponent was part of the initial physical-family screen; the finite smoothing was retained because a literal square-root drive can become numerically stiff at atmosphere with the required large sample step. Nonnegative hinge increments were selected instead of high-order unconstrained polynomials so valve monotonicity and the sealed endpoint remain explicit. A nonlinear flow-power inlet and compressibility-dependent storage variants were also tested, but were not needed in this retained linear-inlet calibration model.",
+    "limitations": "This has more constitutive flexibility than the other candidates and should be regarded as a calibrated process law, not geometry identification. Knot spacing is a design choice; slopes near the extremes are weakly determined, particularly above the largest measured closure. `patm = 0.985` bar reaches its lower fitting bound. Pressure and valve effects can trade off, so `n`, `delta` and individual slopes are not uniquely identified physical mechanisms. With the fitted coefficients the fully-open atmospheric relaxation rate is approximately `0.360422` 1/s, safely inside the classical RK4 rate range at `5` s. The calibration is extended as constant fully-open conductance below the first knot and zero conductance beyond full closure, solely for numerical robustness. Physical requirements: R1 holds because the derivative with respect to inlet `flow` is the fitted positive `a`. R2 holds for `p >= patm`: conductance is nonnegative and nonincreasing in `valve`, and the outlet pressure drive is nonnegative. All supplied pressure observations exceed the final fitted `patm`. A passive bidirectional outlet necessarily reverses the R2 sign below `patm`, because closing it also suppresses atmospheric air admission; therefore literal R2 is not claimed in that unobserved sub-atmospheric regime. R3 holds exactly at `p = patm` with `flow = 0`, for every valve opening, and `patm` is approximately the task's `1` bar. R4 holds in continuous time on either side of `patm`, because the outlet term has the sign of `p-patm` and opposes it whenever the outlet is open. R5 holds exactly at `valve = vmax` or the full-closure endpoint: outlet conductance is zero and `dp = a*flow >= 0` for `flow >= 0`. No measured inlet-flow sample was exactly zero and neither experiment reached full closure, so those endpoints are assumptions rather than empirical verifications."
+  }
+}

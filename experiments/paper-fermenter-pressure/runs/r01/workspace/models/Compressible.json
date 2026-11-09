@@ -1,0 +1,113 @@
+{
+  "expressions": {
+    "dp": "a*flow - (c*Max(0,1/(1+exp((Min(Max(valve,0),vmax)-vmid)/vwidth))-sclosed)/(sref-sclosed))*sign(p-patm)*((gamma/(gamma-1))*Max(p,patm)**2*((Max(Max(Min(p,patm),pfloor)/Max(p,patm),rcrit))**(2/gamma)-(Max(Max(Min(p,patm),pfloor)/Max(p,patm),rcrit))**((gamma+1)/gamma)))/sqrt(((gamma/(gamma-1))*Max(p,patm)**2*((Max(Max(Min(p,patm),pfloor)/Max(p,patm),rcrit))**(2/gamma)-(Max(Max(Min(p,patm),pfloor)/Max(p,patm),rcrit))**((gamma+1)/gamma)))+delta*patm)"
+  },
+  "parameters": [
+    {
+      "name": "a",
+      "value": 0.00126790886757507,
+      "unit": "bar/(s*(l/min))",
+      "type": "fitted",
+      "description": "Positive inlet conversion gain `a`: estimated jointly with all other fitted parameters in the pressure-simulation fit; represents gas storage and standard-volume conversion together, not independently measured tank volume."
+    },
+    {
+      "name": "patm",
+      "value": 0.9850000000000001,
+      "unit": "bar",
+      "type": "fitted",
+      "description": "Effective atmospheric equilibrium `patm`, estimated jointly in the pressure-simulation fit with bounds `0.985 <= patm <= 1.01` bar. These bounds admit a small pressure-calibration/ambient offset around the task's approximate atmospheric level while excluding the markedly lower equilibrium demanded by the rejected linear-outflow fit. This is not a barometer measurement."
+    },
+    {
+      "name": "c",
+      "value": 0.05535953569293062,
+      "unit": "1/s",
+      "type": "fitted",
+      "description": "Outlet coefficient `c` at the reference closure `vref`, estimated jointly; the interpretation of its units follows the candidate pressure-drive law."
+    },
+    {
+      "name": "vmid",
+      "value": 84.09138478041301,
+      "unit": "%",
+      "type": "fitted",
+      "description": "Sigmoid location `vmid`, estimated jointly; controls where valve conductance changes most rapidly, without asserting an actual geometric port location."
+    },
+    {
+      "name": "vwidth",
+      "value": 24.113596563861247,
+      "unit": "%",
+      "type": "fitted",
+      "description": "Positive sigmoid width `vwidth`, estimated jointly; controls the smoothness of the calibrated conductance decrease."
+    },
+    {
+      "name": "vmax",
+      "value": 100.0,
+      "unit": "%",
+      "type": "fixed",
+      "description": "Full-closure endpoint `vmax = 100` % from the task definition; fixed to enforce a sealed outlet at that endpoint."
+    },
+    {
+      "name": "vref",
+      "value": 70.0,
+      "unit": "%",
+      "type": "fixed",
+      "description": "Reference closure `vref = 70` % chosen before fitting to lie in the dense training-input region and to normalize `c`; no physical threshold is asserted."
+    },
+    {
+      "name": "sclosed",
+      "value": 0.3407988483207196,
+      "unit": "-",
+      "type": "tied",
+      "description": "Endpoint sigmoid ordinate `sclosed`, tied rather than separately fitted, so full closure has exactly zero nonnegative conductance.",
+      "equation": "1/(1+exp((vmax-vmid)/vwidth))"
+    },
+    {
+      "name": "sref",
+      "value": 0.6420734883041016,
+      "unit": "-",
+      "type": "tied",
+      "description": "Reference sigmoid ordinate `sref`, tied to the fitted valve curve so `c` is its reference coefficient.",
+      "equation": "1/(1+exp((vref-vmid)/vwidth))"
+    },
+    {
+      "name": "delta",
+      "value": 0.07762107867458067,
+      "unit": "bar",
+      "type": "fitted",
+      "description": "Positive near-equilibrium regularization scale `delta`, jointly estimated; replaces the singular ideal-orifice atmospheric slope by a finite calibrated viscous-like slope."
+    },
+    {
+      "name": "gamma",
+      "value": 1.4,
+      "unit": "-",
+      "type": "fixed",
+      "description": "Fixed calorically perfect dry-air specific-heat ratio approximation `gamma = 1.4`; no gas temperature or composition measurements are available to identify it. The perfect-gas/nozzle framework is documented in the NASA source cited in the discussion."
+    },
+    {
+      "name": "rcrit",
+      "value": 0.5282817877171742,
+      "unit": "-",
+      "type": "tied",
+      "description": "Critical downstream/upstream pressure ratio `rcrit`, tied to `gamma` using the ideal isentropic choking condition.",
+      "equation": "(2/(gamma+1))**(gamma/(gamma-1))"
+    },
+    {
+      "name": "pfloor",
+      "value": 0.01,
+      "unit": "bar",
+      "type": "fixed",
+      "description": "Fixed downstream pressure floor `pfloor = 0.01` bar prevents undefined fractional powers for a numerically visited nonphysical negative absolute pressure; it is far below every supplied pressure sample and is not a valid vacuum model."
+    }
+  ],
+  "estimation": {
+    "criterion": "Unweighted sum of squared free-running pressure errors, in bar squared, over every sample after the initial one. Each trajectory is initialized only at its first logged `p`; current-row `valve` and `flow` are held constant during a classical RK4 step of `5` s. The final fit has `2904` pressure residuals, with `1451` from training and `1453` from validation. This directly matches the intended long-horizon simulation criterion instead of fitting the filtered `dp` column. Final training RMSE is 0.0250273261 bar and final validation-data RMSE is 0.037064506 bar; the pooled supplied-data RMSE is 0.0316279892 bar. Validation data are part of this final estimation objective, not an independent performance test.",
+    "data": "All rows of `data/train.csv` (one trajectory, `1452` samples) and `data/val.csv` (one separate trajectory, `1454` samples). The initial samples are used to initialize simulations but not to score residuals. A training-only preliminary fit used only `data/train.csv`; its validation RMSE was 0.0381357102 bar. Validation was first used for structural comparison and residual inspection, then included in the final joint fit to improve input/pressure coverage. The experiments are never concatenated into one state trajectory; no rows are excluded and no future inputs are used.",
+    "method": "Bound-constrained nonlinear least squares with the Trust Region Reflective algorithm, `scipy.optimize.least_squares`, using two-point finite-difference Jacobians and `x_scale = 'jac'`. This is used because the closed-form model is nonlinear in the coefficients and the criterion includes recursive state integration; ordinary linear least squares cannot minimize this objective. Numba compiles only the model and RK4 loops; it does not change the integration rule. First all fitted coefficients were estimated together against training-trajectory simulation; all were then re-estimated together against the two independently initialized trajectories in one combined objective. Training-fit starting values: `a = 0.0013` bar/(s*(l/min)), `c = 0.05` 1/s, `patm = 0.994` bar, `delta = 0.03` bar, `vmid = 82` %, `vwidth = 20` %. These scales were chosen to represent an approximately nominal gas-storage gain, an outlet coefficient of comparable magnitude, an equilibrium close to atmosphere, and moderate valve/pressure nonlinearities rather than an extreme initial stiffness. Joint-fit starting values: `a = 0.00133156404203` bar/(s*(l/min)), `c = 0.0584008974055` 1/s, `patm = 0.985` bar, `delta = 0.0763909260993` bar, `vmid = 82.9352507955` %, `vwidth = 22.5364759665` %. They are the converged training values, to retain a physically plausible training optimum as the initial point. The fitted coefficients are `a`, `c`, `patm`, `delta`, `vmid` and `vwidth`; ideal-gas `gamma` and its critical ratio are assumed, not estimated. All six fitted coefficients are estimated together in each simulation stage. No derivative prefit determines the submitted values. Bounds: `0.0001 <= a <= 0.004` bar/(s*(l/min)), `0.0001 <= c <= 0.3` 1/s, `0.985 <= patm <= 1.01` bar, `0.003 <= delta <= 0.5` bar, `0 <= vmid <= 98` %, and `2 <= vwidth <= 70` %. Maximum function evaluations per stage: `350`. For this candidate the actual maximum is `350`. Stopping tolerances `ftol = 1e-10`, `xtol = 1e-10`, and `gtol = 1e-10` are the dimensionless solver settings, not data-derived noise levels. No random numbers or stochastic search were used; no seed applies. ",
+    "script": "fit_candidates.py"
+  },
+  "discussion": {
+    "family": "Isothermal lumped ideal-gas storage with a regularized compressible isentropic-orifice outlet law, including sonic choking, and sigmoid valve-area calibration. The storage assumption is isothermal; the local outlet-flow approximation is isentropic. The ideal-gas storage basis is the NASA Glenn Beginner's Guide to Aeronautics, \"Equation of State\" (page last updated May 13, 2021), read during this round. The isentropic/choked-flow reference is the same guide's \"Mass Flow Choking\" (page last updated May 13, 2021), also read during this round. Neither source determines the rig's fitted valve characteristic or the empirical smoothing.",
+    "interpretation": "`a*flow` represents inlet gas accumulation. Define `up = Max(p,patm)` and `down = Max(Min(p,patm),pfloor)` in this discussion only. The effective ratio `Max(Max(Min(p,patm),pfloor)/Max(p,patm),rcrit)` stops decreasing once the ideal sonic critical ratio is reached. The quantity `(gamma/(gamma-1))*Max(p,patm)**2*((Max(Max(Min(p,patm),pfloor)/Max(p,patm),rcrit))**(2/gamma)-(Max(Max(Min(p,patm),pfloor)/Max(p,patm),rcrit))**((gamma+1)/gamma))` is the squared ideal-orifice pressure drive, in bar squared. Without regularization its square root produces the usual upstream-pressure-scaled subcritical mass-flow law and its choked continuation. The signed regularized drive `sign(p-patm)*((gamma/(gamma-1))*Max(p,patm)**2*((Max(Max(Min(p,patm),pfloor)/Max(p,patm),rcrit))**(2/gamma)-(Max(Max(Min(p,patm),pfloor)/Max(p,patm),rcrit))**((gamma+1)/gamma)))/sqrt(((gamma/(gamma-1))*Max(p,patm)**2*((Max(Max(Min(p,patm),pfloor)/Max(p,patm),rcrit))**(2/gamma)-(Max(Max(Min(p,patm),pfloor)/Max(p,patm),rcrit))**((gamma+1)/gamma)))+delta*patm)` preserves zero atmospheric discharge and the high-drop gas-flow limit while supplying finite near-equilibrium relaxation. `c` incorporates area, discharge coefficient, temperature factors and storage conversion; it is not a separately measured geometric area. The nonnegative sigmoid calibration decreases that coefficient to zero at full closure.",
+    "origin": "The compressible family was proposed in the initial plan because headspace absolute pressure spans roughly atmosphere to more than twice atmosphere, where a constant-density square-root flow approximation may be inadequate. Initial pressure-squared surrogate laws did not improve validation enough; the explicit pressure-ratio/choked law was subsequently tried so compressibility has a defensible gas-flow form rather than an arbitrary extra pressure exponent. Finite atmospheric regularization is retained for the `5` s numerical step and low-drop viscous effects; its exact form is a modelling choice, not derived from ideal nozzle theory. The same monotone sigmoid endpoint calibration was selected based on its performance in the lower-dimensional outlet screen.",
+    "limitations": "Temperature is unmeasured, water-vapor content is unknown and the actual outlet is a valve with piping, not necessarily an ideal nozzle. `gamma` is assumed; `c` and `delta` can absorb departure from ideal isentropic flow. `patm = 0.985` bar is at the lower fitting bound, so it should not be read as a precise atmospheric measurement. A substantial regularization scale means this is not a claim of exact ideal-orifice flow close to equilibrium. The fitted fully-open near-atmospheric relaxation rate is approximately `0.412` 1/s on the supplied fitted coefficients, consistent with the `5` s RK4 stability requirement. The negative-pressure floor is a numerical guard; the model is not calibrated for vacuum, supersonic transients, large temperatures or pressures well beyond the supplied range. Physical requirements: R1 holds because the derivative with respect to inlet `flow` is the fitted positive `a`. R2 holds for `p >= patm`: conductance is nonnegative and nonincreasing in `valve`, and the outlet pressure drive is nonnegative. All supplied pressure observations exceed the final fitted `patm`. A passive bidirectional outlet necessarily reverses the R2 sign below `patm`, because closing it also suppresses atmospheric air admission; therefore literal R2 is not claimed in that unobserved sub-atmospheric regime. R3 holds exactly at `p = patm` with `flow = 0`, for every valve opening, and `patm` is approximately the task's `1` bar. R4 holds in continuous time on either side of `patm`, because the outlet term has the sign of `p-patm` and opposes it whenever the outlet is open. R5 holds exactly at `valve = vmax` or the full-closure endpoint: outlet conductance is zero and `dp = a*flow >= 0` for `flow >= 0`. No measured inlet-flow sample was exactly zero and neither experiment reached full closure, so those endpoints are assumptions rather than empirical verifications."
+  }
+}

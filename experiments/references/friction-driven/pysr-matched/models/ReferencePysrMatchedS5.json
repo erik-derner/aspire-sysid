@@ -1,0 +1,62 @@
+{
+  "expressions": {
+    "dtheta": "omega",
+    "domega": "cb1*omega + cb2*sin(theta) + cb3*sin(tanh(omega + tanh(omega - sin(sin(cb6*theta))))) + cb4 + cb5*u"
+  },
+  "parameters": [
+    {
+      "name": "cb1",
+      "value": -1.2216987378874677,
+      "unit": "not assigned",
+      "type": "fitted",
+      "description": "Constant of the equation found by the search, optimized by the package together with the structure; its unit follows from its position in the expression and was not derived."
+    },
+    {
+      "name": "cb2",
+      "value": -108.420063510816,
+      "unit": "not assigned",
+      "type": "fitted",
+      "description": "Constant of the equation found by the search, optimized by the package together with the structure; its unit follows from its position in the expression and was not derived."
+    },
+    {
+      "name": "cb3",
+      "value": -25.28699474687971,
+      "unit": "not assigned",
+      "type": "fitted",
+      "description": "Constant of the equation found by the search, optimized by the package together with the structure; its unit follows from its position in the expression and was not derived."
+    },
+    {
+      "name": "cb4",
+      "value": 0.77339214,
+      "unit": "not assigned",
+      "type": "fitted",
+      "description": "Constant of the equation found by the search, optimized by the package together with the structure; its unit follows from its position in the expression and was not derived."
+    },
+    {
+      "name": "cb5",
+      "value": 26.28699474687971,
+      "unit": "not assigned",
+      "type": "fitted",
+      "description": "Constant of the equation found by the search, optimized by the package together with the structure; its unit follows from its position in the expression and was not derived."
+    },
+    {
+      "name": "cb6",
+      "value": 5.046593,
+      "unit": "not assigned",
+      "type": "fitted",
+      "description": "Constant of the equation found by the search, optimized by the package together with the structure; its unit follows from its position in the expression and was not derived."
+    }
+  ],
+  "estimation": {
+    "criterion": "Mean squared error between the equation and its target, the default loss of the package, for each target separately (`domega`); the target is the supplied derivative column. This is not the simulation error that the task scores. The simulation error on the training data was used only to select among the equations that the search returned.",
+    "data": "data/train.csv, all `3522` rows of all trajectories. The validation data were not used.",
+    "method": "Symbolic regression by regularized evolution with PySR 1.5.10 (Cranmer, 2023, arXiv:2305.01582), pysr.PySRRegressor, one search per target, with binary operators `+`, `-`, `*`, `/` and unary operators `sin`, `cos`, `tanh`, `exp`, `log`, `sqrt`, `abs`, `sign`, `niterations=100`, `populations=31`, `population_size=27`, `maxsize=30` and the other settings of the package at their defaults. Of the equations on the Pareto front of accuracy and complexity that the search returns for a target, the one with the smallest root mean squared error of the simulated `theta` on the training data was selected, with the simulation of the evaluation of the task. With the equations that the package selects the training error is `0.2044` rad. The unary operators were added because the task permits these functions; `Piecewise`, `Min`, `Max` and the remaining permitted functions were not offered to the search. The expression `dtheta` is `omega`, as the task prescribes. The search needs no starting values from the user: it starts from random expressions and optimizes the constants of an equation inside the search. Seed `random_state=5`, `deterministic=True`, `parallelism=\"serial\"`, so that the seed determines the result. Search time: domega 1351 s.",
+    "script": "experiments/references/fit_pysr.py"
+  },
+  "discussion": {
+    "family": "Closed-form expression found by symbolic regression (genetic search over expression trees). Reference model; it is not a candidate of the agent.",
+    "interpretation": "The terms have no assigned physical meaning; each expression is the equation that the search returned for its target, written with its constants as named parameters.",
+    "origin": "The structure was found by the search of the package from the operators listed in the estimation record; no physical reasoning entered; the selection among the returned equations used the simulation error on the training data.",
+    "limitations": "The search minimizes the error of one step or of the derivative, not the simulation error, so that a small loss does not bound the error of a long simulation. The result depends on the seed. Outside the range of the training data the expression is not expected to hold."
+  }
+}

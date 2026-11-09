@@ -1,0 +1,64 @@
+# Example of a static task (tasks/GUIDE.md). Copy this folder to tasks/<your-id>/ and edit it.
+# A static task has an output that depends only on the inputs of the same row: y = f(u).
+# Lines marked "optional" can be deleted. The data of this example are synthetic (build.py).
+
+schema_version: 1                 # always 1
+id: example-static                # the name of this folder; lower-case letters, digits, hyphens
+title: Force of a nonlinear spring
+formulation: static               # the dynamic formulations are discrete, continuous and narx
+
+# What the system is and how the data were obtained. Optional, but it is the main information
+# the agent has besides the data. Write what you would tell a colleague.
+description: >
+  A spring is compressed and extended on a test bench. The bench logs the
+  displacement d from the rest position and the force F. The spring is known
+  to stiffen at larger displacements.
+
+# What the model will be used for. Optional.
+intended_use: >
+  The model will be used to compute the force from the displacement in a
+  simulation of the mechanism that contains the spring.
+
+# One entry per column of the data files. Exactly one column has the role output.
+columns:
+  - name: d                       # the column name in the CSV files; used in the expressions
+    symbol: d                     # how the quantity is written in texts
+    roles: [input]
+    unit: m                       # "-" for a dimensionless quantity
+    description: displacement from the rest position
+    range: [-0.1, 0.1]            # an interval that contains every training value
+  - name: F
+    symbol: F
+    roles: [output]
+    unit: N
+    description: spring force
+    range: [-13.0, 13.0]
+
+# How a model is evaluated. For a static task these three lines are always the same.
+evaluation:
+  mode: algebraic                 # the expression is evaluated row by row
+  initialization: 0
+  scoring: all_samples
+  failure_limits:                 # a model output outside these bounds counts as a failure
+    - variable: F
+      lower: -1000.0
+      upper: 1000.0
+      unit: N
+      justification: numerical failure bound, about 80 times the largest training value
+  time_limit_s: 60.0              # time limit of the evaluation of one model
+
+data:
+  train: data/train.csv           # the agent sees this file
+  # val: data/val.csv             # optional: validation data, also visible to the agent
+  noise: Gaussian measurement noise of the force with a standard deviation of about 0.2 N   # optional
+  preprocessing: none             # optional
+
+# Sealed test data: the agent never sees these files; the harness scores the models on them.
+test:
+  - {file: test/test_1.csv, trajectory: test-1}
+
+pool_cap: 10                      # at most this many models are evaluated per run
+
+# Limits of one run (round). A turn is one response of the language model.
+budget:
+  round: {turns: 60, seconds: 3600, usd: 10.0}

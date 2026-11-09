@@ -1,0 +1,12 @@
+{
+  "order": [
+    "HarmonicStiction",
+    "ProjectedAngleFriction",
+    "StribeckStiction",
+    "SmoothCoulomb",
+    "AngleDamping",
+    "MotorSaturation"
+  ],
+  "recommended": "HarmonicStiction",
+  "reason": "Recommend HarmonicStiction: it combines an exactly stationary stick band with a bounded, sign-preserving second-harmonic restoring correction. Its conditional leave-one-trajectory-out angle RMSE was `0.071908` rad over all 4698 predicted samples, lower than the other delivered structures under the same diagnostic. This is not a hidden-test result or nested model-selection validation. The simpler smooth Coulomb comparator had better initial independent validation performance but does not maintain true sticking; the recommendation favors both trajectory robustness and the intended physics. All final coefficients use both supplied files, so final validation-file errors are explicitly labeled reused-data diagnostics. See `identification_report.md`, `crossvalidation_results.json` and each candidate record for qualifications."
+}

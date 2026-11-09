@@ -1,0 +1,56 @@
+# Identification record
+
+## Scope and approach
+
+Only `data/train.csv` and `data/val.csv` were accessed as data. No test files or evaluation results were sought. The pre-fit family list is in `plan.md`. All delivered laws enforce `dtheta = omega`; all six families were fitted directly by open-loop simulation, not by black-box prediction. No symbolic-regression search was run.
+
+The supplied velocity and acceleration are central differences of the encoder angle and velocity, respectively, on trajectory interiors (agreement to numerical roundoff; see `exploratory_results.txt`). That observation motivated using derivative regression only as initialization and optimizing the measured angle rather than its noisy derivatives. The moving initialization subset was `Abs(omega) > 0.5` rad/s, containing 1519 training rows. Bounded linear least squares gave `a = 26.512691` rad/(s^2 V), `g = 108.38543` rad/s^2, `b = 1.6181489` 1/s and `c = 19.026032` rad/s^2 for `a*u-g*sin(theta)-b*omega-c*sign(omega)`. No derivative-initialization rows were excluded from subsequent angle fits.
+
+## Numerical identification
+
+Every trajectory starts from its own first recorded `theta` in rad and `omega` in rad/s. The recorded `u` in V is held constant on each `TS = 0.01` s interval. Classical fourth-order Runge-Kutta uses exactly one step per interval, with no state corrections. The objective is unweighted sum of squares of angle error after each initial sample. It contains 4698 residuals when both supplied files are used.
+
+Final estimation is deterministic bound-constrained nonlinear least squares with `scipy.optimize.least_squares`, trust-region reflective method, linear loss, Jacobian scaling, two-point finite differences, `diff_step = 0.0001`, `max_nfev = 400`, and three stopping tolerances of `1e-8`. All coefficients of each candidate are estimated jointly in the final step. The exact winning starting values and bounds appear in each candidate. Numba only accelerates our explicitly coded simulator. No seed is involved in these fits.
+
+First, eight families were fit only on training data and compared on the untouched validation trajectories. Second, multistart training fits compared narrow and broad friction transitions and alternative torque-clipping laws. Then every candidate was refit on both supplied files; the lower-cost of two specified initializations was retained. Final validation-file RMSE is therefore a reused-data diagnostic, not independent performance.
+
+Conditional leave-one-trajectory-out diagnostics used all 16 supplied trajectories: fit on the other 15 and simulate the omitted one. The fit was warm-started from the full-data estimate and allowed at most 200 residual evaluations. These diagnostics are not nested validation of the complete structure-selection process. The reported overall RMSE weights samples equally, not trajectories equally.
+
+## Comparisons
+
+| Candidate | Training refit RMSE (rad) | Reused validation refit RMSE (rad) | Grouped holdout RMSE (rad) |
+|---|---:|---:|---:|
+| HarmonicStiction | 0.056550 | 0.089627 | 0.071908 |
+| ProjectedAngleFriction | 0.058033 | 0.086577 | 0.078650 |
+| StribeckStiction | 0.066463 | 0.086758 | 0.077589 |
+| SmoothCoulomb | 0.066466 | 0.082391 | 0.078021 |
+| AngleDamping | 0.061295 | 0.088161 | 0.081298 |
+| MotorSaturation | 0.063067 | 0.092350 | 0.083118 |
+
+The recommendation is **HarmonicStiction**: the second restoring harmonic gave the lowest grouped holdout error among the delivered structures and the law has a genuine zero-acceleration stick band. SmoothCoulomb is a deliberately minimal comparator: its initial independent validation RMSE was `0.085805` rad, better than the analytic-stiction families in that initial comparison, but it creeps rather than remaining exactly stuck. It is not recommended for long-duration sticking analysis.
+
+The pool represents different hypotheses, not nearby coefficient perturbations: empirical nonlinear restoring torque; projected torque-limited friction with angle modulation; Stribeck friction; minimal smooth Coulomb friction; positive angle-dependent viscous damping; and a monotone saturating actuator. Their common pendulum/motor balance is a physical constraint rather than a claim that every additional term has a unique mechanical cause.
+
+## Residual-driven checks and rejected structures
+
+The moving derivative residuals of the initial physical model had mild correlations with `cos(theta)*omega` and `cos(theta)*sign(omega)`. Both positive angle-dependent damping and positive angle-dependent friction were actually tested. Nonnegative quadratic drag fitted essentially zero in moving-row regression, so it was not carried into the pool. A voltage cubic did not materially improve derivative residuals; monotone voltage saturation was tested by angle simulation instead. The second restoring harmonic improved large-angle free-response prediction. Asymmetric moving friction improved some training errors but was less consistent on validation; it was omitted.
+
+After fitting the leading models, acceleration residuals were inspected separately on moving, near-rest and resting rows; complete values and per-trajectory simulated endpoints are in `residual_diagnostics.txt`. HarmonicStiction gives near-zero final simulated speeds on most free responses rather than the creep visible in SmoothCoulomb. Remaining angle errors include appreciable trajectory-specific terminal-position differences. The leading model still has substantial moving acceleration residuals, consistent with differentiated encoder noise and omitted effects; it was not selected for derivative RMSE.
+
+A remaining correlation with `sin(theta)**2` motivated actually fitting `-g*sin(theta)*exp(q*sin(theta))` and the extension `-g*sin(theta)*(1+h*cos(theta))*exp(q*sin(theta))`, where `q` is dimensionless. The harmonic-plus-asymmetry extension slightly improved all-data fit but worsened grouped holdout RMSE to approximately `0.074716` rad versus `0.071908` rad for the simpler harmonic model. It was rejected. See `fit_restoring.py` and `restoring_results.json`.
+
+The Stribeck candidate reaches bounds on its high-speed friction and decay speed. It remains an admissible empirical curve, but its physical decomposition is poorly identified. The saturation and angle-damping alternatives likewise express uncertainty rather than established mechanisms.
+
+## Physical checks
+
+All gains and friction magnitudes are positive. For the harmonic model the fitted `Abs(h) < 1`, so `sin(theta)*(1+h*cos(theta))` has the sign of `theta` on `-pi <= theta <= pi` rad. Other restoring laws retain `sin(theta)` directly. At `omega = 0` rad/s, clipped static cancellation can only decrease the magnitude of restoring acceleration without changing its sign; therefore `domega*theta <= 0`. SmoothCoulomb gives `-g*sin(theta)` directly at rest.
+
+For fixed `theta` and `omega`, the clip has derivative between zero and one with respect to its argument. The analytic static gate is between zero and one, so the acceleration is nondecreasing in applied drive. The saturated actuator has positive input slope, and the other actuator gains are positive. ProjectedAngleFriction has input slope either zero or its positive motor gain. Flat intervals are necessary to represent static friction. These observations establish input monotonicity analytically, not merely by sampling.
+
+The shared speed lower bound was `v >= 0.12` rad/s; the projected relaxation upper bound was `k <= 220` 1/s. They prevent very stiff local rest dynamics at the specified step; they do not prove arbitrary-input global simulation stability. All coefficients, including the speeds within those bounds, were fitted rather than frozen.
+
+## Reproduction and references
+
+Run `python fit_candidates.py` to repeat the actual final optimizations and regenerate the six model files and pool. It uses the recorded initial guesses in `candidate_config.json`, not stored final coefficients. Run `python check_submission.py` to check the submission. The other scripts and JSON files preserve the intermediate screening, multistart, residual and grouped-holdout records.
+
+General friction-family reference, cited from memory without a successfully retrieved source: Armstrong-Helouvry, Dupont and Canudas de Wit, Automatica 30(7), 1083-1138 (1994), "A survey of models, analysis tools and compensation methods for the control of machines with friction". The exact memoryless cancellation and projected expressions here are constructed approximations, not attributed implementations of that survey or of a hysteretic friction model. The numerical method is the trust-region reflective nonlinear least-squares algorithm as named in the SciPy API. No external reference was used to set a numerical physical coefficient.

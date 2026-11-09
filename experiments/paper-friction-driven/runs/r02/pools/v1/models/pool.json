@@ -1,0 +1,9 @@
+{
+  "order": [
+    "TwoScaleStick",
+    "ProjectionStick",
+    "PeriodicContact"
+  ],
+  "recommended": "TwoScaleStick",
+  "reason": "`TwoScaleStick` is the six-parameter symmetric Coulomb-viscous static model with independent regularization speeds. It had the lowest three-fold trajectory cross-validation angle RMSE among the retained structures: 0.076358 rad across the supplied training and validation files, compared with 0.080005 rad for `ProjectionStick` and 0.080707 rad for `PeriodicContact`. All three preserve the nine observed stationary free-response endpoints in 20 s unforced persistence tests and analytically satisfy the restoring-sign and nondecreasing input constraints. The simpler symmetric model is recommended rather than the most flexible angular-friction structure, whose lower pooled fitting error is not independently predictive. The projection model is a distinct physically defensible sticking alternative. Scores used for selection are not untouched test scores."
+}

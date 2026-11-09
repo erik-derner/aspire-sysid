@@ -1,0 +1,173 @@
+{
+  "expressions": {
+    "dy": "b0*1 + b1*(y) + b2*(x1/sx) + b3*(x2/sz) + b4*(y)**2 + b5*(y)*(x1/sx) + b6*(y)*(x2/sz) + b7*(x1/sx)**2 + b8*(x1/sx)*(x2/sz) + b9*(x2/sz)**2 + b10*(y)**3 + b11*(y)**2*(x1/sx) + b12*(y)**2*(x2/sz) + b13*(y)*(x1/sx)**2 + b14*(y)*(x1/sx)*(x2/sz) + b15*(y)*(x2/sz)**2 + b16*(x1/sx)**3 + b17*(x1/sx)**2*(x2/sz) + b18*(x1/sx)*(x2/sz)**2 + b19*(x2/sz)**3"
+  },
+  "parameters": [
+    {
+      "name": "sx",
+      "value": 100.0,
+      "unit": "unknown input x1 unit",
+      "type": "fixed",
+      "description": "Scale of `x1`; chosen as a convenient round value near the observed input range, not a fitted physical constant."
+    },
+    {
+      "name": "sz",
+      "value": 30.0,
+      "unit": "unknown input x2 unit",
+      "type": "fixed",
+      "description": "Scale of `x2`; chosen as a convenient round value near the observed training input range, not a physical constant."
+    },
+    {
+      "name": "b0",
+      "value": 0.3076694100140326,
+      "unit": "unknown state unit**1/s",
+      "type": "fitted",
+      "description": "Coefficient of `1`; simultaneously estimated by derivative ordinary least squares."
+    },
+    {
+      "name": "b1",
+      "value": -0.4428244485328082,
+      "unit": "unknown state unit**0/s",
+      "type": "fitted",
+      "description": "Coefficient of `(y)`; simultaneously estimated by derivative ordinary least squares."
+    },
+    {
+      "name": "b2",
+      "value": -0.14502578284965528,
+      "unit": "unknown state unit**1/s",
+      "type": "fitted",
+      "description": "Coefficient of `(x1/sx)`; simultaneously estimated by derivative ordinary least squares."
+    },
+    {
+      "name": "b3",
+      "value": -0.07763383433848646,
+      "unit": "unknown state unit**1/s",
+      "type": "fitted",
+      "description": "Coefficient of `(x2/sz)`; simultaneously estimated by derivative ordinary least squares."
+    },
+    {
+      "name": "b4",
+      "value": 0.1540693746354143,
+      "unit": "unknown state unit**-1/s",
+      "type": "fitted",
+      "description": "Coefficient of `(y)**2`; simultaneously estimated by derivative ordinary least squares."
+    },
+    {
+      "name": "b5",
+      "value": 0.2114982126271975,
+      "unit": "unknown state unit**0/s",
+      "type": "fitted",
+      "description": "Coefficient of `(y)*(x1/sx)`; simultaneously estimated by derivative ordinary least squares."
+    },
+    {
+      "name": "b6",
+      "value": 0.08426613103360503,
+      "unit": "unknown state unit**0/s",
+      "type": "fitted",
+      "description": "Coefficient of `(y)*(x2/sz)`; simultaneously estimated by derivative ordinary least squares."
+    },
+    {
+      "name": "b7",
+      "value": -0.12272220912990703,
+      "unit": "unknown state unit**1/s",
+      "type": "fitted",
+      "description": "Coefficient of `(x1/sx)**2`; simultaneously estimated by derivative ordinary least squares."
+    },
+    {
+      "name": "b8",
+      "value": 0.05824811569261958,
+      "unit": "unknown state unit**1/s",
+      "type": "fitted",
+      "description": "Coefficient of `(x1/sx)*(x2/sz)`; simultaneously estimated by derivative ordinary least squares."
+    },
+    {
+      "name": "b9",
+      "value": 0.0478575096932127,
+      "unit": "unknown state unit**1/s",
+      "type": "fitted",
+      "description": "Coefficient of `(x2/sz)**2`; simultaneously estimated by derivative ordinary least squares."
+    },
+    {
+      "name": "b10",
+      "value": -0.023796565186422935,
+      "unit": "unknown state unit**-2/s",
+      "type": "fitted",
+      "description": "Coefficient of `(y)**3`; simultaneously estimated by derivative ordinary least squares."
+    },
+    {
+      "name": "b11",
+      "value": -0.03326284729091096,
+      "unit": "unknown state unit**-1/s",
+      "type": "fitted",
+      "description": "Coefficient of `(y)**2*(x1/sx)`; simultaneously estimated by derivative ordinary least squares."
+    },
+    {
+      "name": "b12",
+      "value": -0.006956322256086115,
+      "unit": "unknown state unit**-1/s",
+      "type": "fitted",
+      "description": "Coefficient of `(y)**2*(x2/sz)`; simultaneously estimated by derivative ordinary least squares."
+    },
+    {
+      "name": "b13",
+      "value": 0.03790851629111777,
+      "unit": "unknown state unit**0/s",
+      "type": "fitted",
+      "description": "Coefficient of `(y)*(x1/sx)**2`; simultaneously estimated by derivative ordinary least squares."
+    },
+    {
+      "name": "b14",
+      "value": -0.07016132305451839,
+      "unit": "unknown state unit**0/s",
+      "type": "fitted",
+      "description": "Coefficient of `(y)*(x1/sx)*(x2/sz)`; simultaneously estimated by derivative ordinary least squares."
+    },
+    {
+      "name": "b15",
+      "value": -0.0007264987485968522,
+      "unit": "unknown state unit**0/s",
+      "type": "fitted",
+      "description": "Coefficient of `(y)*(x2/sz)**2`; simultaneously estimated by derivative ordinary least squares."
+    },
+    {
+      "name": "b16",
+      "value": 0.06803826203296386,
+      "unit": "unknown state unit**1/s",
+      "type": "fitted",
+      "description": "Coefficient of `(x1/sx)**3`; simultaneously estimated by derivative ordinary least squares."
+    },
+    {
+      "name": "b17",
+      "value": 0.03196190547814751,
+      "unit": "unknown state unit**1/s",
+      "type": "fitted",
+      "description": "Coefficient of `(x1/sx)**2*(x2/sz)`; simultaneously estimated by derivative ordinary least squares."
+    },
+    {
+      "name": "b18",
+      "value": -0.009029703098719945,
+      "unit": "unknown state unit**1/s",
+      "type": "fitted",
+      "description": "Coefficient of `(x1/sx)*(x2/sz)**2`; simultaneously estimated by derivative ordinary least squares."
+    },
+    {
+      "name": "b19",
+      "value": -0.02500078352833174,
+      "unit": "unknown state unit**1/s",
+      "type": "fitted",
+      "description": "Coefficient of `(x2/sz)**3`; simultaneously estimated by derivative ordinary least squares."
+    }
+  ],
+  "estimation": {
+    "criterion": "Unweighted sum of squared prediction errors on the logged derivative `dy`. All rows receive equal weight because measurement accuracies are unspecified. The derivative target permits a direct linear least-squares fit; free-running state errors are then checked separately.",
+    "data": "All rows of `data/train.csv` for estimation; `data/val.csv` only for structure comparison and free-running validation. No measured state is substituted after initialization during validation.",
+    "method": "Ordinary least squares with `numpy.linalg.lstsq`, using `rcond = None`, jointly fits all polynomial coefficients. The design matrix uses `sklearn.preprocessing.PolynomialFeatures` of total degree `3`. No numerical starting values or random seed are needed for this direct linear solution. Input scaling is fixed for conditioning. Degrees from `1` through `5` were screened on derivative errors; degrees from `1` through `4` were also checked by uninterrupted classical RK4 simulation with `T_s = 5` s. Optional full-trajectory least-squares refinements did not improve this candidate on validation and are not part of its delivered fit.",
+    "script": "fit_screen.py"
+  },
+  "discussion": {
+    "family": "Continuous-time polynomial nonlinear state-space regression. Ordinary least squares and prediction-error identification are standard; reference: Ljung, System Identification: Theory for the User, second edition, 1999 (cited from memory, not checked).",
+    "interpretation": "The expression approximates the vector field with all monomials in `y`, `x1/sx`, and `x2/sz` of total degree at most `3`. Constant terms create drift; state powers shape restoring or amplifying effects; input powers create nonlinear forcing; mixed terms make input effects depend on state or the other input. No term is assigned a physical interpretation without a system description.",
+    "origin": "An affine baseline gave poor free-running predictions. A systematic total-degree polynomial expansion added quadratic interactions, then cubic curvature. The cubic reduced both derivative and validation state errors relative to the quadratic. Fourth-degree expansions and unrestricted trajectory fitting tended to worsen validation or stability, so they were rejected. This is deterministic library regression, not genetic symbolic regression. Residual analysis prompted subsequent rational and logarithmic candidates.",
+    "limitations": "The units and physical system are unknown. Only one supplied training trajectory and one supplied validation trajectory are available. Validation was used repeatedly for structure selection, so its error is not an unbiased estimate of generalization. Inputs and state are correlated, and global behavior is not identified. No delayed or future input is present. Residuals suggest sampling alignment or omitted dynamics: cubic derivative residual correlation with `x2` at the next sample minus its current value is approximately `0.8375` on training and `0.7193` on validation; this diagnostic is not proof of causation. These memoryless models cannot explicitly reproduce that dependence. Cubic powers may cause unstable extrapolation far beyond the measured state and input range. Validation free-running RMSE is `0.0365253` in unknown state units; training free-running RMSE is `0.0268363` in unknown state units, each excluding the first sample. Derivative validation RMSE is `0.00188129` in unknown state units per second."
+  }
+}

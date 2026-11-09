@@ -1,0 +1,55 @@
+# Price schedule of the language models used by the harness ("cost computed from a
+# dated price schedule"). Read by aspire_sysid.agent.prices.
+#
+# Prices are in US dollars (USD) per 1,000,000 tokens. They are maintained by hand, committed,
+# and never fetched at run time, so that the cost of a recorded run can be recomputed. A price
+# enters this file only after it has been verified on the vendor's official pricing page; every
+# entry states the date of that verification and its source. The loader rejects a table or an
+# entry without a verification date, and cost_usd rejects a model that is not listed here.
+#
+# Cached input tokens: no price for cached input tokens has been verified for any model in this
+# file. The harness therefore charges cached input tokens at the full input price. This
+# overestimates the cost of a request whose input was partly served from the vendor's cache and
+# never underestimates it. The harness does not request prompt caching explicitly.
+#
+# Reasoning tokens are part of the output tokens reported by the vendor and are charged at the
+# output price.
+#
+# Web search (optional, per model): web_search_call is the fee in USD of one call of the vendor's
+# built-in web search tool, with web_search_verified, the date of its verification. The content
+# that a search returns to the model is billed as input tokens at the model's rate. The harness
+# charges the fee for every web search action the vendor reports (search, open page, find in
+# page); when the vendor charges only the search actions, this overestimates the cost and never
+# underestimates it.
+
+schema_version: 1
+currency: USD
+unit_tokens: 1000000
+# Date of the most recent verification of the table as a whole (ISO 8601).
+verified: 2026-08-02
+
+models:
+  gpt-5.5-2026-04-23:
+    vendor: openai
+    input: 5.00
+    output: 30.00
+    verified: 2026-08-02
+    source: official OpenAI API pricing documentation
+    # "Web search (all models): $10.00 / 1k calls + search content tokens billed at model rates"
+    # (https://developers.openai.com/api/docs/pricing, built-in tools, consulted 2026-10-05).
+    web_search_call: 0.01
+    web_search_verified: 2026-10-05
+  # Model of the experiments of the paper; an identifier
+  # without a dated snapshot (configs/models.yaml).
+  # "Input $2, cached input $0.10, output $10 per 1M tokens; prompts with more than 272K input
+  # tokens are priced at 2x input and cache rates and 1.5x output for the full request" (model
+  # page, consulted 2026-10-05). The harness charges cached input at the full input price and
+  # does not model the rule above 272K input tokens, as for gpt-5.5-2026-04-23.
+  gpt-6.1-sol:
+    vendor: openai
+    input: 2.00
+    output: 10.00
+    verified: 2026-10-05
+    source: official OpenAI model page (developers.openai.com/api/docs/models/gpt-6.1-sol)
+    web_search_call: 0.01
+    web_search_verified: 2026-10-05

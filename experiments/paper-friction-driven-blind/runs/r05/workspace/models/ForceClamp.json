@@ -1,0 +1,83 @@
+{
+  "expressions": {
+    "dy": "x1",
+    "dx1": "bias+gain*x2-stiff*sin(y)+asym*(cos(y)-1)-damp*x1-Min(fric+fricSin*sin(y)+fricCos*(cos(y)-1),Max(-(fric+fricSin*sin(y)+fricCos*(cos(y)-1)),bias+gain*x2-stiff*sin(y)+asym*(cos(y)-1)+width*x1))"
+  },
+  "parameters": [
+    {
+      "name": "bias",
+      "value": 4.234347116469216,
+      "unit": "not supplied",
+      "type": "fitted",
+      "description": "Constant acceleration offset `bias`. Its value is on the supplied logged scale; physical units are not stated."
+    },
+    {
+      "name": "gain",
+      "value": 29.19160890131544,
+      "unit": "not supplied",
+      "type": "fitted",
+      "description": "Input coefficient of `gain*x2`. Its value is on the supplied logged scale; physical units are not stated."
+    },
+    {
+      "name": "damp",
+      "value": 1.8881624926065361,
+      "unit": "not supplied",
+      "type": "fitted",
+      "description": "Linear velocity damping coefficient of `-damp*x1`. Its value is on the supplied logged scale; physical units are not stated."
+    },
+    {
+      "name": "stiff",
+      "value": 116.0723580352147,
+      "unit": "not supplied",
+      "type": "fitted",
+      "description": "Restoring coefficient of `-stiff*sin(y)`. Its value is on the supplied logged scale; physical units are not stated."
+    },
+    {
+      "name": "fric",
+      "value": 19.51670354663188,
+      "unit": "not supplied",
+      "type": "fitted",
+      "description": "Baseline velocity-resistance amplitude `fric`. Its value is on the supplied logged scale; physical units are not stated."
+    },
+    {
+      "name": "width",
+      "value": 141.21220228030668,
+      "unit": "not supplied",
+      "type": "fitted",
+      "description": "Near-rest force/velocity slope `width` in `width*x1`. Its value is on the supplied logged scale; physical units are not stated."
+    },
+    {
+      "name": "asym",
+      "value": 4.051873459671241,
+      "unit": "not supplied",
+      "type": "fitted",
+      "description": "Even restoring correction coefficient of `asym*(cos(y)-1)`. Its value is on the supplied logged scale; physical units are not stated."
+    },
+    {
+      "name": "fricSin",
+      "value": -7.324640715746156,
+      "unit": "not supplied",
+      "type": "fitted",
+      "description": "Odd modulation coefficient `fricSin` in `fricSin*sin(y)`. Its value is on the supplied logged scale; physical units are not stated."
+    },
+    {
+      "name": "fricCos",
+      "value": -8.295474685139203,
+      "unit": "not supplied",
+      "type": "fitted",
+      "description": "Even modulation coefficient `fricCos` in `fricCos*(cos(y)-1)`. Its value is on the supplied logged scale; physical units are not stated."
+    }
+  ],
+  "estimation": {
+    "criterion": "Sum of squared free-running output errors in `y`, excluding the initial row of each trajectory. Each rollout uses classical fourth-order Runge-Kutta at the supplied sampling period `0.01` s and holds `x2` constant within a sample. Simulated states are never reset to subsequent measurements. The training-only stage and final joint stage use the same criterion, because integrated output accuracy, rather than sampled derivative accuracy, is the requested use. The expression `dy = x1` is assumed from the essentially exact central-difference relation observed on interior rows and is not fitted.",
+    "data": "Training stage: `data/train.csv`, all thirteen trajectories and all rows after the first row of each trajectory, with each initial logged pair `y`, `x1` used only as an initial condition. Final stage: the same rows plus `data/val.csv`, all three trajectories and all rows after their first rows. No test data were available or used. There are 4698 scored time samples across the two supplied files. Rows were equally weighted to match sample-wise output scoring; derivative columns were used in structural exploration but not in these final objectives. All listed trajectories were retained to test different cold-start conditions. Exact suffix overlaps were found: training trajectories 8 and 11 reproduce validation trajectory 1 from row 309 and validation trajectory 2 from row 209 respectively (zero-based row indices); training trajectories 9, 10, 12 and 13 reproduce training trajectories 1, 2, 3 and 4 from rows 309, 309, 209 and 209. Thus file-level validation is not an independent-experiment holdout. The final use of validation is explicit and its final error is in-sample.",
+    "method": "Bounded nonlinear least squares, using the trust-region-reflective algorithm in `scipy.optimize.least_squares` (SciPy 1.18.1). This is direct output-error system identification: integration makes the objective nonlinear in all coefficients, so ordinary least squares cannot solve it. All fitted coefficients were optimized jointly in each of two stages. The model was fitted directly by output-error least squares because derivative-only fitting does not choose static endpoints reliably. The training-only numeric starting vector in the coefficient order of the parameter rows was `[2, 28, 1.8, 110, 20, 100, 0, 0, 0]`, on the logged parameter scales (physical units unknown). These rounded exploratory starting values place the restoring strength, input gain and friction near the derivative-regression scale and avoid an unstable initial rollout. The final joint starting vector was the training-only estimate `[4.3131902144965455, 28.871095381695973, 1.754173402712736, 116.26925468576506, 19.795226915917397, 124.44544112762705, 3.523205264190249, -7.472637496998925, -9.071747662373653]`, on those same scales, so it was warm-started rather than restarted randomly. The final bounds in this coefficient order were `[[-30.0, 5.0, 0.1, 30.0, 5.0, 5.0, -15.0, -15.0, -15.0], [30.0, 60.0, 6.0, 180.0, 40.0, 220.0, 15.0, 15.0, 15.0]]`, on those same scales. Positive damping, restoring strength and friction were bounded to select a dissipative model; wide remaining bounds limit poorly supported extrapolation. The training-only script is `extend_fit.py sin_clamp_cos_fsin_fcos`; the force law and RK4 objective are implemented in `extend_fit.py` and `fit_models.py`. Both stages used `diff_step = 0.0001`, `x_scale = 'jac'`, `ftol = 1e-7`, `xtol = 1e-7`, `gtol = 1e-6`; these dimensionless optimizer settings were chosen for a reproducible local fit without demanding more precision than the logged resolution. Training evaluations were capped at `max_nfev = 140` for the trigonometric models and `max_nfev = 180` for the polynomial model; the final cap was `max_nfev = 180`. Two-point finite-difference Jacobians were used. No random search or random numbers were used; no seed applies. Bounds and starts are also recorded in `results/`. The optimizer is local and global optimality is not claimed. Method reference: T. F. Coleman and Y. Li, An Interior Trust Region Approach for Nonlinear Minimization Subject to Bounds, SIAM Journal on Optimization (1996), cited from memory without successful source verification. `final_fit.py` reproduces the final estimates from the saved training-only results; the cited stage scripts reproduce those warm starts.",
+    "script": "final_fit.py"
+  },
+  "discussion": {
+    "family": "Piecewise-affine saturated-force friction coupled to a trigonometric state-space oscillator. It is a memoryless sticking/sliding approximation, related in purpose but not identical in formulation to the Karnopp friction model. Reference: D. Karnopp, Computer Simulation of Stick-Slip Friction in Mechanical Dynamic Systems, Journal of Dynamic Systems, Measurement, and Control (1985), cited from memory without successful source verification.",
+    "interpretation": "`dy = x1` defines velocity-like kinematics. Define the drive expression `bias+gain*x2-stiff*sin(y)+asym*(cos(y)-1)` and resistance bound `fric+fricSin*sin(y)+fricCos*(cos(y)-1)`, positive for all numerical angles at the fitted coefficients. Here `bias` is an acceleration offset, `gain` is input gain, `stiff` is near-origin restoring strength, and `asym` supplies even coordinate asymmetry. The terms with `fricSin` and `fricCos` empirically modulate the force bound with the coordinate. The nested `Min` and `Max` clip `bias+gain*x2-stiff*sin(y)+asym*(cos(y)-1)+width*x1` to the positive and negative resistance bounds. When unclipped, the drive cancels in `dx1` and `dx1 = -(damp+width)*x1`, so velocity tends rapidly to zero while arbitrary balanced coordinates can persist. When clipped, the model has the drive minus a saturated resistance and `damp*x1` damping. Thus it can represent sticking without an unobserved friction state. `width` is the near-rest force/velocity slope, not the velocity width used in TrigSmooth. No physical contact law is asserted.",
+    "origin": "Near-zero-velocity residuals of the smooth sine oscillator and distinct nonzero stationary coordinates motivated force-dependent cancellation at rest. I proposed the clipped affine resistance manually to allow a continuum of static equilibria; this was a structural hypothesis, not a fitted threshold from a hidden physical specification. Sine restoring terms came from comparison against affine and cubic alternatives. The cosine correction and first-state-dependent clipping limits were retained because large-coordinate and sign-asymmetric residuals decreased. The clipping operators distinguish this family from the smooth saturating family. Before the final joint refit, sample-weighted free-running `y` RMSE was `0.03055835` on training and `0.08247325` on validation, in unspecified `y` units. After the final refit these were `0.03256060` and `0.07637558` respectively, now both in-sample. Diagnostics in `residuals.py` compare sampled `dx1` residuals and free-running output residuals. Sampled derivative RMSE was `7.948329` on training and `15.734503` on validation, in unspecified derivative units. The final validation per-trajectory output RMSE vector was `[0.10412947549804029, 0.04039560836018362, 0.05984325789955946]` in unspecified `y` units. These diagnostics are not test results. In the final training diagnostics, sampled derivative RMSE restricted to `-0.15 <= x1 < 0.15` was `2.423418` in unspecified derivative units, versus `8.644165` for the recommended smooth candidate, but this model had worse pre-refit validation output error.",
+    "limitations": "The physical system, units, measurement process, intended use and meaning of `x2` are not supplied. Numerical coefficients refer to the logged scales, not identified physical constants. Trigonometric arguments assume the numerical `y` coordinate is suitable for a dimensionless angle-like representation; no physical angle unit is asserted. The logged `x1` and `dx1` equal central finite differences of `y` and `x1` on interior rows, to numerical precision, and are quantized, so instantaneous derivatives are not independently measured. Identification cannot separate all measurement and dynamic effects. The observed training domain is approximately `-2.5133 <= y <= 2.5353`, `-20.1062 <= x1 <= 14.4513`, `-4.9452 <= x2 <= 3.9526`, all in unspecified logged units. Extrapolation outside this domain or beyond the supplied trajectory lengths is unvalidated. There are experiment-dependent residuals, notably validation trajectory 1, and exact train/validation suffix overlaps; neither file-level validation nor the final combined fit is a pristine independent test. Sticking locations are sensitive to parameter values and initial conditions. A memoryless clipping law cannot reproduce genuine friction hysteresis or unlogged internal states. The model improved stationary derivative residuals but validation trajectory 1 still had a substantial output bias. Its objective is nonsmooth at clipping boundaries; finite-difference local optimization may miss better parameter sets. The slope upper bound was chosen to keep near-rest decay resolvable by the specified RK4 sampling step, not from a known physical parameter."
+  }
+}

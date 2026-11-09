@@ -1,0 +1,11 @@
+{
+  "order": [
+    "RectifiedEuler",
+    "AffineArc",
+    "TurnDeadzone",
+    "CubicArc",
+    "WheelDeadzone"
+  ],
+  "recommended": "RectifiedEuler",
+  "reason": "Recommend `RectifiedEuler`: its pooled leave-one-trajectory-out `25`-step (`5` s) rolling-window `x` RMSE was `0.02906545` m, the lowest among explored model families, while retaining four interpretable parameters and preventing artificial negative forward speed at tiny nonnegative commands. The simpler proportional Euler fit was almost tied (`0.02908078` m), so the threshold benefit is small, not statistically established. Exact arcs, nonlinear angular response, and wheel thresholds did not improve this held-out scored-output metric. Actual test trajectories and test scores were not available; overlapping-window and three-trajectory validation limits confidence."
+}

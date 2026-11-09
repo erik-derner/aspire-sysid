@@ -1,0 +1,10 @@
+{
+  "order": [
+    "FourierRidge",
+    "Deadzone",
+    "Rational",
+    "Periodic"
+  ],
+  "recommended": "FourierRidge",
+  "reason": "The regularized Fourier-feature map has the lowest pooled leave-one-trajectory-out free-running `y` RMSE: `0.061109` native `y` units (not supplied), across the three training trajectories with each validation trajectory fitted using only the other two. Its separate coordinate maps relax the shared-displacement hypothesis, while a centered ridge penalty prevents the poor validation of unregularized fits. No test data were accessed. Deadzone, Rational and Periodic retain compact alternative hard-threshold, smooth-rational and angular-feedback structures; their validation errors are larger. Residuals still suggest omitted input-response dynamics, so the recommendation is comparative, not a claim of exact identification."
+}

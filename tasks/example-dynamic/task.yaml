@@ -1,0 +1,75 @@
+# Example of a dynamic task in discrete time (tasks/GUIDE.md). Copy this folder to
+# tasks/<your-id>/ and edit it. A discrete-time model gives the state at the next sample from
+# the state and the inputs at the present sample: x[k+1] = g(x[k], u[k]).
+# Lines marked "optional" can be deleted. The data of this example are synthetic (build.py).
+
+schema_version: 1                 # always 1
+id: example-dynamic               # the name of this folder; lower-case letters, digits, hyphens
+title: Water level of a tank with a pump
+formulation: discrete             # other dynamic formulations: continuous, narx (tasks/README.md)
+
+# What the system is and how the data were obtained. Optional, but it is the main information
+# the agent has besides the data. Write what you would tell a colleague.
+description: >
+  A pump fills an open tank, and the water leaves through an outlet at the
+  bottom. A sensor logs the water level h. The pump command u is held for
+  10 samples and then replaced by a new random value.
+
+# What the model will be used for. Optional.
+intended_use: >
+  The model will be used to simulate the water level over about one minute
+  from one measured level and the sequence of pump commands.
+
+# One entry per column of the data files, except the trajectory column.
+columns:
+  - name: h                       # the column name in the CSV files; used in the expressions
+    symbol: h                     # how the quantity is written in texts
+    roles: [state, output]        # a state is computed by the model; exactly one column is the output
+    unit: m
+    description: water level
+    range: [0.1, 0.7]             # an interval that contains every training value
+  - name: u
+    symbol: u
+    roles: [input]                # an input is read from the data
+    unit: "-"                     # "-" for a dimensionless quantity
+    description: pump command, 0 (off) to 1 (full power)
+    range: [0.0, 1.0]
+
+dynamics:
+  sampling_period: 1.0            # T_s in seconds; always required for a dynamic task
+  states: [h]
+  inputs: [u]
+  measurement: h                  # the output as an expression of the states
+  input_hold: zero_order
+
+# How a model is evaluated.
+evaluation:
+  mode: simulation                # the model is simulated from the first sample of each trajectory;
+                                  # one_step instead predicts each sample from the measured previous one
+  initialization: 1               # samples at the start of a trajectory that initialize the model
+  scoring: after_initialization
+  failure_limits:                 # a simulated value outside these bounds counts as a failure
+    - variable: h
+      lower: -100.0
+      upper: 100.0
+      unit: m
+      justification: numerical divergence bound, about 150 times the largest training value
+  time_limit_s: 60.0              # time limit of the evaluation of one model
+
+data:
+  train: data/train.csv           # the agent sees this file
+  # val: data/val.csv             # optional: validation data, also visible to the agent
+  trajectory_column: trajectory   # integer column that numbers the trajectories of the training file
+  noise: Gaussian measurement noise of the level with a standard deviation of about 0.002 m   # optional
+  preprocessing: none             # optional
+
+# Sealed test data, one trajectory per file, without a trajectory column: the agent never sees
+# these files; the harness scores the models on them.
+test:
+  - {file: test/test_1.csv, trajectory: test-1}
+
+pool_cap: 10                      # at most this many models are evaluated per run
+
+# Limits of one run (round). A turn is one response of the language model.
+budget:
+  round: {turns: 60, seconds: 3600, usd: 10.0}

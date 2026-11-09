@@ -1,0 +1,5 @@
+Identification plan (written before fitting)
+
+Data are discrete transitions within each trajectory, never across boundaries. Unknown units are retained as unknown; no physical interpretation is imposed.
+
+Families to try: (1) affine discrete state-space transitions as a baseline; (2) sparse polynomial state increments, degrees two and three, selected with least squares and sequential thresholding; (3) compact nonlinear state increments from a dictionary of saturation, rational and trigonometric terms, refined by nonlinear least squares where justified. Consider trajectory-level held-out free-run errors, not only one-step fit. Examine residual correlations and add structures only when supported. If the data suggest integration relationships, test a structured state-update family with those relationships. Compare candidates using leave-one-trajectory-out prediction and train rollouts; retain structurally different defensible families. All computations use only data/train.csv. Deliver reproducible fitting scripts and parameter provenance.

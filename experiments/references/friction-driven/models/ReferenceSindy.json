@@ -1,0 +1,76 @@
+{
+  "expressions": {
+    "dtheta": "omega",
+    "domega": "c_omega_1 + c_omega_2*theta + c_omega_3*omega + c_omega_4*u + c_omega_5*theta**2 + c_omega_6*theta*omega + c_omega_7*theta*u + c_omega_8*u**2"
+  },
+  "parameters": [
+    {
+      "name": "c_omega_1",
+      "value": 0.6785662746939344,
+      "unit": "rad/s^2",
+      "type": "fitted",
+      "description": "Coefficient of the library term `1` in the expression `domega`."
+    },
+    {
+      "name": "c_omega_2",
+      "value": -67.65265178773,
+      "unit": "rad/s^2 / ((rad))",
+      "type": "fitted",
+      "description": "Coefficient of the library term `theta` in the expression `domega`."
+    },
+    {
+      "name": "c_omega_3",
+      "value": -4.0014966244448305,
+      "unit": "rad/s^2 / ((rad/s))",
+      "type": "fitted",
+      "description": "Coefficient of the library term `omega` in the expression `domega`."
+    },
+    {
+      "name": "c_omega_4",
+      "value": 25.384547796091805,
+      "unit": "rad/s^2 / ((V))",
+      "type": "fitted",
+      "description": "Coefficient of the library term `u` in the expression `domega`."
+    },
+    {
+      "name": "c_omega_5",
+      "value": 2.558881358416759,
+      "unit": "rad/s^2 / ((rad)^2)",
+      "type": "fitted",
+      "description": "Coefficient of the library term `theta**2` in the expression `domega`."
+    },
+    {
+      "name": "c_omega_6",
+      "value": 1.2405995340579459,
+      "unit": "rad/s^2 / ((rad) (rad/s))",
+      "type": "fitted",
+      "description": "Coefficient of the library term `theta*omega` in the expression `domega`."
+    },
+    {
+      "name": "c_omega_7",
+      "value": -2.9319478389621123,
+      "unit": "rad/s^2 / ((rad) (V))",
+      "type": "fitted",
+      "description": "Coefficient of the library term `theta*u` in the expression `domega`."
+    },
+    {
+      "name": "c_omega_8",
+      "value": 0.4584207365334976,
+      "unit": "rad/s^2 / ((V)^2)",
+      "type": "fitted",
+      "description": "Coefficient of the library term `u**2` in the expression `domega`."
+    }
+  ],
+  "estimation": {
+    "criterion": "Sum of squared differences between the library expansion and the supplied derivative column (`domega` for `domega`), with a ridge penalty; this is the criterion of the default optimizer of the package and is not the simulation error that the task scores. It was kept because the reference model is the result of the tool as it is delivered.",
+    "data": "data/train.csv, all `3522` rows of all `13` trajectories. The validation data were not used.",
+    "method": "Sparse identification of nonlinear dynamics (SINDy; Brunton, Proctor and Kutz, 2016), pysindy.SINDy (PySINDy 2.1.0) with its default settings: the library of all polynomial terms up to degree `2` in `theta`, `omega`, `u` with a constant term, and sequentially thresholded least squares (STLSQ) with threshold `0.1`, ridge parameter `0.05` and at most `20` iterations. The derivative was not computed by the package; the derivative column of the task was passed to it. The defaults were used because the model is a reference for what the tool gives without tuning. The expression `dtheta` is `omega`, as the task prescribes; the regression result for it was discarded. The method needs no starting values and uses no random numbers. All coefficients of one expression were estimated together.",
+    "script": "experiments/references/friction-driven/fit_references.py"
+  },
+  "discussion": {
+    "family": "Polynomial continuous-time state-space model found by sparse regression (SINDy). Reference model; it is not a candidate of the agent.",
+    "interpretation": "The expression `domega` is a linear combination of the polynomial library terms that the thresholding kept. The terms have no assigned physical meaning.",
+    "origin": "The structure was selected by the sparse-regression algorithm from the polynomial library; no physical reasoning entered, and no other library was tried.",
+    "limitations": "The polynomial library of degree 2 contains no other function of the variables. The criterion is the error of the derivative, not the simulation error, so that a small error of the derivative does not bound the error of a long simulation. Outside the range of the training data a polynomial is not expected to hold."
+  }
+}

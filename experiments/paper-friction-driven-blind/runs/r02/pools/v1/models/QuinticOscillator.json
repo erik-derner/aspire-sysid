@@ -1,0 +1,76 @@
+{
+  "expressions": {
+    "dy": "x1",
+    "dx1": "b + k*y + a3*y**3 + a5*y**5 + c*x1 + g*x2 - f*tanh(x1/s)"
+  },
+  "parameters": [
+    {
+      "name": "b",
+      "value": 1.6316174983243474,
+      "unit": "V/s",
+      "type": "fitted",
+      "description": "constant acceleration offset. Units use the recorded-unit convention defined in discussion."
+    },
+    {
+      "name": "k",
+      "value": -113.00536121986602,
+      "unit": "V/(s*Y)",
+      "type": "fitted",
+      "description": "coefficient of `y`. Units use the recorded-unit convention defined in discussion."
+    },
+    {
+      "name": "c",
+      "value": -1.673285213977778,
+      "unit": "1/s",
+      "type": "fitted",
+      "description": "linear velocity damping coefficient multiplying `x1`. Units use the recorded-unit convention defined in discussion."
+    },
+    {
+      "name": "f",
+      "value": 21.399299654385548,
+      "unit": "V/s",
+      "type": "fitted",
+      "description": "baseline magnitude of the bounded velocity-opposing term. Units use the recorded-unit convention defined in discussion."
+    },
+    {
+      "name": "g",
+      "value": 28.366663405829176,
+      "unit": "V/(s*U)",
+      "type": "fitted",
+      "description": "linear logged-input gain multiplying `x2`. Units use the recorded-unit convention defined in discussion."
+    },
+    {
+      "name": "s",
+      "value": 0.11151542396044395,
+      "unit": "V",
+      "type": "fitted",
+      "description": "velocity scale in `tanh(x1/s)`. Units use the recorded-unit convention defined in discussion."
+    },
+    {
+      "name": "a3",
+      "value": 18.173941782307903,
+      "unit": "V/(s*Y**3)",
+      "type": "fitted",
+      "description": "cubic restoring coefficient multiplying `y**3`. Units use the recorded-unit convention defined in discussion."
+    },
+    {
+      "name": "a5",
+      "value": -0.5029426748900546,
+      "unit": "V/(s*Y**5)",
+      "type": "fitted",
+      "description": "quintic restoring coefficient multiplying `y**5`. Units use the recorded-unit convention defined in discussion."
+    }
+  ],
+  "estimation": {
+    "criterion": "Unweighted sum of squared free-running errors in `y` over all noninitial samples, with equal weight per sample, rather than equal weight per trajectory. This matches the task scoring aggregation. `dx1` informed preliminary derivative-regression screening and residual diagnostics, but is not included in the final objective. ",
+    "data": "Final estimation used every row of data/train.csv (all thirteen trajectories) and data/val.csv (all three trajectories); first states initialize simulations but first rows do not contribute residuals. Validation trajectories were first used separately for structure comparison, then included in the final parameter refit to use all available information. Consequently the final reported validation error is an in-sample diagnostic, not an unbiased holdout estimate. Trajectories remain separate experiments. ",
+    "method": "Deterministic bounded nonlinear least squares with scipy.optimize.least_squares, method trf (trust-region reflective), x_scale jac, finite-difference Jacobian and linear loss. All coefficients in this candidate were optimized jointly, without resetting states after the initial measured state of each trajectory. RK4 used `T_s = 0.01` s and held the logged `x2` constant during a step, matching the stated scoring protocol. This output-error method was chosen over derivative-only regression because finite-difference derivative targets are quantized and scoring concerns free-running `y`. There are no random seeds. Starting values were `b = 1.2946930206324743`, `k = -114.48331140635653`, `c = -1.6819096496761896`, `f = 20.666489751160512`, `g = 27.926459922201239`, `s = 0.090000016757185719`, `a3 = 19.581587054373855`, `a5 = -0.69404650908922882`. They were taken from the preliminary training-only quintic smooth-friction fit in fit_rollout.py to initialize near a stable trajectory solution. All parameters were then jointly refitted with max_nfev 100, ftol 1e-8 and diff_step 1e-4. The final solver reported successful termination. Starting values and bounds use each parameter's unit from the parameter table. The bounds were `-20 <= b <= 20`; `-200 <= k <= -20`; `-10 <= c <= 0`; `16 <= f <= 50`; `0 <= g <= 60`; `0.09 <= s <= 3`; `0 <= a3 <= 30`; `-5 <= a5 <= 0`. Broad coefficient bounds constrain finite fits; restoring and damping signs encode the observed oscillator-like decay. The positive friction and smoothing bounds avoid sign-reversed dissipation and excessively stiff near-zero-velocity dynamics under the prescribed one-step RK4. Bounds are modeling assumptions, not known system limits. ",
+    "script": "reproduce_candidates.py"
+  },
+  "discussion": {
+    "family": "Quintic polynomial nonlinear oscillator, an extension of the Duffing oscillator, with smooth Coulomb-like damping. The Duffing family is named as an established model family; the extension here is empirical. Related dry-friction simulation reference cited from memory, not independently verified: D. Karnopp, Computer Simulation of Stick-Slip Friction in Mechanical Dynamic Systems, ASME Journal of Dynamic Systems, Measurement, and Control (1985). This is a family-level reference, not a claim that the expression is Karnopp's exact algorithm. SciPy documentation retrieval was attempted but returned no usable text; software settings below report the actual calls, not an externally verified quotation. ",
+    "interpretation": "Physical units were not supplied. Here Y, V and U mean the recorded units of `y`, `x1` and `x2`; time is in seconds. The observed kinematic relation makes V consistent with Y/s. Trigonometric arguments use the raw numerical coordinate `y`; an angle interpretation is assumed only as a useful mathematical analogy, not identified physical provenance. `dy = x1` is the kinematic relation. In `dx1`, `b` shifts acceleration, `k*y` supplies local linear restoring behavior, `a3*y**3` softens that behavior at intermediate amplitude, and the negative fitted `a5*y**5` restores an inward highest-order force at large amplitude. `c*x1` is linear damping, `g*x2` is input forcing, and `-f*tanh(x1/s)` is a smooth velocity-opposing force with bounded magnitude. These are mathematical effects; no masses, lengths or material properties are inferred. ",
+    "origin": "Before fitting, affine, sparse polynomial, saturation, and state-dependent damping families were proposed. Exploratory ordinary least squares and nonlinear least squares in helper_nonlinear.py screened affine, sine, cubic, higher-polynomial, Coulomb, drag, input-nonlinearity and cross-term libraries; scan_terms.py also used sklearn.linear_model.ARDRegression as a diagnostic library screen, not as the final estimator. Centered differences showed `dy = x1` within numerical precision, so `dy` was fixed to `x1` without a fitted scale. The affine family and purely viscous damping had substantially worse free-running errors and were not delivered. Velocity-bin residuals and stopped trajectories motivated dry-friction-like terms; moving-row residual improvements from `sin(y)*sign(x1)` and `cos(y)*sign(x1)` motivated position dependence of its magnitude. No physical system description was available. The cubic branch improved amplitude dependence over the affine model. The quintic term was added to approximate the sine-like softening over observed excursions while avoiding the outward highest-degree force of an unconstrained softening cubic model. Constant friction was retained to give an independently defensible compact polynomial alternative, not a coefficient perturbation of the harmonic model. Powers came from a manually enumerated polynomial library, not a genetic-programming search. ",
+    "limitations": "Polynomial extrapolation is not a physical law and becomes very steep outside observed excursions. Smooth friction does not admit an exact interval of stuck equilibria. Its training-only held-out validation `y` RMSE before refitting was `0.0837067` Y. Final free-running `y` RMSE was `0.0528176` Y on training and `0.0777601` Y on the reused validation data. Derivative-residual RMSE was `9.99382` V/s and `16.6145` V/s, respectively; within-trajectory lag-one derivative-residual correlations were `0.6388` and `0.4238`. These nonwhite residuals leave quantization, unmodeled dynamics and input timing effects unresolved. No intended use, physical units, sensor accuracy, actuator dynamics, or true derivative measurements were supplied. The recorded derivatives are centered finite differences, not independent evidence. Models were checked only on supplied trajectories: training `-2.51328 <= y <= 2.53527` Y, `-20.1062 <= x1 <= 14.4514` V and `-4.94511 <= x2 <= 3.95251` U. Validation extends neither position nor velocity range substantially. Constant-input forcing far outside these data, alternate input timing, other integration steps, and long-term extrapolation are not validated. The state trajectories stayed finite and within the task bounds on supplied data, but no test score is known."
+  }
+}

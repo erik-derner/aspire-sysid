@@ -1,0 +1,37 @@
+{
+  "matlab": {
+    "files": [
+      "task-jdhj/task-jdhj_train.mat",
+      "task-jdhj/task-jdhj_val.mat",
+      "task-jdhj/task-jdhj_test-1.mat",
+      "task-jdhj/task-jdhj_test-2.mat",
+      "task-jdhj/task-jdhj_test-3.mat",
+      "task-jdhj/task-jdhj_test-4.mat",
+      "task-jdhj/splitData.m",
+      "task-jdhj/evaluationSets.m",
+      "task-jdhj/startup.m",
+      "task-jdhj/HP/run=1-pool=1/task-jdhj_train/model01.m",
+      "task-jdhj/HP/run=1-pool=1/task-jdhj_train/model02.m",
+      "task-jdhj/HP/run=1-pool=1/task-jdhj_train/model03.m",
+      "task-jdhj/README.md",
+      "task-jdhj/aspire_export.json"
+    ],
+    "models": 3,
+    "models_in_framework": 3,
+    "octave": null,
+    "skipped": [],
+    "status": "written",
+    "verified": true
+  },
+  "python": {
+    "file": "export/python/task_jdhj_pool_v1.py",
+    "labels": [
+      "QuinticDamping",
+      "TrigDamping",
+      "StaticBlend"
+    ],
+    "status": "written",
+    "verified": true
+  },
+  "written_at": "2026-10-08T00:58:35.587654+00:00"
+}

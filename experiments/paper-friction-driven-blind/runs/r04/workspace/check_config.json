@@ -1,0 +1,70 @@
+{
+  "format_version": 2,
+  "task_id": "task-jdhj",
+  "formulation": "continuous",
+  "columns": [
+    {
+      "name": "y",
+      "roles": [
+        "state",
+        "output"
+      ]
+    },
+    {
+      "name": "x1",
+      "roles": [
+        "state"
+      ]
+    },
+    {
+      "name": "x2",
+      "roles": [
+        "input"
+      ]
+    },
+    {
+      "name": "dx1",
+      "roles": [
+        "state_derivative"
+      ]
+    }
+  ],
+  "arguments": [
+    "y",
+    "x1",
+    "x2"
+  ],
+  "expression_keys": [
+    "dy",
+    "dx1"
+  ],
+  "delays": [],
+  "constants": [],
+  "functions": [
+    "sin",
+    "cos",
+    "tan",
+    "asin",
+    "acos",
+    "atan",
+    "atan2",
+    "sinh",
+    "cosh",
+    "tanh",
+    "exp",
+    "log",
+    "sqrt",
+    "Abs",
+    "sign",
+    "Min",
+    "Max",
+    "Piecewise"
+  ],
+  "added_functions": [],
+  "discussion_questions": [],
+  "pool_cap": 10,
+  "trajectory_column": "trajectory",
+  "train_file": "data/train.csv",
+  "pool_version": 1,
+  "previous_labels": []
+}

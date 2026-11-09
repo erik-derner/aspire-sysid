@@ -1,0 +1,71 @@
+{
+  "power_balance": {
+    "residuals": [
+      {
+        "data": "train",
+        "mean_pressure_residual_bar": 0.001134370653546627,
+        "max_abs_pressure_residual_bar": 0.1341359019017181,
+        "increment_residual_future_flow_increment_correlation": -0.7955948538606513,
+        "pressure_residual_flow_correlation": -0.3262847302165689
+      },
+      {
+        "data": "val",
+        "mean_pressure_residual_bar": 0.0010438915590752671,
+        "max_abs_pressure_residual_bar": 0.17479763679885907,
+        "increment_residual_future_flow_increment_correlation": -0.842973701089466,
+        "pressure_residual_flow_correlation": -0.12392571851200868
+      }
+    ],
+    "constant_input_stress_cases": 120,
+    "stress_nonfinite_count": 0,
+    "stress_max_abs_bar": 125.77114365842307,
+    "unsealed_stress_max_abs_bar": 9.702779243255813,
+    "zero_flow_open_case_max_departure_from_initial_or_atmosphere_bar": 0.0
+  },
+  "mixed_resistance": {
+    "residuals": [
+      {
+        "data": "train",
+        "mean_pressure_residual_bar": 0.004359910905642805,
+        "max_abs_pressure_residual_bar": 0.13263860742916433,
+        "increment_residual_future_flow_increment_correlation": -0.7965866503395581,
+        "pressure_residual_flow_correlation": -0.5388606769877757
+      },
+      {
+        "data": "val",
+        "mean_pressure_residual_bar": 0.006951652252405449,
+        "max_abs_pressure_residual_bar": 0.17887845045611495,
+        "increment_residual_future_flow_increment_correlation": -0.8499018700160369,
+        "pressure_residual_flow_correlation": -0.21310233342468637
+      }
+    ],
+    "constant_input_stress_cases": 120,
+    "stress_nonfinite_count": 0,
+    "stress_max_abs_bar": 116.36414711878612,
+    "unsealed_stress_max_abs_bar": 11.110805933352104,
+    "zero_flow_open_case_max_departure_from_initial_or_atmosphere_bar": 0.0
+  },
+  "compressible_nozzle": {
+    "residuals": [
+      {
+        "data": "train",
+        "mean_pressure_residual_bar": 0.008524423966186544,
+        "max_abs_pressure_residual_bar": 0.12064500440798165,
+        "increment_residual_future_flow_increment_correlation": -0.7645813812261688,
+        "pressure_residual_flow_correlation": -0.6229196256999777
+      },
+      {
+        "data": "val",
+        "mean_pressure_residual_bar": 0.015480042549983218,
+        "max_abs_pressure_residual_bar": 0.18777052690064466,
+        "increment_residual_future_flow_increment_correlation": -0.8160739229225717,
+        "pressure_residual_flow_correlation": -0.3149452889579893
+      }
+    ],
+    "constant_input_stress_cases": 120,
+    "stress_nonfinite_count": 0,
+    "stress_max_abs_bar": 100.56801616604237,
+    "unsealed_stress_max_abs_bar": 7.497711328717703,
+    "zero_flow_open_case_max_departure_from_initial_or_atmosphere_bar": 0.0
+  }
+}

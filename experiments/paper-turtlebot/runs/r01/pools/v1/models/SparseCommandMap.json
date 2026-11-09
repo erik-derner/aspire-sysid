@@ -1,0 +1,70 @@
+{
+  "expressions": {
+    "x_next": "x + Ts*(gf*sign(v_f)*Max(Abs(v_f)-df, 0))*cos(phi + 0.5*Ts*(ga*v_a + gc*v_a**3 + gv*v_f*v_a + ba))",
+    "y_next": "y + Ts*(gf*sign(v_f)*Max(Abs(v_f)-df, 0))*sin(phi + 0.5*Ts*(ga*v_a + gc*v_a**3 + gv*v_f*v_a + ba))",
+    "phi_next": "atan2(sin(phi + Ts*(ga*v_a + gc*v_a**3 + gv*v_f*v_a + ba)), cos(phi + Ts*(ga*v_a + gc*v_a**3 + gv*v_f*v_a + ba)))"
+  },
+  "parameters": [
+    {
+      "name": "Ts",
+      "value": 0.2,
+      "unit": "s",
+      "type": "fixed",
+      "description": "Sampling period `Ts = 0.2` s specified in TASK.md; fixed because the samples have a known time spacing."
+    },
+    {
+      "name": "gf",
+      "value": 0.8955176438227905,
+      "unit": "-",
+      "type": "fitted",
+      "description": "Forward gain outside the forward dead zone."
+    },
+    {
+      "name": "ga",
+      "value": 0.6812676586511835,
+      "unit": "-",
+      "type": "fitted",
+      "description": "Linear angular-command coefficient."
+    },
+    {
+      "name": "gc",
+      "value": -0.06007443501099086,
+      "unit": "s^2/rad^2",
+      "type": "fitted",
+      "description": "Cubic angular-command coefficient; radians are explicit in this coefficient unit."
+    },
+    {
+      "name": "gv",
+      "value": 0.40767456194291646,
+      "unit": "s/m",
+      "type": "fitted",
+      "description": "Coefficient of forward-command-dependent angular gain."
+    },
+    {
+      "name": "ba",
+      "value": 0.007494931209645025,
+      "unit": "rad/s",
+      "type": "fitted",
+      "description": "Constant angular calibration offset."
+    },
+    {
+      "name": "df",
+      "value": 0.008011548819806149,
+      "unit": "m/s",
+      "type": "fitted",
+      "description": "Forward dead-zone threshold replacing the negative affine forward intercept."
+    }
+  ],
+  "estimation": {
+    "criterion": "Minimize the sum of squared open-loop rollout residuals in `x` (m), `y` (m), and heading (rad), over 25 transitions (5 s) per fitting window. The heading residual is the principal circular difference multiplied by a fixed conversion of 0.25 m/rad before squaring. This joint criterion constrains turning as well as translation, avoiding the weak angular identifiability of an `x`-only objective in some orientations. The conversion is an analyst-chosen balance, comparable to the distance traveled over a few seconds, not an estimated sensor-noise variance. No later logged pose corrects a rollout.",
+    "data": "`data/train.csv`, all three trajectories (`trajectory = 1`, `trajectory = 2`, and `trajectory = 3`), treated as separate experiments. Fit windows start at within-trajectory zero-based rows `0, 5, ..., 120`; each uses the logged initial pose and the next 25 transitions (5 s), without later state correction. Thus 75 windows use inputs through row 144 and target states through row 145. The last four samples are not direct fitting targets because no complete 25-transition window starting on their command-block grid ends there. They are included in the sliding-window validation (starts at every available row through row 124) and in full-trajectory diagnostics. Block-aligned fitting starts reflect the one-second command schedule and reduce near-duplicate starts. No transition crosses trajectory boundaries.",
+    "method": "Structure selection first used `sklearn.linear_model.LassoLarsIC(criterion=\"bic\")` on 87 complete command blocks from `data/train.csv`: 29 blocks per trajectory with three steady-phase transitions per block. Each library column was divided by its training standard deviation. Least-angle Lasso with BIC needs no parameter starting values and was chosen as a small-library sparse baseline; it is not genetic-programming symbolic regression. Preliminary selection is reproduced by `residual_analysis.py`. All six final fitted parameters were then estimated together with bounded nonlinear rollout least squares using `scipy.optimize.least_squares` (default trust-region reflective method, numerical Jacobian, linear loss, `ftol = 1e-10`, `xtol = 1e-10`, `gtol = 1e-10`, `max_nfev = 400`). Final starting values were `gf = 0.9`, `ga = 0.68`, `gc = -0.06` s^2/rad^2, `gv = 0.41` s/m, `ba = 0.0075` rad/s, and `df = 0.008` m/s, rounded from the earlier sparse-support affine rollout fit in `fit_extensions.py`; none of its coefficients were held fixed. Bounds were `0.2 <= gf <= 1.5`, `0.1 <= ga <= 1.5`, `-0.4 <= gc <= 1` s^2/rad^2, `-2 <= gv <= 2` s/m, `-0.15 <= ba <= 0.15` rad/s, and `0 <= df <= 0.06` m/s, allowing either sign of nonlinear correction while retaining positive baseline gains. No stochastic search or random seed is used.",
+    "script": "fit_clipped.py"
+  },
+  "discussion": {
+    "family": "Discrete-time unicycle/differential-drive kinematics with calibrated command response. A general reference for unicycle kinematics is Siciliano, Sciavicco, Villani and Oriolo, Robotics: Modelling, Planning and Control (Springer, 2009), cited from memory without consulting the book during this round. The supplied task, rather than that reference, defines the robot and sampling period. Sparse polynomial input-response map with a zero-preserving forward dead zone. Structure discovery uses sparse regression; final coefficients use rollout least squares. The sparse-regression approach is related to SINDy: Brunton, Proctor and Kutz, Discovering governing equations from data by sparse identification of nonlinear dynamical systems, PNAS (2016), cited from memory, not fetched; this implementation uses a command-response library rather than a state-derivative SINDy fit.",
+    "interpretation": "`x`, `y`, and `phi` are the current planar pose, `v_f` and `v_a` are the current forward and angular commands, and `Ts` is the fixed sampling period. `gf` converts commanded forward speed to effective logged forward speed, and `ga` calibrates angular command response. Translation adds a body-forward increment projected onto the world axes. The heading update uses `atan2(sin(phi + Ts*(ga*v_a + gc*v_a**3 + gv*v_f*v_a + ba)), cos(phi + Ts*(ga*v_a + gc*v_a**3 + gv*v_f*v_a + ba)))` to wrap the angle; wrapping does not alter either translation projection. `gc*v_a**3` changes angular gain with squared angular-command magnitude. `gv*v_f*v_a` changes angular gain linearly with forward command. These are empirical mathematical corrections, not separately identified mechanical forces. `ba` shifts the angular map, while `df` suppresses very small forward commands. The final negative cubic coefficient contrasts with the preliminary steady-block coefficient, showing that rollout fitting also absorbs missing transient effects. The complete state-update expressions are `x + Ts*(gf*sign(v_f)*Max(Abs(v_f)-df, 0))*cos(phi + 0.5*Ts*(ga*v_a + gc*v_a**3 + gv*v_f*v_a + ba))`, `y + Ts*(gf*sign(v_f)*Max(Abs(v_f)-df, 0))*sin(phi + 0.5*Ts*(ga*v_a + gc*v_a**3 + gv*v_f*v_a + ba))`, and `atan2(sin(phi + Ts*(ga*v_a + gc*v_a**3 + gv*v_f*v_a + ba)), cos(phi + Ts*(ga*v_a + gc*v_a**3 + gv*v_f*v_a + ba)))`.",
+    "origin": "The physical pose update was retained. I formed effective forward and angular velocities from measured increments, using measured midpoint heading for body projection, then averaged phases 2 through 4 within each complete command block to reduce switch-lag contamination and avoid treating correlated samples as independent. A standardized candidate library contained `v_f`, `v_a`, `v_f**2`, `v_a**2`, `v_f*v_a`, `v_a**3`, `v_f*v_a**2`, and `sign(v_a)`, with an intercept. BIC-selected sparse regression retained only `v_f` for forward response and `v_a`, `v_f*v_a`, and `v_a**3` for angular response, plus intercepts. After an affine forward refit gave a negative intercept, I replaced it by a signed forward dead zone to preserve zero motion at zero forward command, then refitted all final coefficients. No spatial terms were searched or included.",
+    "limitations": "The additional angular terms reduce training criterion but do not improve held-out position error; the speed-coupling coefficient varies considerably between folds. Cubic extrapolation can reverse angular response at sufficiently large commands, so this candidate is restricted to the observed range. The sparse-selected support is a hypothesis, not evidence that a unique nonlinear law has been recovered. On all training sliding windows, `x` rollout RMSE is 0.029538 m; equal-trajectory pooled leave-one-trajectory-out `x` RMSE is 0.031524 m, computed on 25-transition (5 s) windows with one-sample start spacing. These results are diagnostics, not test scores. Only positive forward commands were observed: `0.000034 <= v_f <= 0.298156` m/s, and angular commands satisfy `-0.948148 <= v_a <= 0.941161` rad/s (rounded extrema of `data/train.csv`). Reverse motion and larger commands are not validated. The logs cannot separate true actuator response from odometry distortion. Command-change residuals show lag and within-block correlation, but the allowed state has neither actuator velocity nor previous commands, so this memoryless model cannot reproduce that lag exactly. Long rollouts accumulate error; 30-second training diagnostics are not evidence of 5-second test accuracy. Validation uses only three held-out training trajectories, with overlapping windows; it is not an independent test set and gives no reliable confidence interval."
+  }
+}
