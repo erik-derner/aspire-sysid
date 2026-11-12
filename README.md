@@ -2,6 +2,7 @@
 
 **Agentic System-identification Platform for Iterative Reasoning and Exploration**
 
+[![arXiv](https://img.shields.io/badge/arXiv-2611.13114-b31b1b.svg)](https://arxiv.org/abs/2611.13114)
 [![License: CC BY 4.0](https://img.shields.io/badge/License-CC%20BY%204.0-lightgrey.svg)](LICENSE)
 ![Python 3.11+](https://img.shields.io/badge/python-3.11%2B-blue.svg)
 
@@ -15,8 +16,10 @@ model. The software evaluates every candidate on test data that the agent cannot
 the formal requirements and records every step of the run. A human assesses the result.
 
 This repository contains the software, the tasks and the complete records of the experiments
-reported in the accompanying paper by Erik Derner, Jiří Kubalík and Robert Babuška. A link to the
-preprint and a citation entry will be added here when the preprint is available.
+reported in the paper by Erik Derner, Jiří Kubalík and Robert Babuška, "ASPIRE: An Agentic
+System-Identification Platform for Iterative Reasoning and Exploration", arXiv:2611.13114, 2026
+([arxiv.org/abs/2611.13114](https://arxiv.org/abs/2611.13114)). Please cite the paper when you use
+the software, the tasks or the records (see [Citation](#citation)).
 
 ![Overview of ASPIRE](docs/aspire-overview.png)
 
@@ -201,6 +204,19 @@ described in the paper; the data files of the tasks are complete.
   University in Prague, and Department of Cognitive Robotics, Delft University of Technology
 
 Contact: Erik Derner, erik.derner@cvut.cz.
+
+## Citation
+
+    @misc{derner2026aspire,
+      title         = {{ASPIRE}: An Agentic System-Identification Platform for Iterative Reasoning and Exploration},
+      author        = {Derner, Erik and Kubal{\'i}k, Ji{\v{r}}{\'i} and Babu{\v{s}}ka, Robert},
+      year          = {2026},
+      eprint        = {2611.13114},
+      archivePrefix = {arXiv},
+      primaryClass  = {cs.RO},
+      doi           = {10.48550/arXiv.2611.13114},
+      url           = {https://arxiv.org/abs/2611.13114}
+    }
 
 ## Acknowledgements
 
